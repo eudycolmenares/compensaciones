@@ -5,8 +5,8 @@
 
   <div class="menu-items">
     <div class="nav flex-column nav-pills red" role="tablist" aria-orientation="vertical">
-      <a class="nav-link bg-dark text-light active" data-toggle="pill" role="tab" aria-controls="v-pills-home" aria-selected="true">Ajustes</a>
-      <a class="nav-link text-light" data-toggle="pill"  role="tab" aria-controls="v-pills-profile" aria-selected="false">Causas</a>
+      <a class="nav-link bg-dark text-light" [routerLink]="['/dashboard/ajustes']" routerLinkActivate="active" data-toggle="pill" role="tab" aria-controls="v-pills-home" aria-selected="true">Ajustes</a>
+      <a class="nav-link text-light" [routerLink]="['/dashboard/causas']" routerLinkActivate="active" data-toggle="pill"  role="tab" aria-controls="v-pills-profile" aria-selected="false">Causas</a>
       <a class="nav-link text-light" data-toggle="pill"  role="tab" aria-controls="v-pills-profile" aria-selected="false">Causas Servicio</a>
       <a class="nav-link text-light" data-toggle="pill"  role="tab" aria-controls="v-pills-profile" aria-selected="false">Estado Sistema</a>
       <a class="nav-link text-light" data-toggle="pill"  role="tab" aria-controls="v-pills-profile" aria-selected="false">FTP</a>
