@@ -1,0 +1,18 @@
+.section-header {
+  background: whitesmoke;
+  height: 3.5rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem 0 0;
+  .user {
+    height: 2rem;
+  }
+  .access {
+    height: 1.3rem;
+  }
+  img {
+    cursor: pointer;
+  }
+}

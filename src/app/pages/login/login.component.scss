@@ -1,0 +1,68 @@
+// acomaodar css principal #acomodar
+.background-blur {
+  background: linear-gradient(90deg, rgba(239,56,41,0.75) 9%, rgba(239,56,41,0.9) 84%), url(/assets/img/background-login.jpg);
+  filter: blur(5px);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+.input-dark {
+  background: rgba(0, 0, 0, .3);
+  color: white;
+}
+//
+.section-login {
+	align-items: center;
+  display: flex;
+	justify-content: center;
+  min-height: 100vh;
+}
+.container-login {
+  background-color: aliceblue;
+  background: rgba(0,0,0,.3);
+  border-radius: 10px;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-template-rows: 25rem;
+  max-width: 80vw;
+  min-width: 60rem;
+  z-index: 10;
+	.logo {
+		align-items: center;
+		display: flex;
+    justify-content: center;
+		img {
+			height: 80%;
+		}
+	}
+	.form-login {
+    align-items: center;
+    color: white;
+		display: flex;
+    flex-direction: column;
+		justify-content: space-evenly;
+		padding: 1rem 2rem;
+		.form {
+			width: 80%;
+			text-align: center;
+			p {
+				font-size: .9rem;
+    		cursor: pointer;
+    		margin: 6px 0 0 0;
+			}
+		}
+		button {
+			width: 40%;
+		}
+	}
+}
+.title-main {
+	font-size: 2.5rem;
+	font-weight: bold;
+}
+.title-secondary {
+	font-size: 1.1rem;
+}
