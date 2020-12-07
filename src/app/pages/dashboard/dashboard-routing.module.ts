@@ -8,14 +8,14 @@ const ROUTES: Routes = [
     path: '',
     component: DashboardComponent,
     children: [
-      { path: '', pathMatch: 'full', redirectTo: 'ajustes' },
+      { path: '', pathMatch: 'full', redirectTo: 'settings' },
       {
-        path: 'ajustes',
-        loadChildren: () => import('../parametrizacion/ajustes/ajustes.module').then(m => m.AjustesModule),
+        path: 'settings',
+        loadChildren: () => import('../parameterization/settings/settings.module').then(m => m.SettingsModule),
       },
       {
-        path: 'causas',
-        loadChildren: () => import('../parametrizacion/causas/causas-routing.module').then(m => m.CausasRoutingModule),
+        path: 'causes',
+        loadChildren: () => import('../parameterization/causes/causes-routing.module').then(m => m.CausesRoutingModule),
       }
     ],
   }
