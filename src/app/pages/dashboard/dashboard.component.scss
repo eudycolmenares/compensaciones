@@ -1,0 +1,28 @@
+.section-dashboard {
+  background-color: red;
+  display: grid;
+  grid-template-columns: 15rem auto;
+  grid-template-rows: 4rem auto 4rem;
+  grid-template-areas:
+      "header header"
+      "navbar content"
+      "footer footer";
+  min-height: 100vh;
+  width: 100%;
+}
+.header{
+  grid-area: header;
+  background-color: skyblue;
+}
+.navbar{
+  grid-area: navbar;
+  background-color: #8ca0ff;
+}
+.main-content{
+  grid-area: content;
+  background-color: cornflowerblue;
+}
+.footer{
+  grid-area: footer;
+  background-color: slategray;
+}

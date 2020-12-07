@@ -1,0 +1,49 @@
+.section-login {
+	align-items: center;
+  display: flex;
+	justify-content: center;
+	min-height: 100vh;
+  
+}
+.container-login {
+	background-color: aliceblue;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-template-rows: 25rem;
+  max-width: 80vw;
+  min-width: 60rem;
+	.logo {
+		align-items: center;
+		display: flex;
+    justify-content: center;
+		img {
+			height: 80%;
+		}
+	}
+	.form-login {
+		align-items: center;
+		display: flex;
+    flex-direction: column;
+		justify-content: space-evenly;
+		padding: 1rem 2rem;
+		.form {
+			width: 80%;
+			text-align: center;
+			p {
+				font-size: .9rem;
+    		cursor: pointer;
+    		margin: 6px 0 0 0;
+			}
+		}
+		button {
+			width: 40%;
+		}
+	}
+}
+.title-main {
+	font-size: 2.5rem;
+	font-weight: bold;
+}
+.title-secondary {
+	font-size: 1.1rem;
+}
