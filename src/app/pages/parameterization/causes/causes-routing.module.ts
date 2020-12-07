@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { CausasComponent } from './causas.component';
+import { CausesComponent } from './causes.component';
 
 const ROUTES: Routes = [
   {
     path: '',
-    component: CausasComponent,
+    component: CausesComponent,
   },
 ];
 
@@ -15,4 +15,4 @@ const ROUTES: Routes = [
   exports: [RouterModule]
 })
 
-export class CausasRoutingModule { }
+export class CausesRoutingModule { }
