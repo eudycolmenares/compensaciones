@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { SidebarModule } from 'ng-sidebar';
 import { NgbDropdownModule } from "@ng-bootstrap/ng-bootstrap";
 
 import { DashboardRoutingModule } from './dashboard-routing.module';
@@ -18,6 +19,7 @@ import { NavbarComponent } from '../../components/navbar/navbar.component';
   imports: [
     CommonModule,
     DashboardRoutingModule,
+    SidebarModule.forRoot(),
     NgbDropdownModule
   ]
 })
