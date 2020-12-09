@@ -10,6 +10,8 @@ import { HeaderComponent } from '../../components/header/header.component';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 
+import { ReactiveFormsModule } from "@angular/forms";
+
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -22,8 +24,9 @@ import { NavbarComponent } from '../../components/navbar/navbar.component';
     DashboardRoutingModule,
     SidebarModule.forRoot(),
     NgbDropdownModule,
-    NgbAccordionModule
-  ]
+    NgbAccordionModule,
+    ReactiveFormsModule
+  ], exports: [ReactiveFormsModule]
 })
 
 export class DashboardModule { }
