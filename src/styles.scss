@@ -67,11 +67,16 @@
     padding: .3rem .3rem;
     color: white;
     font-weight: bold;
+    display: flex;
+    justify-content: space-between;
     &:hover {
       text-decoration: none;
     }
     &:focus {
       box-shadow: none;
+    }
+    img {
+      width: 20px;
     }
   }
   .btn {
