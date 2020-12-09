@@ -3,13 +3,14 @@ import { CommonModule } from '@angular/common';
 
 import { CausesRoutingModule } from './causes-routing.module';
 import { CausesComponent } from './causes.component';
+import { DashboardModule } from '../../dashboard/dashboard.module';
 
 @NgModule({
   declarations: [CausesComponent],
   imports: [
     CommonModule,
-    CausesRoutingModule
-  ],
-  exports: [CausesComponent],
+    CausesRoutingModule,
+    DashboardModule
+  ]
 })
 export class CausesModule { }
