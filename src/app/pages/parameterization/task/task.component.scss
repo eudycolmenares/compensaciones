@@ -1,3 +1,6 @@
+.section-page {
+  padding: 2rem 3rem;
+}
 .section-task {}
 
 .container-add {
@@ -14,7 +17,7 @@
   }
   .calendar {
     img {
-      width: 20px;
+      width: 15px;
     }
   }
   ngb-timepicker {

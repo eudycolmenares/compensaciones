@@ -6,9 +6,13 @@ import { NgbTimepickerModule } from "@ng-bootstrap/ng-bootstrap";
 
 import { TaskRoutingModule } from './task-routing.module';
 import { TaskComponent } from './task.component';
+import { SortableDirective } from '../../../directives/sortable.directive';
 
 @NgModule({
-  declarations: [TaskComponent],
+  declarations: [
+    TaskComponent,
+    SortableDirective
+  ],
   imports: [
     CommonModule,
     FormsModule,
@@ -17,6 +21,7 @@ import { TaskComponent } from './task.component';
     NgbTimepickerModule
   ],
   exports: [TaskComponent],
+  bootstrap: [TaskComponent]
 })
 
 export class TaskModule { }
