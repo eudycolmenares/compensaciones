@@ -4,7 +4,7 @@
   </div>
 
   <div class="menu-items">
-    <div class="nav flex-column nav-pills red" role="tablist" aria-orientation="vertical">
+    <!-- <div class="nav flex-column nav-pills red" role="tablist" aria-orientation="vertical">
       <a class="nav-link bg-dark text-light" [routerLink]="['/dashboard/settings']" routerLinkActivate="active" data-toggle="pill" role="tab" aria-controls="v-pills-home" aria-selected="true">Ajustes</a>
       <a class="nav-link text-light" [routerLink]="['/dashboard/causes']" routerLinkActivate="active" data-toggle="pill"  role="tab" aria-controls="v-pills-profile" aria-selected="false">Causas</a>
       <a class="nav-link text-light" data-toggle="pill"  role="tab" aria-controls="v-pills-profile" aria-selected="false">Causas Servicio</a>
@@ -16,6 +16,57 @@
       <a class="nav-link text-light" data-toggle="pill"  role="tab" aria-controls="v-pills-profile" aria-selected="false">Tipo Origen</a>
       <a class="nav-link text-light" data-toggle="pill"  role="tab" aria-controls="v-pills-profile" aria-selected="false">Cargue Masivo</a>
       <a class="nav-link text-light" data-toggle="pill"  role="tab" aria-controls="v-pills-profile" aria-selected="false">Coanfiguración Task</a>
-    </div>
+    </div> -->
+
+    <ngb-accordion [closeOthers]="true">
+      <ngb-panel id="static-1">
+        <ng-template ngbPanelTitle>
+          <span>Parametrización</span>
+        </ng-template>
+        <ng-template ngbPanelContent>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item" [routerLink]="['/dashboard/settings']">
+              <span>Ajustes</span><img src="assets/img/setting.svg">
+            </li>
+            <li class="list-group-item" [routerLink]="['/dashboard/causes']">
+              <span>Causas</span><img src="assets/img/flow-filled.svg">
+            </li>
+            <li class="list-group-item">Causas Servicio</li>
+            <li class="list-group-item">Estado Sistema</li>
+            <li class="list-group-item">FTP</li>
+            <li class="list-group-item">Síntoma</li>
+            <li class="list-group-item">Síntomas Servicio</li>
+            <li class="list-group-item">Prioridades</li>
+            <li class="list-group-item">Observaciones</li>
+            <li class="list-group-item">Tipo Origen</li>
+            <li class="list-group-item">Cargue Masivo</li>
+            <li class="list-group-item" [routerLink]="['/dashboard/causes']">
+              <span>Configuración Task</span><img src="assets/img/task.svg">
+            </li>
+          </ul>
+        </ng-template>
+      </ngb-panel>
+      <ngb-panel id="static-2">
+        <ng-template ngbPanelTitle>
+          <span>Reporte</span>
+        </ng-template>
+        <ng-template ngbPanelContent>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">Validación Nodos</li>
+          </ul>
+        </ng-template>
+      </ngb-panel>
+      <ngb-panel id="static-3">
+        <ng-template ngbPanelTitle>
+          <span>Validación</span>
+        </ng-template>
+        <ng-template ngbPanelContent>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">Nodos</li>
+            <li class="list-group-item">Cuentas</li>
+          </ul>
+        </ng-template>
+      </ngb-panel>
+    </ngb-accordion>
   </div>
 </section>

@@ -15,4 +15,7 @@
   img {
     cursor: pointer;
   }
+  .btn:focus {
+    box-shadow: none;
+  }
 }

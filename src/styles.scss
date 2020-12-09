@@ -1,4 +1,55 @@
 /* You can add global styles to this file, and also import other style files */
 
 /* Importing Bootstrap SCSS file. */
-@import '~bootstrap/scss/bootstrap';
+@import "~bootstrap/scss/bootstrap";
+
+// SideBar
+
+.ng-sidebar {
+  background: red;
+  width: 15rem;
+}
+
+// Accordion
+
+.menu-items {
+  .card {
+    border-radius: 0;
+    background: transparent;
+  }
+  .card-header {
+    padding: 0.3rem 0;
+  }
+  .btn-link {
+    width: 100%;
+    text-align: left;
+    padding: .3rem .3rem;
+    color: white;
+    font-weight: bold;
+    &:hover {
+      text-decoration: none;
+    }
+    &:focus {
+      box-shadow: none;
+    }
+  }
+  .btn {
+    &:focus {
+      box-shadow: none;
+    }
+  }
+  .card-body {
+    padding: 0;
+    .list-group-item {
+      background: transparent;
+      color: white;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      padding: .75rem .8rem .75rem 1.25rem;
+    }
+    img {
+      width: 20px;
+    }
+  }
+}
