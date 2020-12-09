@@ -125,5 +125,8 @@
       }
     }
   },
-  "defaultProject": "compensaciones-v2"
+  "defaultProject": "compensaciones-v2",
+  "cli": {
+    "analytics": "a91b1b6d-68fc-418c-a8dd-9c3a524c7e6b"
+  }
 }
