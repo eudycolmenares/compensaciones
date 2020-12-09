@@ -15,7 +15,7 @@ const ROUTES: Routes = [
       },
       {
         path: 'causes',
-        loadChildren: () => import('../parameterization/causes/causes-routing.module').then(m => m.CausesRoutingModule),
+        loadChildren: () => import('../parameterization/causes/causes.module').then(m => m.CausesModule),
       },
       {
         path: 'task',

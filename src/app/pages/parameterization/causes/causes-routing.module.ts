@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-
 import { CausesComponent } from './causes.component';
 
-const ROUTES: Routes = [
+const routes: Routes = [
   {
     path: '',
     component: CausesComponent,
@@ -11,8 +10,7 @@ const ROUTES: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(ROUTES)],
+  imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-
 export class CausesRoutingModule { }
