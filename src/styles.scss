@@ -1,8 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
 
-/* Importing Bootstrap SCSS file. */
-@import "~bootstrap/scss/bootstrap";
-
 :root {
   --blue: #007bff;
   --indigo: #6610f2;
@@ -29,20 +26,39 @@
 
 //Backgraund color app
 .background-theme {
-  background-color: var(--primary);
+  background-color: var(--red);
 }
 
 //Resize icon invalid - solution conflic
 .was-validated .form-control:invalid,
 .form-control.is-invalid {
-  background-position: right calc(0.75em + 0.1875rem) center;
+  background-position: right calc(0.8em + 0.1875rem) center;
 }
 
 //Background color buttons
 .btn-primary {
-  background-color: var(--primary);
+  background-color: var(--red);
 }
 
+// Used in the separation in the forms
+hr {
+  margin: 5% 0 5% 0;
+  height: 2px;
+  border-width: 0;
+  color: var(--gray);
+  background-color: var(--gray)
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
 
 // SideBar
 
@@ -153,4 +169,13 @@
     transform: rotate(180deg);
     -ms-transform: rotate(180deg);
   }
+}
+
+.table .thead-dark th {
+  background-color: var(--red);
+}
+
+.page-item.active .page-link {
+  z-index: 0;
+  background-color: var(--red);
 }
