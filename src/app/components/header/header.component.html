@@ -1,1 +1,21 @@
-<p>header works!</p>
+<section class="section-header">
+  <nav class="navbar navbar-light ">
+    <app-navbar-button (click)="toggleSidebar()"></app-navbar-button>
+  </nav>
+
+  <div>
+    <img class="access ml-2" src="assets/img/browser.svg" alt="" srcset="">
+    <img class="access ml-2" src="assets/img/mail.svg" alt="" srcset="">
+    <img class="access ml-2" src="assets/img/notification.svg" alt="" srcset="">
+    <img class="user ml-3" src="assets/img/user.svg" alt="" srcset="">
+
+    <div ngbDropdown class="d-inline-block">
+      <button class="btn btn-link text-dark" id="dropdownBasic1" ngbDropdownToggle>Usuario</button>
+      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+        <button ngbDropdownItem>Perfil</button>
+        <button ngbDropdownItem>Cambiar contraseña</button>
+        <button ngbDropdownItem>Cerrar sesión</button>
+      </div>
+    </div>
+  </div>
+</section>

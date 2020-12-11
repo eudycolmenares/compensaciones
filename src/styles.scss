@@ -1,4 +1,181 @@
 /* You can add global styles to this file, and also import other style files */
 
-/* Importing Bootstrap SCSS file. */
-@import '~bootstrap/scss/bootstrap';
+:root {
+  --blue: #007bff;
+  --indigo: #6610f2;
+  --purple: #6f42c1;
+  --pink: #e83e8c;
+  --red: #da291C;
+  --orange: #fd7e14;
+  --yellow: #ffc107;
+  --green: #28a745;
+  --teal: #20c997;
+  --cyan: #17a2b8;
+  --white: #fff;
+  --gray: #6c757d;
+  --gray-dark: #343a40;
+  --primary: #ef3829;
+  --secondary: #6c757d;
+  --success: #28a745;
+  --info: #17a2b8;
+  --warning: #ffc107;
+  --danger: #dc3545;
+  --light: #f8f9fa;
+  --dark: #343a40;
+}
+
+//Backgraund color app
+.background-theme {
+  background-color: var(--red);
+}
+
+//Resize icon invalid - solution conflic
+.was-validated .form-control:invalid,
+.form-control.is-invalid {
+  background-position: right calc(0.8em + 0.1875rem) center;
+}
+
+//Background color buttons
+.btn-primary {
+  background-color: var(--red);
+}
+
+// Used in the separation in the forms
+hr {
+  margin: 5% 0 5% 0;
+  height: 2px;
+  border-width: 0;
+  color: var(--gray);
+  background-color: var(--gray)
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+// SideBar
+
+.ng-sidebar {
+  background: var(--red);
+  width: 15rem;
+}
+
+// Accordion
+
+.menu-items {
+  .card {
+    border-radius: 0;
+    background: transparent;
+  }
+  .card-header {
+    padding: 0.3rem 0;
+  }
+  .btn-link {
+    width: 100%;
+    text-align: left;
+    padding: .3rem .3rem;
+    color: var(--white);
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    &:hover {
+      text-decoration: none;
+    }
+    &:focus {
+      box-shadow: none;
+    }
+    img {
+      width: 20px;
+    }
+  }
+  .btn {
+    &:focus {
+      box-shadow: none;
+    }
+  }
+  .card-body {
+    padding: 0;
+    .list-group-item {
+      background: transparent;
+      color: var(--white);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      padding: .75rem .8rem .75rem 1.25rem;
+    }
+    img {
+      width: 20px;
+    }
+  }
+}
+
+// Pages
+.section-page {
+  padding: 2rem 3rem;
+  .container-add {
+    label {
+      background: var(--red);
+      font-size: .9rem;
+      height: 1.9rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .calendar {
+      img {
+        width: 15px;
+      }
+    }
+    ngb-timepicker {
+      margin: auto;
+    }
+  }
+  .container-buttons {
+    text-align: center;
+    button {
+      min-width: 6rem;
+    }
+  }
+}
+
+// table
+
+.table {
+  th[sortable] {
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  th[sortable].desc:before, th[sortable].asc:before {
+    content: '';
+    display: block;
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAAXNSR0IArs4c6QAAAmxJREFUeAHtmksrRVEUx72fH8CIGQNJkpGUUmakDEiZSJRIZsRQmCkTJRmZmJgQE0kpX0D5DJKJgff7v+ru2u3O3vvc67TOvsdatdrnnP1Y///v7HvvubdbUiIhBISAEBACQkAICAEhIAQ4CXSh2DnyDfmCPEG2Iv9F9MPlM/LHyAecdyMzHYNwR3fdNK/OH9HXl1UCozD24TCvILxizEDWIEzA0FcM8woCgRrJCoS5PIwrANQSMAJX1LEI9bqpQo4JYNFFKRSvIgsxHDVnqZgIkPnNBM0rIGtYk9YOOsqgbgepRCfdbmFtqhFkVEDVPjJp0+Z6e6hRHhqBKgg6ZDCvYBygVmUoEGoh5JTRvIJwhJo1aUOoh4CLPMyvxxi7EWOMgnCGsXXI1GIXlZUYX7ucU+kbR8NW8lh3O7cue0Pk32MKndfUxQFAwxdirk3fHappAnc0oqDPzDfGTBrCfHP04dM4oTV8cxr0SVzH9FF07xD3ib6xCDE+M+aUcVygtWzzbtGX2rPBrEUYfecfQkaFzYi6HjVnGBdtL7epqAlc1+jRdAap74RrnPc4BCijttY2tRcdN0g17w7HqZrXhdJTYAuS3hd8z+vKgK3V1zWPae0mZDMykadBn1hTQBLnZNwVrJpSe/NwEeDsEwCctEOsJTsgxLvCqUl2ACftEGvJDgjxrnBqkh3ASTvEWrIDQrwrnJpkB3DSDrGW7IAQ7wqnJtkBnLRztejXXVu4+mxz/nQ9jR1w5VB86ejLTFcnDwhzV+F6T+CHZlx6THSjn76eyyBIOPHyDakhBAQAkJACAgBISAEhIAQYCLwC8JxpAmsEGt6AAAAAElFTkSuQmCC') no-repeat;
+    background-size: 22px;
+    width: 22px;
+    height: 22px;
+    float: left;
+    margin-left: -22px;
+  }
+
+  th[sortable].desc:before {
+    transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+  }
+}
+
+.table .thead-dark th {
+  background-color: var(--red);
+}
+
+.page-item.active .page-link {
+  z-index: 0;
+  background-color: var(--red);
+}

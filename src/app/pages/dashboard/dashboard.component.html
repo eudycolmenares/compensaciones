@@ -1,12 +1,36 @@
-<section class="section-dashboard">
-  <div class="header">
-    <app-header></app-header>
+<ng-sidebar-container>
+  <!-- Sidebar -->
+  <ng-sidebar [(opened)]="opened" mode="over" dock="true" dockedSize="50px">
+    <app-navbar [opened]="opened" (swToggle)="swToggle($event)"></app-navbar>
+  </ng-sidebar>
+
+  <!-- Page content -->
+  <div class="my-sidebar-content" ng-sidebar-content>
+    <app-header [opened]="opened" (swToggle)="swToggle($event)"></app-header>
+    <section class="section-maincontent">
+      <div class="container-main">
+        <router-outlet></router-outlet>
+      </div>
+    </section>
+    <!-- <button (click)="toggleSidebar()">Toggle sidebar</button> -->
   </div>
-  <div class="navbar">
+</ng-sidebar-container>
+
+
+
+<!-- <section class="section-dashboard">
+  <div class="navbar-vertical">
     <app-navbar></app-navbar>
   </div>
-  <div class="main-content"><p>main-content works!</p></div>
-  <div class="footer">
-    <app-footer></app-footer>
+  <div class="main-content">
+    <app-header></app-header>
+    <section class="section-maincontent">
+      <div class="container-main">
+        <router-outlet></router-outlet>
+      </div>
+    </section>
   </div>
-</section>
+</section> -->
+<!-- <div class="footer">
+    <app-footer></app-footer>
+  </div> -->

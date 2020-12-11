@@ -6,7 +6,22 @@ import { DashboardComponent } from './dashboard.component';
 const ROUTES: Routes = [
   {
     path: '',
-    component: DashboardComponent
+    component: DashboardComponent,
+    children: [
+      { path: '', pathMatch: 'full', redirectTo: 'settings' },
+      {
+        path: 'settings',
+        loadChildren: () => import('../parameterization/settings/settings.module').then(m => m.SettingsModule),
+      },
+      {
+        path: 'causes',
+        loadChildren: () => import('../parameterization/causes/causes.module').then(m => m.CausesModule),
+      },
+      {
+        path: 'task',
+        loadChildren: () => import('../parameterization/task/task.module').then(m => m.TaskModule),
+      }
+    ],
   }
 ];
 

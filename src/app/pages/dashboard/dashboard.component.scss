@@ -1,28 +1,26 @@
-.section-dashboard {
-  background-color: red;
-  display: grid;
-  grid-template-columns: 15rem auto;
-  grid-template-rows: 4rem auto 4rem;
-  grid-template-areas:
-      "header header"
-      "navbar content"
-      "footer footer";
+ng-sidebar-container {
   min-height: 100vh;
+}
+
+// .ng-sidebar {
+//   background: red;
+// }
+
+.my-sidebar-content {
+  background: whitesmoke;
+  min-height: 100vh;
+}
+
+// .navbar-vertical{
+//   background-color: #ef3829;
+// }
+
+.section-maincontent {
   width: 100%;
-}
-.header{
-  grid-area: header;
-  background-color: skyblue;
-}
-.navbar{
-  grid-area: navbar;
-  background-color: #8ca0ff;
-}
-.main-content{
-  grid-area: content;
-  background-color: cornflowerblue;
-}
-.footer{
-  grid-area: footer;
-  background-color: slategray;
+  padding: 0 1rem 1rem 1rem;
+  .container-main {
+    height: auto;
+    background: var(--white);
+    border-radius: 8px;
+  }
 }
