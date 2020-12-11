@@ -1,1 +1,86 @@
-<p>task works!</p>
+<section class="section-task section-page">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb bg-transparent mb-5">
+      <li class="breadcrumb-item text-dark text-uppercase font-weight-bold">Parametrización</li>
+      <li class="breadcrumb-item text-dark text-uppercase font-weight-bold active" aria-current="page">Configuración Task</li>
+    </ol>
+  </nav>
+
+  <div class="container-add">
+    <label class="mb-0 text-light">Periodo de Ejecución(*)</label>
+    <label class="mb-0 text-light">Fecha de ejecución(*)</label>
+    <label class="mb-0 text-light">Hora de Ejecución(*)</label>
+    <label class="mb-0 text-light">Estado(*)</label>
+
+    <select class="form-control form-control-sm">
+      <option>Diario</option>
+      <option>Semanal</option>
+      <option>Mensual</option>
+      <option>Semestral</option>
+      <option>Anual</option>
+    </select>
+    <form class="form-inline">
+      <div class="input-group w-100">
+        <input class="form-control form-control-sm" placeholder="yyyy-mm-dd"
+                name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary btn-sm calendar" (click)="d.toggle()" type="button">
+            <img class="img-btn" src="assets/img/calendar.svg" alt="" srcset="">
+          </button>
+        </div>
+      </div>
+    </form>
+    <ngb-timepicker [(ngModel)]="time" meridian="true" size="small"></ngb-timepicker>
+    <select class="form-control form-control-sm">
+      <option>Activo</option>
+      <option>Inactivo</option>
+    </select>
+  </div>
+  <div class="container-buttons mt-3">
+    <button type="button" class="btn btn-primary mr-3 btn-sm">Crear</button>
+    <button type="button" class="btn btn-secondary btn-sm">Limpiar</button>
+  </div>
+
+  <hr class="mt-5 mb-5" />
+
+  <div class="form-group form-inline">
+    Buscar: <input class="form-control form-control-sm ml-2" type="text" name="searchTerm" [(ngModel)]="taskSvc.searchTerm"/>
+    <!-- <span class="ml-3" *ngIf="service.loading$ | async">Loading...</span> -->
+  </div>
+
+  <table class="table table-sm table-borderless table-hover">
+    <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col" sortable="period" (sort)="onSort($event)">Periodo</th>
+      <th scope="col" sortable="date" (sort)="onSort($event)">Fecha</th>
+      <th scope="col" sortable="time" (sort)="onSort($event)">Hora</th>
+      <th scope="col" sortable="status" (sort)="onSort($event)">Estado</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let task of tasks | async">
+      <th scope="row">{{ task.id }}</th>
+      <td>
+        {{ task.period }}
+      </td>
+      <td>{{ task.date }}</td>
+      <td>{{ task.time }}</td>
+      <td>{{ task.status }}</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div class="d-flex justify-content-between p-2">
+    <ngb-pagination
+      [collectionSize]="total$ | async" [(page)]="taskSvc.page" [pageSize]="taskSvc.pageSize" size="sm">
+    </ngb-pagination>
+
+    <select class="form-control form-control-sm" style="width: auto" name="pageSize" [(ngModel)]="taskSvc.pageSize">
+      <option [ngValue]="2">2 items por página</option>
+      <option [ngValue]="4">4 items por página</option>
+      <option [ngValue]="6">6 items por página</option>
+    </select>
+  </div>
+
+</section>
