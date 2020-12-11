@@ -9,6 +9,7 @@ import { DashboardComponent } from './dashboard.component';
 import { HeaderComponent } from '../../components/header/header.component';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
+import { NavbarButtonComponent } from '../../components/navbar-button/navbar-button.component';
 
 import { ReactiveFormsModule } from "@angular/forms";
 
@@ -17,7 +18,8 @@ import { ReactiveFormsModule } from "@angular/forms";
     DashboardComponent,
     HeaderComponent,
     FooterComponent,
-    NavbarComponent
+    NavbarComponent,
+    NavbarButtonComponent
   ],
   imports: [
     CommonModule,

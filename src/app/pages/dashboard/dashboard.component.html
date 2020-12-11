@@ -1,7 +1,7 @@
 <ng-sidebar-container>
   <!-- Sidebar -->
-  <ng-sidebar [(opened)]="opened" mode="push" dock="true" dockedSize="50px">
-    <app-navbar></app-navbar>
+  <ng-sidebar [(opened)]="opened" mode="over" dock="true" dockedSize="50px">
+    <app-navbar [opened]="opened" (swToggle)="swToggle($event)"></app-navbar>
   </ng-sidebar>
 
   <!-- Page content -->

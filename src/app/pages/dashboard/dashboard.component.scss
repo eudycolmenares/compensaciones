@@ -3,7 +3,7 @@ ng-sidebar-container {
 }
 
 .ng-sidebar {
-  background: red;
+  background: var(--primary);
 }
 
 .my-sidebar-content {
@@ -22,9 +22,7 @@ ng-sidebar-container {
 //   grid-area: header;
 //   background-color: skyblue;
 // }
-.navbar-vertical{
-  background-color: #ef3829;
-}
+
 // .main-content{
 //   background: whitesmoke;
 // }

@@ -1,0 +1,285 @@
+<form [formGroup]="causeForm" (ngSubmit)="onSubmit()">
+  <div class="form-group row">
+    <div class="col-md-3 my-2">
+      <div class="background-theme titleForm">Código Anomalía (*)</div>
+      <input
+        type="text"
+        formControlName="codeAnomaly"
+        class="form-control form-control-sm"
+        [ngClass]="{
+          'is-invalid':
+            statusForm == true ||
+            (causeForm.get('codeAnomaly').touched &&
+              causeForm.get('codeAnomaly').invalid)
+        }"
+        placeholder="Cód Anomalía"
+      />
+      <div
+        class="text-danger"
+        *ngIf="
+          statusForm == true ||
+          (causeForm.get('codeAnomaly').touched &&
+            causeForm.get('codeAnomaly').invalid)
+        "
+      >
+        {{ validationFormTextRequired("codeAnomaly") }}
+      </div>
+    </div>
+    <div class="col-md-3 my-2">
+      <div class="background-theme titleForm">Descripción Anomalía (*)</div>
+      <input
+        type="text"
+        formControlName="descriptionAnomaly"
+        class="form-control form-control-sm"
+        [ngClass]="{
+          'is-invalid':
+            statusForm == true ||
+            (causeForm.get('descriptionAnomaly').touched &&
+              causeForm.get('descriptionAnomaly').invalid)
+        }"
+        placeholder="Descripción Anomalía"
+      />
+      <div
+        class="text-danger"
+        *ngIf="
+          statusForm == true ||
+          (causeForm.get('descriptionAnomaly').touched &&
+            causeForm.get('descriptionAnomaly').invalid)
+        "
+      >
+        {{ validationFormText("descriptionAnomaly") }}
+      </div>
+    </div>
+    <div class="col-md-3 my-2">
+      <div class="background-theme titleForm">Código Problema (*)</div>
+      <input
+        type="number"
+        formControlName="problemCode"
+        class="form-control form-control-sm"
+        [ngClass]="{
+          'is-invalid':
+            statusForm == true ||
+            (causeForm.get('problemCode').touched &&
+              causeForm.get('problemCode').invalid)
+        }"
+        placeholder="Código Problema"
+      />
+      <div
+        class="text-danger"
+        *ngIf="
+          statusForm == true ||
+          (causeForm.get('problemCode').touched &&
+            causeForm.get('problemCode').invalid)
+        "
+      >
+        {{ validationForm("problemCode") }}
+      </div>
+    </div>
+    <div class="col-md-3 my-2">
+      <div class="background-theme titleForm">Descripción Problema</div>
+      <input
+        type="number"
+        formControlName="descriptionProblem"
+        class="form-control form-control-sm"
+        [ngClass]="{
+          'is-invalid':
+            statusForm == true ||
+            (causeForm.get('descriptionProblem').touched &&
+              causeForm.get('descriptionProblem').invalid)
+        }"
+        placeholder="Descripción Problema"
+      />
+      <div
+        class="text-danger"
+        *ngIf="
+          statusForm == true ||
+          (causeForm.get('descriptionProblem').touched &&
+            causeForm.get('descriptionProblem').invalid)
+        "
+      >
+        {{ validationForm("descriptionProblem") }}
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col-md-3 my-2">
+      <div class="background-theme titleForm">Código Causas (*)</div>
+      <input
+        type="number"
+        formControlName="causeCode"
+        class="form-control form-control-sm"
+        [ngClass]="{
+          'is-invalid':
+            statusForm == true ||
+            (causeForm.get('causeCode').touched &&
+              causeForm.get('causeCode').invalid)
+        }"
+        placeholder="Código Causa"
+      />
+      <div
+        class="text-danger"
+        *ngIf="
+          statusForm == true ||
+          (causeForm.get('causeCode').touched &&
+            causeForm.get('causeCode').invalid)
+        "
+      >
+        {{ validationForm("causeCode") }}
+      </div>
+    </div>
+    <div class="col-md-3 my-2">
+      <div class="background-theme titleForm">Descripción Causa (*)</div>
+      <input
+        type="number"
+        formControlName="descriptionCause"
+        class="form-control form-control-sm"
+        [ngClass]="{
+          'is-invalid':
+            statusForm == true ||
+            (causeForm.get('descriptionCause').touched &&
+              causeForm.get('descriptionCause').invalid)
+        }"
+        placeholder="Descripción Causa"
+      />
+      <div
+        class="text-danger"
+        *ngIf="
+          statusForm == true ||
+          (causeForm.get('descriptionCause').touched &&
+            causeForm.get('descriptionCause').invalid)
+        "
+      >
+        {{ validationForm("descriptionCause") }}
+      </div>
+    </div>
+    <div class="col-md-3 my-2">
+      <div class="background-theme titleForm">Origen (*)</div>
+      <select
+        formControlName="origin"
+        class="form-control form-control-sm"
+        [ngClass]="{
+          'is-invalid':
+            statusForm == true ||
+            (causeForm.get('origin').touched && causeForm.get('origin').invalid)
+        }"
+      >
+        <option selected>Seleccione ...</option>
+        <option
+          *ngFor="let listTypeOrigin of dataTest"
+          value="listTypeOrigin.id"
+        >
+          {{ listTypeOrigin.vData }}
+        </option>
+      </select>
+      <div
+        class="text-danger"
+        *ngIf="
+          statusForm == true ||
+          (causeForm.get('origin').touched && causeForm.get('origin').invalid)
+        "
+      >
+        {{ validationForm("origin") }}
+      </div>
+    </div>
+    <div class="col-md-3 my-2">
+      <div class="background-theme titleForm">Tipo de Origen (*)</div>
+      <select
+        formControlName="typeOrigin"
+        class="form-control form-control-sm"
+        [ngClass]="{
+          'is-invalid':
+            statusForm == true ||
+            (causeForm.get('typeOrigin').touched &&
+              causeForm.get('typeOrigin').invalid)
+        }"
+      >
+        <option selected>Seleccione ...</option>
+        <option
+          *ngFor="let listTypeOrigin of dataTest"
+          value="listTypeOrigin.id"
+        >
+          {{ listTypeOrigin.vData }}
+        </option>
+      </select>
+      <div
+        class="text-danger"
+        *ngIf="
+          statusForm == true ||
+          (causeForm.get('typeOrigin').touched &&
+            causeForm.get('typeOrigin').invalid)
+        "
+      >
+        {{ validationForm("typeOrigin") }}
+      </div>
+    </div>
+  </div>
+  <div class="form-group row justify-content-center">
+    <div class="col-md-3 my-2">
+      <div class="background-theme titleForm">Servicio (*)</div>
+      <select
+        formControlName="service"
+        class="form-control form-control-sm"
+        [ngClass]="{
+          'is-invalid':
+            statusForm == true ||
+            (causeForm.get('service').touched &&
+              causeForm.get('service').invalid)
+        }"
+      >
+        <option selected>Seleccione ...</option>
+        <option
+          *ngFor="let listTypeOrigin of dataTest"
+          value="listTypeOrigin.id"
+        >
+          {{ listTypeOrigin.vData }}
+        </option>
+      </select>
+      <div
+        class="text-danger"
+        *ngIf="
+          statusForm == true ||
+          (causeForm.get('service').touched && causeForm.get('service').invalid)
+        "
+      >
+        {{ validationForm("service") }}
+      </div>
+    </div>
+    <div class="col-md-3 my-2">
+      <div class="background-theme titleForm">Estado (*)</div>
+      <select
+        formControlName="status"
+        class="form-control form-control-sm"
+        [ngClass]="{
+          'is-invalid':
+            statusForm == true ||
+            (causeForm.get('status').touched && causeForm.get('status').invalid)
+        }"
+      >
+        <option selected>Seleccione ...</option>
+        <option
+          *ngFor="let listTypeOrigin of dataTest"
+          value="listTypeOrigin.id"
+        >
+          {{ listTypeOrigin.vData }}
+        </option>
+      </select>
+      <div
+        class="text-danger"
+        *ngIf="
+          statusForm == true ||
+          (causeForm.get('status').touched && causeForm.get('status').invalid)
+        "
+      >
+        {{ validationForm("status") }}
+      </div>
+    </div>
+  </div>
+  <div class="form-group row justify-content-center">
+    <div class="col-md-1 d-flex justify-content-end">
+      <button class="btn btn-primary" type="submit">Crear</button>
+    </div>
+    <div class="col-md-1">
+      <button class="btn btn-primary" type="reset">Limpiar</button>
+    </div>
+  </div>
+</form>
