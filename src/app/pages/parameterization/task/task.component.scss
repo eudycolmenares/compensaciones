@@ -1,0 +1,11 @@
+.section-task {}
+
+.container-add {
+  max-width: 80%;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  text-align: center;
+  align-items: center;
+  grid-gap: 4px;
+}
