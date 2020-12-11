@@ -2,43 +2,25 @@ ng-sidebar-container {
   min-height: 100vh;
 }
 
-.ng-sidebar {
-  background: red;
-}
+// .ng-sidebar {
+//   background: red;
+// }
 
 .my-sidebar-content {
   background: whitesmoke;
   min-height: 100vh;
 }
 
-// .section-dashboard {
-//   background-color: red;
-//   display: grid;
-//   grid-template-columns: 15rem auto;
-//   min-height: 100vh;
-//   width: 100%;
-// }
-// .header{
-//   grid-area: header;
-//   background-color: skyblue;
-// }
-.navbar-vertical{
-  background-color: #ef3829;
-}
-// .main-content{
-//   background: whitesmoke;
-// }
-// .footer{
-//   grid-area: footer;
-//   background-color: slategray;
+// .navbar-vertical{
+//   background-color: #ef3829;
 // }
 
 .section-maincontent {
   width: 100%;
-  padding: 1rem;
+  padding: 0 1rem 1rem 1rem;
   .container-main {
     height: auto;
-    background: white;
+    background: var(--white);
     border-radius: 8px;
   }
 }

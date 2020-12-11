@@ -1,8 +1,8 @@
 <section class="section-task section-page">
-  <nav aria-label="breadcrumb" >
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="">Parametrización</a></li>
-      <li class="breadcrumb-item active" aria-current="page">Configuración Task</li>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb bg-transparent mb-5">
+      <li class="breadcrumb-item text-dark text-uppercase font-weight-bold">Parametrización</li>
+      <li class="breadcrumb-item text-dark text-uppercase font-weight-bold active" aria-current="page">Configuración Task</li>
     </ol>
   </nav>
 
@@ -36,22 +36,31 @@
       <option>Inactivo</option>
     </select>
   </div>
+  <div class="container-buttons mt-3">
+    <button type="button" class="btn btn-primary mr-3 btn-sm">Crear</button>
+    <button type="button" class="btn btn-secondary btn-sm">Limpiar</button>
+  </div>
 
-  <hr/>
+  <hr class="mt-5 mb-5" />
 
-  <table class="table table-striped">
-    <thead>
+  <div class="form-group form-inline">
+    Buscar: <input class="form-control form-control-sm ml-2" type="text" name="searchTerm" [(ngModel)]="taskSvc.searchTerm"/>
+    <!-- <span class="ml-3" *ngIf="service.loading$ | async">Loading...</span> -->
+  </div>
+
+  <table class="table table-sm table-borderless table-hover">
+    <thead class="thead-dark">
     <tr>
       <th scope="col">#</th>
-      <th scope="col" sortable="periodo" (sort)="onSort($event)">Periodo</th>
-      <th scope="col" sortable="fecha" (sort)="onSort($event)">Fecha</th>
-      <th scope="col">Hora</th>
-      <th scope="col">Estado</th>
+      <th scope="col" sortable="period" (sort)="onSort($event)">Periodo</th>
+      <th scope="col" sortable="date" (sort)="onSort($event)">Fecha</th>
+      <th scope="col" sortable="time" (sort)="onSort($event)">Hora</th>
+      <th scope="col" sortable="status" (sort)="onSort($event)">Estado</th>
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let task of tasks; index as i">
-      <th scope="row">{{ i + 1 }}</th>
+    <tr *ngFor="let task of tasks | async">
+      <th scope="row">{{ task.id }}</th>
       <td>
         {{ task.period }}
       </td>
@@ -61,5 +70,17 @@
     </tr>
     </tbody>
   </table>
+
+  <div class="d-flex justify-content-between p-2">
+    <ngb-pagination
+      [collectionSize]="total$ | async" [(page)]="taskSvc.page" [pageSize]="taskSvc.pageSize" size="sm">
+    </ngb-pagination>
+
+    <select class="form-control form-control-sm" style="width: auto" name="pageSize" [(ngModel)]="taskSvc.pageSize">
+      <option [ngValue]="2">2 items por página</option>
+      <option [ngValue]="4">4 items por página</option>
+      <option [ngValue]="6">6 items por página</option>
+    </select>
+  </div>
 
 </section>

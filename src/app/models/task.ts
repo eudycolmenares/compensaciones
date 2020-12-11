@@ -5,3 +5,8 @@ export interface TaskModel {
   time: string;
   status: string;
 }
+
+export interface SearchResultModel {
+  tasks: TaskModel[];
+  total: number;
+}
