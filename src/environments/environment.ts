@@ -4,7 +4,11 @@
 
 export const environment = {
   production: false,
-  URL_API: ''
+  URL_API: '/WSCompensaciones-web/webresources/WSCompensaciones/',
+  endpoints: {
+    settings_create: 'SettingsService/create',
+    settings_delete: 'SettingsService/delete'
+  }
 };
 
 /*

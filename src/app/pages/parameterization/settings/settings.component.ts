@@ -7,6 +7,7 @@ import {
   ServicesSettings as Services
 } from '../../../libraries/utilities.library';
 import { GeneralFunctionsService } from '../../../services/general-functions.service';
+import { SettingsService } from '../../../services/settings/settings.service';
 
 @Component({
   selector: 'app-settings',
@@ -28,6 +29,7 @@ export class SettingsComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private gnrScv: GeneralFunctionsService,
+    private stgsSvc : SettingsService
   ) {
     this.createForm();
     this.initializeVariables();
@@ -110,6 +112,26 @@ export class SettingsComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log('sigue lo siguiente!!!');
+    const dataRequest = {
+      'setting': {
+        'code': this.formStgs.get('code').value,
+        'description': this.formStgs.get('description').value,
+        'state': this.formStgs.get('state').value,
+        'user': 'test',
+        'socialStratum': '6',
+        'television': '1',
+        'internet': '0',
+        'telephone': '0'
+      }
+    }
+    this.stgsSvc.createSetting(dataRequest).subscribe(data => {
+      console.log('respuesta servicio create: ', data);
+
+    })
+
+
+
     if(this.formStgs.invalid) {
       (this.strata.length === 0) ? this.invalidStrata = true : '';
       (this.services.length === 0) ? this.invalidServices = true : '';
@@ -117,15 +139,16 @@ export class SettingsComponent implements OnInit {
         control.markAsTouched();
       })
     }else {
-      if(this.strata.length === 0) {
-        this.invalidStrata = true;
+      (this.strata.length === 0) ? this.invalidStrata = true : '';
+      (this.services.length === 0) ? this.invalidServices = true : '';
+      if(this.invalidStrata===true || this.invalidServices===true) {
         return false;
       }
-      if(this.services.length === 0) {
-        this.invalidServices = true;
-        return false;
-      }
-      console.log('sigue lo siguiente!!!');
+
+
+
+
+
     }
   }
 }

@@ -16,7 +16,6 @@ export class GeneralFunctionsService {
   }
 
   sort(tasks: TaskModel[], column: string, direction: string): TaskModel[] {
-    console.log('sort():', tasks, column, direction);
     if (direction === '') {
       return tasks;
     } else {
