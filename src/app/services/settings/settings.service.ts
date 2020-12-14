@@ -10,8 +10,6 @@ import { responseSettingsModel as responseModel } from '../../models/settings';
 })
 
 export class SettingsService {
-  // urlApi: string = environment.URL_API;
-  // urlCauses: string = 'CausesService/';
   headers = new HttpHeaders({
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',

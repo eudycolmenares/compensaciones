@@ -25,7 +25,7 @@ export enum StrataSettings {
 }
 
 export enum ServicesSettings {
-  telefonia = 'Telefonía',
+  telephone = 'Telefonía',
   television = 'Televisión',
   internet = 'Internet'
 }

@@ -14,7 +14,7 @@ import { ComponentsModule } from '../../../components/components.module';
     CommonModule,
     SettingsRoutingModule,
     ComponentsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   exports: [SettingsComponent],
 })

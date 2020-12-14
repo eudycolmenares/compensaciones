@@ -4,10 +4,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
   StrataSettings as Strata,
   SelectStatus,
-  ServicesSettings as Services
+  ServicesSettings as Services,
 } from '../../../libraries/utilities.library';
 import { GeneralFunctionsService } from '../../../services/general-functions.service';
 import { SettingsService } from '../../../services/settings/settings.service';
+import { ToastService } from '../../../services/shared/toast.service';
+import { requestSettingsModel as requestModel } from '../../../models/settings';
 
 @Component({
   selector: 'app-settings',
@@ -29,7 +31,8 @@ export class SettingsComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private gnrScv: GeneralFunctionsService,
-    private stgsSvc : SettingsService
+    private stgsSvc : SettingsService,
+    private toastScv: ToastService
   ) {
     this.createForm();
     this.initializeVariables();
@@ -112,26 +115,6 @@ export class SettingsComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('sigue lo siguiente!!!');
-    const dataRequest = {
-      'setting': {
-        'code': this.formStgs.get('code').value,
-        'description': this.formStgs.get('description').value,
-        'state': this.formStgs.get('state').value,
-        'user': 'test',
-        'socialStratum': '6',
-        'television': '1',
-        'internet': '0',
-        'telephone': '0'
-      }
-    }
-    this.stgsSvc.createSetting(dataRequest).subscribe(data => {
-      console.log('respuesta servicio create: ', data);
-
-    })
-
-
-
     if(this.formStgs.invalid) {
       (this.strata.length === 0) ? this.invalidStrata = true : '';
       (this.services.length === 0) ? this.invalidServices = true : '';
@@ -144,11 +127,34 @@ export class SettingsComponent implements OnInit {
       if(this.invalidStrata===true || this.invalidServices===true) {
         return false;
       }
-
-
-
-
-
+      const dataRequest: requestModel = {
+        'Setting': {
+          'code': this.formStgs.get('code').value,
+          'description': this.formStgs.get('description').value,
+          'state': this.formStgs.get('state').value,
+          'user': 'test', // seteado
+          'socialStratum': this.strata[0]['value'],
+          'television': (this.services.find(svc => svc['key'] === 'television') ? '1' : '0'),
+          'internet': (this.services.find(svc => svc['key'] === 'internet') ? '1' : '0'),
+          'telephone': (this.services.find(svc => svc['key'] === 'telephone') ? '1' : '0')
+        }
+      }
+      this.stgsSvc.createSetting(dataRequest).subscribe(resp => {
+        console.log('respuesta servicio create: ', resp);
+        if(resp.GeneralResponse.code === '0') {
+          this.toastScv.showSuccess(resp.GeneralResponse.messageCode);
+          this.cleanForm();
+        }else{
+          this.toastScv.showError(resp.GeneralResponse.messageCode);
+        }
+      })
+      this.cleanForm();
     }
+  }
+
+  cleanForm() {
+    this.formStgs.reset();
+    this.strata = [];
+    this.services = [];
   }
 }
