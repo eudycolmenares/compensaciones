@@ -9,6 +9,7 @@ import { TaskRoutingModule } from './task-routing.module';
 import { TaskComponent } from './task.component';
 import { SortableDirective } from '../../../directives/sortable.directive';
 import { TaskService } from '../../../services/task.service';
+import { ComponentsModule } from '../../../components/components.module';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { TaskService } from '../../../services/task.service';
     TaskRoutingModule,
     NgbDatepickerModule,
     NgbTimepickerModule,
-    NgbPaginationModule
+    NgbPaginationModule,
+    ComponentsModule
   ],
   exports: [TaskComponent],
   bootstrap: [TaskComponent],

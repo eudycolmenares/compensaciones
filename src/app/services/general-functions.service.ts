@@ -1,4 +1,5 @@
 import { Injectable, PipeTransform } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 
 import { TaskModel } from '../models/task';
 
@@ -36,4 +37,11 @@ export class GeneralFunctionsService {
     //   || pipe.transform(country.population).includes(term);
   }
 
+  validationFormTextRequired(form: FormGroup, field: string) {
+    return form.get(field).hasError('required')
+      ? 'El campo es obligatorio'
+      : !form.get(field).hasError('maxLength')
+      ? 'El campo supera lo permitido'
+      : '';
+  }
 }

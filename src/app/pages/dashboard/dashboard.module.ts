@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from "@angular/forms";
 import { SidebarModule } from 'ng-sidebar';
 import { NgbDropdownModule } from "@ng-bootstrap/ng-bootstrap";
 import { NgbAccordionModule } from "@ng-bootstrap/ng-bootstrap";
@@ -10,8 +11,6 @@ import { HeaderComponent } from '../../components/header/header.component';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { NavbarButtonComponent } from '../../components/navbar-button/navbar-button.component';
-
-import { ReactiveFormsModule } from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -27,8 +26,10 @@ import { ReactiveFormsModule } from "@angular/forms";
     SidebarModule.forRoot(),
     NgbDropdownModule,
     NgbAccordionModule,
+    ReactiveFormsModule,
+  ], exports: [
     ReactiveFormsModule
-  ], exports: [ReactiveFormsModule]
+  ]
 })
 
 export class DashboardModule { }

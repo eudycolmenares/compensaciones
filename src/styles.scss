@@ -117,9 +117,12 @@ input[type=number] {
 }
 
 // Pages
+
 .section-page {
   padding: 2rem 3rem;
   .container-add {
+    width: 80%;
+    margin: auto;
     label {
       background: var(--red);
       font-size: .9rem;
@@ -136,11 +139,32 @@ input[type=number] {
     ngb-timepicker {
       margin: auto;
     }
+    .field {
+      display: grid;
+      text-align: left;
+      align-items: flex-start;
+      grid-gap: 4px;
+    }
+    .one-field {
+      grid-template-columns: 1fr;
+    }
+    .two-field {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .three-fields {
+      grid-template-columns: repeat(3, 1fr);
+    }
   }
   .container-buttons {
     text-align: center;
     button {
       min-width: 6rem;
+    }
+  }
+  .btn-group-vertical {
+    padding: 1.8rem 0;
+    img {
+      height: 1.3rem;
     }
   }
 }
