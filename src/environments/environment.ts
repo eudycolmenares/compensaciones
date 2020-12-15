@@ -6,6 +6,7 @@ export const environment = {
   production: false,
   URL_API: '/WSCompensaciones-web/webresources/WSCompensaciones/',
   endpoints: {
+    settings_all: 'SettingsService/read/all',
     settings_create: 'SettingsService/create',
     settings_delete: 'SettingsService/delete'
   }

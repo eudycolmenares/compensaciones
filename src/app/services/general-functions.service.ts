@@ -15,7 +15,7 @@ export class GeneralFunctionsService {
     return v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
   }
 
-  sort(tasks: TaskModel[], column: string, direction: string): TaskModel[] {
+  sort(tasks: any[], column: string, direction: string): TaskModel[] {
     if (direction === '') {
       return tasks;
     } else {

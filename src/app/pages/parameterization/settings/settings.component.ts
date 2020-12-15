@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChildren, QueryList } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Observable } from 'rxjs/internal/Observable';
 
 import {
   StrataSettings as Strata,
@@ -9,7 +10,10 @@ import {
 import { GeneralFunctionsService } from '../../../services/general-functions.service';
 import { SettingsService } from '../../../services/settings/settings.service';
 import { ToastService } from '../../../services/shared/toast.service';
-import { requestSettingsModel as requestModel } from '../../../models/settings';
+import {
+  requestSettingsModel as requestModel,
+  settingModel
+} from '../../../models/settings';
 
 @Component({
   selector: 'app-settings',
@@ -27,6 +31,8 @@ export class SettingsComponent implements OnInit {
   invalidStrata = false;
   invalidServices = false;
   msgErrorEmpty = 'El campo es obligatorio';
+  // table
+  settings$: Observable<settingModel[]>; // acomodar
 
   constructor(
     private fb: FormBuilder,
@@ -39,6 +45,10 @@ export class SettingsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // acomodar
+    this.stgsSvc.allSettings().subscribe(resp => {
+      console.log('Respuesta: ', resp);
+    })
   }
 
   initializeVariables() {
@@ -51,6 +61,8 @@ export class SettingsComponent implements OnInit {
     for (const i of Object.entries(Services)) {
       this.servicesBase.push({key: i[0], value: i[1]})
     }
+    // table
+    this.settings$ = this.stgsSvc.settings$;
   }
 
   createForm() {
@@ -140,7 +152,6 @@ export class SettingsComponent implements OnInit {
         }
       }
       this.stgsSvc.createSetting(dataRequest).subscribe(resp => {
-        console.log('respuesta servicio create: ', resp);
         if(resp.GeneralResponse.code === '0') {
           this.toastScv.showSuccess(resp.GeneralResponse.messageCode);
           this.cleanForm();

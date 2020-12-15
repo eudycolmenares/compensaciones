@@ -78,7 +78,33 @@
       <button type="button" class="btn btn-secondary btn-sm">Limpiar</button>
     </div>
   </form>
+
+
   <hr class="mt-5 mb-5" />
+
+  <table class="table table-sm table-borderless table-hover">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col" sortable="period" (sort)="onSort($event)">Código</th>
+        <th scope="col" sortable="date" (sort)="onSort($event)">Descripción</th>
+        <th scope="col" sortable="time" (sort)="onSort($event)">Estado</th>
+        <!-- <th scope="col" sortable="status" (sort)="onSort($event)">Estado</th> -->
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngIf="settings$ | async as settings">
+        <tr *ngFor="let setting of settings; index as i">
+          <th scope="row">{{ i + 1 }}</th>
+          <td>{{ setting.code }}</td>
+          <td>{{ setting.description }}</td>
+          <td>{{ (setting.state === '1') ? 'Activo' : 'Inactivo' }}</td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+
+
 </section>
 
 <app-toast></app-toast>
