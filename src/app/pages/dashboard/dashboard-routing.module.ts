@@ -18,6 +18,10 @@ const ROUTES: Routes = [
         loadChildren: () => import('../parameterization/causes/causes.module').then(m => m.CausesModule),
       },
       {
+        path: 'symptom',
+        loadChildren: () => import('../parameterization/symptom/symptom.module').then(m => m.SymptomModule),
+      },
+      {
         path: 'task',
         loadChildren: () => import('../parameterization/task/task.module').then(m => m.TaskModule),
       }
