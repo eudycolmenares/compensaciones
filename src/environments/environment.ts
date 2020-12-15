@@ -8,6 +8,7 @@ export const environment = {
   endpoints: {
     settings_all: 'SettingsService/read/all',
     settings_create: 'SettingsService/create',
+    settings_update: 'SettingsService/update',
     settings_delete: 'SettingsService/delete'
   }
 };

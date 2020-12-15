@@ -31,6 +31,7 @@ export class SettingsComponent implements OnInit {
   invalidStrata = false;
   invalidServices = false;
   msgErrorEmpty = 'El campo es obligatorio';
+  actionForm = 'create'; // create, update
   // table
   settings$: Observable<settingModel[]>; // acomodar
 
@@ -46,9 +47,7 @@ export class SettingsComponent implements OnInit {
 
   ngOnInit(): void {
     // acomodar
-    this.stgsSvc.allSettings().subscribe(resp => {
-      console.log('Respuesta: ', resp);
-    })
+    this.stgsSvc.allSettings();
   }
 
   initializeVariables() {
@@ -67,8 +66,9 @@ export class SettingsComponent implements OnInit {
 
   createForm() {
     this.formStgs = this.fb.group({
+      id: [''],
       code: ['', [Validators.required, Validators.maxLength(20)]],
-      description: ['', [Validators.required, Validators.maxLength(20)]],
+      description: ['', [Validators.required, Validators.maxLength(40)]],
       state: ['', Validators.required],
       strataBase: [''],
       strata: [''],
@@ -151,21 +151,84 @@ export class SettingsComponent implements OnInit {
           'telephone': (this.services.find(svc => svc['key'] === 'telephone') ? '1' : '0')
         }
       }
-      this.stgsSvc.createSetting(dataRequest).subscribe(resp => {
-        if(resp.GeneralResponse.code === '0') {
-          this.toastScv.showSuccess(resp.GeneralResponse.messageCode);
-          this.cleanForm();
-        }else{
-          this.toastScv.showError(resp.GeneralResponse.messageCode);
-        }
-      })
-      this.cleanForm();
+      if(this.actionForm === 'create') {
+        this.createSettingApi(dataRequest);
+      }else {
+        this.updateSettingApi(dataRequest);
+      }
     }
+  }
+  createSettingApi(dataRequest: requestModel) {
+    this.stgsSvc.createSetting(dataRequest).subscribe(resp => {
+      if(resp.GeneralResponse.code === '0') {
+        this.toastScv.showSuccess(resp.GeneralResponse.messageCode);
+        this.cleanForm();
+        this.stgsSvc.allSettings();
+      }else{
+        this.toastScv.showError(resp.GeneralResponse.messageCode);
+      }
+    })
+  }
+  updateSettingApi(dataRequest: requestModel) {
+    dataRequest.Setting.id = this.formStgs.get('id').value;
+    this.stgsSvc.updateSetting(dataRequest).subscribe(resp => {
+      if(resp.GeneralResponse.code === '0') {
+        this.toastScv.showSuccess(resp.GeneralResponse.messageCode);
+        this.cleanForm();
+        this.stgsSvc.allSettings();
+      }else{
+        this.toastScv.showError(resp.GeneralResponse.messageCode);
+      }
+    })
+  }
+
+  updateSetting(setting: settingModel) {
+    this.setForm(setting);
+    this.actionForm = 'update';
+  }
+
+  deleteSetting(setting: settingModel) {
+    this.stgsSvc.deleteSetting(setting.id).subscribe(resp => {
+      if(resp.GeneralResponse.code === '0') {
+        this.toastScv.showSuccess(resp.GeneralResponse.messageCode);
+        this.stgsSvc.allSettings();
+      }else{
+        this.toastScv.showError(resp.GeneralResponse.messageCode);
+      }
+    })
   }
 
   cleanForm() {
     this.formStgs.reset();
     this.strata = [];
     this.services = [];
+    this.actionForm = 'create';
+  }
+
+  setForm(data: settingModel) {
+    this.formStgs.reset({
+      id: data.id,
+      code: data.code,
+      description: data.description,
+      state: data.state,
+      strataBase: [data.socialStratum],
+      strata: [],
+      servicesBase: this.returnServiceName(data),
+      services: [],
+    });
+    this.strata = []; this.services = [];
+    this.assignChoices('strataBase', 'strata');
+    this.assignChoices('servicesBase', 'services');
+  }
+
+  returnServiceName(data: settingModel): string[] {
+    const arraySvc = ['television', 'internet', 'telephone'];
+    let svcSelected = []
+    for (const key in data) {
+      if(arraySvc.indexOf(key) > -1 && data[key] === '1') {
+        svcSelected.push(key);
+      }
+    }
+    return svcSelected;
   }
 }

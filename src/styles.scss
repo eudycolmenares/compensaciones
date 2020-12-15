@@ -193,6 +193,9 @@ input[type=number] {
     transform: rotate(180deg);
     -ms-transform: rotate(180deg);
   }
+  button img {
+    height: 15px;
+  }
 }
 
 .table .thead-dark th {

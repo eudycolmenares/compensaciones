@@ -35,13 +35,24 @@ export class SettingsService {
     });
   }
 
-  allSettings(): Observable<settingsApiModel> {
-    console.log('consultoALL() ');
-    return this.http.get<settingsApiModel>(env.URL_API + env.endpoints.settings_all, {
+  updateSetting(body: requestModel): Observable<responseModel> {
+    return this.http.put<responseModel>(env.URL_API + env.endpoints.settings_update, body, {
+      headers: this.headers,
+    });
+  }
+
+  deleteSetting(id: string): Observable<responseModel> {
+    return this.http.delete<responseModel>(env.URL_API + env.endpoints.settings_delete + `/${id}`, {
+      headers: this.headers,
+    });
+  }
+
+  allSettings(): void {
+    this.http.get<settingsApiModel>(env.URL_API + env.endpoints.settings_all, {
       headers: this.headers,
     }).pipe(
       tap(data => this._settings$.next(data.Settings.Setting))
-    );
+    ).subscribe();
   }
 
   // table

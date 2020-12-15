@@ -74,21 +74,22 @@
 
     </div>
     <div class="container-buttons mt-3">
-      <button type="submit" class="btn btn-primary mr-3 btn-sm">Crear</button>
-      <button type="button" class="btn btn-secondary btn-sm">Limpiar</button>
+      <button type="submit" class="btn btn-primary mr-3 btn-sm">{{ (actionForm === 'create' ? 'Crear' : 'Actualizar' )}}</button>
+      <button type="button" class="btn btn-secondary btn-sm" (click)="cleanForm()">Limpiar</button>
     </div>
   </form>
 
 
   <hr class="mt-5 mb-5" />
 
-  <table class="table table-sm table-borderless table-hover">
+  <table class="table table-sm table-borderless table-hover text-center">
     <thead class="thead-dark">
       <tr>
         <th scope="col">#</th>
-        <th scope="col" sortable="period" (sort)="onSort($event)">Código</th>
-        <th scope="col" sortable="date" (sort)="onSort($event)">Descripción</th>
-        <th scope="col" sortable="time" (sort)="onSort($event)">Estado</th>
+        <th scope="col" sortable="period">Código</th>
+        <th scope="col" sortable="date">Descripción</th>
+        <th scope="col" sortable="time">Estado</th>
+        <th scope="col" sortable="time">Acciones</th>
         <!-- <th scope="col" sortable="status" (sort)="onSort($event)">Estado</th> -->
       </tr>
     </thead>
@@ -99,6 +100,14 @@
           <td>{{ setting.code }}</td>
           <td>{{ setting.description }}</td>
           <td>{{ (setting.state === '1') ? 'Activo' : 'Inactivo' }}</td>
+          <td>
+            <button type="button" class="btn btn-primary btn-sm mr-2" (click)="updateSetting(setting)">
+              <img src="assets/img/edit.svg">
+            </button>
+            <button type="button" class="btn btn-secondary btn-sm" (click)="deleteSetting(setting)">
+              <img src="assets/img/trash.svg">
+            </button>
+          </td>
         </tr>
       </ng-container>
     </tbody>
