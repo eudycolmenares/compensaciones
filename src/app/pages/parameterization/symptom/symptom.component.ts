@@ -5,18 +5,15 @@ import { Observable } from 'rxjs/internal/Observable';
 import { SymptomService } from '../../../services/symptom/symptom.service';
 import { GeneralFunctionsService } from '../../../services/general-functions.service';
 import { ToastService } from '../../../services/shared/toast.service';
-import {
-  SelectStatus,
-  ServicesSettings as Services
-} from '../../../libraries/utilities.library';
-import { requestModel, responseModel } from '../../../models/symptom';
+import { SelectStatus, ServicesSettings as Services } from '../../../libraries/utilities.library';
+import { requestModel, responseModel, symptomModel } from '../../../models/symptom';
 
 interface originModel {
   id: number;
   name: string;
   description: string;
   state: number;
-}
+} // acomodar
 
 @Component({
   selector: 'app-symptom',
@@ -50,13 +47,13 @@ export class SymptomComponent implements OnInit {
       description: 'RR',
       state: 1
     }
-  ];
+  ]; // acomodar
   formSymptom: FormGroup;
   actionForm = 'create'; // create, update
   selectStatus: object[] = [];
   services: object[] = [];
   // table
-  symptoms$: Observable<any[]>; // acomodar
+  symptoms$: Observable<symptomModel[]>;
 
   constructor(
     private fb: FormBuilder,
@@ -109,7 +106,7 @@ export class SymptomComponent implements OnInit {
       this.services.push({key: i[0], value: i[1]})
     }
     // table
-    this.symptoms$ = this.symptomSvc._settings$;
+    this.symptoms$ = this.symptomSvc.symptoms$;
   }
 
   onSubmit() {
@@ -134,23 +131,70 @@ export class SymptomComponent implements OnInit {
         }
       }
       if(this.actionForm === 'create') {
-        this.createApi(dataRequest);
+        this.createSymptomApi(dataRequest);
       }else {
-        // this.updateSettingApi(dataRequest);
+        this.updateSymptomApi(dataRequest);
       }
     }
   }
-  createApi(dataRequest: requestModel) {
+  createSymptomApi(dataRequest: requestModel) {
     this.symptomSvc.createSymptom(dataRequest).subscribe((resp: responseModel) => {
-      console.log('resp: ',resp);
       if(resp.generalResponse.code === '0') {
         this.toastScv.showSuccess(resp.generalResponse.messageCode);
         this.cleanForm();
-        // this.symptomSvc.allSettings(); // acomodar
+        this.symptomSvc.allSymptoms();
       }else{
         this.toastScv.showError(resp.generalResponse.messageCode);
       }
     })
+  }
+  updateSymptomApi(dataRequest: requestModel) {
+    dataRequest.symptom.symptomId = this.formSymptom.get('id').value;
+    this.symptomSvc.updateSymptom(dataRequest).subscribe(resp => {
+      if(resp.generalResponse.code === '0') {
+        this.toastScv.showSuccess(resp.generalResponse.messageCode);
+        this.cleanForm();
+        this.symptomSvc.allSymptoms();
+      }else{
+        this.toastScv.showError(resp.generalResponse.messageCode);
+      }
+    })
+  }
+
+  updateSymptom(symptom: symptomModel) {
+    this.setForm(symptom);
+    this.actionForm = 'update';
+  }
+  setForm(data: symptomModel) {
+    this.formSymptom.reset({
+      id: data.symptomId,
+      code: data.symptomCode,
+      description: data.description,
+      state: data.state,
+      origin: data.originId,
+      services: this.returnServiceName(data),
+    });
+  }
+  returnServiceName(data: symptomModel): string[] {
+    const arraySvc = ['television', 'internet', 'telephone'];
+    let svcSelected = []
+    for (const key in data) {
+      if(arraySvc.indexOf(key) > -1 && data[key] === '1') {
+        svcSelected.push(key);
+      }
+    }
+    return svcSelected;
+  }
+
+  deleteSymptom(symptom: symptomModel) {
+    // this.stgsSvc.deleteSetting(setting.id).subscribe(resp => {
+    //   if(resp.GeneralResponse.code === '0') {
+    //     this.toastScv.showSuccess(resp.GeneralResponse.messageCode);
+    //     this.stgsSvc.allSettings();
+    //   }else{
+    //     this.toastScv.showError(resp.GeneralResponse.messageCode);
+    //   }
+    // })
   }
 
   cleanForm() {

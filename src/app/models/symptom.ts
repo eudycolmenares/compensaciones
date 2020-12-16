@@ -25,3 +25,8 @@ export interface requestModel {
 export interface responseModel {
   generalResponse: generalResponse;
 }
+
+export interface symptomsApiModel {
+  generalResponse: generalResponse;
+  symptom: symptomModel[];
+}

@@ -1,7 +1,6 @@
 <section class="container py-3">
   <app-breadcrumb></app-breadcrumb>
 
-
   <div class="container-add px-sm-2 px-md-5">
     <form autocomplete="off" [formGroup]="formSymptom" (ngSubmit)="onSubmit()">
       <div class="row text-light text-center">
@@ -44,7 +43,6 @@
           <small class="text-danger" *ngIf="invalidServices">{{ textsFormInvalid("services") }}</small>
         </div>
       </div>
-
       <div class="row text-light text-center mt-4">
         <div class="col-sm container-buttons">
           <button type="submit" class="btn btn-primary mr-3 btn-sm">{{ (actionForm === 'create' ? 'Crear' : 'Actualizar' )}}</button>
@@ -54,9 +52,45 @@
     </form>
   </div>
 
-
-
   <hr class="mt-5 mb-5" />
+
+  <table class="table table-sm table-borderless table-hover">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col" sortable="period">Código Sintoma</th>
+        <th scope="col" sortable="date">Descripción</th>
+        <th scope="col" sortable="time">Origen</th>
+        <th scope="col" sortable="status">Telefonía</th>
+        <th scope="col" sortable="status">Televisión</th>
+        <th scope="col" sortable="status">Internet</th>
+        <th scope="col" sortable="status">Estado</th>
+        <th scope="col" sortable="time">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngIf="symptoms$ | async as symptoms">
+        <tr *ngFor="let symptom of symptoms; index as i">
+          <th scope="row">{{ i + 1 }}</th>
+          <td>{{ symptom.symptomCode }}</td>
+          <td>{{ symptom.description }}</td>
+          <td>{{ symptom.origin }}</td>
+          <td>{{ (symptom.telephone === '1') ? 'Aplica' : 'N/A' }}</td>
+          <td>{{ (symptom.television === '1') ? 'Aplica' : 'N/A' }}</td>
+          <td>{{ (symptom.internet === '1') ? 'Aplica' : 'N/A' }}</td>
+          <td>{{ (symptom.state == '1') ? 'Activo' : 'Inactivo' }}</td>
+          <td>
+            <button type="button" class="btn btn-primary btn-sm mr-2" (click)="updateSymptom(symptom)">
+              <img src="assets/img/edit.svg">
+            </button>
+            <button type="button" class="btn btn-secondary btn-sm" (click)="deleteSymptom(symptom)">
+              <img src="assets/img/trash.svg">
+            </button>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
 
 </section>
 <app-toast></app-toast>

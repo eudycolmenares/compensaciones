@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { tap, switchMap } from 'rxjs/operators';
 
 import { environment as env } from 'src/environments/environment';
-import { requestModel } from '../../models/symptom';
+import { requestModel, symptomModel, symptomsApiModel, responseModel } from '../../models/symptom';
 
 @Injectable({
   providedIn: 'root'
@@ -17,21 +17,30 @@ export class SymptomService {
     'Content-Type': 'application/json; charset=utf-8',
   });
   // table
-  _settings$ = new BehaviorSubject<any[]>([]); // acomodar
+  _symptoms$ = new BehaviorSubject<symptomModel[]>([]);
 
   constructor(private http: HttpClient,) { }
 
   allSymptoms(): void { // acomodar
-    this.http.get<any>(env.URL_API + env.endpoints.symptom_all, {
-      headers: this.headers,
-    }).pipe(
-      tap(data => console.log('allSymptoms()', data) ) // this._settings$.next(data.Settings.Setting)
+    this.http.get<symptomsApiModel>(env.URL_API + env.endpoints.symptom_all, { headers: this.headers })
+    .pipe(
+      tap(data => this._symptoms$.next(data.symptom)),
+      tap(console.log) // acomodar
     ).subscribe();
   }
 
-  createSymptom(body: requestModel): Observable<any> { // responseModel
-    return this.http.post<any>(env.URL_API + env.endpoints.symptom_create, body, { // acomodar
+  createSymptom(body: requestModel): Observable<responseModel> {
+    return this.http.post<any>(env.URL_API + env.endpoints.symptom_create, body, {
       headers: this.headers,
     });
   }
+
+  updateSymptom(body: requestModel): Observable<responseModel> {
+    return this.http.put<responseModel>(env.URL_API + env.endpoints.symptom_update, body, {
+      headers: this.headers,
+    });
+  }
+
+  // table
+  get symptoms$() { return this._symptoms$.asObservable(); }
 }
