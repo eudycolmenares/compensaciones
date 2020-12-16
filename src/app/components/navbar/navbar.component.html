@@ -29,7 +29,9 @@
             <li class="list-group-item">Síntomas Servicio</li>
             <li class="list-group-item">Prioridades</li>
             <li class="list-group-item">Observaciones</li>
-            <li class="list-group-item">Tipo Origen</li>
+            <li class="list-group-item" [routerLink]="['/dashboard/origintype']">
+              <span>Tipo Origen</span><img src="assets/img/origin.svg">
+            </li>
             <li class="list-group-item">Cargue Masivo</li>
             <li class="list-group-item" [routerLink]="['/dashboard/task']">
               <span>Configuración Task</span><img src="assets/img/task.svg">

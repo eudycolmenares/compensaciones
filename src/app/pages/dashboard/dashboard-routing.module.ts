@@ -22,6 +22,10 @@ const ROUTES: Routes = [
         loadChildren: () => import('../parameterization/symptom/symptom.module').then(m => m.SymptomModule),
       },
       {
+        path: 'origintype',
+        loadChildren: () => import('../parameterization/originType/origin-type.module').then(m => m.OriginTypeModule),
+      },
+      {
         path: 'task',
         loadChildren: () => import('../parameterization/task/task.module').then(m => m.TaskModule),
       }

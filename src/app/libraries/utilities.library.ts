@@ -11,6 +11,10 @@ export const RoutesData = {
     url: ['dashboard', 'symptom'],
     breadcrumb: ['Parametrización', 'Sintoma']
   },
+  'origintype': {
+    url: ['dashboard', 'origintype'],
+    breadcrumb: ['Parametrización', 'Tipo Origen']
+  },
   'task': {
     url: ['dashboard', 'task'],
     breadcrumb: ['Parametrización', 'Configuración Task']
