@@ -19,13 +19,12 @@ export class SymptomService {
   // table
   _symptoms$ = new BehaviorSubject<symptomModel[]>([]);
 
-  constructor(private http: HttpClient,) { }
+  constructor(private http: HttpClient) { }
 
-  allSymptoms(): void { // acomodar
+  allSymptoms(): void {
     this.http.get<symptomsApiModel>(env.URL_API + env.endpoints.symptom_all, { headers: this.headers })
     .pipe(
-      tap(data => this._symptoms$.next(data.symptom)),
-      tap(console.log) // acomodar
+      tap(data => this._symptoms$.next(data.symptom))
     ).subscribe();
   }
 
@@ -37,6 +36,12 @@ export class SymptomService {
 
   updateSymptom(body: requestModel): Observable<responseModel> {
     return this.http.put<responseModel>(env.URL_API + env.endpoints.symptom_update, body, {
+      headers: this.headers,
+    });
+  }
+
+  deleteSymptom(id: string): Observable<responseModel> {
+    return this.http.delete<responseModel>(env.URL_API + env.endpoints.symptom_delete + `/${id}`, {
       headers: this.headers,
     });
   }

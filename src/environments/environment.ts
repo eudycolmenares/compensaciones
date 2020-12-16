@@ -13,6 +13,11 @@ export const environment = {
     symptom_all: 'SymptomService/readAll',
     symptom_create: 'SymptomService/create',
     symptom_update: 'SymptomService/update',
+    symptom_delete: 'SymptomService/delete',
+    origin_all: 'OriginTypeService/read/all',
+    origin_create: 'OriginTypeService/create',
+    origin_update: 'OriginTypeService/update',
+    origin_delete: 'OriginTypeService/delete',
   }
 };
 

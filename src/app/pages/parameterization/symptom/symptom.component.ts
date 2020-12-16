@@ -185,8 +185,9 @@ export class SymptomComponent implements OnInit {
     }
     return svcSelected;
   }
+  deleteSymptom(symptom: symptomModel) { // acomodar
+    console.log('deleteSymptom()', symptom);
 
-  deleteSymptom(symptom: symptomModel) {
     // this.stgsSvc.deleteSetting(setting.id).subscribe(resp => {
     //   if(resp.GeneralResponse.code === '0') {
     //     this.toastScv.showSuccess(resp.GeneralResponse.messageCode);

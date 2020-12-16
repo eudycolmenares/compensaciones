@@ -1,14 +1,79 @@
 <section class="container py-3">
   <app-breadcrumb></app-breadcrumb>
 
-
   <div class="container-add px-sm-2 px-md-5">
-    here form...
+    <form autocomplete="off" [formGroup]="formOrigin" (ngSubmit)="onSubmit()">
+      <div class="row text-light text-center">
+        <div class="col-sm bg-danger py-1 mx-1">Nombre(*)</div>
+        <div class="col-sm bg-danger py-1 mx-1">Descripción(*)</div>
+        <div class="col-sm bg-danger py-1 mx-1">Compensa(*)</div>
+        <div class="col-sm bg-danger py-1 mx-1">Estado(*)</div>
+      </div>
+      <div class="row">
+        <div class="col-sm mx-1 mt-1 p-0">
+          <input class="form-control form-control-sm" type="text" formControlName="name" [class.is-invalid]="invalidName" placeholder="Nombre">
+          <small class="text-danger" *ngIf="invalidName">{{ textsFormInvalid("name") }}</small>
+        </div>
+        <div class="col-sm mx-1 mt-1 p-0">
+          <input class="form-control form-control-sm" type="text" formControlName="description" [class.is-invalid]="invalidDescription" placeholder="Descripción">
+          <small class="text-danger" *ngIf="invalidDescription">{{ textsFormInvalid("description") }}</small>
+        </div>
+        <div class="col-sm mx-1 mt-1 p-0">
+          <select class="form-control form-control-sm" formControlName="compensate" [class.is-invalid]="invalidCompensate">
+            <option *ngFor="let opt of selectCompensate" [value]="opt.key">{{ opt.value }}</option>
+          </select>
+          <small class="text-danger" *ngIf="invalidCompensate">{{ textsFormInvalid("compensate") }}</small>
+        </div>
+        <div class="col-sm mx-1 mt-1 p-0">
+          <select class="form-control form-control-sm" formControlName="state" [class.is-invalid]="invalidState">
+            <option *ngFor="let state of selectStatus" [value]="state.key">{{ state.value }}</option>
+          </select>
+          <small class="text-danger" *ngIf="invalidState">{{ textsFormInvalid("state") }}</small>
+        </div>
+      </div>
+      <div class="row text-light text-center mt-4">
+        <div class="col-sm container-buttons">
+          <button type="submit" class="btn btn-primary mr-3 btn-sm">{{ (actionForm === 'create' ? 'Crear' : 'Actualizar' )}}</button>
+          <button type="button" class="btn btn-secondary btn-sm" (click)="cleanForm()">Limpiar</button>
+        </div>
+      </div>
+    </form>
   </div>
-
 
   <hr class="mt-5 mb-5" />
 
+  <table class="table table-sm table-borderless table-hover">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col" sortable="period">Nombre</th>
+        <th scope="col" sortable="date">Descripción</th>
+        <th scope="col" sortable="time">Compensa</th>
+        <th scope="col" sortable="status">Usuario</th>
+        <th scope="col" sortable="status">Estado</th>
+        <th scope="col" sortable="time">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngIf="origins$ | async as origins">
+        <tr *ngFor="let origin of origins; index as i">
+          <th scope="row">{{ i + 1 }}</th>
+          <td>{{ origin.name }}</td>
+          <td>{{ origin.description }}</td>
+          <td>{{ (origin.compensate === '1') ? 'Si' : 'No' }}</td>
+          <td>{{ origin.user }}</td>
+          <td>{{ (origin.state == '1') ? 'Activo' : 'Inactivo' }}</td>
+          <td>
+            <button type="button" class="btn btn-primary btn-sm mr-2" (click)="updateOrigin(origin)">
+              <img src="assets/img/edit.svg">
+            </button>
+            <button type="button" class="btn btn-secondary btn-sm" (click)="deleteOrigin(origin)">
+              <img src="assets/img/trash.svg">
+            </button>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
 </section>
 <app-toast></app-toast>
-

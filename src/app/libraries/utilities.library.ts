@@ -43,3 +43,9 @@ export enum SelectStatus {
   'Activo' = '1',
   'Inactivo' = '0'
 }
+
+export enum SelectCompensate {
+  '- Seleccione -' = '',
+  'Si' = '1',
+  'No' = '0'
+}
