@@ -33,7 +33,7 @@ export class SettingsComponent implements OnInit {
   msgErrorEmpty = 'El campo es obligatorio';
   actionForm = 'create'; // create, update
   // table
-  settings$: Observable<settingModel[]>; // acomodar
+  settings$: Observable<settingModel[]>;
 
   constructor(
     private fb: FormBuilder,
@@ -46,7 +46,6 @@ export class SettingsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // acomodar
     this.stgsSvc.allSettings();
   }
 

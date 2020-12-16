@@ -9,7 +9,9 @@ export const environment = {
     settings_all: 'SettingsService/read/all',
     settings_create: 'SettingsService/create',
     settings_update: 'SettingsService/update',
-    settings_delete: 'SettingsService/delete'
+    settings_delete: 'SettingsService/delete',
+    symptom_all: 'SymptomService/read/5195', // acomodar
+    symptom_create: 'SymptomService/create',
   }
 };
 

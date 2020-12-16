@@ -7,6 +7,10 @@ export const RoutesData = {
     url: ['dashboard', 'causes'],
     breadcrumb: ['Parametrización', 'Causas']
   },
+  'symptom': {
+    url: ['dashboard', 'symptom'],
+    breadcrumb: ['Parametrización', 'Sintoma']
+  },
   'task': {
     url: ['dashboard', 'task'],
     breadcrumb: ['Parametrización', 'Configuración Task']
