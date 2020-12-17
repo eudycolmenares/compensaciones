@@ -185,17 +185,15 @@ export class SymptomComponent implements OnInit {
     }
     return svcSelected;
   }
-  deleteSymptom(symptom: symptomModel) { // acomodar
-    console.log('deleteSymptom()', symptom);
-
-    // this.stgsSvc.deleteSetting(setting.id).subscribe(resp => {
-    //   if(resp.GeneralResponse.code === '0') {
-    //     this.toastScv.showSuccess(resp.GeneralResponse.messageCode);
-    //     this.stgsSvc.allSettings();
-    //   }else{
-    //     this.toastScv.showError(resp.GeneralResponse.messageCode);
-    //   }
-    // })
+  deleteSymptom(symptom: symptomModel) {
+    this.symptomSvc.deleteSymptom(symptom.symptomId).subscribe(resp => {
+      if(resp.generalResponse.code === '0') {
+        this.toastScv.showSuccess(resp.generalResponse.messageCode);
+        this.symptomSvc.allSymptoms();
+      }else{
+        this.toastScv.showError(resp.generalResponse.messageCode);
+      }
+    })
   }
 
   cleanForm() {

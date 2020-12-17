@@ -40,7 +40,7 @@ export class SymptomService {
     });
   }
 
-  deleteSymptom(id: string): Observable<responseModel> {
+  deleteSymptom(id: number): Observable<responseModel> {
     return this.http.delete<responseModel>(env.URL_API + env.endpoints.symptom_delete + `/${id}`, {
       headers: this.headers,
     });
