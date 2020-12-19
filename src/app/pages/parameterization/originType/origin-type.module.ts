@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DecimalPipe } from '@angular/common';
 import { ReactiveFormsModule } from "@angular/forms";
 
 import { OriginTypeRoutingModule } from './origin-type-routing.module';
@@ -12,9 +12,11 @@ import { ComponentsModule } from '../../../components/components.module';
     CommonModule,
     OriginTypeRoutingModule,
     ComponentsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   exports: [OriginTypeComponent],
+  bootstrap: [OriginTypeComponent],
+  providers: [DecimalPipe]
 })
 
 export class OriginTypeModule { }

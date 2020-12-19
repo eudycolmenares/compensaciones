@@ -6,7 +6,7 @@ import { GeneralFunctionsService } from '../../../services/general-functions.ser
 import { OriginTypeService } from '../../../services/originType/origin-type.service';
 import { ToastService } from '../../../services/shared/toast.service';
 import { SelectStatus, SelectCompensate } from '../../../libraries/utilities.library';
-import { originModel, requestModel, responseModel } from '../../../models/origin-type'
+import { originModel, requestModel, responseModel, originsApiModel } from '../../../models/origin-type'
 
 @Component({
   selector: 'app-origin-type',
@@ -20,12 +20,34 @@ export class OriginTypeComponent implements OnInit {
   selectStatus: object[] = [];
   selectCompensate: object[] = [];
   // table
-  origins$: Observable<originModel[]>;
+  dataToTable: originModel[];
+  structure: object[] = [
+    {
+      name: 'name',
+      description: 'Nombre'
+    },
+    {
+      name: 'description',
+      description: 'Descripción'
+    },
+    {
+      name: 'compensate',
+      description: 'Compensa'
+    },
+    {
+      name: 'user',
+      description: 'Usuario'
+    },
+    {
+      name: 'state',
+      description: 'Estado'
+    }
+  ];
 
   constructor(
     private fb: FormBuilder,
     private gnrSvc: GeneralFunctionsService,
-    private originSvc: OriginTypeService,
+    public originSvc: OriginTypeService,
     private toastScv: ToastService
   ) {
     this.createForm();
@@ -33,7 +55,6 @@ export class OriginTypeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.originSvc.allOrigins();
   }
 
   createForm() {
@@ -70,8 +91,14 @@ export class OriginTypeComponent implements OnInit {
     for (const i of Object.entries(SelectCompensate)) {
       this.selectCompensate.push({key: i[1], value: i[0]})
     }
-    // table
-    this.origins$ = this.originSvc.origins$;
+    this.initialCharge();
+  }
+
+  initialCharge() {
+    this.originSvc.allOrigins().subscribe((resp: originsApiModel) => { // acomodar a funcion cada vez se actualice data
+      console.log('subs', resp.OriginTypes.OriginType);
+      this.dataToTable = resp.OriginTypes.OriginType;
+    });
   }
 
   onSubmit() {
@@ -101,7 +128,7 @@ export class OriginTypeComponent implements OnInit {
       if(resp.GeneralResponse.code === '0') {
         this.toastScv.showSuccess(resp.GeneralResponse.messageCode);
         this.cleanForm();
-        this.originSvc.allOrigins();
+        this.initialCharge();
       }else{
         this.toastScv.showError(resp.GeneralResponse.messageCode);
       }
@@ -113,7 +140,7 @@ export class OriginTypeComponent implements OnInit {
       if(resp.GeneralResponse.code === '0') {
         this.toastScv.showSuccess(resp.GeneralResponse.messageCode);
         this.cleanForm();
-        this.originSvc.allOrigins();
+        this.initialCharge();
       }else{
         this.toastScv.showError(resp.GeneralResponse.messageCode);
       }
@@ -139,7 +166,7 @@ export class OriginTypeComponent implements OnInit {
     this.originSvc.deleteOrigin(origin.id).subscribe(resp => {
       if(resp.GeneralResponse.code === '0') {
         this.toastScv.showSuccess(resp.GeneralResponse.messageCode);
-        this.originSvc.allOrigins();
+        this.initialCharge();
       }else{
         this.toastScv.showError(resp.GeneralResponse.messageCode);
       }

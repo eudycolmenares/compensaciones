@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
-import { tap, switchMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 import { environment as env } from 'src/environments/environment';
-import { originModel, requestModel, responseModel, originsApiModel } from '../../models/origin-type';
+import { requestModel, responseModel, originsApiModel } from '../../models/origin-type';
 
 @Injectable({
   providedIn: 'root'
@@ -16,16 +15,14 @@ export class OriginTypeService {
     'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
     'Content-Type': 'application/json; charset=utf-8',
   });
-  // table
-  _origins$ = new BehaviorSubject<originModel[]>([]);
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient
+  ) {
+  }
 
-  allOrigins(): void {
-    this.http.get<originsApiModel>(env.URL_API + env.endpoints.origin_all, { headers: this.headers })
-    .pipe(
-      tap(data => this._origins$.next(data.OriginTypes.OriginType))
-    ).subscribe();
+  allOrigins() {
+    return this.http.get<originsApiModel>(env.URL_API + env.endpoints.origin_all, { headers: this.headers });
   }
 
   createOrigin(body: requestModel): Observable<responseModel> {
@@ -45,7 +42,4 @@ export class OriginTypeService {
       headers: this.headers,
     });
   }
-
-  // table
-  get origins$() { return this._origins$.asObservable(); }
 }

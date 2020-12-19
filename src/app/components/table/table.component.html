@@ -1,0 +1,41 @@
+<div class="form-group form-inline">
+  Buscar: <input class="form-control form-control-sm ml-2" type="text" name="searchTerm" [(ngModel)]="searchTerm"/>
+</div>
+<table class="table table-sm table-borderless table-hover">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <ng-container *ngFor="let opt of structure">
+        <th scope="col" [sortable]="opt.name" (sort)="onSort($event)" class="sort-opt">{{ opt.description }}</th>
+      </ng-container>
+      <th scope="col">Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngIf="dataTable$ | async as data">
+      <tr *ngFor="let item of data; index as i">
+        <th scope="row">{{ i + 1 }}</th>
+        <td *ngFor="let opt of structure">{{ item[opt.name] }}</td>
+        <td>
+          <button type="button" class="btn btn-primary btn-sm mr-2" (click)="sendDataToEdit(item)">
+            <img src="assets/img/edit.svg">
+          </button>
+          <button type="button" class="btn btn-secondary btn-sm" (click)="deleteOrigin(item)">
+            <img src="assets/img/trash.svg">
+          </button>
+        </td>
+      </tr>
+    </ng-container>
+  </tbody>
+</table>
+
+<div class="d-flex justify-content-between p-2">
+  <ngb-pagination
+    [collectionSize]="total$ | async" [(page)]="page" [pageSize]="pageSize" size="sm">
+  </ngb-pagination>
+  <select class="form-control form-control-sm" style="width: auto" name="pageSize" [(ngModel)]="pageSize">
+    <option [ngValue]="5">5 items por página</option>
+    <option [ngValue]="10">10 items por página</option>
+    <option [ngValue]="20">20 items por página</option>
+  </select>
+</div>

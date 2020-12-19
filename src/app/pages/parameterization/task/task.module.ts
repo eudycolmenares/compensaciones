@@ -7,14 +7,14 @@ import { NgbPaginationModule  } from '@ng-bootstrap/ng-bootstrap';
 
 import { TaskRoutingModule } from './task-routing.module';
 import { TaskComponent } from './task.component';
-import { SortableDirective } from '../../../directives/sortable.directive';
+// import { SortableDirective } from '../../../directives/sortable.directive';
 import { TaskService } from '../../../services/task.service';
 import { ComponentsModule } from '../../../components/components.module';
 
 @NgModule({
   declarations: [
     TaskComponent,
-    SortableDirective
+    // SortableDirective
   ],
   imports: [
     CommonModule,
