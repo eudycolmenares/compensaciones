@@ -1,6 +1,5 @@
-import { Component, OnInit, ViewChildren, QueryList } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs/internal/Observable';
 
 import {
   StrataSettings as Strata,
@@ -98,7 +97,6 @@ export class SettingsComponent implements OnInit {
     this.cleanForm();
     this.stgsSvc.allSettings().subscribe((resp: settingsApiModel) => {
       this.dataToTable = resp.Settings.Setting;
-      console.log('this.dataToTable: ',this.dataToTable);
     });
   }
 
@@ -134,42 +132,6 @@ export class SettingsComponent implements OnInit {
     return this.gnrScv.validationFormTextRequired(this.formStgs, field);
   }
 
-  // assignChoices(fieldForm: string, caseUse: string) {
-  //   const optionsSel: string[] = this.formStgs.get(fieldForm).value;
-  //   if(optionsSel) {
-  //     optionsSel.map(opc => {
-  //       switch (caseUse) {
-  //         case 'strata':
-  //           const foundStrata = this.strata.find(stratum => stratum['key'] === opc);
-  //           if(!foundStrata) {
-  //             this.strata.push(this.strataBase.filter(stratum => stratum['key'] === opc)[0]);
-  //             // this.invalidStrata = false;
-  //           }
-  //           break;
-  //         case 'services':
-  //           const foundSvcs = this.services.find(svc => svc['key'] === opc);
-  //           if(!foundSvcs) {
-  //             this.services.push(this.servicesBase.filter(svc => svc['key'] === opc)[0]);
-  //             // this.invalidServices = false;
-  //           }
-  //           break;
-  //       }
-  //     })
-  //   }
-  // }
-  // removeChoices(fieldForm: string, caseUse: string) {
-  //   const optionsSel: string[] = this.formStgs.get(fieldForm).value;
-  //   if(optionsSel) {
-  //     optionsSel.map(opc => {
-  //       if(caseUse === 'strata') {
-  //         this.strata = this.strata.filter(stratum => stratum['key'] != opc);
-  //       }else if('services') {
-  //         this.services = this.services.filter(svc => svc['key'] != opc);
-  //       }
-  //     })
-  //   }
-  // }
-
   onSubmit() {
     if(this.formStgs.invalid) {
       return Object.values(this.formStgs.controls).forEach(control => {
@@ -189,7 +151,6 @@ export class SettingsComponent implements OnInit {
           'telephone': (servicesSelected.find(svc => svc === 'telephone') ? '1' : '0')
         }
       }
-      console.log('dataRequest', dataRequest);
       if(this.actionForm === 'create') {
         this.createSettingApi(dataRequest);
       }else { // update
@@ -202,7 +163,6 @@ export class SettingsComponent implements OnInit {
     this.stgsSvc.createSetting(dataRequest).subscribe(resp => {
       if(resp.GeneralResponse.code === '0') {
         this.toastScv.showSuccess(resp.GeneralResponse.messageCode);
-        this.cleanForm();
         this.initialCharge();
       }else{
         this.toastScv.showError(resp.GeneralResponse.messageCode);
@@ -213,7 +173,6 @@ export class SettingsComponent implements OnInit {
     this.stgsSvc.updateSetting(dataRequest).subscribe(resp => {
       if(resp.GeneralResponse.code === '0') {
         this.toastScv.showSuccess(resp.GeneralResponse.messageCode);
-        this.cleanForm();
         this.initialCharge();
       }else{
         this.toastScv.showError(resp.GeneralResponse.messageCode);
@@ -257,15 +216,4 @@ export class SettingsComponent implements OnInit {
     this.formStgs.reset();
     this.actionForm = 'create';
   }
-
-  // returnServiceName(data: settingModel): string[] {
-  //   const arraySvc = ['television', 'internet', 'telephone'];
-  //   let svcSelected = []
-  //   for (const key in data) {
-  //     if(arraySvc.indexOf(key) > -1 && data[key] === '1') {
-  //       svcSelected.push(key);
-  //     }
-  //   }
-  //   return svcSelected;
-  // }
 }
