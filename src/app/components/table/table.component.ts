@@ -2,9 +2,37 @@ import { Component, OnInit, Input, Output, PipeTransform, QueryList, ViewChildre
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { tap, switchMap } from 'rxjs/operators';
 import { DecimalPipe } from '@angular/common';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { StatePagination } from '../../models/general';
 import { SortableDirective, SortEvent, SortDirection } from '../../directives/sortable.directive';
+
+// modal
+
+@Component({
+  selector: 'ngbd-modal-confirm',
+  template: `
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-title">Confirmar</h4>
+    <button type="button" class="close" aria-describedby="modal-title" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p><strong>¿Estás seguro de que deseas eliminar este registro?</strong></p>
+    <p>Toda la información asociada a este registro se eliminará de forma permanente. Esta operación no se puede deshacer.</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancelar</button>
+    <button type="button" class="btn btn-danger" (click)="modal.close('Ok click')">Eliminar</button>
+  </div>
+  `
+})
+export class NgbdModalConfirm {
+  constructor(public modal: NgbActiveModal) {}
+}
+
+//
 
 interface SearchResultModel {
   data: any[];
@@ -22,6 +50,8 @@ export class TableComponent implements OnInit {
   @Input() dataBase: object[];
   @Input() structure: object[];
   @Output() editRecord: EventEmitter<object> ;
+  @Output() disableRecord: EventEmitter<object> ;
+  @Output() deleteRecord: EventEmitter<object> ;
   dataTable$ = new BehaviorSubject<object[]>([]);
   total$ = new BehaviorSubject<number>(0);
   search$ = new Subject<void>();
@@ -35,8 +65,11 @@ export class TableComponent implements OnInit {
 
   constructor(
     private pipe: DecimalPipe,
+    private modalService: NgbModal
   ) {
-    this.editRecord = new EventEmitter()
+    this.editRecord = new EventEmitter();
+    this.disableRecord = new EventEmitter();
+    this.deleteRecord = new EventEmitter();
   }
 
   ngOnInit(): void { }
@@ -48,8 +81,13 @@ export class TableComponent implements OnInit {
   }
 
   sendDataToEdit(item) {
-    console.log('sendDataToEdit()', item);
     this.editRecord.emit(item);
+  }
+  sendDataToDisable(item) {
+    this.disableRecord.emit(item);
+  }
+  sendDataToDelete(item) {
+    this.deleteRecord.emit(item);
   }
 
   callObservableSearch() {
@@ -115,5 +153,14 @@ export class TableComponent implements OnInit {
     // sorting data
     this.sortColumn = column;
     this.sortDirection = direction;
+  }
+
+  // modal
+
+  openModal(item: object) {
+    const modal = this.modalService.open(NgbdModalConfirm);
+    modal.result.then(result => {
+      this.sendDataToDelete(item);
+    }).catch(error => {});
   }
 }

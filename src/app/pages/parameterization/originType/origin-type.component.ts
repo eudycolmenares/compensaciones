@@ -24,23 +24,28 @@ export class OriginTypeComponent implements OnInit {
   structure: object[] = [
     {
       name: 'name',
-      description: 'Nombre'
+      description: 'Nombre',
+      validation: '',
     },
     {
       name: 'description',
-      description: 'Descripción'
+      description: 'Descripción',
+      validation: '',
     },
     {
       name: 'compensate',
-      description: 'Compensa'
+      description: 'Compensa',
+      validation: 'yes-no',
     },
     {
       name: 'user',
-      description: 'Usuario'
+      description: 'Usuario',
+      validation: ''
     },
     {
       name: 'state',
-      description: 'Estado'
+      description: 'Estado',
+      validation: 'active-desactive'
     }
   ];
 
@@ -60,8 +65,8 @@ export class OriginTypeComponent implements OnInit {
   createForm() {
     this.formOrigin = this.fb.group({
       id: [''],
-      name: ['', [Validators.required, Validators.maxLength(20)]],
-      description: ['', [Validators.required, Validators.maxLength(40)]],
+      name: ['', [Validators.required, Validators.maxLength(50)]],
+      description: ['', [Validators.required, Validators.maxLength(50)]],
       state: ['', Validators.required],
       compensate: ['', Validators.required],
       user: [''],
@@ -118,7 +123,8 @@ export class OriginTypeComponent implements OnInit {
       }
       if(this.actionForm === 'create') {
         this.createOriginApi(dataRequest);
-      }else {
+      }else { // update
+        dataRequest.OriginType.id = this.formOrigin.get('id').value;
         this.updateOriginApi(dataRequest);
       }
     }
@@ -135,7 +141,6 @@ export class OriginTypeComponent implements OnInit {
     })
   }
   updateOriginApi(dataRequest: requestModel) {
-    dataRequest.OriginType.id = this.formOrigin.get('id').value;
     this.originSvc.updateOrigin(dataRequest).subscribe(resp => {
       if(resp.GeneralResponse.code === '0') {
         this.toastScv.showSuccess(resp.GeneralResponse.messageCode);
@@ -162,6 +167,16 @@ export class OriginTypeComponent implements OnInit {
       updateDate: data.updateDate
     });
   }
+
+  disableOrigin(origin: originModel) {
+    console.log(origin);
+    const dataRequest: requestModel = { OriginType: {...origin, state: '0'} };
+    console.log(dataRequest);
+
+    // delete dataRequest.OriginType.updateDate;
+    this.updateOriginApi(dataRequest);
+  }
+
   deleteOrigin(origin: originModel) {
     this.originSvc.deleteOrigin(origin.id).subscribe(resp => {
       if(resp.GeneralResponse.code === '0') {
