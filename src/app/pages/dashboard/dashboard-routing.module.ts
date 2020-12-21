@@ -14,6 +14,10 @@ const ROUTES: Routes = [
         loadChildren: () => import('../parameterization/settings/settings.module').then(m => m.SettingsModule),
       },
       {
+        path: 'stratum',
+        loadChildren: () => import('../parameterization/stratum/stratum.module').then(m => m.StratumModule),
+      },
+      {
         path: 'causes',
         loadChildren: () => import('../parameterization/causes/causes.module').then(m => m.CausesModule),
       },

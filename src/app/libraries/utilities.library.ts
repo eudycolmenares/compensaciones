@@ -3,6 +3,10 @@ export const RoutesData = {
     url: ['dashboard', 'settings'],
     breadcrumb: ['Parametrización', 'Ajustes']
   },
+  'stratum': {
+    url: ['dashboard', 'stratum'],
+    breadcrumb: ['Parametrización', 'Estrato']
+  },
   'causes': {
     url: ['dashboard', 'causes'],
     breadcrumb: ['Parametrización', 'Causas']

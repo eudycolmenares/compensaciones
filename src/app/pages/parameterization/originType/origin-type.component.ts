@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs/internal/Observable';
 
 import { GeneralFunctionsService } from '../../../services/general-functions.service';
 import { OriginTypeService } from '../../../services/originType/origin-type.service';
@@ -100,8 +99,7 @@ export class OriginTypeComponent implements OnInit {
   }
 
   initialCharge() {
-    this.originSvc.allOrigins().subscribe((resp: originsApiModel) => { // acomodar a funcion cada vez se actualice data
-      console.log('subs', resp.OriginTypes.OriginType);
+    this.originSvc.allOrigins().subscribe((resp: originsApiModel) => {
       this.dataToTable = resp.OriginTypes.OriginType;
     });
   }
@@ -169,10 +167,7 @@ export class OriginTypeComponent implements OnInit {
   }
 
   disableOrigin(origin: originModel) {
-    console.log(origin);
     const dataRequest: requestModel = { OriginType: {...origin, state: '0'} };
-    console.log(dataRequest);
-
     // delete dataRequest.OriginType.updateDate;
     this.updateOriginApi(dataRequest);
   }

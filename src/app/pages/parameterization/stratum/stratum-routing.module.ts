@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { OriginTypeComponent } from './origin-type.component';
+import { StratumComponent } from './stratum.component';
 
 const ROUTES: Routes = [
   {
     path: '',
-    component: OriginTypeComponent,
+    component: StratumComponent,
   },
 ];
 
@@ -15,4 +15,4 @@ const ROUTES: Routes = [
   exports: [RouterModule]
 })
 
-export class OriginTypeRoutingModule { }
+export class StratumRoutingModule { }
