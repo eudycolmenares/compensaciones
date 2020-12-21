@@ -41,7 +41,7 @@
 
 <div class="d-flex justify-content-between p-2">
   <ngb-pagination
-    [collectionSize]="total$ | async" [(page)]="page" [pageSize]="pageSize" size="sm">
+    [collectionSize]="total$ | async" [(page)]="page" [pageSize]="pageSize" [maxSize]="3" size="sm" [rotate]="true" [ellipses]="false" [boundaryLinks]="true">
   </ngb-pagination>
   <select class="form-control form-control-sm" style="width: auto" name="pageSize" [(ngModel)]="pageSize">
     <option [ngValue]="5">5 items por página</option>
