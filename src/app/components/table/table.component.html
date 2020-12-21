@@ -18,6 +18,9 @@
         <ng-container *ngFor="let opt of structure" [ngSwitch]="opt.validation" >
           <td *ngSwitchCase="'yes-no'">{{ (item[opt.name] === '1') ? 'Si' : 'No' }}</td>
           <td *ngSwitchCase="'active-desactive'">{{ (item[opt.name] === '1') ? 'Activo' : 'Inactivo' }}</td>
+
+          <td *ngSwitchCase="'service'">{{ (item[opt.name] === '1') ? 'Aplica' : 'N/A' }}</td>
+
           <td *ngSwitchCase="''">{{ item[opt.name] }}</td>
         </ng-container>
         <td class="text-center">

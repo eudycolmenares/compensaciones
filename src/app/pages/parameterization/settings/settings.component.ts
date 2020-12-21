@@ -12,7 +12,8 @@ import { SettingsService } from '../../../services/settings/settings.service';
 import { ToastService } from '../../../services/shared/toast.service';
 import {
   requestSettingsModel as requestModel,
-  settingModel
+  settingModel,
+  settingsApiModel
 } from '../../../models/settings';
 
 @Component({
@@ -23,17 +24,49 @@ import {
 
 export class SettingsComponent implements OnInit {
   strataBase: object[] = [];
-  strata: object[] = [];
   selectStatus: object[] = [];
   servicesBase: object[] = [];
-  services: object[] = [];
   formStgs: FormGroup;
-  invalidStrata = false;
-  invalidServices = false;
-  msgErrorEmpty = 'El campo es obligatorio';
   actionForm = 'create'; // create, update
   // table
-  settings$: Observable<settingModel[]>;
+  dataToTable: settingModel[];
+  structure: object[] = [
+    {
+      name: 'code',
+      description: 'Código',
+      validation: '',
+    },
+    {
+      name: 'description',
+      description: 'Descripción',
+      validation: '',
+    },
+    {
+      name: 'state',
+      description: 'Estado',
+      validation: 'active-desactive'
+    },
+    {
+      name: 'socialStratum',
+      description: 'Estrato',
+      validation: '',
+    },
+    {
+      name: 'telephone',
+      description: 'Telefonía',
+      validation: 'service'
+    },
+    {
+      name: 'television',
+      description: 'Televisión',
+      validation: 'service'
+    },
+    {
+      name: 'internet',
+      description: 'Internet',
+      validation: 'service'
+    }
+  ];
 
   constructor(
     private fb: FormBuilder,
@@ -59,8 +92,14 @@ export class SettingsComponent implements OnInit {
     for (const i of Object.entries(Services)) {
       this.servicesBase.push({key: i[0], value: i[1]})
     }
-    // table
-    this.settings$ = this.stgsSvc.settings$;
+    this.initialCharge(); // table
+  }
+  initialCharge() {
+    this.cleanForm();
+    this.stgsSvc.allSettings().subscribe((resp: settingsApiModel) => {
+      this.dataToTable = resp.Settings.Setting;
+      console.log('this.dataToTable: ',this.dataToTable);
+    });
   }
 
   createForm() {
@@ -69,10 +108,10 @@ export class SettingsComponent implements OnInit {
       code: ['', [Validators.required, Validators.maxLength(20)]],
       description: ['', [Validators.required, Validators.maxLength(40)]],
       state: ['', Validators.required],
-      strataBase: [''],
-      strata: [''],
-      services: [''],
-      servicesBase: ['']
+      strataBase: [''], // acomodar
+      strata: ['', Validators.required],
+      services: ['', Validators.required],
+      servicesBase: [''] // acomodar
     })
   }
 
@@ -85,74 +124,76 @@ export class SettingsComponent implements OnInit {
   get invalidState() {
     return this.formStgs.get('state').touched && this.formStgs.get('state').invalid;
   }
+  get invalidStrata() {
+    return this.formStgs.get('strata').touched && this.formStgs.get('strata').invalid;
+  }
+  get invalidServices() {
+    return this.formStgs.get('services').touched && this.formStgs.get('services').invalid;
+  }
   textsFormInvalid(field: string) {
     return this.gnrScv.validationFormTextRequired(this.formStgs, field);
   }
 
-  assignChoices(fieldForm: string, caseUse: string) {
-    const optionsSel: string[] = this.formStgs.get(fieldForm).value;
-    if(optionsSel) {
-      optionsSel.map(opc => {
-        switch (caseUse) {
-          case 'strata':
-            const foundStrata = this.strata.find(stratum => stratum['key'] === opc);
-            if(!foundStrata) {
-              this.strata.push(this.strataBase.filter(stratum => stratum['key'] === opc)[0]);
-              this.invalidStrata = false;
-            }
-            break;
-          case 'services':
-            const foundSvcs = this.services.find(svc => svc['key'] === opc);
-            if(!foundSvcs) {
-              this.services.push(this.servicesBase.filter(svc => svc['key'] === opc)[0]);
-              this.invalidServices = false;
-            }
-            break;
-        }
-      })
-    }
-  }
-  removeChoices(fieldForm: string, caseUse: string) {
-    const optionsSel: string[] = this.formStgs.get(fieldForm).value;
-    if(optionsSel) {
-      optionsSel.map(opc => {
-        if(caseUse === 'strata') {
-          this.strata = this.strata.filter(stratum => stratum['key'] != opc);
-        }else if('services') {
-          this.services = this.services.filter(svc => svc['key'] != opc);
-        }
-      })
-    }
-  }
+  // assignChoices(fieldForm: string, caseUse: string) {
+  //   const optionsSel: string[] = this.formStgs.get(fieldForm).value;
+  //   if(optionsSel) {
+  //     optionsSel.map(opc => {
+  //       switch (caseUse) {
+  //         case 'strata':
+  //           const foundStrata = this.strata.find(stratum => stratum['key'] === opc);
+  //           if(!foundStrata) {
+  //             this.strata.push(this.strataBase.filter(stratum => stratum['key'] === opc)[0]);
+  //             // this.invalidStrata = false;
+  //           }
+  //           break;
+  //         case 'services':
+  //           const foundSvcs = this.services.find(svc => svc['key'] === opc);
+  //           if(!foundSvcs) {
+  //             this.services.push(this.servicesBase.filter(svc => svc['key'] === opc)[0]);
+  //             // this.invalidServices = false;
+  //           }
+  //           break;
+  //       }
+  //     })
+  //   }
+  // }
+  // removeChoices(fieldForm: string, caseUse: string) {
+  //   const optionsSel: string[] = this.formStgs.get(fieldForm).value;
+  //   if(optionsSel) {
+  //     optionsSel.map(opc => {
+  //       if(caseUse === 'strata') {
+  //         this.strata = this.strata.filter(stratum => stratum['key'] != opc);
+  //       }else if('services') {
+  //         this.services = this.services.filter(svc => svc['key'] != opc);
+  //       }
+  //     })
+  //   }
+  // }
 
   onSubmit() {
     if(this.formStgs.invalid) {
-      (this.strata.length === 0) ? this.invalidStrata = true : '';
-      (this.services.length === 0) ? this.invalidServices = true : '';
       return Object.values(this.formStgs.controls).forEach(control => {
         control.markAsTouched();
       })
     }else {
-      (this.strata.length === 0) ? this.invalidStrata = true : '';
-      (this.services.length === 0) ? this.invalidServices = true : '';
-      if(this.invalidStrata===true || this.invalidServices===true) {
-        return false;
-      }
+      const servicesSelected = this.formStgs.get('services').value;
       const dataRequest: requestModel = {
         'Setting': {
           'code': this.formStgs.get('code').value,
           'description': this.formStgs.get('description').value,
           'state': this.formStgs.get('state').value,
           'user': 'test', // seteado
-          'socialStratum': this.strata[0]['value'],
-          'television': (this.services.find(svc => svc['key'] === 'television') ? '1' : '0'),
-          'internet': (this.services.find(svc => svc['key'] === 'internet') ? '1' : '0'),
-          'telephone': (this.services.find(svc => svc['key'] === 'telephone') ? '1' : '0')
+          'socialStratum': this.formStgs.get('strata').value,
+          'television': (servicesSelected.find(svc => svc === 'television') ? '1' : '0'),
+          'internet': (servicesSelected.find(svc => svc === 'internet') ? '1' : '0'),
+          'telephone': (servicesSelected.find(svc => svc === 'telephone') ? '1' : '0')
         }
       }
+      console.log('dataRequest', dataRequest);
       if(this.actionForm === 'create') {
         this.createSettingApi(dataRequest);
-      }else {
+      }else { // update
+        dataRequest.Setting.id = this.formStgs.get('id').value;
         this.updateSettingApi(dataRequest);
       }
     }
@@ -162,19 +203,18 @@ export class SettingsComponent implements OnInit {
       if(resp.GeneralResponse.code === '0') {
         this.toastScv.showSuccess(resp.GeneralResponse.messageCode);
         this.cleanForm();
-        this.stgsSvc.allSettings();
+        this.initialCharge();
       }else{
         this.toastScv.showError(resp.GeneralResponse.messageCode);
       }
     })
   }
   updateSettingApi(dataRequest: requestModel) {
-    dataRequest.Setting.id = this.formStgs.get('id').value;
     this.stgsSvc.updateSetting(dataRequest).subscribe(resp => {
       if(resp.GeneralResponse.code === '0') {
         this.toastScv.showSuccess(resp.GeneralResponse.messageCode);
         this.cleanForm();
-        this.stgsSvc.allSettings();
+        this.initialCharge();
       }else{
         this.toastScv.showError(resp.GeneralResponse.messageCode);
       }
@@ -185,12 +225,28 @@ export class SettingsComponent implements OnInit {
     this.setForm(setting);
     this.actionForm = 'update';
   }
+  setForm(data: settingModel) {
+    this.formStgs.reset({
+      id: data.id,
+      code: data.code,
+      description: data.description,
+      state: data.state,
+      strata: data.socialStratum,
+      services: Object.keys(Services).filter(scv => data[scv] === '1') ,
+    });
+  }
+
+  disableSetting(setting: settingModel) {
+    const dataRequest: requestModel = { Setting: {...setting, state: '0'} };
+    // delete dataRequest.OriginType.updateDate;
+    this.updateSettingApi(dataRequest);
+  }
 
   deleteSetting(setting: settingModel) {
     this.stgsSvc.deleteSetting(setting.id).subscribe(resp => {
       if(resp.GeneralResponse.code === '0') {
         this.toastScv.showSuccess(resp.GeneralResponse.messageCode);
-        this.stgsSvc.allSettings();
+        this.initialCharge();
       }else{
         this.toastScv.showError(resp.GeneralResponse.messageCode);
       }
@@ -199,35 +255,17 @@ export class SettingsComponent implements OnInit {
 
   cleanForm() {
     this.formStgs.reset();
-    this.strata = [];
-    this.services = [];
     this.actionForm = 'create';
   }
 
-  setForm(data: settingModel) {
-    this.formStgs.reset({
-      id: data.id,
-      code: data.code,
-      description: data.description,
-      state: data.state,
-      strataBase: [data.socialStratum],
-      strata: [],
-      servicesBase: this.returnServiceName(data),
-      services: [],
-    });
-    this.strata = []; this.services = [];
-    this.assignChoices('strataBase', 'strata');
-    this.assignChoices('servicesBase', 'services');
-  }
-
-  returnServiceName(data: settingModel): string[] {
-    const arraySvc = ['television', 'internet', 'telephone'];
-    let svcSelected = []
-    for (const key in data) {
-      if(arraySvc.indexOf(key) > -1 && data[key] === '1') {
-        svcSelected.push(key);
-      }
-    }
-    return svcSelected;
-  }
+  // returnServiceName(data: settingModel): string[] {
+  //   const arraySvc = ['television', 'internet', 'telephone'];
+  //   let svcSelected = []
+  //   for (const key in data) {
+  //     if(arraySvc.indexOf(key) > -1 && data[key] === '1') {
+  //       svcSelected.push(key);
+  //     }
+  //   }
+  //   return svcSelected;
+  // }
 }

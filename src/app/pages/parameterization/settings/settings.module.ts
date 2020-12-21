@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DecimalPipe } from '@angular/common';
 import { ReactiveFormsModule } from "@angular/forms";
 
 import { SettingsRoutingModule } from './settings-routing.module';
@@ -17,6 +17,8 @@ import { ComponentsModule } from '../../../components/components.module';
     ReactiveFormsModule
   ],
   exports: [SettingsComponent],
+  bootstrap: [SettingsComponent],
+  providers: [DecimalPipe]
 })
 
 export class SettingsModule { }

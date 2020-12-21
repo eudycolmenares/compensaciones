@@ -95,9 +95,8 @@ export class OriginTypeComponent implements OnInit {
     for (const i of Object.entries(SelectCompensate)) {
       this.selectCompensate.push({key: i[1], value: i[0]})
     }
-    this.initialCharge();
+    this.initialCharge(); // table
   }
-
   initialCharge() {
     this.originSvc.allOrigins().subscribe((resp: originsApiModel) => {
       this.dataToTable = resp.OriginTypes.OriginType;
