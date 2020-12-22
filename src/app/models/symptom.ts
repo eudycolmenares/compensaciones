@@ -2,7 +2,7 @@ export interface symptomModel {
   symptomCode: string;
   symptomId?: number
   description: string;
-  state: number;
+  state: number | string;
   originId: number;
   origin: string;
   internet?: string;

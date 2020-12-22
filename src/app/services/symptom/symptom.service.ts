@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
-import { tap, switchMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 import { environment as env } from 'src/environments/environment';
-import { requestModel, symptomModel, symptomsApiModel, responseModel } from '../../models/symptom';
+import { requestModel, symptomsApiModel, responseModel } from '../../models/symptom';
 
 @Injectable({
   providedIn: 'root'
@@ -16,20 +15,15 @@ export class SymptomService {
     'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
     'Content-Type': 'application/json; charset=utf-8',
   });
-  // table
-  _symptoms$ = new BehaviorSubject<symptomModel[]>([]);
 
   constructor(private http: HttpClient) { }
 
-  allSymptoms(): void {
-    this.http.get<symptomsApiModel>(env.URL_API + env.endpoints.symptom_all, { headers: this.headers })
-    .pipe(
-      tap(data => this._symptoms$.next(data.symptom))
-    ).subscribe();
+  allSymptoms(): Observable<symptomsApiModel> {
+    return this.http.get<symptomsApiModel>(env.URL_API + env.endpoints.symptom_all, { headers: this.headers });
   }
 
   createSymptom(body: requestModel): Observable<responseModel> {
-    return this.http.post<any>(env.URL_API + env.endpoints.symptom_create, body, {
+    return this.http.post<responseModel>(env.URL_API + env.endpoints.symptom_create, body, {
       headers: this.headers,
     });
   }
@@ -45,7 +39,4 @@ export class SymptomService {
       headers: this.headers,
     });
   }
-
-  // table
-  get symptoms$() { return this._symptoms$.asObservable(); }
 }

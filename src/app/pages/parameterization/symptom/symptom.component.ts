@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs/internal/Observable';
 
 import { SymptomService } from '../../../services/symptom/symptom.service';
 import { GeneralFunctionsService } from '../../../services/general-functions.service';
 import { ToastService } from '../../../services/shared/toast.service';
 import { SelectStatus, ServicesSettings as Services } from '../../../libraries/utilities.library';
-import { requestModel, responseModel, symptomModel } from '../../../models/symptom';
+import { requestModel, responseModel, symptomModel, symptomsApiModel } from '../../../models/symptom';
 
 interface originModel {
   id: number;
@@ -47,13 +46,50 @@ export class SymptomComponent implements OnInit {
       description: 'RR',
       state: 1
     }
-  ]; // acomodar
+  ]; // seteado
   formSymptom: FormGroup;
   actionForm = 'create'; // create, update
   selectStatus: object[] = [];
   services: object[] = [];
   // table
-  symptoms$: Observable<symptomModel[]>;
+  dataToTable: symptomModel[];
+  structure: object[] = [
+    {
+      name: 'symptomCode',
+      description: 'Código',
+      validation: '',
+    },
+    {
+      name: 'description',
+      description: 'Descripción',
+      validation: '',
+    },
+    {
+      name: 'origin',
+      description: 'Origen',
+      validation: '',
+    },
+    {
+      name: 'telephone',
+      description: 'Telefonía',
+      validation: 'service'
+    },
+    {
+      name: 'television',
+      description: 'Televisión',
+      validation: 'service'
+    },
+    {
+      name: 'internet',
+      description: 'Internet',
+      validation: 'service'
+    },
+    {
+      name: 'state',
+      description: 'Estado',
+      validation: 'active-desactive'
+    }    
+  ];
 
   constructor(
     private fb: FormBuilder,
@@ -105,8 +141,13 @@ export class SymptomComponent implements OnInit {
     for (const i of Object.entries(Services)) {
       this.services.push({key: i[0], value: i[1]})
     }
-    // table
-    this.symptoms$ = this.symptomSvc.symptoms$;
+    this.initialCharge(); // table
+  }
+  initialCharge() {
+    this.cleanForm();
+    this.symptomSvc.allSymptoms().subscribe((resp: symptomsApiModel) => {
+      this.dataToTable = resp.symptom;
+    });
   }
 
   onSubmit() {
@@ -133,6 +174,7 @@ export class SymptomComponent implements OnInit {
       if(this.actionForm === 'create') {
         this.createSymptomApi(dataRequest);
       }else {
+        dataRequest.symptom.symptomId = this.formSymptom.get('id').value;
         this.updateSymptomApi(dataRequest);
       }
     }
@@ -141,20 +183,17 @@ export class SymptomComponent implements OnInit {
     this.symptomSvc.createSymptom(dataRequest).subscribe((resp: responseModel) => {
       if(resp.generalResponse.code === '0') {
         this.toastScv.showSuccess(resp.generalResponse.messageCode);
-        this.cleanForm();
-        this.symptomSvc.allSymptoms();
+        this.initialCharge();
       }else{
         this.toastScv.showError(resp.generalResponse.messageCode);
       }
     })
   }
   updateSymptomApi(dataRequest: requestModel) {
-    dataRequest.symptom.symptomId = this.formSymptom.get('id').value;
     this.symptomSvc.updateSymptom(dataRequest).subscribe(resp => {
       if(resp.generalResponse.code === '0') {
         this.toastScv.showSuccess(resp.generalResponse.messageCode);
-        this.cleanForm();
-        this.symptomSvc.allSymptoms();
+        this.initialCharge();
       }else{
         this.toastScv.showError(resp.generalResponse.messageCode);
       }
@@ -172,24 +211,21 @@ export class SymptomComponent implements OnInit {
       description: data.description,
       state: data.state,
       origin: data.originId,
-      services: this.returnServiceName(data),
+      services: Object.keys(Services).filter(scv => data[scv] === '1'),
     });
   }
-  returnServiceName(data: symptomModel): string[] {
-    const arraySvc = ['television', 'internet', 'telephone'];
-    let svcSelected = []
-    for (const key in data) {
-      if(arraySvc.indexOf(key) > -1 && data[key] === '1') {
-        svcSelected.push(key);
-      }
-    }
-    return svcSelected;
+
+  disableSymptom(symptom: symptomModel) {
+    const dataRequest: requestModel = { symptom: {...symptom, state: '0'} };
+    // delete dataRequest.OriginType.updateDate;
+    this.updateSymptomApi(dataRequest);
   }
+
   deleteSymptom(symptom: symptomModel) {
     this.symptomSvc.deleteSymptom(symptom.symptomId).subscribe(resp => {
       if(resp.generalResponse.code === '0') {
         this.toastScv.showSuccess(resp.generalResponse.messageCode);
-        this.symptomSvc.allSymptoms();
+        this.initialCharge();
       }else{
         this.toastScv.showError(resp.generalResponse.messageCode);
       }
