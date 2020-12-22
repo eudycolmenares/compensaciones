@@ -61,3 +61,9 @@ export enum SelectCompensate {
   'Si' = '1',
   'No' = '0'
 }
+
+export enum ButtonsTable {
+  edit = 'edit',
+  disable = 'disable',
+  delete = 'delete'
+}

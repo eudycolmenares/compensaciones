@@ -23,13 +23,13 @@
           <td *ngSwitchCase="''">{{ item[opt.name] }}</td>
         </ng-container>
         <td class="text-center">
-          <button type="button" class="btn btn-primary btn-sm mr-2" (click)="sendDataToEdit(item)">
+          <button type="button" class="btn btn-primary btn-sm mr-2" (click)="sendDataToEdit(item)" *ngIf="(buttons.indexOf('edit') > -1)">
             <img src="assets/img/edit.svg">
           </button>
-          <button type="button" class="btn btn-secondary btn-sm mr-2" (click)="sendDataToDisable(item)" [disabled]="item.state === '0'">
+          <button type="button" class="btn btn-secondary btn-sm mr-2" (click)="sendDataToDisable(item)" [disabled]="item.state === '0'" *ngIf="(buttons.indexOf('disable') > -1)">
             <img src="assets/img/disable.svg">
           </button>
-          <button type="button" class="btn btn-secondary btn-sm" (click)="openModal(item)">
+          <button type="button" class="btn btn-secondary btn-sm" (click)="openModal(item)" *ngIf="(buttons.indexOf('delete') > -1)">
             <img src="assets/img/trash.svg">
           </button>
         </td>

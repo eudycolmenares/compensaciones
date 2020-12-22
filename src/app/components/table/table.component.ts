@@ -6,6 +6,7 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { StatePagination } from '../../models/general';
 import { SortableDirective, SortEvent, SortDirection } from '../../directives/sortable.directive';
+import { ButtonsTable as Buttons } from '../../libraries/utilities.library';
 
 // modal
 
@@ -49,6 +50,7 @@ export class TableComponent implements OnInit {
   @ViewChildren(SortableDirective) headers: QueryList<SortableDirective>;
   @Input() dataBase: object[];
   @Input() structure: object[];
+  @Input() buttons: Buttons[] = [Buttons.edit, Buttons.disable, Buttons.delete];
   @Output() editRecord: EventEmitter<object> ;
   @Output() disableRecord: EventEmitter<object> ;
   @Output() deleteRecord: EventEmitter<object> ;
@@ -72,7 +74,8 @@ export class TableComponent implements OnInit {
     this.deleteRecord = new EventEmitter();
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+  }
 
   ngOnChanges(changes: object) {
     if(Object.keys(changes).length === 1) {

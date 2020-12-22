@@ -5,6 +5,7 @@ import { StratumService } from '../../../services/stratum/stratum.service';
 import { GeneralFunctionsService } from '../../../services/general-functions.service';
 import { ToastService } from '../../../services/shared/toast.service';
 import { strataApiModel, stratumModel, requestModel, responseModel } from '../../../models/stratum';
+import { ButtonsTable as Buttons } from '../../../libraries/utilities.library';
 
 @Component({
   selector: 'app-stratum',
@@ -29,6 +30,7 @@ export class StratumComponent implements OnInit {
       validation: '',
     }
   ];
+  buttonToTable: Buttons[] = [Buttons.edit, Buttons.delete]
 
   constructor(
     private stratumSvc: StratumService,
@@ -68,7 +70,6 @@ export class StratumComponent implements OnInit {
     this.cleanForm();
     this.stratumSvc.allStrata().subscribe((resp: strataApiModel) => {
       this.dataToTable = resp.socialStatus;
-      console.log('dataToTable: ', this.dataToTable);
     });
   }
 
