@@ -18,6 +18,10 @@ export const environment = {
     origin_create: 'OriginTypeService/create',
     origin_update: 'OriginTypeService/update',
     origin_delete: 'OriginTypeService/delete',
+    stratum_all: 'SocialStratumService/readAll',
+    stratum_create: 'SocialStratumService/create',
+    stratum_update: 'SocialStratumService/update',
+    stratum_delete: 'SocialStratumService/delete',
   }
 };
 

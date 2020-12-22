@@ -140,7 +140,7 @@ export class TableComponent implements OnInit {
   }
 
   matches(data: object, term: string, pipe: PipeTransform) {
-    return( Object.keys(data).find(opc => opc != 'id' && data[opc].toLowerCase().includes(term)) );
+    return( Object.keys(data).find(opc => opc != 'id' && data[opc].toString().toLowerCase().includes(term)) );
   }
 
   onSort({column, direction}: SortEvent) {

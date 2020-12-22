@@ -2,10 +2,33 @@
   <app-breadcrumb></app-breadcrumb>
 
   <div class="container-add px-sm-2 px-md-5">
+    <form autocomplete="off" [formGroup]="formStratum" (ngSubmit)="onSubmit()">
+      <div class="row text-light text-center">
+        <div class="col-sm bg-danger py-1 mx-1">Estrato(*)</div>
+        <div class="col-sm bg-danger py-1 mx-1">Descripción(*)</div>
+      </div>
+      <div class="row">
+        <div class="col-sm mx-1 mt-1 p-0">
+          <input class="form-control form-control-sm" type="text" formControlName="code" [class.is-invalid]="invalidCode" placeholder="Estrato">
+          <small class="text-danger" *ngIf="invalidCode">{{ textsFormInvalid("code") }}</small>
+        </div>
+        <div class="col-sm mx-1 mt-1 p-0">
+          <input class="form-control form-control-sm" type="text" formControlName="description" [class.is-invalid]="invalidDescription" placeholder="Descripción">
+          <small class="text-danger" *ngIf="invalidDescription">{{ textsFormInvalid("description") }}</small>
+        </div>
+      </div>
+      <div class="row text-light text-center mt-4">
+        <div class="col-sm container-buttons">
+          <button type="submit" class="btn btn-primary mr-3 btn-sm">{{ (actionForm === 'create' ? 'Crear' : 'Actualizar' )}}</button>
+          <button type="button" class="btn btn-secondary btn-sm" (click)="cleanForm()">Limpiar</button>
+        </div>
+      </div>
+    </form>
 
   </div>
 
   <hr class="mt-5 mb-5" />
 
+  <app-table [dataBase]="dataToTable" [structure]="structure" (editRecord)="updateStratum($event)" (deleteRecord)="deleteStratum($event)"></app-table>
 </section>
 <app-toast></app-toast>

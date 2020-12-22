@@ -98,6 +98,7 @@ export class OriginTypeComponent implements OnInit {
     this.initialCharge(); // table
   }
   initialCharge() {
+    this.cleanForm();
     this.originSvc.allOrigins().subscribe((resp: originsApiModel) => {
       this.dataToTable = resp.OriginTypes.OriginType;
     });
@@ -130,7 +131,6 @@ export class OriginTypeComponent implements OnInit {
     this.originSvc.createOrigin(dataRequest).subscribe((resp: responseModel) => {
       if(resp.GeneralResponse.code === '0') {
         this.toastScv.showSuccess(resp.GeneralResponse.messageCode);
-        this.cleanForm();
         this.initialCharge();
       }else{
         this.toastScv.showError(resp.GeneralResponse.messageCode);
@@ -141,7 +141,6 @@ export class OriginTypeComponent implements OnInit {
     this.originSvc.updateOrigin(dataRequest).subscribe(resp => {
       if(resp.GeneralResponse.code === '0') {
         this.toastScv.showSuccess(resp.GeneralResponse.messageCode);
-        this.cleanForm();
         this.initialCharge();
       }else{
         this.toastScv.showError(resp.GeneralResponse.messageCode);
