@@ -24,13 +24,17 @@
               <span>Causas</span><img src="assets/img/flow-filled.svg">
             </li>
             <!-- <li class="list-group-item">Causas Servicio</li> -->
-            <li class="list-group-item">Estado Sistema</li>
+            <li class="list-group-item" [routerLink]="['/dashboard/system-status']">
+              Estado Sistema
+            </li>
             <!-- <li class="list-group-item">FTP</li> -->
             <li class="list-group-item" [routerLink]="['/dashboard/symptom']">
               <span>Síntoma</span><img src="assets/img/search.svg">
             </li>
             <!-- <li class="list-group-item">Síntomas Servicio</li> -->
-            <li class="list-group-item">Prioridades</li>
+            <li class="list-group-item" [routerLink]="['/dashboard/priorities']">
+              Prioridades
+            </li>
             <!-- <li class="list-group-item">Observaciones</li> -->
             <li class="list-group-item" [routerLink]="['/dashboard/origintype']">
               <span>Tipo Origen</span><img src="assets/img/origin.svg">

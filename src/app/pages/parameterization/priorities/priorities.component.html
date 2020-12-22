@@ -1,0 +1,163 @@
+<app-breadcrumb></app-breadcrumb>
+<div class="container">
+  <form [formGroup]="priorityForm" (ngSubmit)="onSubmit()">
+    <div class="form-group row justify-content-center">
+      <div class="col-md-3 my-2">
+        <div class="bg-primary text-light text-center my-2">
+          Código Prioridad (*)
+        </div>
+        <input
+          type="text"
+          formControlName="priorityCode"
+          class="form-control form-control-sm"
+          [ngClass]="{
+            'is-invalid': this.invalidFieldForm('priorityCode')
+          }"
+          placeholder="Código prioridad"
+        />
+        <small
+          class="text-danger"
+          *ngIf="this.invalidFieldForm('priorityCode')"
+        >
+          {{ textsFormInvalid("priorityCode") }}
+        </small>
+      </div>
+      <div class="col-md-3 my-2">
+        <div class="bg-primary text-light text-center my-2">
+          Descripción Prioridad (*)
+        </div>
+        <input
+          type="text"
+          formControlName="priorityDescription"
+          class="form-control form-control-sm"
+          [ngClass]="{
+            'is-invalid': this.invalidFieldForm('priorityDescription')
+          }"
+          placeholder="Descripción"
+        />
+        <small
+          class="text-danger"
+          *ngIf="this.invalidFieldForm('priorityDescription')"
+        >
+          {{ textsFormInvalid("priorityDescription") }}
+        </small>
+      </div>
+    </div>
+    <div class="form-group row justify-content-center">
+      <div class="col-md-3 my-2">
+        <div class="bg-primary text-light text-center my-2">Estado (*)</div>
+        <select
+          formControlName="state"
+          class="form-control form-control-sm"
+          [ngClass]="{
+            'is-invalid': this.invalidFieldForm('state')
+          }"
+        >
+          <option *ngFor="let stateOp of selectState" [value]="stateOp.key">
+            {{ stateOp.value }}
+          </option>
+        </select>
+        <small class="text-danger" *ngIf="this.invalidFieldForm('state')">
+          {{ textsFormInvalid("state") }}
+        </small>
+      </div>
+      <div class="col-md-3 my-2">
+        <div class="bg-primary text-light text-center my-2">
+          Compensa Nodo (*)
+        </div>
+        <select
+          formControlName="compensatesNode"
+          class="form-control form-control-sm"
+          [ngClass]="{
+            'is-invalid': this.invalidFieldForm('compensatesNode')
+          }"
+        >
+          <option
+            *ngFor="let compNodeOp of selectQuestion"
+            [value]="compNodeOp.key"
+          >
+            {{ compNodeOp.value }}
+          </option>
+        </select>
+        <small
+          class="text-danger"
+          *ngIf="this.invalidFieldForm('compensatesNode')"
+        >
+          {{ textsFormInvalid("compensatesNode") }}
+        </small>
+      </div>
+      <div class="col-md-3 my-2">
+        <div class="bg-primary text-light text-center my-2">
+          Compensa Cuenta (*)
+        </div>
+        <select
+          formControlName="compensatesAccount"
+          class="form-control form-control-sm"
+          [ngClass]="{
+            'is-invalid': this.invalidFieldForm('compensatesAccount')
+          }"
+        >
+          <option
+            *ngFor="let compAccountOp of selectQuestion"
+            [value]="compAccountOp.key"
+          >
+            {{ compAccountOp.value }}
+          </option>
+        </select>
+        <small
+          class="text-danger"
+          *ngIf="this.invalidFieldForm('compensatesAccount')"
+        >
+          {{ textsFormInvalid("compensatesAccount") }}
+        </small>
+      </div>
+    </div>
+    <div class="form-group row justify-content-center">
+      <div class="col-md-1 d-flex justify-content-end">
+        <button class="btn btn-primary" type="submit">{{ (actionForm === 'create' ? 'Crear' : 'Actualizar' )}}</button>
+      </div>
+      <div class="col-md-1">
+        <button class="btn btn-primary" type="reset">Limpiar</button>
+      </div>
+    </div>
+  </form>
+  <hr>
+  <div class="form-group form-inline">
+    Buscar: <!-- <input class="form-control form-control-sm ml-2" type="text" name="searchTerm" [(ngModel)]="taskSvc.searchTerm"/> -->
+    <!-- <span class="ml-3" *ngIf="service.loading$ | async">Loading...</span> -->
+  </div>
+
+  <table class="table table-sm table-borderless table-hover">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col" sortable="period">Código</th>
+        <th scope="col" sortable="date">Descripción</th>
+        <th scope="col" sortable="time">Estado</th>
+        <th scope="col" sortable="status">Compensa Nodo</th>
+        <th scope="col" sortable="status">Compensa Cuenta</th>
+        <th scope="col" sortable="time">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngIf="priorities$ | async as priorities">
+        <tr *ngFor="let priority of priorities; index as i">
+          <th scope="row">{{ i + 1 }}</th>
+          <td>{{ priority.priorityCode }}</td>
+          <td>{{ priority.priorityDescription }}</td>
+          <td>{{ (priority.state == 1) ? 'Activo' : 'Inactivo' }}</td>
+          <td>{{ (priority.nodecompensates == 1) ? 'Si' : 'No' }}</td>
+          <td>{{ (priority.accountscompensates == 1) ? 'Si' : 'No' }}</td>
+          <td>
+            <button type="button" class="btn btn-primary btn-sm mr-2" (click)="updatePriority(priority)">
+              <img src="assets/img/edit.svg">
+            </button>
+            <button type="button" class="btn btn-secondary btn-sm" (click)="deletePriority(priority)">
+              <img src="assets/img/trash.svg">
+            </button>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</div>

@@ -22,7 +22,26 @@ export const environment = {
     stratum_create: 'SocialStratumService/create',
     stratum_update: 'SocialStratumService/update',
     stratum_delete: 'SocialStratumService/delete',
-  }
+  
+    //Causes
+    cause_create: 'CausesService/create',
+    cause_delete_id: 'CausesService/delete/',
+    cause_update: 'CausesService/update',
+    cause_read_id: 'CausesService/read/id/',
+    causes_read: 'CausesService/read/all',
+    //system status
+    system_status_create: 'SystemStatusService/create',
+    system_status_delete_id: 'SystemStatusService/delete/',
+    system_status_update: 'SystemStatusService/update',
+    system_status_read_id: 'SystemStatusService/read/id/',
+    system_status_read: 'SystemStatusService/read/all',
+    //Priorities
+    priority_create: 'PriorityService/create',
+    priority_delete_id: 'PriorityService/delete/',
+    priority_update: 'PriorityService/update',
+    priority_read_id: 'PriorityService/read/id/',
+    priorities_read: 'PriorityService/readAll',
+  },
 };
 
 /*
