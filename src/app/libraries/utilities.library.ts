@@ -11,9 +11,17 @@ export const RoutesData = {
     url: ['dashboard', 'causes'],
     breadcrumb: ['Parametrización', 'Causas']
   },
+  'system-status': {
+    url: ['dashboard', 'system-status'],
+    breadcrumb: ['Parametrización', 'Estado sistema'],
+  },
   'symptom': {
     url: ['dashboard', 'symptom'],
     breadcrumb: ['Parametrización', 'Sintoma']
+  },
+  'priorities': {
+    url: ['dashboard', 'priorities'],
+    breadcrumb: ['Parametrización', 'Prioridades'],
   },
   'origintype': {
     url: ['dashboard', 'origintype'],

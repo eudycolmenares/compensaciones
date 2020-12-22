@@ -22,8 +22,16 @@ const ROUTES: Routes = [
         loadChildren: () => import('../parameterization/causes/causes.module').then(m => m.CausesModule),
       },
       {
+        path: 'system-status',
+        loadChildren: () => import('../parameterization/system-status/system-status.module').then(m => m.SystemStatusModule),
+      },
+      {
         path: 'symptom',
         loadChildren: () => import('../parameterization/symptom/symptom.module').then(m => m.SymptomModule),
+      },
+      {
+        path: 'priorities',
+        loadChildren: () => import('../parameterization/priorities/priorities.module').then(m => m.PrioritiesModule),
       },
       {
         path: 'origintype',

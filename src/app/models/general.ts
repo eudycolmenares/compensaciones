@@ -7,3 +7,8 @@ export interface StatePagination {
   sortColumn: string;
   sortDirection: SortDirection;
 }
+
+export class DataList {
+  key: string;
+  value: string;
+}
