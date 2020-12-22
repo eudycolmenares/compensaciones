@@ -5,6 +5,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
+
 export class NavbarComponent implements OnInit {
   @Input() opened: boolean;
   @Output() swToggle = new EventEmitter<boolean>();
