@@ -8,22 +8,22 @@ export interface PriorityModel {
     createDate?: string;
   }
   
-  interface generalResponse {
+  interface GeneralResponse {
     code: string;
     descriptionCode: string;
     messageCode: string;
   }
   
-  export interface requestModel {
+  export interface RequestModel {
     priority: PriorityModel;
   }
   
-  export interface responseModel {
-    generalResponse: generalResponse;
+  export interface ResponseModel {
+    generalResponse: GeneralResponse;
   }
   
-  export interface prioritiesApiModel {
-    generalResponse: generalResponse;
+  export interface PrioritiesApiModel {
+    generalResponse: GeneralResponse;
     priority: PriorityModel[];
   }
   

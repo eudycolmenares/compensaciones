@@ -1,74 +1,100 @@
-<app-breadcrumb></app-breadcrumb>
-<div class="container">
-  <form [formGroup]="systemStatusForm" (ngSubmit)="onSubmit()">
-    <div class="form-group row justify-content-center">
-      <div class="col-md-3 my-2">
-        <div class="bg-primary text-light text-center my-2">
-          Descripción Estado (*)
+<section class="container py-3">
+  <app-breadcrumb></app-breadcrumb>
+
+  <div class="container-add px-sm-2 px-md-5">
+    <form
+      autocomplete="off"
+      [formGroup]="systemStatusForm"
+      (ngSubmit)="onSubmit()"
+    >
+      <div class="row text-light text-center mt-4 px-sm-0 px-md-5">
+        <div class="col-sm bg-primary py-1 mx-1">Descripción Estado (*)</div>
+        <div class="col-sm bg-primary py-1 mx-1">Compensa (*)</div>
+        <div class="col-sm bg-primary py-1 mx-1">Estado (*)</div>
+      </div>
+
+      <div class="row px-sm-0 px-md-5">
+        <div class="col-sm py-1 mx-1 p-0">
+          <input
+            type="text"
+            formControlName="description"
+            class="form-control form-control-sm"
+            [ngClass]="{
+              'is-invalid': this.invalidFieldForm('description')
+            }"
+            placeholder="Descripción Estado"
+          />
+          <small
+            class="text-danger"
+            *ngIf="this.invalidFieldForm('description')"
+          >
+            {{ textsFormInvalid("description") }}
+          </small>
         </div>
-        <input
-          type="text"
-          formControlName="descriptionStatus"
-          class="form-control form-control-sm"
-          [ngClass]="{
-            'is-invalid': this.invalidFieldForm('descriptionStatus')
-          }"
-          placeholder="Descripción Estado"
-        />
-        <small
-          class="text-danger"
-          *ngIf="this.invalidFieldForm('descriptionStatus')"
-        >
-          {{ textsFormInvalid("descriptionStatus") }}
-        </small>
+        <div class="col-sm py-1 mx-1 p-0 text-left">
+          <select
+            formControlName="compensate"
+            class="form-control form-control-sm"
+            [ngClass]="{
+              'is-invalid': this.invalidFieldForm('compensate')
+            }"
+          >
+            <option
+              *ngFor="let compAccountOp of selectQuestion"
+              [value]="compAccountOp.key"
+            >
+              {{ compAccountOp.value }}
+            </option>
+          </select>
+          <small
+            class="text-danger"
+            *ngIf="this.invalidFieldForm('compensate')"
+          >
+            {{ textsFormInvalid("compensate") }}
+          </small>
+        </div>
+        <div class="col-sm py-1 mx-1 p-0 text-left">
+          <select
+            formControlName="status"
+            class="form-control form-control-sm"
+            [ngClass]="{
+              'is-invalid': this.invalidFieldForm('status')
+            }"
+          >
+            <option *ngFor="let stateOp of selectState" [value]="stateOp.key">
+              {{ stateOp.value }}
+            </option>
+          </select>
+          <small class="text-danger" *ngIf="this.invalidFieldForm('status')">
+            {{ textsFormInvalid("status") }}
+          </small>
+        </div>
       </div>
-      <div class="col-md-3 my-2">
-        <div class="bg-primary text-light text-center my-2">Compensa (*)</div>
-        <select
-          formControlName="compensates"
-          class="form-control form-control-sm"
-          [ngClass]="{
-            'is-invalid': this.invalidFieldForm('compensates')
-          }"
-        >
-          <option *ngFor="let compOp of selectQuestion" value="compOp.key">
-            {{ compOp.value }}
-          </option>
-        </select>
-        <small class="text-danger" *ngIf="this.invalidFieldForm('compensates')">
-          {{ textsFormInvalid("compensates") }}
-        </small>
+      <div class="row text-light text-center mt-4">
+        <div class="col-sm container-buttons">
+          <button type="submit" class="btn btn-primary mr-3 btn-sm">
+            {{ actionForm === "create" ? "Crear" : "Actualizar" }}
+          </button>
+          <button
+            type="button"
+            class="btn btn-secondary btn-sm"
+            (click)="cleanForm()"
+          >
+            Limpiar
+          </button>
+        </div>
       </div>
-      <div class="col-md-3 my-2">
-        <div class="bg-primary text-light text-center my-2">Estado (*)</div>
-        <select
-          formControlName="status"
-          class="form-control form-control-sm"
-          [ngClass]="{
-            'is-invalid': this.invalidFieldForm('status')
-          }"
-        >
-          <option *ngFor="let statusOp of selectState" value="statusData.key">
-            {{ statusOp.value }}
-          </option>
-        </select>
-        <small class="text-danger" *ngIf="this.invalidFieldForm('status')">
-          {{ textsFormInvalid("status") }}
-        </small>
-      </div>
-    </div>
-    <div class="form-group row justify-content-center">
-      <div class="col-md-1 d-flex justify-content-end">
-        <button class="btn btn-primary" type="submit">Crear</button>
-      </div>
-      <div class="col-md-1">
-        <button class="btn btn-primary" type="reset">Limpiar</button>
-      </div>
-    </div>
-  </form>
-  <hr>
-  <div class="form-group form-inline">
-    Buscar: <!-- <input class="form-control form-control-sm ml-2" type="text" name="searchTerm" [(ngModel)]="taskSvc.searchTerm"/> -->
-    <!-- <span class="ml-3" *ngIf="service.loading$ | async">Loading...</span> -->
+    </form>
   </div>
-</div>
+
+  <hr />
+
+  <app-table
+    [dataBase]="dataToTable"
+    [structure]="structure"
+    (editRecord)="updateSystemStatus($event)"
+    (disableRecord)="disableSystemStatus($event)"
+    (deleteRecord)="deleteSystemStatus($event)"
+  ></app-table>
+</section>
+<app-toast></app-toast>

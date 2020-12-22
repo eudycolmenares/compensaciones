@@ -1,6 +1,5 @@
-import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
 
 import { GeneralFunctionsService } from 'src/app/services/general-functions.service';
 import {
@@ -10,9 +9,10 @@ import {
 import { DataList } from 'src/app/models/general';
 import { PriorityService } from '../../../services/priority/priority.service';
 import {
+  PrioritiesApiModel,
   PriorityModel,
-  requestModel,
-  responseModel,
+  RequestModel,
+  ResponseModel,
 } from 'src/app/models/priority';
 import { ToastService } from 'src/app/services/shared/toast.service';
 
@@ -27,8 +27,34 @@ export class PrioritiesComponent implements OnInit {
   selectQuestion: DataList[] = [];
 
   actionForm = 'create'; // create, update
-  // table
-  priorities$: Observable<PriorityModel[]>;
+  dataToTable: PriorityModel[];
+  structure: object[] = [
+    {
+      name: 'priorityCode',
+      description: 'Código',
+      validation: '',
+    },
+    {
+      name: 'priorityDescription',
+      description: 'Descripción',
+      validation: '',
+    },
+    {
+      name: 'state',
+      description: 'Estado',
+      validation: 'active-desactive',
+    },
+    {
+      name: 'nodecompensates',
+      description: 'Compensa Nodo',
+      validation: 'yes-no',
+    },
+    {
+      name: 'accountscompensates',
+      description: 'Compensa Cuenta',
+      validation: 'yes-no',
+    },
+  ];
   constructor(
     private _fb: FormBuilder,
     private _prioritySvc: PriorityService,
@@ -47,6 +73,7 @@ export class PrioritiesComponent implements OnInit {
       state: ['', [Validators.required]],
       compensatesNode: ['', [Validators.required]],
       compensatesAccount: ['', [Validators.required]],
+      user: [''],
     });
   }
 
@@ -70,10 +97,16 @@ export class PrioritiesComponent implements OnInit {
       this.selectState.push({ key: i[1], value: i[0] });
     }
     for (const i of Object.entries(SelectCompensate)) {
-      this.selectQuestion.push({ key: i[0], value: i[1] });
+      this.selectQuestion.push({ key: i[1], value: i[0] });
     }
     // table
-    this.priorities$ = this._prioritySvc.priorities$;
+    this.initialCharge();
+  }
+
+  initialCharge() {
+    this._prioritySvc.allPriorities().subscribe((resp: PrioritiesApiModel) => {
+      this.dataToTable = resp.priority;
+    });
   }
 
   onSubmit() {
@@ -82,7 +115,7 @@ export class PrioritiesComponent implements OnInit {
         control.markAsTouched();
       });
     } else {
-      const dataRequest: requestModel = {
+      const dataRequest: RequestModel = {
         priority: {
           priorityId: this.priorityForm.get('priorityId').value,
           priorityCode: this.priorityForm.get('priorityCode').value,
@@ -95,20 +128,17 @@ export class PrioritiesComponent implements OnInit {
         },
       };
       if (this.actionForm === 'create') {
-        console.log('entra a create 1');
-
         this.createPriorityApi(dataRequest);
       } else {
-        console.log('entra a update 1');
         this.updatePriorityApi(dataRequest);
       }
     }
   }
 
-  createPriorityApi(dataRequest: requestModel) {
+  createPriorityApi(dataRequest: RequestModel) {
     this._prioritySvc
       .createPriority(dataRequest)
-      .subscribe((resp: responseModel) => {
+      .subscribe((resp: ResponseModel) => {
         if (resp.generalResponse.code === '0') {
           this._toastScv.showSuccess(resp.generalResponse.messageCode);
           this.cleanForm();
@@ -118,7 +148,8 @@ export class PrioritiesComponent implements OnInit {
         }
       });
   }
-  updatePriorityApi(dataRequest: requestModel) {
+
+  updatePriorityApi(dataRequest: RequestModel) {
     this._prioritySvc.updatePriority(dataRequest).subscribe((resp) => {
       if (resp.generalResponse.code === '0') {
         this._toastScv.showSuccess(resp.generalResponse.messageCode);
@@ -131,11 +162,10 @@ export class PrioritiesComponent implements OnInit {
   }
 
   updatePriority(priority: PriorityModel) {
-    console.log(priority);
-
     this.setForm(priority);
     this.actionForm = 'update';
   }
+
   setForm(data: PriorityModel) {
     this.priorityForm.reset({
       priorityId: data.priorityId,
@@ -146,6 +176,7 @@ export class PrioritiesComponent implements OnInit {
       compensatesAccount: data.accountscompensates,
     });
   }
+
   returnServiceName(data: PriorityModel): string[] {
     const arraySvc = ['television', 'internet', 'telephone'];
     let svcSelected = [];
@@ -155,6 +186,11 @@ export class PrioritiesComponent implements OnInit {
       }
     }
     return svcSelected;
+  }
+
+  disablePriority(priority: PriorityModel) {
+    const dataRequest: RequestModel = { priority: { ...priority, state: 0 } };
+    this.updatePriorityApi(dataRequest);
   }
 
   deletePriority(priority: PriorityModel) {

@@ -4,7 +4,6 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { DataModule } from './data/data.module';
 
 @NgModule({
   declarations: [
@@ -13,7 +12,6 @@ import { DataModule } from './data/data.module';
   imports: [
     HttpClientModule,
     BrowserModule,
-    DataModule,
     AppRoutingModule,
   ],
   providers: [],
