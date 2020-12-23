@@ -123,6 +123,7 @@ export class SystemStatusComponent implements OnInit {
       if (this.actionForm === 'create') {
         this.createSystemStatusApi(dataRequest);
       } else {
+        dataRequest.SystemStatus.id = this.systemStatusForm.get('id').value;
         this.updateSystemStatusApi(dataRequest);
       }
     }
@@ -135,7 +136,7 @@ export class SystemStatusComponent implements OnInit {
         if (resp.GeneralResponse.code === '0') {
           this._toastScv.showSuccess(resp.GeneralResponse.messageCode);
           this.cleanForm();
-          this._systemStatusSvc.allSystemStatus();
+          this.initialCharge();
         } else {
           this._toastScv.showError(resp.GeneralResponse.messageCode);
         }
@@ -143,12 +144,11 @@ export class SystemStatusComponent implements OnInit {
   }
 
   updateSystemStatusApi(dataRequest: RequestModel) {
-    dataRequest.SystemStatus.id = this.systemStatusForm.get('id').value;
     this._systemStatusSvc.updateSystemStatus(dataRequest).subscribe((resp) => {
       if (resp.GeneralResponse.code === '0') {
         this._toastScv.showSuccess(resp.GeneralResponse.messageCode);
         this.cleanForm();
-        this._systemStatusSvc.allSystemStatus();
+        this.initialCharge();
       } else {
         this._toastScv.showError(resp.GeneralResponse.messageCode);
       }
@@ -173,7 +173,7 @@ export class SystemStatusComponent implements OnInit {
   disableSystemStatus(systemStatus: SystemStatusModel) {
     const dataRequest: RequestModel = {
       SystemStatus: { ...systemStatus, state: '0' },
-    };
+    };    
     this.updateSystemStatusApi(dataRequest);
   }
 
@@ -183,7 +183,7 @@ export class SystemStatusComponent implements OnInit {
       .subscribe((resp) => {
         if (resp.GeneralResponse.code === '0') {
           this._toastScv.showSuccess(resp.GeneralResponse.messageCode);
-          this._systemStatusSvc.allSystemStatus();
+          this.initialCharge();
         } else {
           this._toastScv.showError(resp.GeneralResponse.messageCode);
         }

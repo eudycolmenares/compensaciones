@@ -163,6 +163,23 @@ export class CausesComponent implements OnInit {
       status: [''],
       user: [''],
     });
+    this.causeForm.get('origin').valueChanges.subscribe((selectValue) => {
+      if (selectValue !== '30') {
+        this.causeForm.get('codeAnomaly').setValue('');
+        this.causeForm.get('descriptionAnomaly').setValue('');
+        this.causeForm.get('problemCode').setValue('');
+        this.causeForm.get('descriptionProblem').setValue('');
+        this.causeForm.controls['codeAnomaly'].disable();
+        this.causeForm.controls['descriptionAnomaly'].disable();
+        this.causeForm.controls['problemCode'].disable();
+        this.causeForm.controls['descriptionProblem'].disable();
+      } else {
+        this.causeForm.controls['codeAnomaly'].enable();
+        this.causeForm.controls['descriptionAnomaly'].enable();
+        this.causeForm.controls['problemCode'].enable();
+        this.causeForm.controls['descriptionProblem'].enable();
+      }
+    });
   }
 
   ngOnInit(): void {
@@ -188,18 +205,15 @@ export class CausesComponent implements OnInit {
     for (const i of Object.entries(SelectStatus)) {
       this.selectState.push({ key: i[1], value: i[0] });
     }
-    // table
-    this.initialCharge();
+    this._originTypeSvc.allOrigins().subscribe((resp: originsApiModel) => {
+      this.originTypeList = resp.OriginTypes.OriginType;
+    });
+    this.initialCharge(); // table
   }
 
   initialCharge() {
-    this._originTypeSvc
-      .allOrigins()
-      .subscribe(async (resp: originsApiModel) => {
-        this.originTypeList = await resp.OriginTypes.OriginType;
-      });
-    this._causeSvc.allCauses().subscribe(async (resp: CausesApiModel) => {
-      this.dataToTable = await resp.Causes.Cause;
+    this._causeSvc.allCauses().subscribe((resp: CausesApiModel) => {
+      this.dataToTable = resp.Causes.Cause;
     });
   }
 
@@ -211,41 +225,41 @@ export class CausesComponent implements OnInit {
     } else {
       var servicesSelected = this.causeForm.get('services').value;
       const dataRequest: RequestModel = {
-        Causes: {
-          Cause: {
-            Disruption: {
-              id: this.causeForm.get('codeAnomaly').value,
-              description: this.causeForm.get('descriptionAnomaly').value,
-            },
-            Problem: {
-              id: this.causeForm.get('problemCode').value,
-              description: this.causeForm.get('descriptionProblem').value,
-            },
-            code: this.causeForm.get('causeCode').value,
-            description: this.causeForm.get('descriptionCause').value,
-            Origin: {
-              id: this.causeForm.get('origin').value,
-            },
-            OriginType: {
-              id: this.causeForm.get('typeOrigin').value,
-            },
-            television: servicesSelected.find((svc) => svc === 'television')
-              ? '1'
-              : '0',
-            internet: servicesSelected.find((svc) => svc === 'internet')
-              ? '1'
-              : '0',
-            telephone: servicesSelected.find((svc) => svc === 'telephone')
-              ? '1'
-              : '0',
-            state: this.causeForm.get('status').value,
-            user: 'test', // seteado
+        Cause: {
+          Disruption: {
+            id: this.causeForm.get('codeAnomaly').value,
+            description: this.causeForm.get('descriptionAnomaly').value,
           },
+          Problem: {
+            id: this.causeForm.get('problemCode').value,
+            description: this.causeForm.get('descriptionProblem').value,
+          },
+          code: this.causeForm.get('causeCode').value,
+          description: this.causeForm.get('descriptionCause').value,
+          causes: this.causeForm.get('descriptionCause').value,
+          Origin: {
+            id: this.causeForm.get('origin').value,
+          },
+          OriginType: {
+            id: this.causeForm.get('typeOrigin').value,
+          },
+          television: servicesSelected.find((svc) => svc === 'television')
+            ? '1'
+            : '0',
+          internet: servicesSelected.find((svc) => svc === 'internet')
+            ? '1'
+            : '0',
+          telephone: servicesSelected.find((svc) => svc === 'telephone')
+            ? '1'
+            : '0',
+          state: this.causeForm.get('status').value,
+          user: 'test', // seteado
         },
       };
       if (this.actionForm === 'create') {
         this.createCauseApi(dataRequest);
       } else {
+        dataRequest.Cause.id = this.causeForm.get('idCause').value;
         this.updateCauseApi(dataRequest);
       }
     }
@@ -256,7 +270,7 @@ export class CausesComponent implements OnInit {
       if (resp.GeneralResponse.code === '0') {
         this._toastScv.showSuccess(resp.GeneralResponse.messageCode);
         this.cleanForm();
-        this._causeSvc.allCauses();
+        this.initialCharge(); // table
       } else {
         this._toastScv.showError(resp.GeneralResponse.messageCode);
       }
@@ -264,12 +278,11 @@ export class CausesComponent implements OnInit {
   }
 
   updateCauseApi(dataRequest: RequestModel) {
-    dataRequest.Causes.Cause.id = this.causeForm.get('idCause').value;
     this._causeSvc.updateCause(dataRequest).subscribe((resp) => {
       if (resp.GeneralResponse.code === '0') {
         this._toastScv.showSuccess(resp.GeneralResponse.messageCode);
         this.cleanForm();
-        this._causeSvc.allCauses();
+        this.initialCharge(); // table
       } else {
         this._toastScv.showError(resp.GeneralResponse.messageCode);
       }
@@ -284,12 +297,13 @@ export class CausesComponent implements OnInit {
   setForm(data: CauseModel) {
     this.causeForm.reset({
       idCause: data.id,
-      codeAnomaly: data.code,
-      descriptionAnomaly: data.description,
+      codeAnomaly: data.Disruption.id,
+      descriptionAnomaly: data.Disruption.description,
       problemCode: data.Problem.id,
       descriptionProblem: data.Problem.description,
-      causeCode: data.Disruption.id,
-      descriptionCause: data.Disruption.description,
+      causeCode: data.code,
+      descriptionCause: data.description,
+      causes: data.description,
       origin: data.Origin.id,
       typeOrigin: data.OriginType.id,
       services: this.returnServiceName(data),
@@ -311,7 +325,7 @@ export class CausesComponent implements OnInit {
 
   disableCause(cause: CauseModel) {
     const dataRequest: RequestModel = {
-      Causes: { Cause: { ...cause, state: '0' } },
+      Cause: { ...cause, state: '0' },
     };
     this.updateCauseApi(dataRequest);
   }
@@ -320,7 +334,7 @@ export class CausesComponent implements OnInit {
     this._causeSvc.deleteCause(cause.id).subscribe((resp) => {
       if (resp.GeneralResponse.code === '0') {
         this._toastScv.showSuccess(resp.GeneralResponse.messageCode);
-        this._causeSvc.allCauses();
+        this.initialCharge(); // table
       } else {
         this._toastScv.showError(resp.GeneralResponse.messageCode);
       }

@@ -1,8 +1,3 @@
-// export interface SearchResultModel {
-//   causes: CausesApiModel[];
-//   total: number;
-// }
-
 export interface CauseModel {
     id?: string;
     code: string;
@@ -14,18 +9,18 @@ export interface CauseModel {
       id: string;
     };
     description: string;
-    causes?: string;
+    causes: string;
     user: string;
     television: string;
     internet: string;
     telephone: string;
     Disruption: {
-      id: string;
-      description: string;
+      id?: string;
+      description?: string;
     };
     Problem: {
-      id: string;
-      description: string;
+      id?: string;
+      description?: string;
     };
     createDate?: string;
 }
@@ -37,9 +32,7 @@ interface GeneralResponse {
 }
 
 export interface RequestModel {
-  Causes:{
-    Cause: CauseModel;
-  }
+  Cause: CauseModel;
 }
 
 export interface ResponseModel {

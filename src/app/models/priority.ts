@@ -1,5 +1,5 @@
 export interface PriorityModel {
-    priorityId: number;
+    priorityId?: number;
     priorityCode: number
     priorityDescription: string;
     state: number;

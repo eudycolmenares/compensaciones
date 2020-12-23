@@ -99,8 +99,7 @@ export class PrioritiesComponent implements OnInit {
     for (const i of Object.entries(SelectCompensate)) {
       this.selectQuestion.push({ key: i[1], value: i[0] });
     }
-    // table
-    this.initialCharge();
+    this.initialCharge(); // table
   }
 
   initialCharge() {
@@ -130,6 +129,7 @@ export class PrioritiesComponent implements OnInit {
       if (this.actionForm === 'create') {
         this.createPriorityApi(dataRequest);
       } else {
+        dataRequest.priority.priorityId = this.priorityForm.get('priorityId').value;
         this.updatePriorityApi(dataRequest);
       }
     }
@@ -142,7 +142,7 @@ export class PrioritiesComponent implements OnInit {
         if (resp.generalResponse.code === '0') {
           this._toastScv.showSuccess(resp.generalResponse.messageCode);
           this.cleanForm();
-          this._prioritySvc.allPriorities();
+          this.initialCharge(); // table
         } else {
           this._toastScv.showError(resp.generalResponse.messageCode);
         }
@@ -154,7 +154,7 @@ export class PrioritiesComponent implements OnInit {
       if (resp.generalResponse.code === '0') {
         this._toastScv.showSuccess(resp.generalResponse.messageCode);
         this.cleanForm();
-        this._prioritySvc.allPriorities();
+        this.initialCharge(); // table
       } else {
         this._toastScv.showError(resp.generalResponse.messageCode);
       }
@@ -197,7 +197,7 @@ export class PrioritiesComponent implements OnInit {
     this._prioritySvc.deletePriority(priority.priorityId).subscribe((resp) => {
       if (resp.generalResponse.code === '0') {
         this._toastScv.showSuccess(resp.generalResponse.messageCode);
-        this._prioritySvc.allPriorities();
+        this.initialCharge(); // table
       } else {
         this._toastScv.showError(resp.generalResponse.messageCode);
       }
