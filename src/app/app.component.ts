@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import {delay} from 'rxjs/operators';
+
+import { LoadingService } from './services/loading/loading.service';
 
 @Component({
   selector: 'app-root',
@@ -7,5 +10,17 @@ import { Component } from '@angular/core';
 })
 
 export class AppComponent {
-  title = 'compensaciones-v2';
+  loading = false;
+
+  constructor(
+    private loadingSvc: LoadingService
+  ){
+    this.listenToLoading();
+  }
+
+  listenToLoading(): void {
+    this.loadingSvc.loading$
+    .pipe(delay(0))
+    .subscribe((loading: boolean) => this.loading = loading);
+  }
 }
