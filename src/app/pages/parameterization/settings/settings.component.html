@@ -31,7 +31,7 @@
       <div class="row text-light text-left mt-1 px-sm-0 px-md-5">
         <div class="col-sm mx-1 mt-1 p-0">
           <select class="custom-select form-control-sm" formControlName="strata" size="4" [class.is-invalid]="invalidStrata">
-            <option *ngFor="let stratum of strataBase" [value]="stratum.key">{{ stratum.value }}</option>
+            <option *ngFor="let stratum of strataBase" [value]="stratum.statusSocial">{{ stratum.statusSocial }}</option>
           </select>
           <small class="text-danger" *ngIf="invalidStrata">{{ textsFormInvalid("strata") }}</small>
         </div>

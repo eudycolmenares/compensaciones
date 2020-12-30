@@ -2,18 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import {
-  StrataSettings as Strata,
   SelectStatus,
   ServicesSettings as Services,
 } from '../../../libraries/utilities.library';
 import { GeneralFunctionsService } from '../../../services/general-functions.service';
 import { SettingsService } from '../../../services/settings/settings.service';
+import { StratumService } from '../../../services/stratum/stratum.service';
 import { ToastService } from '../../../services/shared/toast.service';
-import {
-  requestSettingsModel as requestModel,
-  settingModel,
-  settingsApiModel
-} from '../../../models/settings';
+import { requestSettingsModel as requestModel, settingModel, settingsApiModel } from '../../../models/settings';
+import { strataApiModel } from "../../../models/stratum";
 
 @Component({
   selector: 'app-settings',
@@ -71,6 +68,7 @@ export class SettingsComponent implements OnInit {
     private fb: FormBuilder,
     private gnrScv: GeneralFunctionsService,
     private stgsSvc : SettingsService,
+    private stratumSvc : StratumService,
     private toastScv: ToastService
   ) {
     this.createForm();
@@ -82,15 +80,15 @@ export class SettingsComponent implements OnInit {
   }
 
   initializeVariables() {
-    for (const i of Object.values(Strata)) {
-      this.strataBase.push({key: i, value: i})
-    }
     for (const i of Object.entries(SelectStatus)) {
       this.selectStatus.push({key: i[1], value: i[0]})
     }
     for (const i of Object.entries(Services)) {
       this.servicesBase.push({key: i[0], value: i[1]})
     }
+    this.stratumSvc.allStrata().subscribe((resp: strataApiModel) => {
+      this.strataBase = resp.socialStatus;
+    })
     this.initialCharge(); // table
   }
   initialCharge() {
@@ -106,10 +104,8 @@ export class SettingsComponent implements OnInit {
       code: ['', [Validators.required, Validators.maxLength(20)]],
       description: ['', [Validators.required, Validators.maxLength(40)]],
       state: ['', Validators.required],
-      strataBase: [''], // acomodar
       strata: ['', Validators.required],
       services: ['', Validators.required],
-      servicesBase: [''] // acomodar
     })
   }
 
