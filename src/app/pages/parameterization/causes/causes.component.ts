@@ -182,10 +182,7 @@ export class CausesComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    this._causeSvc.allCauses();
-    this._originTypeSvc.allOrigins();
-  }
+  ngOnInit(): void { }
 
   invalidFieldForm(fieldName: string) {
     return (

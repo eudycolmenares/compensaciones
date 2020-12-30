@@ -1,0 +1,80 @@
+<section class="container py-3">
+  <app-breadcrumb></app-breadcrumb>
+
+  <div class="container-add px-sm-2 px-md-5">
+    <form autocomplete="off" [formGroup]="bulkLoadForm" (ngSubmit)="onSubmit()">
+      <div class="row text-light text-center px-sm-0 px-md-5">
+        <div class="col-sm bg-primary py-1 mx-1">Tipo de lista (*)</div>
+        <div class="col-sm bg-primary py-1 mx-1">
+          Descarga aquí la plantilla (*)
+        </div>
+      </div>
+
+      <div class="row px-sm-0 px-md-5">
+        <div class="col-sm py-1 mx-1 p-0">
+          <select
+            formControlName="uploadType"
+            class="form-control form-control-sm"
+            [ngClass]="{
+              'is-invalid': this.invalidFieldForm('uploadType')
+            }"
+          >
+            <option value="" [selected]="true">--Seleccione--</option>
+            <option value="SINTOMAS">Sintomas</option>
+            <option value="CAUSAS">Causas</option>
+          </select>
+          <small
+            class="text-danger"
+            *ngIf="this.invalidFieldForm('uploadType')"
+          >
+            {{ textsFormInvalid("uploadType") }}
+          </small>
+        </div>
+        <div class="col-sm py-1 mx-1 p-0">
+          <button>download</button>
+        </div>
+      </div>
+
+      <div class="row text-light text-center mt-4 px-sm-0 px-md-5">
+        <div class="col-sm bg-primary py-1 mx-1">
+          Carga aquí la plantilla (*)
+        </div>
+      </div>
+
+      <div class="row px-sm-0 px-md-5">
+        <div class="col-sm py-1 mx-1 p-0">
+          <input
+            type="file"
+            formControlName="uploadFile"
+            class="form-control form-control-sm"
+            [ngClass]="{
+              'is-invalid': this.invalidFieldForm('uploadFile')
+            }"
+            (change)="fileChange($event)"
+          />
+          <small
+            class="text-danger"
+            *ngIf="this.invalidFieldForm('uploadFile')"
+          >
+            {{ textsFormInvalid("uploadFile") }}
+          </small>
+        </div>
+      </div>
+
+      <div class="row text-light text-center mt-4">
+        <div class="col-sm container-buttons">
+          <button type="submit" class="btn btn-primary mr-3 btn-sm">
+            upload
+          </button>
+          <button
+            type="button"
+            class="btn btn-secondary btn-sm"
+            (click)="cleanForm()"
+          >
+            Limpiar
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>
