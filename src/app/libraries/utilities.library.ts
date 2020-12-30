@@ -30,6 +30,10 @@ export const RoutesData = {
   'task': {
     url: ['dashboard', 'task'],
     breadcrumb: ['Parametrización', 'Configuración Task']
+  },
+  'load-faults': {
+    url: ['dashboard', 'load-faults'],
+    breadcrumb: ['Fallas RR', 'Cargar Fallas']
   }
 }
 

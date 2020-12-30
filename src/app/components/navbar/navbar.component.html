@@ -47,7 +47,23 @@
           </ul>
         </ng-template>
       </ngb-panel>
+
+      <!-- test -->
       <ngb-panel id="static-2">
+        <ng-template ngbPanelTitle opened="true">
+          <span>Fallas RR</span><img src="assets/img/arrow-down.svg">
+        </ng-template>
+        <ng-template ngbPanelContent>
+          <!-- <ul class="list-group list-group-flush" (click)="toggleSidebar()"> -->
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item" [routerLink]="['/dashboard/load-faults']">
+              <span>Cargar Fallas</span><img src="assets/img/setting.svg">
+            </li>
+          </ul>
+        </ng-template>
+      </ngb-panel>
+
+      <ngb-panel id="static-3">
         <ng-template ngbPanelTitle>
           <span>Reporte</span>
         </ng-template>
@@ -57,7 +73,7 @@
           </ul>
         </ng-template>
       </ngb-panel>
-      <ngb-panel id="static-3">
+      <ngb-panel id="static-4">
         <ng-template ngbPanelTitle>
           <span>Validación</span>
         </ng-template>

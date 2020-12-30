@@ -40,6 +40,11 @@ const ROUTES: Routes = [
       {
         path: 'task',
         loadChildren: () => import('../parameterization/task/task.module').then(m => m.TaskModule),
+      },
+      // test
+      {
+        path: 'load-faults',
+        loadChildren: () => import('../faults/load-faults/load-faults.module').then(m => m.LoadFaultsModule),
       }
     ],
   }
