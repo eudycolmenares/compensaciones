@@ -77,9 +77,7 @@ export class PrioritiesComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    this._prioritySvc.allPriorities();
-  }
+  ngOnInit(): void { }
 
   invalidFieldForm(fieldName: string) {
     return (
@@ -116,7 +114,6 @@ export class PrioritiesComponent implements OnInit {
     } else {
       const dataRequest: RequestModel = {
         priority: {
-          priorityId: this.priorityForm.get('priorityId').value,
           priorityCode: this.priorityForm.get('priorityCode').value,
           priorityDescription: this.priorityForm.get('priorityDescription')
             .value,

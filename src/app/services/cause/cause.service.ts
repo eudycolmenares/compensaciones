@@ -5,7 +5,6 @@ import { Observable } from 'rxjs';
 import { environment as env } from 'src/environments/environment';
 import {
   RequestModel,
-  CauseModel,
   CausesApiModel,
   ResponseModel,
 } from '../../models/cause';

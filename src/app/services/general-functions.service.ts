@@ -36,6 +36,8 @@ export class GeneralFunctionsService {
   validationFormTextRequired(form: FormGroup, field: string) {
     return form.get(field).hasError('required')
       ? 'El campo es obligatorio'
+      : form.get(field).hasError('fileExtValidator')
+      ? 'El tipo del archivo debe ser csv'
       : !form.get(field).hasError('maxLength')
       ? 'El campo supera lo permitido'
       : '';

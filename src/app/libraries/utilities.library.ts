@@ -27,6 +27,10 @@ export const RoutesData = {
     url: ['dashboard', 'origintype'],
     breadcrumb: ['Parametrización', 'Tipo Origen']
   },
+  'bulk-load': {
+    url: ['dashboard', 'bulk-load'],
+    breadcrumb: ['Parametrización', 'Cargue Masivo']
+  },
   'task': {
     url: ['dashboard', 'task'],
     breadcrumb: ['Parametrización', 'Configuración Task']
