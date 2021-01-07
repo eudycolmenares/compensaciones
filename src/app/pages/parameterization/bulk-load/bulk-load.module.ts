@@ -9,4 +9,4 @@ import { BulkLoadComponent } from './bulk-load.component';
   declarations: [BulkLoadComponent],
   imports: [CommonModule, BulkLoadRoutingModule, DashboardModule],
 })
-export class BulkLoadModule { }
+export class BulkLoadModule {}
