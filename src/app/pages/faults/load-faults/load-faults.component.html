@@ -17,7 +17,7 @@
               <small class="text-danger" *ngIf="invalidType">{{ textsFormInvalid("type") }}</small>
             </div>
             <div class="col-sm mx-1 mt-1 p-0">
-							<input type="file" class="form-control-file" formControlName="file" [class.is-invalid]="invalidFile">
+							<input type="file" class="form-control-file" formControlName="file" (change)="handleFileInput($event)" [class.is-invalid]="invalidFile">
 							<small class="text-danger" *ngIf="invalidFile">{{ textsFormInvalid("file") }}</small>
             </div>
           </div>

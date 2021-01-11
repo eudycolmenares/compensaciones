@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   URL_API: '/WSCompensaciones-web/webresources/WSCompensaciones/',
-  urlApi_bulkLoad: '/CompensacionesBatch-web/webresources/CompensacionesBatch/', 
+  urlApi_bulkLoad: '/CompensacionesBatch-web/webresources/CompensacionesBatch/',
+  URL_API_BATCHRR: '/WSCompensacionesBatchRR-web/webresources/WSCompensacionesBatchRR/',
   endpoints: {
     // Settings
     settings_all: 'SettingsService/read/all',
@@ -48,6 +49,9 @@ export const environment = {
     // Bulk load
     bulk_load_create: 'sendFile',
     bulk_load_read: 'findTypeProcess',
+    // Faults
+    faults_load: 'LoadService/load',
+    faults_read_id: 'LoadService/read/id',
   },
 };
 

@@ -10,5 +10,11 @@
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
+  },
+  "/WSCompensacionesBatchRR-web/*": {
+    "target": "http://100.126.19.74:7669",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
   }
 }
