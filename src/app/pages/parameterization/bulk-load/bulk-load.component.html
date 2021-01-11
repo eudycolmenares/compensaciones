@@ -31,7 +31,7 @@
           </small>
         </div>
         <div class="col-sm py-1 mx-1 p-0">
-          <button>download</button>
+          <button (click)="downloadModelDocument()">download</button>
         </div>
       </div>
 
@@ -77,4 +77,12 @@
       </div>
     </form>
   </div>
+
+  <hr />
+
+  <app-table
+    [dataBase]="dataToTable"
+    [structure]="structure"
+    actionsButton="No"
+  ></app-table>
 </section>

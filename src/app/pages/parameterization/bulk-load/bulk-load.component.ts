@@ -6,7 +6,13 @@ import {
   AbstractControl,
 } from '@angular/forms';
 
-import { BulkLoadApiModel, BulkLoadModel, RequestModel, ResponseModel } from 'src/app/models/bulk-load';
+import {
+  BulkLoadApiModel,
+  BulkLoadRequestModel,
+  BulkLoadResponseModel,
+  BulkLoadErrorModel,
+  GeneralResponse,
+} from 'src/app/models/bulk-load';
 import { BulkLoadService } from '../../../services/bulkLoad/bulk-load.service';
 import { GeneralFunctionsService } from '../../../services/general-functions.service';
 import { DataList } from '../../../models/general';
@@ -20,75 +26,25 @@ import { ToastService } from 'src/app/services/shared/toast.service';
 export class BulkLoadComponent implements OnInit {
   bulkLoadForm: FormGroup;
   dataUploaded: Blob;
+  dataArraySent: string[];
   fileEncode: string;
   // table
-  dataToTable: BulkLoadModel[];
+  dataToTable: BulkLoadErrorModel[];
   structure: object[] = [
     {
-      name: 'Disruption',
-      subname: 'id',
-      description: 'Código Anolamía',
-      validation: 'object',
-    },
-    {
-      name: 'Disruption',
-      subname: 'description',
-      description: 'Descripción Anolamía',
-      validation: 'object',
-    },
-    {
-      name: 'Problem',
-      subname: 'id',
-      description: 'Código Problema',
-      validation: 'object',
-    },
-    {
-      name: 'Problem',
-      subname: 'description',
-      description: 'Descripción Problema',
-      validation: 'object',
-    },
-    {
-      name: 'code',
-      description: 'Código Causa',
+      name: 'lineError',
+      description: 'Número de línea',
       validation: '',
     },
     {
-      name: 'description',
-      description: 'Descripción Causa',
+      name: 'dataError',
+      description: 'Datos',
       validation: '',
     },
     {
-      name: 'Origin',
-      subname: 'id',
-      description: 'Origen',
-      validation: 'object',
-    },
-    {
-      name: 'OriginType',
-      subname: 'id',
-      description: 'Tipo Origen',
-      validation: 'object',
-    },
-    {
-      name: 'internet',
-      description: 'Internet',
-      validation: 'service',
-    },
-    {
-      name: 'telephone',
-      description: 'Telefonía',
-      validation: 'service',
-    },
-    {
-      name: 'television',
-      description: 'Televisión',
-      validation: 'service',
-    },
-    {
-      name: 'state',
-      description: 'Estado',
-      validation: 'active-desactive',
+      name: 'commentError',
+      description: 'Comentario',
+      validation: '',
     },
   ];
   constructor(
@@ -102,7 +58,7 @@ export class BulkLoadComponent implements OnInit {
 
   createForm() {
     this.bulkLoadForm = this._fb.group({
-      // fileName: [''],
+      fileName: [''],
       // state: [''],
       uploadFile: [
         '',
@@ -110,7 +66,7 @@ export class BulkLoadComponent implements OnInit {
       ],
       // uploadError: [''],
       uploadType: ['', [Validators.required]],
-      // user: [''],
+      user: ['test'],
     });
   }
 
@@ -138,16 +94,57 @@ export class BulkLoadComponent implements OnInit {
 
   fileSent() {
     this._bulkLoadSvc
-      .allBulkLoad('SINTOMAS')
+      .allBulkLoad(this.bulkLoadForm.get('uploadType').value)
       .subscribe((resp: BulkLoadApiModel) => {
-        this.dataToTable = resp.compProcessLoad;
-        console.log(this.dataToTable);
-        console.log(atob(this.dataToTable[1].file));
+        var fileName = this.bulkLoadForm.get('fileName').value;
+        var user = this.bulkLoadForm.get('user').value;
+
+        resp.compProcessLoad = resp.compProcessLoad.filter(function (data) {
+          return (
+            data.fileName === fileName &&
+            data.user === user &&
+            data.state === 'FINALIZADO_CON_ERRORES'
+          );
+        });
+
+        if (resp.compProcessLoad) {
+          let dataFiltered = atob(resp.compProcessLoad[0].uploadError).split(
+            '\n'
+          );
+          dataFiltered.pop();
+          var arrayList: BulkLoadErrorModel[] = [];
+          dataFiltered.forEach((data: any) => {
+            let dataLineError = data.split(' El ')[0];
+            let numberLineError =
+              Number(dataLineError.replace('Linea: ', '')) - 1;
+            arrayList.push({
+              lineError: dataLineError,
+              dataError: this.dataArraySent[numberLineError],
+              commentError: data.split(' El ')[1],
+            });
+          });
+          this.dataToTable = arrayList;
+        }
       });
   }
 
   fileChange(documentUpload) {
     this.dataUploaded = documentUpload.target.files[0];
+    this.bulkLoadForm
+      .get('fileName')
+      .setValue(Date.now() + '_' + this.dataUploaded['name']);
+  }
+
+  downloadModelDocument() {
+    const symptomsFile = 'assets/documents/SINTOMAS.csv';
+    const causesFile = 'assets/documents/CAUSAS.csv';
+    if (this.bulkLoadForm.get('uploadType').value) {
+      let selectFile = symptomsFile;
+      if (this.bulkLoadForm.get('uploadType').value === 'CAUSAS') {
+        selectFile = causesFile;
+      }
+      window.open(selectFile, '_self');
+    }
   }
 
   onSubmit() {
@@ -159,33 +156,34 @@ export class BulkLoadComponent implements OnInit {
       let fileReader = new FileReader();
       fileReader.readAsText(this.dataUploaded);
       fileReader.onload = (e) => {
-        let text = fileReader.result;
-        let textEncode = btoa(text.toString());
-        console.log(textEncode);
-        const dataRequest: BulkLoadModel = {
-            fileName: 'test.csv',
-            file: textEncode,
-            uploadType: this.bulkLoadForm.get('uploadType').value,
-            userName: 'test', // seteado
+        let text = fileReader.result.toString();
+        this.dataArraySent = text.split('\n');
+        let textEncode = btoa(text);
+        const dataRequest: BulkLoadRequestModel = {
+          fileName: this.bulkLoadForm.get('fileName').value,
+          file: textEncode,
+          uploadType: this.bulkLoadForm.get('uploadType').value,
+          userName: 'test', // seteado
         };
         this.createCauseApi(dataRequest);
-        
       };
-      
     }
   }
 
-  createCauseApi(dataRequest: BulkLoadModel) {
-    this._bulkLoadSvc.createBulkLoad(dataRequest).subscribe((resp: ResponseModel) => {
-      console.log(resp);
-      
-      if (resp.GeneralResponse.code === '0') {
-        this._toastScv.showSuccess(resp.GeneralResponse.messageCode);
-        this.cleanForm();
-      } else {
-        this._toastScv.showError(resp.GeneralResponse.messageCode);
-      }
-    });
+  createCauseApi(dataRequest: BulkLoadRequestModel) {
+    this._bulkLoadSvc
+      .createBulkLoad(dataRequest)
+      .subscribe((resp: GeneralResponse) => {
+        if (resp.code === 'SEND-FILE-VALRES-1' || resp.code === '0') {
+          this._toastScv.showSuccess(resp.messageCode);
+          this.fileSent();
+          // this.cleanForm();
+        } else {
+          this._toastScv.showError(
+            resp.messageCode + ', ' + resp.descriptionCode
+          );
+        }
+      });
   }
 
   cleanForm() {

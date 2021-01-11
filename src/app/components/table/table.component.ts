@@ -50,6 +50,7 @@ export class TableComponent implements OnInit {
   @ViewChildren(SortableDirective) headers: QueryList<SortableDirective>;
   @Input() dataBase: object[];
   @Input() structure: object[];
+  @Input() actionsButton: string;
   @Input() buttons: Buttons[] = [Buttons.edit, Buttons.disable, Buttons.delete];
   @Output() editRecord: EventEmitter<object> ;
   @Output() disableRecord: EventEmitter<object> ;

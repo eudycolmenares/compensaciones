@@ -4,10 +4,9 @@ import { Observable } from 'rxjs';
 
 import { environment as env } from 'src/environments/environment';
 import {
-  RequestModel,
   BulkLoadApiModel,
-  ResponseModel,
-  BulkLoadModel,
+  GeneralResponse,
+  BulkLoadRequestModel,
 } from '../../models/bulk-load'
 
 @Injectable({
@@ -31,9 +30,8 @@ export class BulkLoadService {
     );
   }
 
-  createBulkLoad(body: BulkLoadModel): Observable<ResponseModel> {console.log(body);
-  
-    return this._http.post<ResponseModel>(
+  createBulkLoad(body: BulkLoadRequestModel): Observable<GeneralResponse> {  
+    return this._http.post<GeneralResponse>(
       env.urlApi_bulkLoad + env.endpoints.bulk_load_create,
       body,
       {
