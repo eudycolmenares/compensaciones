@@ -64,12 +64,11 @@ export class LoadFaultsComponent implements OnInit {
         console.log('Respuesta Servicio:', resp);
         const idLoad = resp.Loads.Load[0].idLoad;
         if(resp.GeneralResponse.code === '0') {
-        //   this.toastScv.showSuccess(resp.GeneralResponse.messageCode);
-          this.faultsScv.readByIdFaults(idLoad).subscribe(resp => {
+          this.toastScv.showSuccess(resp.GeneralResponse.messageCode);
+          this.faultsScv.readByIdFaults('353').subscribe(resp => {
             console.log('respuesta readByIdFaults()', resp);
-            console.log('File: ', resp.Loads.Load[0].loadFile);
-            console.log('File: ', atob(resp.Loads.Load[0].loadFile));
-
+            // console.log('File: ', resp.Loads.Load[0].loadFile);
+            // console.log('File: ', atob(resp.Loads.Load[0].loadFile));
           })
         }else{
         //   this.toastScv.showError(resp.GeneralResponse.messageCode);
@@ -83,8 +82,7 @@ export class LoadFaultsComponent implements OnInit {
     let reader = new FileReader();
     reader.readAsDataURL(e.target['files'][0]);
     reader.onload = () => {
-      console.log('>>', reader);
-
+      // console.log('>>', reader);
       const fileString = reader.result.toString().split(';base64,');
       this.fileBaseData = fileString[fileString.length -1];
     };

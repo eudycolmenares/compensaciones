@@ -24,26 +24,19 @@
             <li class="list-group-item" [routerLink]="['/dashboard/causes']">
               <span>Causas</span><img src="assets/img/flow-filled.svg">
             </li>
-            <!-- <li class="list-group-item">Causas Servicio</li> -->
             <li class="list-group-item" [routerLink]="['/dashboard/system-status']">
               <span>Estado Sistema</span><img src="assets/img/system.svg">
             </li>
-            <!-- <li class="list-group-item">FTP</li> -->
             <li class="list-group-item" [routerLink]="['/dashboard/symptom']">
               <span>Síntoma</span><img src="assets/img/search.svg">
             </li>
-            <!-- <li class="list-group-item">Síntomas Servicio</li> -->
             <li class="list-group-item" [routerLink]="['/dashboard/priorities']">
               <span>Prioridades</span><img src="assets/img/priority.svg">
             </li>
-            <!-- <li class="list-group-item">Observaciones</li> -->
             <li class="list-group-item" [routerLink]="['/dashboard/origintype']">
               <span>Tipo Origen</span><img src="assets/img/origin.svg">
             </li>
             <li class="list-group-item" [routerLink]="['/dashboard/bulk-load']">Cargue Masivo</li>
-            <!-- <li class="list-group-item" [routerLink]="['/dashboard/task']">
-              <span>Configuración Task</span><img src="assets/img/task.svg">
-            </li> -->
           </ul>
         </ng-template>
       </ngb-panel>
@@ -51,13 +44,18 @@
       <!-- test -->
       <ngb-panel id="static-2">
         <ng-template ngbPanelTitle opened="true">
-          <span>Fallas RR</span><img src="assets/img/arrow-down.svg">
+          <span>Parametrización RR</span><img src="assets/img/arrow-down.svg">
         </ng-template>
         <ng-template ngbPanelContent>
-          <!-- <ul class="list-group list-group-flush" (click)="toggleSidebar()"> -->
           <ul class="list-group list-group-flush">
             <li class="list-group-item" [routerLink]="['/dashboard/load-faults']">
               <span>Cargar Fallas</span><img src="assets/img/setting.svg">
+            </li>
+            <li class="list-group-item" [routerLink]="">
+              <span>Causas Ordenes Mantenimiento</span><img src="assets/img/setting.svg">
+            </li>
+            <li class="list-group-item" [routerLink]="">
+              <span>Síntomas Ordenes Mantenimiento</span><img src="assets/img/setting.svg">
             </li>
           </ul>
         </ng-template>

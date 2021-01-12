@@ -114,6 +114,11 @@ input[type=number] {
       display: flex;
       justify-content: space-between;
       padding: .75rem .8rem .75rem 1.25rem;
+      span {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
     }
     img {
       width: 20px;
