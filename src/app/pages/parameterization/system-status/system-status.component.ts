@@ -192,6 +192,8 @@ export class SystemStatusComponent implements OnInit {
 
   cleanForm() {
     this.systemStatusForm.reset();
+    this.systemStatusForm.get('compensate').setValue('');
+    this.systemStatusForm.get('status').setValue('');
     this.actionForm = 'create';
   }
 }
