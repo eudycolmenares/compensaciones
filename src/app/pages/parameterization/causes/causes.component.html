@@ -4,13 +4,56 @@
   <div class="container-add px-sm-2 px-md-5">
     <form autocomplete="off" [formGroup]="causeForm" (ngSubmit)="onSubmit()">
       <div class="row text-light text-center px-sm-0 px-md-5">
+        <div class="col-sm bg-primary py-1 mx-1">Origen (*)</div>
+        <div class="col-sm bg-primary py-1 mx-1">Tipo de Origen (*)</div>
         <div class="col-sm bg-primary py-1 mx-1">Código Anomalía (*)</div>
         <div class="col-sm bg-primary py-1 mx-1">Descripción Anomalía (*)</div>
-        <div class="col-sm bg-primary py-1 mx-1">Código Problema (*)</div>
-        <div class="col-sm bg-primary py-1 mx-1">Descripción Problema</div>
       </div>
 
       <div class="row px-sm-0 px-md-5">
+        <div class="col-sm py-1 mx-1 p-0 text-left">
+          <select
+            formControlName="origin"
+            class="form-control form-control-sm"
+            [ngClass]="{
+              'is-invalid': this.invalidFieldForm('origin')
+            }"
+          >
+            <option value="" selected>--Seleccione--</option>
+            <option
+              *ngFor="let listTypeOrigin of origin"
+              [value]="listTypeOrigin.id"
+            >
+              {{ listTypeOrigin.name }}
+            </option>
+          </select>
+          <small class="text-danger" *ngIf="this.invalidFieldForm('origin')">
+            {{ textsFormInvalid("origin") }}
+          </small>
+        </div>
+        <div class="col-sm py-1 mx-1 p-0 text-left">
+          <select
+            formControlName="typeOrigin"
+            class="form-control form-control-sm"
+            [ngClass]="{
+              'is-invalid': this.invalidFieldForm('typeOrigin')
+            }"
+          >
+            <option value="" selected>-- Seleccione --</option>
+            <option
+              *ngFor="let listTypeOrigin of originTypeList"
+              [value]="listTypeOrigin.id"
+            >
+              {{ listTypeOrigin.name }}
+            </option>
+          </select>
+          <small
+            class="text-danger"
+            *ngIf="this.invalidFieldForm('typeOrigin')"
+          >
+            {{ textsFormInvalid("typeOrigin") }}
+          </small>
+        </div>
         <div class="col-sm py-1 mx-1 p-0">
           <input
             type="text"
@@ -45,6 +88,16 @@
             {{ textsFormInvalid("descriptionAnomaly") }}
           </small>
         </div>
+      </div>
+
+      <div class="row text-light text-center mt-4 px-sm-0 px-md-5">
+        <div class="col-sm bg-primary py-1 mx-1">Código Problema (*)</div>
+        <div class="col-sm bg-primary py-1 mx-1">Descripción Problema</div>
+        <div class="col-sm bg-primary py-1 mx-1">Código Causas (*)</div>
+        <div class="col-sm bg-primary py-1 mx-1">Descripción Causa (*)</div>
+      </div>
+
+      <div class="row px-sm-0 px-md-5">
         <div class="col-sm mx-1 mt-1 p-0">
           <input
             type="text"
@@ -79,16 +132,6 @@
             {{ textsFormInvalid("descriptionProblem") }}
           </small>
         </div>
-      </div>
-
-      <div class="row text-light text-center mt-4 px-sm-0 px-md-5">
-        <div class="col-sm bg-primary py-1 mx-1">Código Causas (*)</div>
-        <div class="col-sm bg-primary py-1 mx-1">Descripción Causa (*)</div>
-        <div class="col-sm bg-primary py-1 mx-1">Origen (*)</div>
-        <div class="col-sm bg-primary py-1 mx-1">Tipo de Origen (*)</div>
-      </div>
-
-      <div class="row px-sm-0 px-md-5">
         <div class="col-sm py-1 mx-1 p-0">
           <input
             type="text"
@@ -118,49 +161,6 @@
             *ngIf="this.invalidFieldForm('descriptionCause')"
           >
             {{ textsFormInvalid("descriptionCause") }}
-          </small>
-        </div>
-        <div class="col-sm py-1 mx-1 p-0 text-left">
-          <select
-            formControlName="origin"
-            class="form-control form-control-sm"
-            [ngClass]="{
-              'is-invalid': this.invalidFieldForm('origin')
-            }"
-          >
-            <option selected>--Seleccione--</option>
-            <option
-              *ngFor="let listTypeOrigin of origin"
-              [value]="listTypeOrigin.id"
-            >
-              {{ listTypeOrigin.name }}
-            </option>
-          </select>
-          <small class="text-danger" *ngIf="this.invalidFieldForm('origin')">
-            {{ textsFormInvalid("origin") }}
-          </small>
-        </div>
-        <div class="col-sm py-1 mx-1 p-0 text-left">
-          <select
-            formControlName="typeOrigin"
-            class="form-control form-control-sm"
-            [ngClass]="{
-              'is-invalid': this.invalidFieldForm('typeOrigin')
-            }"
-          >
-            <option selected>Seleccione ...</option>
-            <option
-              *ngFor="let listTypeOrigin of originTypeList"
-              [value]="listTypeOrigin.id"
-            >
-              {{ listTypeOrigin.name }}
-            </option>
-          </select>
-          <small
-            class="text-danger"
-            *ngIf="this.invalidFieldForm('typeOrigin')"
-          >
-            {{ textsFormInvalid("typeOrigin") }}
           </small>
         </div>
       </div>

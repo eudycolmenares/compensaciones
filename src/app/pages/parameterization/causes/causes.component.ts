@@ -150,6 +150,8 @@ export class CausesComponent implements OnInit {
 
   createForm() {
     this.causeForm = this._fb.group({
+      origin: ['', [Validators.required]],
+      typeOrigin: [''],
       idCause: [''],
       codeAnomaly: ['', [Validators.required]],
       descriptionAnomaly: [''],
@@ -157,8 +159,6 @@ export class CausesComponent implements OnInit {
       descriptionProblem: ['', [Validators.required]],
       causeCode: [''],
       descriptionCause: ['', [Validators.required]],
-      origin: ['', [Validators.required]],
-      typeOrigin: [''],
       services: [''],
       status: [''],
       user: [''],
@@ -340,6 +340,9 @@ export class CausesComponent implements OnInit {
 
   cleanForm() {
     this.causeForm.reset();
+    this.causeForm.get('origin').setValue('');
+    this.causeForm.get('typeOrigin').setValue('');
+    this.causeForm.get('status').setValue('');
     this.actionForm = 'create';
   }
 }

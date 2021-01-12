@@ -203,6 +203,9 @@ export class PrioritiesComponent implements OnInit {
 
   cleanForm() {
     this.priorityForm.reset();
+    this.priorityForm.get('state').setValue('');
+    this.priorityForm.get('compensatesNode').setValue('');
+    this.priorityForm.get('compensatesAccount').setValue('');
     this.actionForm = 'create';
   }
 }
