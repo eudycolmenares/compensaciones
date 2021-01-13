@@ -1,1 +1,65 @@
-<p>maintenance-orders-symptoms works!</p>
+<section class="container py-3">
+  <app-breadcrumb></app-breadcrumb>
+
+  <div class="container-add px-sm-2 px-md-5">
+    <form autocomplete="off" [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="row text-light text-center">
+        <div class="col-sm bg-primary py-1 mx-1">Código(*)</div>
+        <div class="col-sm bg-primary py-1 mx-1">Descripción(*)</div>
+        <div class="col-sm bg-primary py-1 mx-1">Estado(*)</div>
+      </div>
+      <div class="row">
+        <div class="col-sm mx-1 mt-1 p-0">
+          <input class="form-control form-control-sm" type="text" formControlName="code" [class.is-invalid]="invalidCode" placeholder="Código">
+          <small class="text-danger" *ngIf="invalidCode">{{ textsFormInvalid("code") }}</small>
+        </div>
+        <div class="col-sm mx-1 mt-1 p-0">
+          <input class="form-control form-control-sm" type="text" formControlName="description" [class.is-invalid]="invalidDescription" placeholder="Descripción">
+          <small class="text-danger" *ngIf="invalidDescription">{{ textsFormInvalid("description") }}</small>
+        </div>
+        <div class="col-sm mx-1 mt-1 p-0">
+          <select class="form-control form-control-sm" formControlName="state" [class.is-invalid]="invalidState">
+            <option *ngFor="let state of selectStatus" [value]="state.key">{{ state.value }}</option>
+          </select>
+          <small class="text-danger" *ngIf="invalidState">{{ textsFormInvalid("state") }}</small>
+        </div>
+      </div>
+      <div class="row text-light text-center mt-4">
+        <div class="col-sm bg-primary py-1 mx-1">Compensa(*)</div>
+        <div class="col-sm bg-primary py-1 mx-1">Mantenimiento(*)</div>
+        <div class="col-sm bg-primary py-1 mx-1">Servicios(*)</div>
+      </div>
+      <div class="row">
+        <div class="col-sm mx-1 mt-1 p-0">
+          <select class="form-control form-control-sm" formControlName="compensate" [class.is-invalid]="invalidCompensate" size="3">
+            <option *ngFor="let opt of selectCompensate" [value]="opt.key">{{ opt.value }}</option>
+          </select>
+          <small class="text-danger" *ngIf="invalidCompensate">{{ textsFormInvalid("compensate") }}</small>
+        </div>
+        <div class="col-sm mx-1 mt-1 p-0">
+          <select class="form-control form-control-sm" formControlName="maintenance" [class.is-invalid]="invalidMaintenance" size="3">
+            <option *ngFor="let opt of selectCompensate" [value]="opt.key">{{ opt.value }}</option>
+          </select>
+          <small class="text-danger" *ngIf="invalidMaintenance">{{ textsFormInvalid("maintenance") }}</small>
+        </div>
+        <div class="col-sm py-1 mx-1 p-0 text-left">
+          <select class="form-control form-control-sm" formControlName="services" multiple [class.is-invalid]="invalidServices" size="3">
+            <option *ngFor="let service of services" [value]="service.key">{{ service.value }}</option>
+          </select>
+          <small class="text-danger" *ngIf="invalidServices">{{ textsFormInvalid("services") }}</small>
+        </div>
+      </div>
+
+      <div class="row text-light text-center mt-4">
+        <div class="col-sm container-buttons">
+          <button type="submit" class="btn btn-primary mr-3 btn-sm">{{ (actionForm === 'create' ? 'Crear' : 'Actualizar' )}}</button>
+          <button type="button" class="btn btn-secondary btn-sm" (click)="cleanForm()">Limpiar</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <hr class="mt-5 mb-5" />
+
+  <app-table [dataBase]="dataToTable" [structure]="structure"></app-table>
+</section>

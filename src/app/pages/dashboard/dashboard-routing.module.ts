@@ -45,10 +45,13 @@ const ROUTES: Routes = [
         path: 'task',
         loadChildren: () => import('../parameterization/task/task.module').then(m => m.TaskModule),
       },
-      // test
       {
         path: 'load-faults',
         loadChildren: () => import('../faults/load-faults/load-faults.module').then(m => m.LoadFaultsModule),
+      },
+      {
+        path: 'orders-symptoms',
+        loadChildren: () => import('../parameterizationRR/maintenance-orders-symptoms/maintenance-orders-symptoms.module').then(m => m.MaintenanceOrdersSymptomsModule),
       }
     ],
   }

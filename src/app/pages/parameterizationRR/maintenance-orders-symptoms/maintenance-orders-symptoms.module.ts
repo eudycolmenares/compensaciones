@@ -1,14 +1,22 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DecimalPipe } from '@angular/common';
+import { ReactiveFormsModule } from "@angular/forms";
 
 import { MaintenanceOrdersSymptomsRoutingModule } from './maintenance-orders-symptoms-routing.module';
-
+import { MaintenanceOrdersSymptomsComponent } from './maintenance-orders-symptoms.component';
+import { ComponentsModule } from '../../../components/components.module';
 
 @NgModule({
-  declarations: [],
+  declarations: [MaintenanceOrdersSymptomsComponent],
   imports: [
     CommonModule,
-    MaintenanceOrdersSymptomsRoutingModule
-  ]
+    MaintenanceOrdersSymptomsRoutingModule,
+    ComponentsModule,
+    ReactiveFormsModule,
+  ],
+  exports: [MaintenanceOrdersSymptomsComponent],
+  bootstrap: [MaintenanceOrdersSymptomsComponent],
+  providers: [DecimalPipe]
 })
+
 export class MaintenanceOrdersSymptomsModule { }
