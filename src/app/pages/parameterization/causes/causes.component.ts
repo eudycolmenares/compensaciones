@@ -182,7 +182,7 @@ export class CausesComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   invalidFieldForm(fieldName: string) {
     return (
@@ -339,10 +339,7 @@ export class CausesComponent implements OnInit {
   }
 
   cleanForm() {
-    this.causeForm.reset();
-    this.causeForm.get('origin').setValue('');
-    this.causeForm.get('typeOrigin').setValue('');
-    this.causeForm.get('status').setValue('');
+    this.causeForm.reset({ origin: '', typeOrigin: '', status: '' });
     this.actionForm = 'create';
   }
 }

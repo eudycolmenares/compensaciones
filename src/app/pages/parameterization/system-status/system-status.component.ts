@@ -173,7 +173,7 @@ export class SystemStatusComponent implements OnInit {
   disableSystemStatus(systemStatus: SystemStatusModel) {
     const dataRequest: RequestModel = {
       SystemStatus: { ...systemStatus, state: '0' },
-    };    
+    };
     this.updateSystemStatusApi(dataRequest);
   }
 
@@ -191,9 +191,7 @@ export class SystemStatusComponent implements OnInit {
   }
 
   cleanForm() {
-    this.systemStatusForm.reset();
-    this.systemStatusForm.get('compensate').setValue('');
-    this.systemStatusForm.get('status').setValue('');
+    this.systemStatusForm.reset({ compensate: '', status: '' });
     this.actionForm = 'create';
   }
 }

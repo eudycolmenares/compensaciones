@@ -1,0 +1,162 @@
+<section class="container py-3">
+  <app-breadcrumb></app-breadcrumb>
+
+  <div class="container-add px-sm-2 px-md-5">
+    <form autocomplete="off" [formGroup]="MOCauseForm" (ngSubmit)="onSubmit()">
+      <div class="row text-light text-center px-sm-0 px-md-5">
+        <div class="col-sm bg-primary py-1 mx-1">Código Causa (*)</div>
+        <div class="col-sm bg-primary py-1 mx-1">Descripción Diagnóstico (*)</div>
+        <div class="col-sm bg-primary py-1 mx-1">Estado (*)</div>
+      </div>
+
+      <div class="row px-sm-0 px-md-5">
+        <div class="col-sm py-1 mx-1 p-0 text-left">
+          <input
+          type="text"
+          formControlName="causeCode"
+          class="form-control form-control-sm"
+          [ngClass]="{
+            'is-invalid': this.invalidFieldForm('causeCode')
+          }"
+          placeholder="Cód Causa"
+        />
+          <small
+            class="text-danger"
+            *ngIf="this.invalidFieldForm('causeCode')"
+          >
+            {{ textsFormInvalid("causeCode") }}
+          </small>
+        </div>
+        <div class="col-sm py-1 mx-1 p-0">
+          <input
+            type="text"
+            formControlName="diagnosticDescription"
+            class="form-control form-control-sm"
+            [ngClass]="{
+              'is-invalid': this.invalidFieldForm('diagnosticDescription')
+            }"
+            placeholder="Desc Diagnóstico"
+          />
+          <small
+            class="text-danger"
+            *ngIf="this.invalidFieldForm('diagnosticDescription')"
+          >
+            {{ textsFormInvalid("diagnosticDescription") }}
+          </small>
+        </div>
+        <div class="col-sm py-1 mx-1 p-0 text-left">
+          <select
+            formControlName="currentlyUse"
+            class="form-control form-control-sm"
+            [ngClass]="{
+              'is-invalid': this.invalidFieldForm('currentlyUse')
+            }"
+          >
+            <option
+              *ngFor="let listCurrentlyUse of selectYesNo"
+              [value]="listCurrentlyUse.key"
+            >
+              {{ listCurrentlyUse.value }}
+            </option>
+          </select>
+          <small class="text-danger" *ngIf="this.invalidFieldForm('currentlyUse')">
+            {{ textsFormInvalid("currentlyUse") }}
+          </small>
+        </div>
+      </div>
+
+      <div class="row text-light text-center mt-4 px-sm-0 px-md-5">
+        <div class="col-sm bg-primary py-1 mx-1">Compensa (*)</div>
+        <div class="col-sm bg-primary py-1 mx-1">Mantenimiento (*)</div>
+        <div class="col-sm bg-primary py-1 mx-1">Servicios (*)</div>
+      </div>
+
+      <div class="row px-sm-0 px-md-5">
+        <div class="col-sm py-1 mx-1 p-0 text-left">
+          <select
+            formControlName="compensation"
+            class="form-control form-control-sm"
+            [ngClass]="{
+              'is-invalid': this.invalidFieldForm('compensation')
+            }"
+          >
+            <option
+              *ngFor="let listCompensation of selectYesNo"
+              [value]="listCompensation.key"
+            >
+              {{ listCompensation.value }}
+            </option>
+          </select>
+          <small class="text-danger" *ngIf="this.invalidFieldForm('compensation')">
+            {{ textsFormInvalid("compensation") }}
+          </small>
+        </div>
+        <div class="col-sm py-1 mx-1 p-0 text-left">
+          <select
+            formControlName="maintenance"
+            class="form-control form-control-sm"
+            [ngClass]="{
+              'is-invalid': this.invalidFieldForm('maintenance')
+            }"
+          >
+            <option
+              *ngFor="let listMaintenance of selectYesNo"
+              [value]="listMaintenance.key"
+            >
+              {{ listMaintenance.value }}
+            </option>
+          </select>
+          <small class="text-danger" *ngIf="this.invalidFieldForm('maintenance')">
+            {{ textsFormInvalid("maintenance") }}
+          </small>
+        </div>
+        <div class="col-sm py-1 mx-1 p-0 text-left">
+          <select
+            formControlName="affectedServices"
+            class="form-control form-control-sm"
+            multiple
+            size="3"
+            [ngClass]="{
+              'is-invalid': this.invalidFieldForm('affectedServices')
+            }"
+          >
+            <option
+              *ngFor="let listServices of selectService"
+              [value]="listServices.key"
+            >
+              {{ listServices.value }}
+            </option>
+          </select>
+          <small
+            class="text-danger"
+            *ngIf="this.invalidFieldForm('affectedServices')"
+          >
+            {{ textsFormInvalid("affectedServices") }}
+          </small>
+        </div>
+      </div>
+      
+      <div class="row text-light text-center mt-4">
+        <div class="col-sm container-buttons">
+          <button type="submit" class="btn btn-primary mr-3 btn-sm">
+            {{ actionForm === "create" ? "Crear" : "Actualizar" }}
+          </button>
+          <button
+            type="button"
+            class="btn btn-secondary btn-sm"
+            (click)="cleanForm()"
+          >
+            Limpiar
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <hr />
+
+  <app-table
+    [dataBase]="dataToTable"
+    [structure]="structure"
+  ></app-table>
+</section>

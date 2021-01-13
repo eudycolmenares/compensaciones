@@ -2,45 +2,11 @@
 
 @import '../node_modules/bootstrap/scss/bootstrap';
 
-:root {
-  --blue: #007bff;
-  --indigo: #6610f2;
-  --purple: #6f42c1;
-  --pink: #e83e8c;
-  --red: #da291C;
-  --orange: #fd7e14;
-  --yellow: #ffc107;
-  --green: #28a745;
-  --teal: #20c997;
-  --cyan: #17a2b8;
-  --white: #fff;
-  --gray: #6c757d;
-  --gray-dark: #343a40;
-  --primary: #ef3829;
-  --secondary: #6c757d;
-  --success: #28a745;
-  --info: #17a2b8;
-  --warning: #ffc107;
-  --danger: #dc3545;
-  --light: #f8f9fa;
-  --dark: #343a40;
-}
-
-//Backgraund color app
-.background-theme {
-  background-color: var(--red);
-}
-
 //Resize icon invalid - solution conflic
 .was-validated .form-control:invalid,
 .form-control.is-invalid {
   background-position: right calc(0.8em + 0.1875rem) center;
 }
-
-// //Background color buttons
-// .btn-primary {
-//   background-color: var(--red);
-// }
 
 // Used in the separation in the forms
 hr {
@@ -65,7 +31,7 @@ input[type=number] {
 // SideBar
 
 .ng-sidebar {
-  background: var(--red);
+  background: var(--primary);
   width: 15rem;
 }
 
@@ -170,12 +136,12 @@ input[type=number] {
 }
 
 .table .thead-dark th {
-  background-color: var(--red);
+  background-color: var(--primary);
 }
 
 .page-item.active .page-link {
   z-index: 0;
-  background-color: var(--red);
+  background-color: var(--primary);
 }
 
 // spinner - loading

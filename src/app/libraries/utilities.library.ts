@@ -42,6 +42,10 @@ export const RoutesData = {
   'orders-symptoms': {
     url: ['dashboard', 'orders-symptoms'],
     breadcrumb: ['Parametrización RR', 'Síntomas para Ordenes Mantenimiento']
+  },
+  'maintenance-orders-causes': {
+    url: ['dashboard', 'maintenance-orders-causes'],
+    breadcrumb: ['Parametrización RR', 'Causas para órdenes mantenimiento']
   }
 }
 
@@ -67,4 +71,13 @@ export enum ButtonsTable {
   edit = 'edit',
   disable = 'disable',
   delete = 'delete'
+}
+
+export enum ServicesSettingsRR {
+  telephone = 'Telefonía',
+  television = 'Televisión',
+  internet = 'Internet',
+  tvDth = 'TvDth',
+  vozDth = 'VozDth',
+  '@Dth' = '@Dth',
 }

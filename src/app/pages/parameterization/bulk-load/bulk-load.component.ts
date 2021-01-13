@@ -187,7 +187,6 @@ export class BulkLoadComponent implements OnInit {
   }
 
   cleanForm() {
-    this.bulkLoadForm.reset();
-    this.bulkLoadForm.get('uploadType').setValue('');
+    this.bulkLoadForm.reset({ uploadType: '' });
   }
 }

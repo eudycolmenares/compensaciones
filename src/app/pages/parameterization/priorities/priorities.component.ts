@@ -77,7 +77,7 @@ export class PrioritiesComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   invalidFieldForm(fieldName: string) {
     return (
@@ -126,7 +126,9 @@ export class PrioritiesComponent implements OnInit {
       if (this.actionForm === 'create') {
         this.createPriorityApi(dataRequest);
       } else {
-        dataRequest.priority.priorityId = this.priorityForm.get('priorityId').value;
+        dataRequest.priority.priorityId = this.priorityForm.get(
+          'priorityId'
+        ).value;
         this.updatePriorityApi(dataRequest);
       }
     }
@@ -202,10 +204,11 @@ export class PrioritiesComponent implements OnInit {
   }
 
   cleanForm() {
-    this.priorityForm.reset();
-    this.priorityForm.get('state').setValue('');
-    this.priorityForm.get('compensatesNode').setValue('');
-    this.priorityForm.get('compensatesAccount').setValue('');
+    this.priorityForm.reset({
+      state: '',
+      compensatesNode: '',
+      compensatesAccount: '',
+    });
     this.actionForm = 'create';
   }
 }
