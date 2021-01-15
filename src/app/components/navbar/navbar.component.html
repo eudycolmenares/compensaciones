@@ -60,10 +60,9 @@
           </ul>
         </ng-template>
       </ngb-panel>
-
       <ngb-panel id="static-3">
-        <ng-template ngbPanelTitle>
-          <span>Reporte</span>
+        <ng-template ngbPanelTitle opened="true">
+          <span>Reporte</span><img src="assets/img/arrow-down.svg">
         </ng-template>
         <ng-template ngbPanelContent>
           <ul class="list-group list-group-flush">
@@ -72,12 +71,14 @@
         </ng-template>
       </ngb-panel>
       <ngb-panel id="static-4">
-        <ng-template ngbPanelTitle>
-          <span>Validación</span>
+        <ng-template ngbPanelTitle opened="true">
+          <span>Validación</span><img src="assets/img/arrow-down.svg">
         </ng-template>
         <ng-template ngbPanelContent>
           <ul class="list-group list-group-flush">
-            <li class="list-group-item">Nodos</li>
+            <li class="list-group-item">
+              <span>Nodos</span><img src="assets/img/node-small.svg">
+            </li>
             <li class="list-group-item" [routerLink]="['/dashboard/validation-accounts']">
               <span>Cuentas</span><img src="assets/img/account-statistics.svg">
             </li>
