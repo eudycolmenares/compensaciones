@@ -47,7 +47,7 @@ const ROUTES: Routes = [
       },
       {
         path: 'load-faults',
-        loadChildren: () => import('../faults/load-faults/load-faults.module').then(m => m.LoadFaultsModule),
+        loadChildren: () => import('../parameterizationRR/load-faults/load-faults.module').then(m => m.LoadFaultsModule),
       },
       {
         path: 'orders-symptoms',
