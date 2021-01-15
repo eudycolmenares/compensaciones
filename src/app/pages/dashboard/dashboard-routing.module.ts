@@ -56,6 +56,10 @@ const ROUTES: Routes = [
       {
         path: 'maintenance-orders-causes',
         loadChildren: () => import('../parameterizationRR/maintenance-orders-causes/maintenance-orders-causes.module').then(m => m.MaintenanceOrdersCausesModule),
+      },
+      {
+        path: 'validation-accounts',
+        loadChildren: () => import('../validation/accounts/accounts.module').then(m => m.AccountsModule),
       }
     ],
   }

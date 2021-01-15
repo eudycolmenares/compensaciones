@@ -78,7 +78,9 @@
         <ng-template ngbPanelContent>
           <ul class="list-group list-group-flush">
             <li class="list-group-item">Nodos</li>
-            <li class="list-group-item">Cuentas</li>
+            <li class="list-group-item" [routerLink]="['/dashboard/validation-accounts']">
+              <span>Cuentas</span><img src="assets/img/account-statistics.svg">
+            </li>
           </ul>
         </ng-template>
       </ngb-panel>

@@ -46,6 +46,10 @@ export const RoutesData = {
   'maintenance-orders-causes': {
     url: ['dashboard', 'maintenance-orders-causes'],
     breadcrumb: ['Parametrización RR', 'Causas para órdenes mantenimiento']
+  },
+  'validation-accounts': {
+    url: ['dashboard', 'validation-accounts'],
+    breadcrumb: ['Validación', 'Cuentas']
   }
 }
 
