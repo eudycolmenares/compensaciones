@@ -60,6 +60,14 @@ const ROUTES: Routes = [
       {
         path: 'validation-accounts',
         loadChildren: () => import('../validation/accounts/accounts.module').then(m => m.AccountsModule),
+      },
+      {
+        path: 'rents-download',
+        loadChildren: () => import('../rentsRR/download/download.module').then(m => m.DownloadModule),
+      },
+      {
+        path: 'rents-load',
+        loadChildren: () => import('../rentsRR/load/load.module').then(m => m.LoadModule),
       }
     ],
   }

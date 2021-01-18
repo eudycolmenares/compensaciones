@@ -60,7 +60,7 @@
           </ul>
         </ng-template>
       </ngb-panel>
-      <ngb-panel id="static-3">
+      <!-- <ngb-panel id="static-3">
         <ng-template ngbPanelTitle opened="true">
           <span>Reporte</span><img src="assets/img/arrow-down.svg">
         </ng-template>
@@ -69,7 +69,7 @@
             <li class="list-group-item">Validación Nodos</li>
           </ul>
         </ng-template>
-      </ngb-panel>
+      </ngb-panel> -->
       <ngb-panel id="static-4">
         <ng-template ngbPanelTitle opened="true">
           <span>Validación</span><img src="assets/img/arrow-down.svg">
@@ -81,6 +81,21 @@
             </li>
             <li class="list-group-item" [routerLink]="['/dashboard/validation-accounts']">
               <span>Cuentas</span><img src="assets/img/account-statistics.svg">
+            </li>
+          </ul>
+        </ng-template>
+      </ngb-panel>
+      <ngb-panel id="static-5">
+        <ng-template ngbPanelTitle opened="true">
+          <span>Rentas RR</span><img src="assets/img/arrow-down.svg">
+        </ng-template>
+        <ng-template ngbPanelContent>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item" [routerLink]="['/dashboard/rents-download']">
+              <span>Descargue Nodos-Cuentas</span><img src="assets/img/download.svg">
+            </li>
+            <li class="list-group-item" [routerLink]="['/dashboard/rents-load']">
+              <span>Cargue Rentas RR</span><img src="assets/img/upload.svg">
             </li>
           </ul>
         </ng-template>
