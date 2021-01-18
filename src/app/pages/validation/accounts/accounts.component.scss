@@ -1,0 +1,30 @@
+.container-statistic {
+  .col-sm {
+    box-shadow: -1px 0px rgba(255, 255, 255, 0.07);
+
+    transform:scale(1);
+    transition-property: transform, background;
+    transition-duration: .3s;
+    .progress {
+      background-color: var(--secondary);
+      height: .5rem;
+    }
+    &:hover{
+      background: var(--primary) !important;
+      transform: scale(1.1);
+      transition-property: transform, background;
+      transition-duration: .3s;
+      position: relative;
+      z-index: 1;
+    }
+    &:hover .progress-bar {
+      background-color: var(--light) !important;
+    }
+  }
+  p {
+    font-size: .9rem;
+  }
+  span {
+    font-size: .7rem;
+  }
+}
