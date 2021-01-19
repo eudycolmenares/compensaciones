@@ -47,6 +47,14 @@ export const RoutesData = {
     url: ['dashboard', 'maintenance-orders-causes'],
     breadcrumb: ['Parametrización RR', 'Causas para órdenes mantenimiento']
   },
+  'rr-failure-validation': {
+    url: ['dashboard', 'rr-failure-validation'],
+    breadcrumb: ['Parametrización RR', 'Validación fallas RR']
+  },
+  'nodes-validation': {
+    url: ['dashboard', 'nodes-validation'],
+    breadcrumb: ['Validación', 'Validación Nodos']
+  },
   'validation-accounts': {
     url: ['dashboard', 'validation-accounts'],
     breadcrumb: ['Validación', 'Cuentas']
@@ -92,4 +100,14 @@ export enum ServicesSettingsRR {
   tvDth = 'TvDth',
   vozDth = 'VozDth',
   '@Dth' = '@Dth',
+}
+
+export enum RRServicesFailure {
+  by_nodo_4296_Tel_Int_48h = 'By_nodo_4296_Tel_Int_48h',
+  by_nodo_acuer11_2006_TV16H = 'By_nodo_acuer11_2006_TV16H',
+  compens_arreglo_TV16H = 'Compens_arreglo_TV16H',
+  compens_arreglos_telef_48H = 'Compens_arreglos_telef_48H',
+  compes_telef_48H = 'Compes_telef_48H',
+  compes_TV_16H = 'Compes_TV_16H',
+  improcedencia_falla_masiva = 'Improcedencia_falla_masiva',
 }

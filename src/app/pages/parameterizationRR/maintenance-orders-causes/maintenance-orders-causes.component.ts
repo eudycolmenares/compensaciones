@@ -93,7 +93,7 @@ export class MaintenanceOrdersCausesComponent implements OnInit {
       this.selectYesNo.push({ key: i[1], value: i[0] });
     }
     for (const i of Object.entries(ServicesSettingsRR)) {
-      this.selectService.push({ key: i[1], value: i[0] });
+      this.selectService.push({ key: i[0], value: i[1] });
     }
     this.initialCharge(); // table
   }
@@ -107,7 +107,7 @@ export class MaintenanceOrdersCausesComponent implements OnInit {
         {
           currentlyUse: 'SI',
           causeCode: 'T10',
-          diagnosticDescription: 'Da¿¿o puerto telefonico eMTA',
+          diagnosticDescription: 'Daño puerto telefonico eMTA',
           maintenance: 'SI',
           affectedServices: 'Telefonia',
           compensation: 'Si',
@@ -115,7 +115,7 @@ export class MaintenanceOrdersCausesComponent implements OnInit {
         {
           currentlyUse: 'SI',
           causeCode: 'L13',
-          diagnosticDescription: 'Cambio MTA Da¿¿ado',
+          diagnosticDescription: 'Cambio MTA Dañado',
           maintenance: 'SI',
           affectedServices: 'Telefonia-Internet',
           compensation: 'Si',
@@ -123,7 +123,7 @@ export class MaintenanceOrdersCausesComponent implements OnInit {
         {
           currentlyUse: 'SI',
           causeCode: 'DH2',
-          diagnosticDescription: 'DTH Conectores Sueltos o En Da¿¿o',
+          diagnosticDescription: 'DTH Conectores Sueltos o En Daño',
           maintenance: 'SI',
           affectedServices: 'TvDth',
           compensation: 'Si',
@@ -149,6 +149,8 @@ export class MaintenanceOrdersCausesComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log(this.MOCauseForm.value);
+    
     if (this.MOCauseForm.invalid) {
       return Object.values(this.MOCauseForm.controls).forEach((control) => {
         control.markAsTouched();

@@ -58,6 +58,14 @@ const ROUTES: Routes = [
         loadChildren: () => import('../parameterizationRR/maintenance-orders-causes/maintenance-orders-causes.module').then(m => m.MaintenanceOrdersCausesModule),
       },
       {
+        path: 'rr-failure-validation',
+        loadChildren: () => import('../parameterizationRR/rr-failure-validation/rr-failure-validation.module').then(m => m.RrFailureValidationModule),
+      },
+      {
+        path: 'nodes-validation',
+        loadChildren: () => import('../validation/nodes/nodes.module').then(m => m.NodesModule),
+      },
+      {
         path: 'validation-accounts',
         loadChildren: () => import('../validation/accounts/accounts.module').then(m => m.AccountsModule),
       },
