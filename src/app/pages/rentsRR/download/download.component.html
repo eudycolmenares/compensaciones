@@ -1,1 +1,36 @@
-<p>download works!</p>
+<section class="container py-3">
+  <app-breadcrumb></app-breadcrumb>
+
+  <div class="px-sm-2 px-md-5">
+    <div class="row">
+      <div class="col-sm py-3 mx-1 background-colum">
+        <div class="row">
+          <div class="col-sm p-0">
+            <app-table [dataBase]="dataToTableNodes" [structure]="structureNodes" actionsButton="No"></app-table>
+          </div>
+        </div>
+        <div class="row text-light text-center mt-2">
+          <div class="col-sm container-buttons">
+            <button class="btn btn-primary mr-3 btn-sm" (click)="generateFile('nodes')">Descargar</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm py-3 mx-1 background-colum">
+        <div class="row">
+          <div class="col-sm p-0">
+            <app-table [dataBase]="dataToTableAccounts" [structure]="structureAccounts" actionsButton="No"></app-table>
+          </div>
+        </div>
+        <div class="row text-light text-center mt-2">
+          <div class="col-sm container-buttons">
+            <button class="btn btn-primary mr-3 btn-sm" (click)="generateFile('accounts')">Descargar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="mt-5 mb-5" />
+
+</section>

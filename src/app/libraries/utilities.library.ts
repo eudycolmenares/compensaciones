@@ -50,6 +50,14 @@ export const RoutesData = {
   'validation-accounts': {
     url: ['dashboard', 'validation-accounts'],
     breadcrumb: ['Validación', 'Cuentas']
+  },
+  'rents-download': {
+    url: ['dashboard', 'rents-download'],
+    breadcrumb: ['Rentas RR', 'Descargue Nodos - Cuentas']
+  },
+  'rents-load': {
+    url: ['dashboard', 'rents-load'],
+    breadcrumb: ['Rentas RR', 'Cargue Rentas RR']
   }
 }
 

@@ -62,16 +62,16 @@ export class LoadFaultsComponent implements OnInit {
       }
       this.faultsScv.loadFaults(dataRequest).subscribe((resp: faultsApiModel) => {
         console.log('Respuesta Servicio:', resp);
-        const idLoad = resp.Loads.Load[0].idLoad;
         if(resp.GeneralResponse.code === '0') {
+          const idLoad = resp.Loads.Load[0].idLoad;
           this.toastScv.showSuccess(resp.GeneralResponse.messageCode);
-          this.faultsScv.readByIdFaults('353').subscribe(resp => {
+          this.faultsScv.readByIdFaults('353').subscribe(resp => { //seteado
             console.log('respuesta readByIdFaults()', resp);
             // console.log('File: ', resp.Loads.Load[0].loadFile);
             // console.log('File: ', atob(resp.Loads.Load[0].loadFile));
           })
         }else{
-        //   this.toastScv.showError(resp.GeneralResponse.messageCode);
+          this.toastScv.showError(resp.GeneralResponse.messageCode);
         }
       })
     }
