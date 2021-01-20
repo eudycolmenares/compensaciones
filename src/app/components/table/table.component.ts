@@ -80,7 +80,7 @@ export class TableComponent implements OnInit {
   }
 
   ngOnChanges(changes: object) {
-    if(Object.keys(changes).length === 1) {
+    if(Object.keys(changes).length >= 1) {
       this.callObservableSearch();
     }
   }
@@ -122,10 +122,10 @@ export class TableComponent implements OnInit {
     // 1. sort
     let data = this.sort(this.dataBase, sortColumn, sortDirection);
     // 2. filter
-    data = data.filter(origin => this.matches(origin, searchTerm, this.pipe));
-    const total = data.length;
+    data = data?.filter(origin => this.matches(origin, searchTerm, this.pipe));
+    const total = data?.length;
     // 3. paginate
-    data = data.slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize);
+    data = data?.slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize);
     return of({data, total});
   }
 

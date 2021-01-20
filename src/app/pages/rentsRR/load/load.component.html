@@ -1,36 +1,23 @@
 <section class="container py-3">
   <app-breadcrumb></app-breadcrumb>
 
-  <!-- <div class="px-sm-2 px-md-5">
-    <div class="row">
-      <div class="col-sm py-3 mx-1 background-colum">
-        <div class="row">
-          <div class="col-sm p-0">
-            <app-table [dataBase]="dataToTableNodes" [structure]="structureNodes" actionsButton="No"></app-table>
+  <div class="px-sm-2 px-md-5">
+    <div class="row text-light mt-4">
+      <div class="col-sm container-buttons">
+        <input type="file" (change)="handleChangeInputFile($event)" class="d-none" #inputFileTxt accept=".txt">
+        <div ngbDropdown class="d-inline-block">
+          <button class="btn btn-outline-primary"  id="dropdownBasic1" ngbDropdownToggle>Seleccione Base</button>
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+            <button ngbDropdownItem (click)="generateClickInput('nodes')">Nodos</button>
+            <button ngbDropdownItem (click)="generateClickInput('accounts')">Cuentas</button>
           </div>
         </div>
-        <div class="row text-light text-center mt-2">
-          <div class="col-sm container-buttons">
-            <button class="btn btn-primary mr-3 btn-sm" (click)="generateFile('nodes')">Descargar</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-sm py-3 mx-1 background-colum">
-        <div class="row">
-          <div class="col-sm p-0">
-            <app-table [dataBase]="dataToTableAccounts" [structure]="structureAccounts" actionsButton="No"></app-table>
-          </div>
-        </div>
-        <div class="row text-light text-center mt-2">
-          <div class="col-sm container-buttons">
-            <button class="btn btn-primary mr-3 btn-sm" (click)="generateFile('accounts')">Descargar</button>
-          </div>
-        </div>
+        <button type="button" class="btn btn-primary btn-sm ml-3" (click)="openModal()">Enviar</button>
       </div>
     </div>
-  </div> -->
+  </div>
 
   <hr class="mt-5 mb-5" />
 
+  <app-table [dataBase]="dataToTable" [structure]="structureToTable" actionsButton="No"></app-table>
 </section>
