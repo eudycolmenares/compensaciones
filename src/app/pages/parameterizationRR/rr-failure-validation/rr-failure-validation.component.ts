@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { GeneralFunctionsService } from '../../../services/general-functions.service';
-import { RRServicesFailure, ServicesSettings } from '../../../libraries/utilities.library';
+import {
+  RRServicesFailure,
+  ServicesSettings,
+} from '../../../libraries/utilities.library';
 import { MaintenanceOrdersCausesService } from 'src/app/services/maintenanceOrdersCauses/maintenance-orders-causes.service';
 import { DataList } from '../../../models/general';
 import { ToastService } from 'src/app/services/shared/toast.service';
@@ -34,9 +37,12 @@ export class RrFailureValidationComponent implements OnInit {
   createForm() {
     this.rrFailureForm = this._fb.group({
       tableOptions: ['', [Validators.required]],
-      services: ['', []],
-      user: [''],
     });
+    this.rrFailureForm
+      .get('tableOptions')
+      .valueChanges.subscribe((selectValue) => {
+        this.selectedTableRrFailure(selectValue);
+      });
   }
 
   ngOnInit(): void {}
@@ -65,8 +71,11 @@ export class RrFailureValidationComponent implements OnInit {
   initialCharge() {}
 
   selectedTableRrFailure(selectTable) {
+    console.log(selectTable);
+
     switch (selectTable) {
-      case 'by_nodo_4296_Tel_Int_48h' || 'by_nodo_acuer11_2006_TV16H':
+      case 'by_nodo_4296_Tel_Int_48h':
+      case 'by_nodo_acuer11_2006_TV16H':
         this.structure = [
           {
             name: 'incident',
@@ -118,7 +127,8 @@ export class RrFailureValidationComponent implements OnInit {
         if (selectTable === 'by_nodo_acuer11_2006_TV16H') {
         }
         break;
-      case 'compens_arreglo_TV16H' || 'compens_arreglos_telef_48H':
+      case 'compens_arreglo_TV16H':
+      case 'compens_arreglos_telef_48H':
         this.structure = [
           {
             name: 'account',
@@ -142,9 +152,9 @@ export class RrFailureValidationComponent implements OnInit {
           },
         ];
         break;
-      case 'compes_telef_48H' ||
-        'compes_TV_16H' ||
-        'improcedencia_falla_masiva':
+      case 'compes_telef_48H':
+      case 'compes_TV_16H':
+      case 'improcedencia_falla_masiva':
         this.structure = [
           {
             name: 'account',
@@ -174,22 +184,11 @@ export class RrFailureValidationComponent implements OnInit {
     }
   }
 
-  onSubmit() {
-    if (this.rrFailureForm.invalid) {
-      return Object.values(this.rrFailureForm.controls).forEach((control) => {
-        control.markAsTouched();
-      });
-    } else {      
-      this.selectedTableRrFailure(this.rrFailureForm.get('tableOptions').value);
-    }
-  }
-
   downloadDataTable() {
-    if(this.dataToTable.length > 0){
+    if (this.dataToTable.length > 0) {
       this.exportToCsv('myCsvDocumentName.csv', this.dataToTable);
     }
-    this._toastScv.showSuccess(this.dataToTable.toString());
-    
+    this._toastScv.showSuccess('Archivo descargado correctamente');
   }
 
   cleanForm() {
@@ -212,7 +211,7 @@ export class RrFailureValidationComponent implements OnInit {
           return keys
             .map((k) => {
               let cell = row[k] === null || row[k] === undefined ? '' : row[k];
-              cell = cell.toLocaleString()
+              cell = cell.toLocaleString();
               if (cell.search(/("|,|\n)/g) >= 0) {
                 cell = `"${cell}"`;
               }

@@ -1,8 +1,12 @@
+const domain = 'http://100.126.19.74:7669';
 export const environment = {
   production: true,
-  URL_API:
-    'http://100.126.19.74:7669' +
-    '/WSCompensaciones-web/webresources/WSCompensaciones/',
+  URL_API: domain + '/WSCompensaciones-web/webresources/WSCompensaciones/',
+  urlApi_bulkLoad:
+    domain + '/CompensacionesBatch-web/webresources/CompensacionesBatch/',
+  URL_API_BATCHRR:
+    domain +
+    '/WSCompensacionesBatchRR-web/webresources/WSCompensacionesBatchRR/',
   endpoints: {
     // Settings
     settings_all: 'SettingsService/read/all',
@@ -42,5 +46,11 @@ export const environment = {
     priority_update: 'PriorityService/update',
     priority_read_id: 'PriorityService/read/id',
     priorities_read: 'PriorityService/readAll',
+    // Bulk load
+    bulk_load_create: 'sendFile',
+    bulk_load_read: 'findTypeProcess',
+    // Faults
+    faults_load: 'LoadService/load',
+    faults_read_id: 'LoadService/read/id',
   },
 };
