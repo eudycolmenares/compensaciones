@@ -188,7 +188,6 @@ export class RrFailureValidationComponent implements OnInit {
     if (this.dataToTable.length > 0) {
       this.exportToCsv('myCsvDocumentName.csv', this.dataToTable);
     }
-    this._toastScv.showSuccess('Archivo descargado correctamente');
   }
 
   cleanForm() {
@@ -238,5 +237,6 @@ export class RrFailureValidationComponent implements OnInit {
         document.body.removeChild(link);
       }
     }
+    this._toastScv.showSuccess('Archivo descargado correctamente');
   }
 }

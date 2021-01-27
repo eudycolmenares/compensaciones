@@ -15,13 +15,8 @@ export interface BulkLoadResponseModel {
   uploadType: string;
 }
 
-export interface BulkLoadErrorModel {
-  lineError: string;
-  dataError: string;
-  commentError: string;
-}
-
 export interface GeneralResponse {
+  Errors?: { Error: errorResponse[] };
   code: string;
   descriptionCode: string;
   messageCode: string;
@@ -32,10 +27,8 @@ export interface BulkLoadApiModel {
   compProcessLoad: BulkLoadResponseModel[];
 }
 
-export interface RequestModel {
-  compProcessLoad: BulkLoadRequestModel;
+export interface errorResponse {
+  data: string;
+  errorDescription: string;
+  lineNumber: string;
 }
-
-// export interface ResponseModel {
-//   GeneralResponse: GeneralResponse;
-// }

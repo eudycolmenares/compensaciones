@@ -7,15 +7,12 @@ import {
 } from '@angular/forms';
 
 import {
-  BulkLoadApiModel,
   BulkLoadRequestModel,
-  BulkLoadResponseModel,
-  BulkLoadErrorModel,
+  errorResponse,
   GeneralResponse,
 } from 'src/app/models/bulk-load';
 import { BulkLoadService } from '../../../services/bulkLoad/bulk-load.service';
 import { GeneralFunctionsService } from '../../../services/general-functions.service';
-import { DataList } from '../../../models/general';
 import { ToastService } from 'src/app/services/shared/toast.service';
 
 @Component({
@@ -25,24 +22,24 @@ import { ToastService } from 'src/app/services/shared/toast.service';
 })
 export class BulkLoadComponent implements OnInit {
   bulkLoadForm: FormGroup;
-  dataUploaded: Blob;
+  dataUploaded: any = '';
   dataArraySent: string[];
   fileEncode: string;
   // table
-  dataToTable: BulkLoadErrorModel[];
+  dataToTable: errorResponse[];
   structure: object[] = [
     {
-      name: 'lineError',
+      name: 'lineNumber',
       description: 'Número de línea',
       validation: '',
     },
     {
-      name: 'dataError',
+      name: 'data',
       description: 'Datos',
       validation: '',
     },
     {
-      name: 'commentError',
+      name: 'errorDescription',
       description: 'Comentario',
       validation: '',
     },
@@ -58,7 +55,7 @@ export class BulkLoadComponent implements OnInit {
 
   createForm() {
     this.bulkLoadForm = this._fb.group({
-      fileName: [''],
+      fileName: ['', [Validators.required]],
       // state: [''],
       uploadFile: [
         '',
@@ -92,40 +89,8 @@ export class BulkLoadComponent implements OnInit {
     return this._gnrScv.validationFormTextRequired(this.bulkLoadForm, field);
   }
 
-  fileSent() {
-    this._bulkLoadSvc
-      .allBulkLoad(this.bulkLoadForm.get('uploadType').value)
-      .subscribe((resp: BulkLoadApiModel) => {
-        var fileName = this.bulkLoadForm.get('fileName').value;
-        var user = this.bulkLoadForm.get('user').value;
-
-        resp.compProcessLoad = resp.compProcessLoad.filter(function (data) {
-          return (
-            data.fileName === fileName &&
-            data.user === user &&
-            data.state === 'FINALIZADO_CON_ERRORES'
-          );
-        });
-
-        if (resp.compProcessLoad) {
-          let dataFiltered = atob(resp.compProcessLoad[0].uploadError).split(
-            '\n'
-          );
-          dataFiltered.pop();
-          var arrayList: BulkLoadErrorModel[] = [];
-          dataFiltered.forEach((data: any) => {
-            let dataLineError = data.split(' El ')[0];
-            let numberLineError =
-              Number(dataLineError.replace('Linea: ', '')) - 1;
-            arrayList.push({
-              lineError: dataLineError,
-              dataError: this.dataArraySent[numberLineError],
-              commentError: data.split(' El ')[1],
-            });
-          });
-          this.dataToTable = arrayList;
-        }
-      });
+  fileSent(responseDataErrors: errorResponse[]) {
+    this.dataToTable = responseDataErrors;
   }
 
   fileChange(documentUpload) {
@@ -133,17 +98,31 @@ export class BulkLoadComponent implements OnInit {
     this.bulkLoadForm
       .get('fileName')
       .setValue(Date.now() + '_' + this.dataUploaded['name']);
+    if (this.bulkLoadForm.get('uploadType').value) {
+      this.onSubmit();
+    }
   }
 
-  downloadModelDocument() {
+  downloadModelDocument(selectedTypeFile) {
     const symptomsFile = 'assets/documents/SINTOMAS.csv';
     const causesFile = 'assets/documents/CAUSAS.csv';
-    if (this.bulkLoadForm.get('uploadType').value) {
+    if (selectedTypeFile) {
       let selectFile = symptomsFile;
-      if (this.bulkLoadForm.get('uploadType').value === 'CAUSAS') {
+      if (selectedTypeFile === 'CAUSAS') {
         selectFile = causesFile;
       }
-      window.open(selectFile, '_self');
+
+      const link = document.createElement('a');
+      if (link.download !== undefined) {
+        // Browsers that support HTML5 download attribute
+        let filename = selectedTypeFile + '.csv';
+        link.setAttribute('href', selectFile);
+        link.setAttribute('download', filename);
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
     }
   }
 
@@ -176,17 +155,17 @@ export class BulkLoadComponent implements OnInit {
       .subscribe((resp: GeneralResponse) => {
         if (resp.code === 'SEND-FILE-VALRES-1' || resp.code === '0') {
           this._toastScv.showSuccess(resp.messageCode);
-          this.fileSent();
-          // this.cleanForm();
+          // this.fileSent();
         } else {
-          this._toastScv.showError(
-            resp.messageCode + ', ' + resp.descriptionCode
-          );
+          this.fileSent(resp.Errors.Error);
+          this._toastScv.showError(resp.descriptionCode);
         }
+        this.cleanForm();
       });
   }
 
   cleanForm() {
     this.bulkLoadForm.reset({ uploadType: '' });
+    console.log(this.bulkLoadForm.value);
   }
 }

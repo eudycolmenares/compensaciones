@@ -2,80 +2,109 @@
   <app-breadcrumb></app-breadcrumb>
 
   <div class="container-add px-sm-2 px-md-5">
-    <form autocomplete="off" [formGroup]="bulkLoadForm" (ngSubmit)="onSubmit()">
-      <div class="row text-light text-center px-sm-0 px-md-5">
-        <div class="col-sm bg-primary py-1 mx-1">Tipo de lista (*)</div>
-        <div class="col-sm bg-primary py-1 mx-1">
-          Descarga aquí la plantilla (*)
-        </div>
-      </div>
-
-      <div class="row px-sm-0 px-md-5">
-        <div class="col-sm py-1 mx-1 p-0">
-          <select
-            formControlName="uploadType"
-            class="form-control form-control-sm"
-            [ngClass]="{
-              'is-invalid': this.invalidFieldForm('uploadType')
-            }"
-          >
-            <option value="" [selected]="true">--Seleccione--</option>
-            <option value="SINTOMAS">Sintomas</option>
-            <option value="CAUSAS">Causas</option>
-          </select>
-          <small
-            class="text-danger"
-            *ngIf="this.invalidFieldForm('uploadType')"
-          >
-            {{ textsFormInvalid("uploadType") }}
-          </small>
-        </div>
-        <div class="col-sm py-1 mx-1 p-0">
-          <button (click)="downloadModelDocument()">Descargar plantilla</button>
-        </div>
-      </div>
-
+    <form autocomplete="off" [formGroup]="bulkLoadForm">
       <div class="row text-light text-center mt-4 px-sm-0 px-md-5">
         <div class="col-sm bg-primary py-1 mx-1">
           Carga aquí la plantilla (*)
         </div>
+        <div class="col-sm bg-primary py-1 mx-1">Tipo de lista (*)</div>
       </div>
 
       <div class="row px-sm-0 px-md-5">
-        <div class="col-sm py-1 mx-1 p-0">
-          <input
-            type="file"
-            formControlName="uploadFile"
-            class="form-control form-control-sm"
-            [ngClass]="{
-              'is-invalid': this.invalidFieldForm('uploadFile')
-            }"
-            (change)="fileChange($event)"
-          />
-          <small
-            class="text-danger"
-            *ngIf="this.invalidFieldForm('uploadFile')"
-          >
-            {{ textsFormInvalid("uploadFile") }}
-          </small>
+        <div class="col-sm-6 py-1">
+          <div class="row">
+            <ng-container
+              *ngIf="
+                !this.bulkLoadForm.get('fileName').value;
+                else elseNamefile
+              "
+            >
+              <div class="col box-upload py-1 mx-1 p-0">
+                <input
+                  type="file"
+                  class="form-control form-control-sm"
+                  formControlName="uploadFile"
+                  (change)="fileChange($event)"
+                />
+                <p>Arrastra y suelta el archivo aquí</p>
+                <p>o</p>
+                <label>Busca el archivo</label>
+              </div>
+            </ng-container>
+            <ng-template #elseNamefile>
+              <div
+                class="d-flex align-content-center flex-wrap col box-upload py-1 mx-1 p-0"
+              >
+                <div class="input-group input-group-sm justify-content-center">
+                  <div class="input-group-prepend">
+                    <p class="input-group-text" id="inputGroup-sizing-sm">
+                      {{ bulkLoadForm.get("fileName").value }}
+                    </p>
+                    <button
+                      type="button"
+                      class="btn btn-primary btn-sm"
+                      (click)="cleanForm()"
+                    >
+                      <img src="assets/img/trash.svg" width="18px" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </div>
+          <div class="row">
+            <div class="col py-1 mx-1 p-0">
+              <small
+                class="text-danger"
+                *ngIf="this.invalidFieldForm('uploadFile')"
+              >
+                {{ textsFormInvalid("uploadFile") }}
+              </small>
+            </div>
+          </div>
         </div>
-      </div>
-
-      <div class="row text-light text-center mt-4">
-        <div class="col-sm container-buttons">
-          <button type="submit" class="btn btn-primary mr-3 btn-sm">
-            Subir archivo
-          </button>
-          <button
-            type="button"
-            class="btn btn-secondary btn-sm"
-            (click)="cleanForm()"
-          >
-            Limpiar
-          </button>
+        <div class="col-sm-6">
+          <div class="row">
+            <div class="col py-1 mx-1 p-0">
+              <select
+                formControlName="uploadType"
+                class="form-control form-control-sm"
+                [ngClass]="{
+                  'is-invalid': this.invalidFieldForm('uploadType')
+                }"
+                (change)="onSubmit()"
+              >
+                <option value="" [selected]="true">--Seleccione--</option>
+                <option value="SINTOMAS">Sintomas</option>
+                <option value="CAUSAS">Causas</option>
+              </select>
+              <small
+                class="text-danger"
+                *ngIf="this.invalidFieldForm('uploadType')"
+              >
+                {{ textsFormInvalid("uploadType") }}
+              </small>
+            </div>
+          </div>
         </div>
       </div>
     </form>
+
+    <div class="row text-light text-center justify-content-center mt-4">
+      <div ngbDropdown class="d-inline-block">
+        <button class="btn btn-outline-primary" ngbDropdownToggle>
+          Descargar plantilla
+        </button>
+        <div ngbDropdownMenu>
+          <button ngbDropdownItem (click)="downloadModelDocument('CAUSAS')">
+            Causas
+          </button>
+          <button ngbDropdownItem (click)="downloadModelDocument('SINTOMAS')">
+            Sintomas
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <hr />

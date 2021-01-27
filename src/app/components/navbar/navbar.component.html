@@ -96,8 +96,20 @@
         </ng-template>
       </ngb-panel>
 
-
       <ngb-panel id="static-6">
+        <ng-template ngbPanelTitle opened="true">
+          <span>Item Facturación RR</span><img src="assets/img/arrow-down.svg">
+        </ng-template>
+        <ng-template ngbPanelContent>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item" [routerLink]="['/dashboard/item-rr-billing']">
+              <span>Cuentas Compensadas RR</span><img src="">
+            </li>
+          </ul>
+        </ng-template>
+      </ngb-panel>
+
+      <ngb-panel id="static-7">
         <ng-template ngbPanelTitle opened="true">
           <span>Supervisión</span><img src="assets/img/arrow-down.svg">
         </ng-template>

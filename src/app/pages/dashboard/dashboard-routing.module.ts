@@ -78,6 +78,10 @@ const ROUTES: Routes = [
         loadChildren: () => import('../rentsRR/load/load.module').then(m => m.LoadModule),
       },
       {
+        path: 'item-rr-billing',
+        loadChildren: () => import('../itemRrBilling/rr-compensated-accounts/rr-compensated-accounts.module').then(m => m.RrCompensatedAccountsModule),
+      },
+      {
         path: 'process-rr',
         loadChildren: () => import('../supervision/process-rr/process-rr.module').then(m => m.ProcessRRModule),
       }
