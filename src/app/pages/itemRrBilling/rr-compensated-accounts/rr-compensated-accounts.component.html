@@ -1,0 +1,61 @@
+<section class="container py-3">
+  <app-breadcrumb></app-breadcrumb>
+  <div class="container-statistic px-sm-2 px-md-5">
+    <div class="row text-light text-left mt-4">
+
+      <div class="col-md-3 p-3">
+        <div ngbDropdown class="d-inline-block">
+          <button class="btn btn-outline-primary" ngbDropdownToggle>
+            -- Seleccione --
+          </button>
+          <div ngbDropdownMenu>
+            <button ngbDropdownItem (click)="selectedTable('DetalleCompensacion', $event.target.innerText)">
+            DetalleCompensacion {{currentDate | date:'yyyyMMdd HHmmss'}}
+            </button>
+            <button ngbDropdownItem (click)="selectedTable('TCAAUF00', $event.target.innerText)">
+              TCAAUF00 {{currentDate | date:'yyyyMMdd HHmmss'}}
+            </button>
+            <button ngbDropdownItem (click)="selectedTable('NotasCompensacion', $event.target.innerText)">
+              Notas_Compensacion {{currentDate | date:'yyyyMMdd HHmmss'}}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm bg-dark p-3">
+        <p class="font-weight-bold mb-0">Valor Total Compensación</p>
+        <span>{{nameSelectedTable}}</span>
+        <h4 class="mt-3">$240.500,06</h4>
+        <div class="progress">
+          <div
+            class="progress-bar bg-success"
+            role="progressbar"
+            style="width: 25%"
+            aria-valuenow="80"
+            aria-valuemin="0"
+            aria-valuemax="100"
+          ></div>
+        </div>
+        <span class="mt-3">Lorem ipsum dolor sit amet</span>
+      </div>
+    </div>
+
+    <hr />
+
+    <app-table
+      [dataBase]="dataToTable"
+      [structure]="structure"
+      actionsButton="No"
+    ></app-table>
+
+    <div *ngIf="dataToTable" class="text-center justify-content-center">
+      <button
+        type="button"
+        class="btn btn-primary mr-3 btn-sm"
+        (click)="downloadDataTable()"
+      >
+        Descargar CSV
+      </button>
+    </div>
+  </div>
+</section>

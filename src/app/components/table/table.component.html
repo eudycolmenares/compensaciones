@@ -35,7 +35,7 @@
                 <img [src]="validation? 'assets/img/rejected-quality.svg' : 'assets/img/disable.svg'">
               </button>
               <button type="button" class="btn btn-secondary btn-sm mr-2" (click)="openModal(item)" *ngIf="(buttons.indexOf('delete') > -1)" data-toggle="tooltip" data-placement="top" [title]="validation? 'Rechazado' : ''">
-                <img [src]="validation? 'assets/img/rejected.svg' : 'assets/img/trash.svg'" src="assets/img/trash.svg">
+                <img [src]="validation? 'assets/img/rejected.svg' : 'assets/img/trash.svg'">
               </button>
             </td>
           </ng-container>
