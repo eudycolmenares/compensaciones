@@ -1,0 +1,80 @@
+<section class="container py-3">
+    <app-breadcrumb></app-breadcrumb>
+  
+    <div class="container-module px-sm-2 px-md-5">
+			<div class="row">
+				<div class="col-sm step-horizontal">
+
+					<ng-container *ngFor="let stage of stages; let i = index">
+						<div class="step-item" (click)="changeStage(stage)">
+							<div class="step-item-icon step-item-icon-process"
+								[ngClass]=" {
+									'step-item-icon-process':stage.status == 'process', 
+									'step-item-icon-notcompleted':stage.status == 'notcompleted',
+									'step-item-icon-completed':stage.status == 'completed'
+								}"
+							>{{ i + 1 }}</div>
+							<div class="step-item-content">
+								<ng-container ng-switch="myVar">
+									<ng-container [ngSwitch]="stage.status">
+										<label class="title" *ngSwitchCase="'completed'">Completado</label>
+										<label class="title" *ngSwitchCase="'process'">En proceso</label>
+										<label class="title" *ngSwitchCase="'notcompleted'">No completado</label>
+									</ng-container>
+								</ng-container>
+								<label class="subtitle">{{ stage.title }}</label>
+							</div>
+						</div>
+						<ng-container *ngIf="i+1 !== stages.length">
+							<div class="progress progressbar" [ngClass]=" {
+								'progressbar-notcompleted':stage.status != 'completed',
+								'progressbar-completed':stage.status == 'completed'
+							}">
+								<div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+							</div>
+						</ng-container>
+					</ng-container>
+				</div>
+			</div>
+
+			<ng-container [ngSwitch]="stageSelected">
+				<div class="mt-4 container-stages" *ngSwitchCase="1">
+					<div class="alert alert-success" role="alert">
+						¡El proceso ejecución reglas para Nodos ha sido completado!
+					</div>
+					<div class="row text-light text-center mt-4">
+						<div class="col-sm container-buttons">
+							<button type="button" class="btn btn-primary btn-sm">Ejecutar Reglas</button>
+						</div>
+					</div>					
+				</div>
+				<div class="mt-4 text-center container-stages" *ngSwitchCase="2">
+						<p>¡Por favor seleccione estado del proceso Validación de Nodos!</p>
+						<div ngbDropdown class="d-inline-block">
+							<button class="btn btn-outline-primary"  id="dropdownBasic1" ngbDropdownToggle>Seleccione Estado</button>
+							<div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+								<button ngbDropdownItem>Completado</button>
+								<button ngbDropdownItem>En proceso</button>
+								<button ngbDropdownItem>No completado</button>
+							</div>
+						</div>
+				</div>
+				<div class="mt-4 text-center container-stages" *ngSwitchCase="3">
+					<p>¡Por favor indique el estado del proceso de Carga de Archivos de Fallas RR!</p>
+					<div ngbDropdown class="d-inline-block">
+						<button class="btn btn-outline-primary"  id="dropdownBasic1" ngbDropdownToggle>Seleccione Estado</button>
+						<div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+							<button ngbDropdownItem>Completado</button>
+							<button ngbDropdownItem>En proceso</button>
+							<button ngbDropdownItem>No completado</button>
+						</div>
+					</div>
+				</div>
+			</ng-container>			
+    </div>
+  
+    <hr class="mt-5 mb-5" />
+  
+    <!-- <app-table [dataBase]="dataToTable" [structure]="structure" (editRecord)="updateOrigin($event)" (disableRecord)="disableOrigin($event)" (deleteRecord)="deleteOrigin($event)"></app-table> -->
+  </section>
+  

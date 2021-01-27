@@ -76,6 +76,10 @@ const ROUTES: Routes = [
       {
         path: 'rents-load',
         loadChildren: () => import('../rentsRR/load/load.module').then(m => m.LoadModule),
+      },
+      {
+        path: 'process-rr',
+        loadChildren: () => import('../supervision/process-rr/process-rr.module').then(m => m.ProcessRRModule),
       }
     ],
   }

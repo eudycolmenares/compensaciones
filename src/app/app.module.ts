@@ -14,7 +14,7 @@ import { LoadingInterceptor } from './services/interceptor/loading.interceptor';
   declarations: [
     AppComponent,
     ToastComponent,
-    SpinnerComponent
+    SpinnerComponent,
   ],
   imports: [
     HttpClientModule,

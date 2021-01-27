@@ -66,6 +66,10 @@ export const RoutesData = {
   'rents-load': {
     url: ['dashboard', 'rents-load'],
     breadcrumb: ['Rentas RR', 'Cargue Rentas RR']
+  },
+  'process-rr': {
+    url: ['dashboard', 'process-rr'],
+    breadcrumb: ['Supervisión', 'Proceso RR']
   }
 }
 
