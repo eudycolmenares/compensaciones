@@ -51,28 +51,22 @@ export class LoadFaultsComponent implements OnInit {
         control.markAsTouched();
       })
     }else {
-      console.log('$$$$$$$$$');
-      console.log(this.form.value);
-
-      const dataRequest = { // acomodar
+      const dataRequest = {
         'file': this.fileBaseData,
         'fileName': this.fileBaseName,
         'loadType': this.form.get('type').value,
         'userName': 'test', // seteado
       }
       this.faultsScv.loadFaults(dataRequest).subscribe((resp: faultsApiModel) => {
-        console.log('Respuesta Servicio:', resp);
+        // const idLoad = resp.Loads.Load[0].idLoad;
         if(resp.GeneralResponse.code === '0') {
-          const idLoad = resp.Loads.Load[0].idLoad;
-          this.toastScv.showSuccess(resp.GeneralResponse.messageCode);
-          this.faultsScv.readByIdFaults('353').subscribe(resp => { //seteado
-            console.log('respuesta readByIdFaults()', resp);
-            // console.log('File: ', resp.Loads.Load[0].loadFile);
-            // console.log('File: ', atob(resp.Loads.Load[0].loadFile));
-          })
+          this.toastScv.showSuccess(resp.GeneralResponse.descriptionCode);
         }else{
-          this.toastScv.showError(resp.GeneralResponse.messageCode);
+          this.toastScv.showError(resp.GeneralResponse.descriptionCode);
+          // this.faultsScv.readByIdFaults(idLoad).subscribe(resp => { //seteado 353
+          // });
         }
+        this.cleanForm();
       })
     }
   }
@@ -82,7 +76,6 @@ export class LoadFaultsComponent implements OnInit {
     let reader = new FileReader();
     reader.readAsDataURL(e.target['files'][0]);
     reader.onload = () => {
-      // console.log('>>', reader);
       const fileString = reader.result.toString().split(';base64,');
       this.fileBaseData = fileString[fileString.length -1];
     };
@@ -92,6 +85,8 @@ export class LoadFaultsComponent implements OnInit {
  }
 
   cleanForm() {
-    this.form.reset();
+    this.form.reset({
+      type: ''
+    });
   }
 }
