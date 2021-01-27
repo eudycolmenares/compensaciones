@@ -20,19 +20,19 @@ export class ProcessRRComponent implements OnInit {
       status: 'notcompleted', // completed | process | notcompleted
       title: 'Cargue archivos Fallas RR',
     },
-    // {
-    //   stage: 4,
-    //   status: 'notcompleted', // completed | process | notcompleted
-    //   title: 'Generación Nodos y Cuentas',
-    // },{
-    //   stage: 5,
-    //   status: 'notcompleted', // completed | process | notcompleted
-    //   title: 'Cargue Información de Rentas',
-    // },{
-    //   stage: 6,
-    //   status: 'notcompleted', // completed | process | notcompleted
-    //   title: 'Generación Archivos de Facturación',
-    // }
+    {
+      stage: 4,
+      status: 'notcompleted', // completed | process | notcompleted
+      title: 'Generación Nodos y Cuentas',
+    },{
+      stage: 5,
+      status: 'notcompleted', // completed | process | notcompleted
+      title: 'Cargue Información de Rentas',
+    },{
+      stage: 6,
+      status: 'notcompleted', // completed | process | notcompleted
+      title: 'Generación Archivos de Facturación',
+    }
   ];
 
   constructor() { }
