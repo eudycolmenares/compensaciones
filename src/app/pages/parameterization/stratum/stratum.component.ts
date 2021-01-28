@@ -5,7 +5,7 @@ import { StratumService } from '../../../services/stratum/stratum.service';
 import { GeneralFunctionsService } from '../../../services/general-functions.service';
 import { ToastService } from '../../../services/shared/toast.service';
 import { strataApiModel, stratumModel, requestModel, responseModel } from '../../../models/stratum';
-import { ButtonsTable as Buttons } from '../../../libraries/utilities.library';
+import { ButtonsTable as Buttons, SelectStatus } from '../../../libraries/utilities.library';
 
 @Component({
   selector: 'app-stratum',
@@ -15,6 +15,7 @@ import { ButtonsTable as Buttons } from '../../../libraries/utilities.library';
 
 export class StratumComponent implements OnInit {
   formStratum: FormGroup;
+  selectStatus: object[] = [];
   actionForm = 'create'; // create, update
   // table
   dataToTable: stratumModel[];
@@ -28,9 +29,14 @@ export class StratumComponent implements OnInit {
       name: 'description',
       description: 'Descripción',
       validation: '',
-    }
+    },
+    {
+      name: 'state',
+      description: 'Estado',
+      validation: 'active-desactive'
+    },
   ];
-  buttonToTable: Buttons[] = [Buttons.edit, Buttons.delete]
+  buttonToTable: Buttons[] = [Buttons.edit, Buttons.disable, Buttons.delete]
 
   constructor(
     private stratumSvc: StratumService,
@@ -50,6 +56,7 @@ export class StratumComponent implements OnInit {
       id: [''],
       code: ['', [Validators.required, Validators.maxLength(50)]],
       description: ['', [Validators.required, Validators.maxLength(50)]],
+      state: ['', Validators.required],
       creationDate: ['']
     })
   }
@@ -59,11 +66,17 @@ export class StratumComponent implements OnInit {
   get invalidDescription() {
     return this.formStratum.get('description').touched && this.formStratum.get('description').invalid;
   }
+  get invalidState() {
+    return this.formStratum.get('state').touched && this.formStratum.get('state').invalid;
+  }
   textsFormInvalid(field: string) {
     return this.gnrSvc.validationFormTextRequired(this.formStratum, field);
   }
 
   initializeVariables() {
+    for (const i of Object.entries(SelectStatus)) {
+      this.selectStatus.push({key: i[1], value: i[0]})
+    }
     this.initialCharge(); // table
   }
   initialCharge() {
@@ -82,7 +95,8 @@ export class StratumComponent implements OnInit {
       const dataRequest: requestModel = {
         'SocialStatus': {
           'statusSocial': this.formStratum.get('code').value,
-          'description': this.formStratum.get('description').value
+          'description': this.formStratum.get('description').value,
+          'state': this.formStratum.get('state').value,
         }
       }
       if(this.actionForm === 'create') {
@@ -123,8 +137,14 @@ export class StratumComponent implements OnInit {
       id: data.idSocialStatus,
       code: data.statusSocial,
       description: data.description,
+      state: data.state,
       creationDate: data.creationDate
     });
+  }
+
+  disableStratum(stratum: stratumModel) {
+    const dataRequest: requestModel = { SocialStatus: {...stratum, state: '0'} };
+    this.updateStratumApi(dataRequest);
   }
 
   deleteStratum(stratum: stratumModel) {
@@ -139,7 +159,9 @@ export class StratumComponent implements OnInit {
   }
 
   cleanForm() {
-    this.formStratum.reset();
+    this.formStratum.reset({
+      state: ''
+    });
     this.actionForm = 'create';
   }
 }

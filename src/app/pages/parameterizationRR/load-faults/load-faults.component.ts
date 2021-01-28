@@ -6,7 +6,6 @@ import { GeneralFunctionsService } from '../../../services/general-functions.ser
 import { ToastService } from '../../../services/shared/toast.service';
 import { FaultsService } from '../../../services/faults/faults.service';
 import { faultsApiModel } from '../../../models/faults';
-import { log } from 'console';
 
 // modal
 

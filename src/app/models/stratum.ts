@@ -2,7 +2,8 @@ export interface stratumModel {
   idSocialStatus?: string;
   statusSocial: string;
   description: string;
-  creationDate?: string
+  creationDate?: string;
+  state?: string;
 }
 
 interface generalResponse {
