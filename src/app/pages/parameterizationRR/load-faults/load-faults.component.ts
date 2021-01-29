@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { GeneralFunctionsService } from '../../../services/general-functions.service';
@@ -43,7 +43,7 @@ export class NgbdModalConfirm {
 export class LoadFaultsComponent implements OnInit {
   form: FormGroup;
   fileBaseData: string;
-  fileBaseName: String;
+  fileBaseName = '';
 
   constructor(
     private fb: FormBuilder,
@@ -61,7 +61,7 @@ export class LoadFaultsComponent implements OnInit {
   createForm() {
     this.form = this.fb.group({
       type: ['', Validators.required],
-      file: ['', Validators.required],
+      file: ['', [Validators.required, this.fileExtensionValidator('.xlsx')],],
     })
   }
   get invalidType() {
@@ -115,14 +115,38 @@ export class LoadFaultsComponent implements OnInit {
       const fileString = reader.result.toString().split(';base64,');
       this.fileBaseData = fileString[fileString.length -1];
     };
-    // reader.onerror = function (error) {
-    //   console.log('Error: ', error);
-    // };
- }
+  }
+
+  downloadTemplate() {
+    const fileToDownload = 'assets/documents/PLANTILLA_CARGUE_BASE_RESIDENCIAL.xlsx';
+    const link = document.createElement('a');
+    if (link.download !== undefined) {
+      let filename = 'PLANTILLA_CARGUE_BASE_RESIDENCIAL.xlsx';
+      link.setAttribute('href', fileToDownload);
+      link.setAttribute('download', filename);
+      link.style.visibility = 'hidden';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  }
 
   cleanForm() {
     this.form.reset({
       type: ''
     });
+    this.fileBaseName = '';
+  }
+  cleanInputFile() {
+    this.form.controls.file.setValue('');
+    this.fileBaseName = '';
+  }
+  fileExtensionValidator(validExt: string) {
+    return (control: AbstractControl): { [key: string]: boolean } | null => {
+      if (control.value !== null && control.value.substr(-4) === validExt) {
+        return null;
+      }
+      return { fileExtValidator: true };
+    };
   }
 }
