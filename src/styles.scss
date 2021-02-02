@@ -1,8 +1,8 @@
-@import 'assets/css/colors.scss';
-@import '../node_modules/bootstrap/scss/bootstrap';
-@import '../node_modules/primeng/resources/themes/bootstrap4-light-blue/theme.css';
-@import '../node_modules/primeng/resources/primeng.min.css';
-@import '../node_modules/primeicons/primeicons.css';
+@import "assets/css/colors.scss";
+@import "../node_modules/bootstrap/scss/bootstrap";
+@import "../node_modules/primeng/resources/themes/bootstrap4-light-blue/theme.css";
+@import "../node_modules/primeng/resources/primeng.min.css";
+@import "../node_modules/primeicons/primeicons.css";
 // @import '../node_modules/primeflex/primeflex.css';
 
 //Resize icon invalid - solution conflic
@@ -17,7 +17,7 @@ hr {
   height: 2px;
   border-width: 0;
   color: var(--gray);
-  background-color: var(--gray)
+  background-color: var(--gray);
 }
 
 input::-webkit-outer-spin-button,
@@ -27,7 +27,7 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type=number] {
+input[type="number"] {
   -moz-appearance: textfield;
 }
 
@@ -98,7 +98,7 @@ input[type=number] {
 // Pages
 
 .container-add {
-  font-size: .9rem;
+  font-size: 0.9rem;
   .container-buttons {
     button {
       min-width: 6rem;
@@ -106,7 +106,7 @@ input[type=number] {
   }
 }
 .container-table {
-  font-size: .9rem;
+  font-size: 0.9rem;
 }
 
 // // NgBootstrap - Table
@@ -207,5 +207,23 @@ input[type=number] {
   }
   .p-panelmenu-content .p-menuitem .p-menuitem-link:focus {
     box-shadow: 0 0 0 0.2rem rgb(211 34 21 / 50%) !important;
+  }
+}
+
+//PRIMENG button dialog confirm
+
+.p-dialog-footer {
+  .p-button {
+    background: var(--primary);
+    border: var(--primary);
+    &:enabled {
+      &:hover {
+        background-color: var(--primary);
+        border-color: var(--primary);
+      }
+    }
+    &:focus {
+      box-shadow: none;
+    }
   }
 }

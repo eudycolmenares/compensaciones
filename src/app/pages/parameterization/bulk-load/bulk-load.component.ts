@@ -15,6 +15,55 @@ import { BulkLoadService } from '../../../services/bulkLoad/bulk-load.service';
 import { GeneralFunctionsService } from '../../../services/general-functions.service';
 import { ToastService } from 'src/app/services/shared/toast.service';
 
+import { ConfirmationService } from 'primeng/api';
+
+// modal
+
+// @Component({
+//   selector: 'ngbd-modal-confirm',
+//   template: `
+//     <div class="modal-header">
+//       <h4 class="modal-title" id="modal-title">Confirmar</h4>
+//       <button
+//         type="button"
+//         class="close"
+//         aria-describedby="modal-title"
+//         (click)="modal.dismiss('Cross click')"
+//       >
+//         <span aria-hidden="true">&times;</span>
+//       </button>
+//     </div>
+//     <div class="modal-body">
+//       <p><strong>¿Estás seguro que deseas enviar el archivo?</strong></p>
+//       <p>
+//         Toda la información de Carga de Fallas que contiene el archivo quedará
+//         registrada en la base de datos.
+//       </p>
+//     </div>
+//     <div class="modal-footer">
+//       <button
+//         type="button"
+//         class="btn btn-outline-secondary"
+//         (click)="modal.dismiss('cancel click')"
+//       >
+//         Cancelar
+//       </button>
+//       <button
+//         type="button"
+//         class="btn btn-danger"
+//         (click)="modal.close('Ok click')"
+//       >
+//         Confirmar
+//       </button>
+//     </div>
+//   `,
+// })
+// export class NgbdModalConfirm {
+//   constructor(public modal: NgbActiveModal) {}
+// }
+
+//
+
 @Component({
   selector: 'app-bulk-load',
   templateUrl: './bulk-load.component.html',
@@ -30,7 +79,7 @@ export class BulkLoadComponent implements OnInit {
   structure: object[] = [
     {
       name: 'lineNumber',
-      description: 'Número de línea',
+      description: 'N° de línea',
       validation: '',
     },
     {
@@ -48,8 +97,10 @@ export class BulkLoadComponent implements OnInit {
     private _fb: FormBuilder,
     private _bulkLoadSvc: BulkLoadService,
     private _gnrScv: GeneralFunctionsService,
-    private _toastScv: ToastService
-  ) {
+    private _toastScv: ToastService,
+    private confirmationService: ConfirmationService
+  ) // private modalService: NgbModal
+  {
     this.createForm();
   }
 
@@ -132,21 +183,37 @@ export class BulkLoadComponent implements OnInit {
         control.markAsTouched();
       });
     } else {
-      let fileReader = new FileReader();
-      fileReader.readAsText(this.dataUploaded);
-      fileReader.onload = (e) => {
-        let text = fileReader.result.toString();
-        this.dataArraySent = text.split('\n');
-        let textEncode = btoa(text);
-        const dataRequest: BulkLoadRequestModel = {
-          fileName: this.bulkLoadForm.get('fileName').value,
-          file: textEncode,
-          uploadType: this.bulkLoadForm.get('uploadType').value,
-          userName: 'test', // seteado
-        };
-        this.createCauseApi(dataRequest);
-      };
+      this.confirmationService.confirm({
+        message: `<p><strong>¿Estás seguro que deseas enviar el archivo?</strong></p>
+              <p>
+                Toda la información de Cargue Masivo que contiene el archivo quedará
+                registrada en la base de datos.
+              </p>`,
+        accept: () => {
+          this.sendFileToService();
+        },
+        reject: () => {
+          this.bulkLoadForm.get('uploadType').setValue('');
+        },
+      });
     }
+  }
+
+  sendFileToService() {
+    let fileReader = new FileReader();
+    fileReader.readAsText(this.dataUploaded);
+    fileReader.onload = (e) => {
+      let text = fileReader.result.toString();
+      this.dataArraySent = text.split('\n');
+      let textEncode = btoa(text);
+      const dataRequest: BulkLoadRequestModel = {
+        fileName: this.bulkLoadForm.get('fileName').value,
+        file: textEncode,
+        uploadType: this.bulkLoadForm.get('uploadType').value,
+        userName: 'test', // seteado
+      };
+      this.createCauseApi(dataRequest);
+    };
   }
 
   createCauseApi(dataRequest: BulkLoadRequestModel) {
