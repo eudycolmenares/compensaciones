@@ -35,32 +35,32 @@ export class NavbarComponent implements OnInit {
           {
             label: 'Causas',
             icon:'pi pi-fw pi-external-link',
-            // routerLink: ['/dashboard/causes']
+            routerLink: ['/dashboard/causes']
           },
           {
             label: 'Estado Sistema',
             icon:'pi pi-fw pi-external-link',
-            // routerLink: ['/dashboard/system-status']
+            routerLink: ['/dashboard/system-status']
           },
           {
             label: 'Síntoma',
             icon:'pi pi-fw pi-external-link',
-            // routerLink: ['/dashboard/symptom']
+            routerLink: ['/dashboard/symptom']
           },
           {
             label: 'Prioridades',
             icon:'pi pi-fw pi-external-link',
-            // routerLink: ['/dashboard/priorities']
+            routerLink: ['/dashboard/priorities']
           },
           {
             label: 'Tipo Origen',
             icon:'pi pi-fw pi-external-link',
-            // routerLink: ['/dashboard/origintype']
+            routerLink: ['/dashboard/origintype']
           },
           {
             label: 'Cargue Masivo',
             icon:'pi pi-fw pi-external-link',
-            // routerLink: ['/dashboard/bulk-load']
+            routerLink: ['/dashboard/bulk-load']
           }
         ]
       },
