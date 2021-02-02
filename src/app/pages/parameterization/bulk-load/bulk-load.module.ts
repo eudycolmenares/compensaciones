@@ -5,7 +5,7 @@ import { BulkLoadRoutingModule } from './bulk-load-routing.module';
 import { DashboardModule } from '../../dashboard/dashboard.module';
 import { BulkLoadComponent } from './bulk-load.component';
 
-import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+// import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [BulkLoadComponent],
@@ -13,7 +13,7 @@ import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
     CommonModule,
     BulkLoadRoutingModule,
     DashboardModule,
-    NgbDropdownModule,
+    // NgbDropdownModule,
   ],
 })
 export class BulkLoadModule {}

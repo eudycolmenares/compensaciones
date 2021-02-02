@@ -5,7 +5,7 @@ import { RrCompensatedAccountsRoutingModule } from './rr-compensated-accounts-ro
 import { RrCompensatedAccountsComponent } from './rr-compensated-accounts.component';
 import { DashboardModule } from '../../dashboard/dashboard.module';
 
-import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+// import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [RrCompensatedAccountsComponent],
@@ -13,7 +13,7 @@ import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
     CommonModule,
     RrCompensatedAccountsRoutingModule,
     DashboardModule,
-    NgbDropdownModule,
+    // NgbDropdownModule,
   ]
 })
 export class RrCompensatedAccountsModule { }

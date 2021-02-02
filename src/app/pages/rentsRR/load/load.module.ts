@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule, DecimalPipe } from '@angular/common';
-import { NgbDropdownModule } from "@ng-bootstrap/ng-bootstrap";
+// import { NgbDropdownModule } from "@ng-bootstrap/ng-bootstrap";
 
 import { LoadRoutingModule } from './load-routing.module';
 import { LoadComponent } from './load.component';
@@ -12,7 +12,7 @@ import { ComponentsModule } from  '../../../components/components.module';
     CommonModule,
     LoadRoutingModule,
     ComponentsModule,
-    NgbDropdownModule
+    // NgbDropdownModule
   ],
   exports: [LoadComponent],
   bootstrap: [LoadComponent],

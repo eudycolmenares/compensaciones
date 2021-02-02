@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { MenuItem } from 'primeng/api';
 
 @Component({
   selector: 'app-header',
@@ -9,10 +10,34 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 export class HeaderComponent implements OnInit {
   @Input() opened: boolean;
   @Output() swToggle = new EventEmitter<boolean>();
+  items: MenuItem[];
 
   constructor() { }
 
   ngOnInit(): void {
+    this.items = [
+      {
+        label: 'Perfil',
+        icon: 'pi pi-user',
+        command: () => {
+          // this.update();
+        }
+      },
+      {
+        label: 'Cambiar contraseña',
+        icon: 'pi pi-key',
+        command: () => {
+          // this.delete();
+        }
+      },
+      {
+        separator: true
+      },
+      {
+        label: 'Cerrar Sesión',
+        icon: 'pi pi-sign-out'
+      }
+  ];
   }
 
   toggleSidebar() {

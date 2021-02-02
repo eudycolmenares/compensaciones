@@ -2,12 +2,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule, DecimalPipe } from '@angular/common';
 import { ReactiveFormsModule } from "@angular/forms";
 import { SidebarModule } from 'ng-sidebar';
-import { NgbDropdownModule } from "@ng-bootstrap/ng-bootstrap";
-import { NgbAccordionModule } from "@ng-bootstrap/ng-bootstrap";
 
-import { NgbDatepickerModule } from "@ng-bootstrap/ng-bootstrap";
-import { NgbTimepickerModule } from "@ng-bootstrap/ng-bootstrap";
-import { NgbPaginationModule  } from '@ng-bootstrap/ng-bootstrap';
+import { SplitButtonModule } from 'primeng/splitbutton';
+// import { NgbDatepickerModule } from "@ng-bootstrap/ng-bootstrap";
+// import { NgbTimepickerModule } from "@ng-bootstrap/ng-bootstrap";
+// import { NgbPaginationModule  } from '@ng-bootstrap/ng-bootstrap';
+import { PanelMenuModule } from 'primeng/panelmenu';
 
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
@@ -29,20 +29,24 @@ import { ComponentsModule } from 'src/app/components/components.module';
     CommonModule,
     DashboardRoutingModule,
     SidebarModule.forRoot(),
-    NgbDropdownModule,
-    NgbAccordionModule,
+    // NgbDropdownModule,
+    // NgbAccordionModule,
+    SplitButtonModule,
+
+    PanelMenuModule,
+
     ComponentsModule,
     ReactiveFormsModule,
-    NgbDatepickerModule,
-    NgbTimepickerModule,
-    NgbPaginationModule,
-  ], 
+    // NgbDatepickerModule,
+    // NgbTimepickerModule,
+    // NgbPaginationModule,
+  ],
   exports: [
     ComponentsModule,
     ReactiveFormsModule,
-    NgbDatepickerModule,
-    NgbTimepickerModule,
-    NgbPaginationModule,
+    // NgbDatepickerModule,
+    // NgbTimepickerModule,
+    // NgbPaginationModule,
   ],
   providers: [DecimalPipe]
 })

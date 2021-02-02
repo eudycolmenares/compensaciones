@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
-import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+// import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { GeneralFunctionsService } from '../../../services/general-functions.service';
 import { ToastService } from '../../../services/shared/toast.service';
@@ -29,7 +29,7 @@ import { faultsApiModel } from '../../../models/faults';
   `
 })
 export class NgbdModalConfirm {
-  constructor(public modal: NgbActiveModal) {}
+  // constructor(public modal: NgbActiveModal) {}
 }
 
 //
@@ -50,7 +50,7 @@ export class LoadFaultsComponent implements OnInit {
     private gnrSvc: GeneralFunctionsService,
     private toastScv: ToastService,
     private faultsScv: FaultsService,
-    private modalService: NgbModal
+    // private modalService: NgbModal
   ) {
     this.createForm();
   }
@@ -80,10 +80,10 @@ export class LoadFaultsComponent implements OnInit {
         control.markAsTouched();
       })
     }else {
-      const modal = this.modalService.open(NgbdModalConfirm);
-      modal.result.then(result => {
-        this.sendFileToService();
-      }).catch(error => {});
+      // const modal = this.modalService.open(NgbdModalConfirm);
+      // modal.result.then(result => {
+      //   this.sendFileToService();
+      // }).catch(error => {});
     }
   }
 

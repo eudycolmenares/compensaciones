@@ -42,10 +42,6 @@ const ROUTES: Routes = [
         loadChildren: () => import('../parameterization/bulk-load/bulk-load.module').then(m => m.BulkLoadModule),
       },
       {
-        path: 'task',
-        loadChildren: () => import('../parameterization/task/task.module').then(m => m.TaskModule),
-      },
-      {
         path: 'load-faults',
         loadChildren: () => import('../parameterizationRR/load-faults/load-faults.module').then(m => m.LoadFaultsModule),
       },

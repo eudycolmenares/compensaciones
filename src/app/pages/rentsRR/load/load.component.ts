@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+// import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 // modal
 
@@ -23,7 +23,7 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
   `
 })
 export class NgbdModalConfirm {
-  constructor(public modal: NgbActiveModal) {}
+  // constructor(public modal: NgbActiveModal) {}
 }
 
 
@@ -139,7 +139,7 @@ export class LoadComponent implements OnInit {
   caseUse = '';
 
   constructor(
-    private modalService: NgbModal
+    // private modalService: NgbModal
   ) { }
 
   ngOnInit(): void {
@@ -191,9 +191,9 @@ export class LoadComponent implements OnInit {
   }
 
   openModal() {
-    const modal = this.modalService.open(NgbdModalConfirm);
-    modal.result.then(result => {
-      // this.sendDataToDelete(item);
-    }).catch(error => {});
+    // const modal = this.modalService.open(NgbdModalConfirm);
+    // modal.result.then(result => {
+    //   // this.sendDataToDelete(item);
+    // }).catch(error => {});
   }
 }
