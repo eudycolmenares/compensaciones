@@ -15,7 +15,6 @@ import { DropdownModule } from 'primeng/dropdown';
     BulkLoadRoutingModule,
     DashboardModule,
     ConfirmDialogModule,
-    ConfirmDialogModule,
     DropdownModule,
   ],
   exports: [BulkLoadComponent],

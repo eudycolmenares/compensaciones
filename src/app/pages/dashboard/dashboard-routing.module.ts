@@ -17,10 +17,10 @@ const ROUTES: Routes = [
         path: 'stratum',
         loadChildren: () => import('../parameterization/stratum/stratum.module').then(m => m.StratumModule),
       },
-      // {
-      //   path: 'causes',
-      //   loadChildren: () => import('../parameterization/causes/causes.module').then(m => m.CausesModule),
-      // },
+      {
+        path: 'causes',
+        loadChildren: () => import('../parameterization/causes/causes.module').then(m => m.CausesModule),
+      },
       // {
       //   path: 'system-status',
       //   loadChildren: () => import('../parameterization/system-status/system-status.module').then(m => m.SystemStatusModule),

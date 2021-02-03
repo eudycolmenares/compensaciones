@@ -240,13 +240,13 @@ export class CausesComponent implements OnInit {
           OriginType: {
             id: this.causeForm.get('typeOrigin').value,
           },
-          television: servicesSelected.find((svc) => svc === 'television')
+          television: servicesSelected.find((svc) => svc['key'] === 'television')
             ? '1'
             : '0',
-          internet: servicesSelected.find((svc) => svc === 'internet')
+          internet: servicesSelected.find((svc) => svc['key'] === 'internet')
             ? '1'
             : '0',
-          telephone: servicesSelected.find((svc) => svc === 'telephone')
+          telephone: servicesSelected.find((svc) => svc['key'] === 'telephone')
             ? '1'
             : '0',
           state: this.causeForm.get('status').value,
