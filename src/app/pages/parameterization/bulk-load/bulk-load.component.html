@@ -91,14 +91,12 @@
     </form>
 
     <div class="row text-light text-center justify-content-center mt-4">
-      <p-dropdown
-        #add
-        [options]="templateOptionsList"
-        optionLabel="nameOption"
-        class="p-inputtext-sm"
-        placeholder="Descargar plantilla"
-        (onChange)="downloadModelDocument(add.value?.value)"
-      >
+      <p-dropdown [options]="templateOptionsList" optionLabel="nameOption" class="p-inputtext-sm" placeholder="Seleccione">
+        <ng-template let-option pTemplate="item">
+          <div (click)="downloadModelDocument(option.valueOption)">
+            {{ option.nameOption }}
+          </div>
+        </ng-template>
       </p-dropdown>
     </div>
   </div>
@@ -113,7 +111,7 @@
 </section>
 
 <p-confirmDialog
-  header="¿Estás seguro que deseas enviar el archivo?"
+  header="Confirmación"
   rejectLabel="Cancelar"
   acceptLabel="Aceptar"
   icon="pi pi-exclamation-triangle"

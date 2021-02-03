@@ -112,6 +112,7 @@ export class LoadComponent implements OnInit {
     }
   ];
   caseUse = '';
+  templateOptionsList: object[] = [{valueOption: 'nodes', nameOption: 'Nodos'}, {valueOption: 'accounts', nameOption: 'Cuentas'}] ;
 
   constructor(
     private _confirmationService: ConfirmationService

@@ -46,14 +46,16 @@ export class BulkLoadComponent implements OnInit {
       validation: '',
     },
   ];
-  templateOptionsList: object[] = [{value: 'CAUSAS', nameOption: 'Causas'}, {value: 'SINTOMAS', nameOption: 'Síntomas'}] ;
-  selectedCity: any;
+  templateOptionsList: object[] = [
+    { valueOption: 'CAUSAS', nameOption: 'Causas' },
+    { valueOption: 'SINTOMAS', nameOption: 'Síntomas' },
+  ];
   constructor(
     private _fb: FormBuilder,
     private _bulkLoadSvc: BulkLoadService,
     private _gnrScv: GeneralFunctionsService,
     private _toastScv: ToastService,
-    private _confirmationService: ConfirmationService,
+    private _confirmationService: ConfirmationService
   ) {
     this.createForm();
   }
@@ -110,28 +112,32 @@ export class BulkLoadComponent implements OnInit {
 
   downloadModelDocument(selectedTypeFile: string) {
     if (selectedTypeFile !== null || selectedTypeFile !== undefined) {
-    const symptomsFile = 'assets/documents/SINTOMAS.csv';
-    const causesFile = 'assets/documents/CAUSAS.csv';
-    if (selectedTypeFile) {
-      let selectFile = symptomsFile;
+      const symptomsFile = 'assets/documents/SINTOMAS.csv';
+      const causesFile = 'assets/documents/CAUSAS.csv';
+      let selectFile = '';
+      if (selectedTypeFile === 'SINTOMAS') {
+        selectFile = symptomsFile;
+      }
       if (selectedTypeFile === 'CAUSAS') {
         selectFile = causesFile;
       }
 
       const link = document.createElement('a');
+      let filename = selectedTypeFile + '.csv';
       if (link.download !== undefined) {
         // Browsers that support HTML5 download attribute
-        let filename = selectedTypeFile + '.csv';
-        link.setAttribute('href', selectFile);
-        link.setAttribute('download', filename);
-        link.style.visibility = 'hidden';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        setTimeout(function () {
+          // <- fix error with dropdown list when click
+          link.setAttribute('href', selectFile);
+          link.setAttribute('download', filename);
+          link.style.visibility = 'hidden';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        }, 1);
       }
     }
   }
-}
 
   onSubmit() {
     if (this.bulkLoadForm.invalid) {
