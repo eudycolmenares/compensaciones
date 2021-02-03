@@ -15,10 +15,19 @@ export class TableComponent implements OnInit {
   @Input() buttons: Buttons[] = [Buttons.edit, Buttons.disable, Buttons.delete];
 
   constructor(private http: HttpClient) {
+    this.buttons.length
   }
 
   ngOnInit(): void {
-
+    console.log('structure: ', this.structure);
+    console.log('dataBase: ', this.dataBase);
   }
 
+  ngOnChanges(changes: object) {
+    console.log('ngOnChanges()', changes);
+
+    if(Object.keys(changes).length >= 1) {
+      // this.callObservableSearch();
+    }
+  }
 }

@@ -38,63 +38,6 @@ input[type=number] {
   width: 15rem;
 }
 
-// Accordion
-
-// .menu-items {
-//   font-size: .9rem;
-//   width: 100%;
-//   .card {
-//     border-radius: 0;
-//     background: transparent;
-//   }
-//   .card-header {
-//     padding: 0.3rem 0;
-//   }
-//   .btn-link {
-//     width: 100%;
-//     text-align: left;
-//     padding: .3rem .3rem;
-//     color: var(--white);
-//     font-weight: bold;
-//     display: flex;
-//     justify-content: space-between;
-//     &:hover {
-//       text-decoration: none;
-//     }
-//     &:focus {
-//       box-shadow: none;
-//     }
-//     img {
-//       width: 20px;
-//     }
-//   }
-//   .btn {
-//     font-size: .9rem;
-//     &:focus {
-//       box-shadow: none;
-//     }
-//   }
-//   .card-body {
-//     padding: 0;
-//     .list-group-item {
-//       background: transparent;
-//       color: var(--white);
-//       cursor: pointer;
-//       display: flex;
-//       justify-content: space-between;
-//       padding: .75rem .8rem .75rem 1.25rem;
-//       span {
-//         white-space: nowrap;
-//         text-overflow: ellipsis;
-//         overflow: hidden;
-//       }
-//     }
-//     img {
-//       width: 20px;
-//     }
-//   }
-// }
-
 // Pages
 
 .container-add {
@@ -147,20 +90,20 @@ input[type=number] {
 //   background-color: var(--primary);
 // }
 
-// // spinner - loading
+// spinner - loading
 
-// .loading-container {
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   position: fixed;
-//   top: 0;
-//   left: 0;
-//   width: 100vw;
-//   height: 100vh;
-//   background-color: rgba(0,0,0,0.7);
-//   z-index: 10;
-// }
+.loading-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.7);
+  z-index: 10;
+}
 
 // PRIMENG SplitButton
 
@@ -207,5 +150,13 @@ input[type=number] {
   }
   .p-panelmenu-content .p-menuitem .p-menuitem-link:focus {
     box-shadow: 0 0 0 0.2rem rgb(211 34 21 / 50%) !important;
+  }
+}
+
+// PRIMENG Table
+
+.container-table {
+  .btn img {
+    height: 15px;
   }
 }

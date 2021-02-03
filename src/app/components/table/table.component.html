@@ -1,26 +1,43 @@
 <div class="container-table px-sm-0 px-md-3">
   ComponentTable
-  <!-- <p-table [value]="cars">
+  <p-table [value]="dataBase" styleClass="p-datatable-sm" selectionMode="single">
     <ng-template pTemplate="header">
       <tr>
-          <th>Vin</th>
-          <th>Year</th>
-          <th>Brand</th>
-          <th>Color</th>
+        <th scope="col">#</th>
+        <th *ngFor="let opt of structure">{{opt.description}}</th>
+        <ng-container *ngIf="buttons.length !== 0">
+          <th scope="col" class="text-center">Acciones</th>
+        </ng-container>
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-car>
+    <ng-template pTemplate="body" let-item let-i="rowIndex" let-columns="structure">
       <tr>
-          <td>{{car.vin}}</td>
-          <td>{{car.year}}</td>
-          <td>{{car.brand}}</td>
-          <td>{{car.color}}</td>
+        <td>{{ i + 1 }}</td>
+        <ng-container *ngFor="let opt of structure" [ngSwitch]="opt.validation" >
+          <td *ngSwitchCase="'yes-no'">{{ (item[opt.name] === '1' || item[opt.name] === 1) ? 'Si' : 'No' }}</td>
+          <td *ngSwitchCase="'active-desactive'">{{ (item[opt.name] === '1' || item[opt.name] === 1) ? 'Activo' : 'Inactivo' }}</td>
+          <td *ngSwitchCase="'service'">{{ (item[opt.name] === '1' || item[opt.name] === 1) ? 'Aplica' : 'N/A' }}</td>
+          <td *ngSwitchCase="'object'">{{ item[opt.name][opt.subname] }}</td>
+          <td *ngSwitchCase="'observation'"><textarea class="form-control form-control-sm" [value]="item[opt.name]" (change)="item[opt.name]=$event.target.value"></textarea></td>
+          <td *ngSwitchCase="''">{{ item[opt.name] }}</td>
+        </ng-container>
+
+        <ng-container *ngIf="buttons.length !== 0">
+          <td class="text-center">
+            <button type="button" class="btn btn-primary btn-sm mr-2" (click)="sendDataToEdit(item)" *ngIf="(buttons.indexOf('edit') > -1)" data-toggle="tooltip" data-placement="top" [title]="validation? 'Aprobado' : ''">
+              <img [src]="validation? 'assets/img/checked.svg' : 'assets/img/edit.svg'">
+            </button>
+            <button type="button" class="btn btn-secondary btn-sm mr-2" (click)="sendDataToDisable(item)" [disabled]="item.state?.toString() === '0'" *ngIf="(buttons.indexOf('disable') > -1)" data-toggle="tooltip" data-placement="top" [title]="validation? 'Rechazado por calidad' : ''">
+              <img [src]="validation? 'assets/img/rejected-quality.svg' : 'assets/img/disable.svg'">
+            </button>
+            <button type="button" class="btn btn-secondary btn-sm mr-2" (click)="openModal(item)" *ngIf="(buttons.indexOf('delete') > -1)" data-toggle="tooltip" data-placement="top" [title]="validation? 'Rechazado' : ''">
+              <img [src]="validation? 'assets/img/rejected.svg' : 'assets/img/trash.svg'">
+            </button>
+          </td>
+        </ng-container>
       </tr>
     </ng-template>
-</p-table> -->
-
-
-
+  </p-table>
 </div>
 
 
