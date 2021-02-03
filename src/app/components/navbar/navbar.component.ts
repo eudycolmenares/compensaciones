@@ -71,7 +71,7 @@ export class NavbarComponent implements OnInit {
           {
             label: 'Cargar Fallas',
             icon:'pi pi-fw pi-align-left',
-            // routerLink: ['/dashboard/load-faults']
+            routerLink: ['/dashboard/load-faults']
           },
           {
             label: 'Causas Ordenes Mantenimiento',

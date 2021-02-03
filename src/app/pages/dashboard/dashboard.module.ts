@@ -8,8 +8,6 @@ import { SplitButtonModule } from 'primeng/splitbutton';
 // import { NgbTimepickerModule } from "@ng-bootstrap/ng-bootstrap";
 // import { NgbPaginationModule  } from '@ng-bootstrap/ng-bootstrap';
 import { PanelMenuModule } from 'primeng/panelmenu';
-import {ConfirmDialogModule} from 'primeng/confirmdialog';
-import {ConfirmationService} from 'primeng/api';
 
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
@@ -36,7 +34,6 @@ import { ComponentsModule } from 'src/app/components/components.module';
     SplitButtonModule,
 
     PanelMenuModule,
-    ConfirmDialogModule,
 
     ComponentsModule,
     ReactiveFormsModule,
@@ -47,12 +44,11 @@ import { ComponentsModule } from 'src/app/components/components.module';
   exports: [
     ComponentsModule,
     ReactiveFormsModule,
-    ConfirmDialogModule,
     // NgbDatepickerModule,
     // NgbTimepickerModule,
     // NgbPaginationModule,
   ],
-  providers: [DecimalPipe,ConfirmationService]
+  providers: [DecimalPipe]
 })
 
 export class DashboardModule { }

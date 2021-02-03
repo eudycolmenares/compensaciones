@@ -5,13 +5,13 @@
     <div class="row text-light mt-4">
       <div class="col-sm container-buttons">
         <input type="file" (change)="handleChangeInputFile($event)" class="d-none" #inputFileTxt accept=".txt">
-        <div ngbDropdown class="d-inline-block">
+        <!-- <div ngbDropdown class="d-inline-block">
           <button class="btn btn-outline-primary"  id="dropdownBasic1" ngbDropdownToggle>Seleccione Base</button>
           <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
             <button ngbDropdownItem (click)="generateClickInput('nodes')">Nodos</button>
             <button ngbDropdownItem (click)="generateClickInput('accounts')">Cuentas</button>
           </div>
-        </div>
+        </div> -->
         <button type="button" class="btn btn-primary btn-sm ml-3" (click)="openModal()">Enviar</button>
       </div>
     </div>
@@ -19,5 +19,13 @@
 
   <hr class="mt-5 mb-5" />
 
-  <app-table [dataBase]="dataToTable" [structure]="structureToTable" actionsButton="No"></app-table>
+  <!-- <app-table [dataBase]="dataToTable" [structure]="structureToTable" actionsButton="No"></app-table> -->
 </section>
+
+<p-confirmDialog
+  header="¿Estás seguro de que desea cargar esta información?"
+  rejectLabel="Cancelar"
+  acceptLabel="Aceptar"
+  icon="pi pi-exclamation-triangle"
+>
+</p-confirmDialog>

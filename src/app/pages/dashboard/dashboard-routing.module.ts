@@ -41,10 +41,10 @@ const ROUTES: Routes = [
         path: 'bulk-load',
         loadChildren: () => import('../parameterization/bulk-load/bulk-load.module').then(m => m.BulkLoadModule),
       },
-      // {
-      //   path: 'load-faults',
-      //   loadChildren: () => import('../parameterizationRR/load-faults/load-faults.module').then(m => m.LoadFaultsModule),
-      // },
+      {
+        path: 'load-faults',
+        loadChildren: () => import('../parameterizationRR/load-faults/load-faults.module').then(m => m.LoadFaultsModule),
+      },
       // {
       //   path: 'orders-symptoms',
       //   loadChildren: () => import('../parameterizationRR/maintenance-orders-symptoms/maintenance-orders-symptoms.module').then(m => m.MaintenanceOrdersSymptomsModule),
