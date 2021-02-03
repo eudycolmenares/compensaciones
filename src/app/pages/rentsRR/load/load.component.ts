@@ -3,28 +3,28 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
 // modal
 
-@Component({
-  selector: 'ngbd-modal-confirm',
-  template: `
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-title">Confirmar</h4>
-    <button type="button" class="close" aria-describedby="modal-title" (click)="modal.dismiss('Cross click')">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <p><strong>¿Estás seguro de que desea cargar esta información?</strong></p>
-    <p>Todos estos registros reflejados en la tabla, seran almacenados para su posterior procesamiento.</p>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancelar</button>
-    <button type="button" class="btn btn-success" (click)="modal.close('Ok click')">Aceptar</button>
-  </div>
-  `
-})
-export class NgbdModalConfirm {
-  // constructor(public modal: NgbActiveModal) {}
-}
+// @Component({
+//   selector: 'ngbd-modal-confirm',
+//   template: `
+//   <div class="modal-header">
+//     <h4 class="modal-title" id="modal-title">Confirmar</h4>
+//     <button type="button" class="close" aria-describedby="modal-title" (click)="modal.dismiss('Cross click')">
+//       <span aria-hidden="true">&times;</span>
+//     </button>
+//   </div>
+//   <div class="modal-body">
+//     <p><strong>¿Estás seguro de que desea cargar esta información?</strong></p>
+//     <p>Todos estos registros reflejados en la tabla, seran almacenados para su posterior procesamiento.</p>
+//   </div>
+//   <div class="modal-footer">
+//     <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancelar</button>
+//     <button type="button" class="btn btn-success" (click)="modal.close('Ok click')">Aceptar</button>
+//   </div>
+//   `
+// })
+// export class NgbdModalConfirm {
+//   constructor(public modal: NgbActiveModal) {}
+// }
 
 
 @Component({

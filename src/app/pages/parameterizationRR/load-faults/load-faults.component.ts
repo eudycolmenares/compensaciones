@@ -9,28 +9,28 @@ import { faultsApiModel } from '../../../models/faults';
 
 // modal
 
-@Component({
-  selector: 'ngbd-modal-confirm',
-  template: `
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-title">Confirmar</h4>
-    <button type="button" class="close" aria-describedby="modal-title" (click)="modal.dismiss('Cross click')">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <p><strong>¿Estás seguro que deseas enviar el archivo?</strong></p>
-    <p>Toda la información de Carga de Fallas que contiene el archivo quedará registrada en la base de datos.</p>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancelar</button>
-    <button type="button" class="btn btn-danger" (click)="modal.close('Ok click')">Confirmar</button>
-  </div>
-  `
-})
-export class NgbdModalConfirm {
-  // constructor(public modal: NgbActiveModal) {}
-}
+// @Component({
+//   selector: 'ngbd-modal-confirm',
+//   template: `
+//   <div class="modal-header">
+//     <h4 class="modal-title" id="modal-title">Confirmar</h4>
+//     <button type="button" class="close" aria-describedby="modal-title" (click)="modal.dismiss('Cross click')">
+//       <span aria-hidden="true">&times;</span>
+//     </button>
+//   </div>
+//   <div class="modal-body">
+//     <p><strong>¿Estás seguro que deseas enviar el archivo?</strong></p>
+//     <p>Toda la información de Carga de Fallas que contiene el archivo quedará registrada en la base de datos.</p>
+//   </div>
+//   <div class="modal-footer">
+//     <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancelar</button>
+//     <button type="button" class="btn btn-danger" (click)="modal.close('Ok click')">Confirmar</button>
+//   </div>
+//   `
+// })
+// export class NgbdModalConfirm {
+//   // constructor(public modal: NgbActiveModal) {}
+// }
 
 //
 

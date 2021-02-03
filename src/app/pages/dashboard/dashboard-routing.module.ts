@@ -37,10 +37,10 @@ const ROUTES: Routes = [
       //   path: 'origintype',
       //   loadChildren: () => import('../parameterization/originType/origin-type.module').then(m => m.OriginTypeModule),
       // },
-      // {
-      //   path: 'bulk-load',
-      //   loadChildren: () => import('../parameterization/bulk-load/bulk-load.module').then(m => m.BulkLoadModule),
-      // },
+      {
+        path: 'bulk-load',
+        loadChildren: () => import('../parameterization/bulk-load/bulk-load.module').then(m => m.BulkLoadModule),
+      },
       // {
       //   path: 'load-faults',
       //   loadChildren: () => import('../parameterizationRR/load-faults/load-faults.module').then(m => m.LoadFaultsModule),
