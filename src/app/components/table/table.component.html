@@ -1,19 +1,45 @@
 <div class="container-table px-sm-0 px-md-3">
-  ComponentTable
-  <p-table [value]="dataBase" styleClass="p-datatable-sm" selectionMode="single">
-    <ng-template pTemplate="header">
+
+  <p-table #dt1 dataKey="id" styleClass="p-datatable-sm" selectionMode="single"
+    [value]="dataBase" [columns]="selectedColumns"
+    [paginator]="true" [rows]="5" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,20]"
+    [globalFilterFields]="selectedColumns"
+  >
+
+    <ng-template pTemplate="caption">
+      <div class="d-flex justify-content-between">
+        <p-multiSelect [options]="cols" [(ngModel)]="selectedColumns" optionLabel="header" selectedItemsLabel="{0} columns selected" [style]="{minWidth: '200px'}" placeholder="Elija Columnas">
+        </p-multiSelect>
+        <!-- <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt1)"></button> -->
+        <span class="p-input-icon-left p-ml-auto">
+          <i class="pi pi-search"></i>
+          <input pInputText type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Buscar palabra clave" />
+        </span>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="colgroup" let-columns>
+      <colgroup>
+          <col style="width: 3rem">
+          <col *ngFor="let col of columns">
+          <col style="width: 9rem" *ngIf="buttons.length !== 0">
+      </colgroup>
+    </ng-template>
+
+    <ng-template pTemplate="header" let-columns>
       <tr>
         <th scope="col">#</th>
-        <th *ngFor="let opt of structure">{{opt.description}}</th>
+        <th *ngFor="let opt of columns" [pSortableColumn]="opt.field">{{opt.description}} <p-sortIcon [field]="opt.field"></p-sortIcon></th>
         <ng-container *ngIf="buttons.length !== 0">
           <th scope="col" class="text-center">Acciones</th>
         </ng-container>
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-item let-i="rowIndex" let-columns="structure">
+
+    <ng-template pTemplate="body" let-item let-i="rowIndex" let-columns="columns">
       <tr>
-        <td>{{ i + 1 }}</td>
-        <ng-container *ngFor="let opt of structure" [ngSwitch]="opt.validation" >
+        <td style="width: 1rem">{{ i + 1 }}</td>
+        <ng-container *ngFor="let opt of columns" [ngSwitch]="opt.validation" >
           <td *ngSwitchCase="'yes-no'">{{ (item[opt.name] === '1' || item[opt.name] === 1) ? 'Si' : 'No' }}</td>
           <td *ngSwitchCase="'active-desactive'">{{ (item[opt.name] === '1' || item[opt.name] === 1) ? 'Activo' : 'Inactivo' }}</td>
           <td *ngSwitchCase="'service'">{{ (item[opt.name] === '1' || item[opt.name] === 1) ? 'Aplica' : 'N/A' }}</td>
@@ -21,7 +47,6 @@
           <td *ngSwitchCase="'observation'"><textarea class="form-control form-control-sm" [value]="item[opt.name]" (change)="item[opt.name]=$event.target.value"></textarea></td>
           <td *ngSwitchCase="''">{{ item[opt.name] }}</td>
         </ng-container>
-
         <ng-container *ngIf="buttons.length !== 0">
           <td class="text-center">
             <button type="button" class="btn btn-primary btn-sm mr-2" (click)="sendDataToEdit(item)" *ngIf="(buttons.indexOf('edit') > -1)" data-toggle="tooltip" data-placement="top" [title]="validation? 'Aprobado' : ''">
@@ -37,7 +62,9 @@
         </ng-container>
       </tr>
     </ng-template>
+
   </p-table>
+
 </div>
 
 
