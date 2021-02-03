@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 
 import { ButtonsTable as Buttons } from '../../libraries/utilities.library';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-table',
@@ -20,7 +20,9 @@ export class TableComponent implements OnInit {
   cols: any[];
   _selectedColumns: any[];
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private confirmationSvc: ConfirmationService,
+  ) {
     this.editRecord = new EventEmitter();
     this.disableRecord = new EventEmitter();
     this.deleteRecord = new EventEmitter();
@@ -29,17 +31,7 @@ export class TableComponent implements OnInit {
   ngOnInit(): void {
     this.cols = this.structure.map(item => ({...item, field: item['name'], header: item['description']}) );
     this._selectedColumns = this.cols;
-    console.log('this.cols: ', this.cols);
-    console.log('structure: ', this.structure);
-    console.log('dataBase: ', this.dataBase);
   }
-
-  // ngOnChanges(changes: object) {
-  //   console.log('ngOnChanges()', changes);
-  //   if(Object.keys(changes).length >= 1) {
-  //     // this.callObservableSearch();
-  //   }
-  // }
 
   sendDataToEdit(item) {
     this.editRecord.emit(item);
@@ -56,5 +48,18 @@ export class TableComponent implements OnInit {
   }
   @Input() get selectedColumns(): any[] {
     return this._selectedColumns;
+  }
+
+  // modal
+
+  openModal(item: object) {
+    console.log('asdasdsd');
+    this.confirmationSvc.confirm({
+      message: `Toda la información asociada a este registro se eliminará de forma permanente. Esta operación no se puede deshacer.`,
+      accept: () => {
+        this.sendDataToDelete(item);
+      },
+      reject: () => { },
+    });
   }
 }

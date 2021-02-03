@@ -4,9 +4,6 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { SidebarModule } from 'ng-sidebar';
 
 import { SplitButtonModule } from 'primeng/splitbutton';
-// import { NgbDatepickerModule } from "@ng-bootstrap/ng-bootstrap";
-// import { NgbTimepickerModule } from "@ng-bootstrap/ng-bootstrap";
-// import { NgbPaginationModule  } from '@ng-bootstrap/ng-bootstrap';
 import { PanelMenuModule } from 'primeng/panelmenu';
 
 import { DashboardRoutingModule } from './dashboard-routing.module';
@@ -29,24 +26,14 @@ import { ComponentsModule } from 'src/app/components/components.module';
     CommonModule,
     DashboardRoutingModule,
     SidebarModule.forRoot(),
-    // NgbDropdownModule,
-    // NgbAccordionModule,
     SplitButtonModule,
-
     PanelMenuModule,
-
     ComponentsModule,
     ReactiveFormsModule,
-    // NgbDatepickerModule,
-    // NgbTimepickerModule,
-    // NgbPaginationModule,
   ],
   exports: [
     ComponentsModule,
     ReactiveFormsModule,
-    // NgbDatepickerModule,
-    // NgbTimepickerModule,
-    // NgbPaginationModule,
   ],
   providers: [DecimalPipe]
 })
