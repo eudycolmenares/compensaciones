@@ -172,7 +172,7 @@
 
       <div class="row px-sm-0 px-md-5">
         <div class="col-sm py-1 mx-1 p-0">
-          <select
+          <!-- <select
             class="form-control form-control-sm"
             formControlName="services"
             multiple
@@ -184,7 +184,15 @@
             <option *ngFor="let service of selectService" [value]="service.key">
               {{ service.value }}
             </option>
-          </select>
+          </select> -->
+          <p-multiSelect
+            formControlName="services"
+            [options]="selectService"
+            defaultLabel="Seleccione"
+            optionLabel="value"
+            class="multiselect-custom"
+            [filter]="false"
+          ></p-multiSelect>
           <small class="text-danger" *ngIf="this.invalidFieldForm('services')">
             {{ textsFormInvalid("services") }}
           </small>

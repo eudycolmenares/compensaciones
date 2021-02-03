@@ -5,13 +5,13 @@
     <div class="row text-light mt-4">
       <div class="col-sm container-buttons">
         <input type="file" (change)="handleChangeInputFile($event)" class="d-none" #inputFileTxt accept=".txt">
-        <!-- <div ngbDropdown class="d-inline-block">
-          <button class="btn btn-outline-primary"  id="dropdownBasic1" ngbDropdownToggle>Seleccione Base</button>
-          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-            <button ngbDropdownItem (click)="generateClickInput('nodes')">Nodos</button>
-            <button ngbDropdownItem (click)="generateClickInput('accounts')">Cuentas</button>
-          </div>
-        </div> -->
+        <p-dropdown [options]="templateOptionsList" optionLabel="nameOption" class="p-inputtext-sm" placeholder="Seleccione">
+          <ng-template let-option pTemplate="item" class="p-inputtext-sm">
+            <div (click)="generateClickInput(option.valueOption)">
+              {{ option.nameOption }}
+            </div>
+          </ng-template>
+        </p-dropdown>
         <button type="button" class="btn btn-primary btn-sm ml-3" (click)="openModal()">Enviar</button>
       </div>
     </div>
