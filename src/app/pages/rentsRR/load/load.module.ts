@@ -1,22 +1,23 @@
 import { NgModule } from '@angular/core';
-import { CommonModule, DecimalPipe } from '@angular/common';
-// import { NgbDropdownModule } from "@ng-bootstrap/ng-bootstrap";
+import { CommonModule } from '@angular/common';
 
 import { LoadRoutingModule } from './load-routing.module';
 import { LoadComponent } from './load.component';
-import { ComponentsModule } from  '../../../components/components.module';
+import { DashboardModule } from '../../dashboard/dashboard.module';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService } from 'primeng/api';
 
 @NgModule({
   declarations: [LoadComponent],
   imports: [
     CommonModule,
     LoadRoutingModule,
-    ComponentsModule,
-    // NgbDropdownModule
+    DashboardModule,
+    ConfirmDialogModule,
+    ConfirmDialogModule,
   ],
   exports: [LoadComponent],
-  bootstrap: [LoadComponent],
-  providers: [DecimalPipe]
+  providers: [ConfirmationService],
 })
 
 export class LoadModule { }

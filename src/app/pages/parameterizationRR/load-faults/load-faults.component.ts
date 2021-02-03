@@ -1,38 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
-// import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { GeneralFunctionsService } from '../../../services/general-functions.service';
 import { ToastService } from '../../../services/shared/toast.service';
 import { FaultsService } from '../../../services/faults/faults.service';
 import { faultsApiModel } from '../../../models/faults';
 
-// modal
-
-// @Component({
-//   selector: 'ngbd-modal-confirm',
-//   template: `
-//   <div class="modal-header">
-//     <h4 class="modal-title" id="modal-title">Confirmar</h4>
-//     <button type="button" class="close" aria-describedby="modal-title" (click)="modal.dismiss('Cross click')">
-//       <span aria-hidden="true">&times;</span>
-//     </button>
-//   </div>
-//   <div class="modal-body">
-//     <p><strong>¿Estás seguro que deseas enviar el archivo?</strong></p>
-//     <p>Toda la información de Carga de Fallas que contiene el archivo quedará registrada en la base de datos.</p>
-//   </div>
-//   <div class="modal-footer">
-//     <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancelar</button>
-//     <button type="button" class="btn btn-danger" (click)="modal.close('Ok click')">Confirmar</button>
-//   </div>
-//   `
-// })
-// export class NgbdModalConfirm {
-//   // constructor(public modal: NgbActiveModal) {}
-// }
-
-//
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-load-faults',
@@ -50,7 +24,7 @@ export class LoadFaultsComponent implements OnInit {
     private gnrSvc: GeneralFunctionsService,
     private toastScv: ToastService,
     private faultsScv: FaultsService,
-    // private modalService: NgbModal
+    private _confirmationService: ConfirmationService,
   ) {
     this.createForm();
   }
@@ -80,10 +54,14 @@ export class LoadFaultsComponent implements OnInit {
         control.markAsTouched();
       })
     }else {
-      // const modal = this.modalService.open(NgbdModalConfirm);
-      // modal.result.then(result => {
-      //   this.sendFileToService();
-      // }).catch(error => {});
+      this._confirmationService.confirm({
+        message: `Toda la información de Carga de Fallas que contiene el archivo quedará
+                registrada en la base de datos.`,
+        accept: () => {
+          this.sendFileToService();
+        },
+        reject: () => { },
+      });
     }
   }
 

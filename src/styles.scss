@@ -153,28 +153,33 @@ input[type="number"] {
   }
 }
 
-//PRIMENG button dialog confirm
-
-.p-dialog-footer {
-  .p-button {
-    background: var(--primary);
-    border: var(--primary);
-    &:enabled {
-      &:hover {
-        background-color: var(--primary);
-        border-color: var(--primary);
-      }
-    }
-    &:focus {
-      box-shadow: none;
-    }
-  }
-}
-
 // PRIMENG Table
 
 .container-table {
   .btn img {
     height: 15px;
+  }
+}
+
+
+//PRIMENG button dialog confirm
+.p-confirm-dialog-reject {
+  color: var(--secondary);
+  background-color: transparent;
+  border-color: var(--secondary);
+}
+.p-confirm-dialog-accept {
+  background-color: var(--success);
+}
+.p-confirm-dialog-reject,
+.p-confirm-dialog-accept {
+  &:enabled {
+    &:hover {
+      background-color: var(--confirm-hover);
+      border-color: var(--confirm-hover);
+    }
+  }
+  &:focus {
+    box-shadow: none;
   }
 }

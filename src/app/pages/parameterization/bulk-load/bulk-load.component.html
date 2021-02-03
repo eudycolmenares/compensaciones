@@ -91,19 +91,15 @@
     </form>
 
     <div class="row text-light text-center justify-content-center mt-4">
-      <div ngbDropdown class="d-inline-block">
-        <button class="btn btn-outline-primary" ngbDropdownToggle>
-          Descargar plantilla
-        </button>
-        <div ngbDropdownMenu>
-          <button ngbDropdownItem (click)="downloadModelDocument('CAUSAS')">
-            Causas
-          </button>
-          <button ngbDropdownItem (click)="downloadModelDocument('SINTOMAS')">
-            Sintomas
-          </button>
-        </div>
-      </div>
+      <p-dropdown
+        #add
+        [options]="templateOptionsList"
+        optionLabel="nameOption"
+        class="p-inputtext-sm"
+        placeholder="Descargar plantilla"
+        (onChange)="downloadModelDocument(add.value?.value)"
+      >
+      </p-dropdown>
     </div>
   </div>
 
@@ -116,4 +112,10 @@
   ></app-table>
 </section>
 
-<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<p-confirmDialog
+  header="¿Estás seguro que deseas enviar el archivo?"
+  rejectLabel="Cancelar"
+  acceptLabel="Aceptar"
+  icon="pi pi-exclamation-triangle"
+>
+</p-confirmDialog>

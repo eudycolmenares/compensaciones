@@ -17,53 +17,6 @@ import { ToastService } from 'src/app/services/shared/toast.service';
 
 import { ConfirmationService } from 'primeng/api';
 
-// modal
-
-// @Component({
-//   selector: 'ngbd-modal-confirm',
-//   template: `
-//     <div class="modal-header">
-//       <h4 class="modal-title" id="modal-title">Confirmar</h4>
-//       <button
-//         type="button"
-//         class="close"
-//         aria-describedby="modal-title"
-//         (click)="modal.dismiss('Cross click')"
-//       >
-//         <span aria-hidden="true">&times;</span>
-//       </button>
-//     </div>
-//     <div class="modal-body">
-//       <p><strong>¿Estás seguro que deseas enviar el archivo?</strong></p>
-//       <p>
-//         Toda la información de Carga de Fallas que contiene el archivo quedará
-//         registrada en la base de datos.
-//       </p>
-//     </div>
-//     <div class="modal-footer">
-//       <button
-//         type="button"
-//         class="btn btn-outline-secondary"
-//         (click)="modal.dismiss('cancel click')"
-//       >
-//         Cancelar
-//       </button>
-//       <button
-//         type="button"
-//         class="btn btn-danger"
-//         (click)="modal.close('Ok click')"
-//       >
-//         Confirmar
-//       </button>
-//     </div>
-//   `,
-// })
-// export class NgbdModalConfirm {
-//   constructor(public modal: NgbActiveModal) {}
-// }
-
-//
-
 @Component({
   selector: 'app-bulk-load',
   templateUrl: './bulk-load.component.html',
@@ -93,14 +46,15 @@ export class BulkLoadComponent implements OnInit {
       validation: '',
     },
   ];
+  templateOptionsList: object[] = [{value: 'CAUSAS', nameOption: 'Causas'}, {value: 'SINTOMAS', nameOption: 'Síntomas'}] ;
+  selectedCity: any;
   constructor(
     private _fb: FormBuilder,
     private _bulkLoadSvc: BulkLoadService,
     private _gnrScv: GeneralFunctionsService,
     private _toastScv: ToastService,
-    private confirmationService: ConfirmationService
-  ) // private modalService: NgbModal
-  {
+    private _confirmationService: ConfirmationService,
+  ) {
     this.createForm();
   }
 
@@ -154,7 +108,8 @@ export class BulkLoadComponent implements OnInit {
     }
   }
 
-  downloadModelDocument(selectedTypeFile) {
+  downloadModelDocument(selectedTypeFile: string) {
+    if (selectedTypeFile !== null || selectedTypeFile !== undefined) {
     const symptomsFile = 'assets/documents/SINTOMAS.csv';
     const causesFile = 'assets/documents/CAUSAS.csv';
     if (selectedTypeFile) {
@@ -176,6 +131,7 @@ export class BulkLoadComponent implements OnInit {
       }
     }
   }
+}
 
   onSubmit() {
     if (this.bulkLoadForm.invalid) {
@@ -183,12 +139,9 @@ export class BulkLoadComponent implements OnInit {
         control.markAsTouched();
       });
     } else {
-      this.confirmationService.confirm({
-        message: `<p><strong>¿Estás seguro que deseas enviar el archivo?</strong></p>
-              <p>
-                Toda la información de Cargue Masivo que contiene el archivo quedará
-                registrada en la base de datos.
-              </p>`,
+      this._confirmationService.confirm({
+        message: `Toda la información de Cargue Masivo que contiene el archivo quedará
+                registrada en la base de datos.`,
         accept: () => {
           this.sendFileToService();
         },

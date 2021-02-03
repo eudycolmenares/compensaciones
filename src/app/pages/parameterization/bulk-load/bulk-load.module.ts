@@ -2,10 +2,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { BulkLoadRoutingModule } from './bulk-load-routing.module';
-import { DashboardModule } from '../../dashboard/dashboard.module';
 import { BulkLoadComponent } from './bulk-load.component';
-
-// import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { DashboardModule } from '../../dashboard/dashboard.module';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService } from 'primeng/api';
+import { DropdownModule } from 'primeng/dropdown';
 
 @NgModule({
   declarations: [BulkLoadComponent],
@@ -13,7 +14,11 @@ import { BulkLoadComponent } from './bulk-load.component';
     CommonModule,
     BulkLoadRoutingModule,
     DashboardModule,
-    // NgbDropdownModule,
+    ConfirmDialogModule,
+    ConfirmDialogModule,
+    DropdownModule,
   ],
+  exports: [BulkLoadComponent],
+  providers: [ConfirmationService],
 })
 export class BulkLoadModule {}
