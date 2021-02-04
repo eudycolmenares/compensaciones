@@ -172,19 +172,6 @@
 
       <div class="row px-sm-0 px-md-5">
         <div class="col-sm py-1 mx-1 p-0">
-          <!-- <select
-            class="form-control form-control-sm"
-            formControlName="services"
-            multiple
-            [ngClass]="{
-              'is-invalid': this.invalidFieldForm('services')
-            }"
-            size="3"
-          >
-            <option *ngFor="let service of selectService" [value]="service.key">
-              {{ service.value }}
-            </option>
-          </select> -->
           <p-multiSelect
             formControlName="services"
             [options]="selectService"

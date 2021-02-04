@@ -13,6 +13,7 @@ import {
 } from 'src/app/models/bulk-load';
 import { BulkLoadService } from '../../../services/bulkLoad/bulk-load.service';
 import { GeneralFunctionsService } from '../../../services/general-functions.service';
+import { CustomValidation } from '../../../utils/custom-validation';
 import { ToastService } from 'src/app/services/shared/toast.service';
 
 import { ConfirmationService } from 'primeng/api';
@@ -66,21 +67,12 @@ export class BulkLoadComponent implements OnInit {
       // state: [''],
       uploadFile: [
         '',
-        [Validators.required, this.fileExtensionValidator('.csv')],
+        [Validators.required, CustomValidation.fileIsAllowed('csv')],
       ],
       // uploadError: [''],
       uploadType: ['', [Validators.required]],
       user: ['test'],
     });
-  }
-
-  fileExtensionValidator(validExt: string) {
-    return (control: AbstractControl): { [key: string]: boolean } | null => {
-      if (control.value !== null && control.value.substr(-4) === validExt) {
-        return null;
-      }
-      return { fileExtValidator: true };
-    };
   }
 
   ngOnInit(): void {}
@@ -102,6 +94,7 @@ export class BulkLoadComponent implements OnInit {
 
   fileChange(documentUpload) {
     this.dataUploaded = documentUpload.target.files[0];
+    console.log(this.dataUploaded, documentUpload);
     this.bulkLoadForm
       .get('fileName')
       .setValue(Date.now() + '_' + this.dataUploaded['name']);
@@ -134,7 +127,7 @@ export class BulkLoadComponent implements OnInit {
           document.body.appendChild(link);
           link.click();
           document.body.removeChild(link);
-        }, 1);
+        }, 10);
       }
     }
   }
