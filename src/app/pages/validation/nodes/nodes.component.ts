@@ -116,7 +116,7 @@ export class NodesComponent implements OnInit {
 
   onSubmit() {
     console.log(this.nodeForm.value);
-    
+
     if (this.nodeForm.invalid) {
       return Object.values(this.nodeForm.controls).forEach((control) => {
         control.markAsTouched();
