@@ -76,17 +76,17 @@ export class NavbarComponent implements OnInit {
           {
             label: 'Causas Ordenes Mantenimiento',
             icon:'pi pi-fw pi-align-left',
-            // routerLink: ['/dashboard/maintenance-orders-causes']
+            routerLink: ['/dashboard/maintenance-orders-causes']
           },
           {
             label: 'Síntomas Ordenes Mantenimiento',
             icon:'pi pi-fw pi-align-left',
-            // routerLink: ['/dashboard/orders-symptoms']
+            routerLink: ['/dashboard/orders-symptoms']
           },
           {
             label: 'Validación Fallas RR',
             icon:'pi pi-fw pi-align-left',
-            // routerLink: ['/dashboard/rr-failure-validation']
+            routerLink: ['/dashboard/rr-failure-validation']
           }
         ]
       },
@@ -113,12 +113,12 @@ export class NavbarComponent implements OnInit {
           {
             label: 'Descargue Nodos-Cuentas',
             icon:'pi pi-fw pi-align-left',
-            // routerLink: ['/dashboard/rents-download']
+            routerLink: ['/dashboard/rents-download']
           },
           {
             label: 'Cargue Rentas RR',
             icon:'pi pi-fw pi-align-left',
-            // routerLink: ['/dashboard/rents-load']
+            routerLink: ['/dashboard/rents-load']
           }
         ]
       },
@@ -129,7 +129,7 @@ export class NavbarComponent implements OnInit {
           {
             label: 'Cuentas Compensadas RR',
             icon:'pi pi-fw pi-align-left',
-            // routerLink: ['/dashboard/item-rr-billing']
+            routerLink: ['/dashboard/item-rr-billing']
           }
         ]
       },
@@ -140,7 +140,7 @@ export class NavbarComponent implements OnInit {
           {
             label: 'Proceso RR',
             icon:'pi pi-fw pi-align-left',
-            // routerLink: ['/dashboard/process-rr']
+            routerLink: ['/dashboard/process-rr']
           }
         ]
       }
