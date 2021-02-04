@@ -97,12 +97,12 @@ export class NavbarComponent implements OnInit {
           {
             label: 'Nodo',
             icon:'pi pi-fw pi-align-left',
-            // routerLink: ['/dashboard/nodes-validation']
+            routerLink: ['/dashboard/nodes-validation']
           },
           {
             label: 'Cuentas',
             icon:'pi pi-fw pi-align-left',
-            // routerLink: ['/dashboard/validation-accounts']
+            routerLink: ['/dashboard/validation-accounts']
           }
         ]
       },

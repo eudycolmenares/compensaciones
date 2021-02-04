@@ -30,7 +30,7 @@
       <tr>
         <th scope="col">#</th>
         <th *ngFor="let opt of columns" [pSortableColumn]="opt.field">{{opt.description}} <p-sortIcon [field]="opt.field"></p-sortIcon></th>
-        <ng-container *ngIf="buttons.length !== 0">
+        <ng-container *ngIf="!hideActionButtons && buttons.length !== 0">
           <th scope="col" class="text-center">Acciones</th>
         </ng-container>
       </tr>
@@ -47,16 +47,16 @@
           <td *ngSwitchCase="'observation'"><textarea class="form-control form-control-sm" [value]="item[opt.name]" (change)="item[opt.name]=$event.target.value"></textarea></td>
           <td *ngSwitchCase="''">{{ item[opt.name] }}</td>
         </ng-container>
-        <ng-container *ngIf="buttons.length !== 0">
+        <ng-container *ngIf="!hideActionButtons && buttons.length !== 0">
           <td class="text-center">
             <button type="button" class="btn btn-primary btn-sm mr-2" (click)="sendDataToEdit(item)" *ngIf="(buttons.indexOf('edit') > -1)" data-toggle="tooltip" data-placement="top" [title]="validation? 'Aprobado' : ''">
-              <img [src]="validation? 'assets/img/checked.svg' : 'assets/img/edit.svg'">
+              <i [class]="validation? 'pi pi-check' : 'bi bi-pencil-fill' "></i>
             </button>
             <button type="button" class="btn btn-secondary btn-sm mr-2" (click)="sendDataToDisable(item)" [disabled]="item.state?.toString() === '0'" *ngIf="(buttons.indexOf('disable') > -1)" data-toggle="tooltip" data-placement="top" [title]="validation? 'Rechazado por calidad' : ''">
-              <img [src]="validation? 'assets/img/rejected-quality.svg' : 'assets/img/disable.svg'">
+              <i [class]="validation? 'bi bi-file-earmark-break' : 'bi bi-eye-slash' "></i>
             </button>
             <button type="button" class="btn btn-secondary btn-sm mr-2" (click)="openModal(item)" *ngIf="(buttons.indexOf('delete') > -1)" data-toggle="tooltip" data-placement="top" [title]="validation? 'Rechazado' : ''">
-              <img [src]="validation? 'assets/img/rejected.svg' : 'assets/img/trash.svg'">
+              <i [class]="validation? 'pi pi-times' : 'pi pi-trash' "></i>
             </button>
           </td>
         </ng-container>
