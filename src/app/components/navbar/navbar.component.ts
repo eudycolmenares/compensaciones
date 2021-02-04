@@ -123,7 +123,7 @@ export class NavbarComponent implements OnInit {
         ]
       },
       {
-        label: 'Item Facturación RR',
+        label: 'Facturación RR',
         icon:'pi pi-fw pi-pencil',
         items: [
           {

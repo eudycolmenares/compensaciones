@@ -91,7 +91,12 @@
     </form>
 
     <div class="row text-light text-center justify-content-center mt-4">
-      <p-dropdown [options]="templateOptionsList" optionLabel="nameOption" class="p-inputtext-sm" placeholder="Descargar Plantilla">
+      <p-dropdown
+        [options]="templateOptionsList"
+        optionLabel="nameOption"
+        class="p-inputtext-sm"
+        placeholder="Descargar Plantilla"
+      >
         <ng-template let-option pTemplate="item">
           <div (click)="downloadModelDocument(option.valueOption)">
             {{ option.nameOption }}
@@ -106,14 +111,9 @@
   <app-table
     [dataBase]="dataToTable"
     [structure]="structure"
-    actionsButton="No"
+    buttons=""
   ></app-table>
 </section>
 
-<p-confirmDialog
-  header="Confirmación"
-  rejectLabel="Cancelar"
-  acceptLabel="Aceptar"
-  icon="pi pi-exclamation-triangle"
->
+<p-confirmDialog key="confirmBulkLoad" rejectLabel="Cancelar" acceptLabel="Aceptar">
 </p-confirmDialog>

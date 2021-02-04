@@ -14,7 +14,6 @@ export class RrCompensatedAccountsComponent implements OnInit {
   dataToTable: any[];
   dataToSelectedTable: any[];
   structure: object[] = [];
-  hideActionButtons: boolean = true;
 
   constructor(private _toastScv: ToastService) {}
 

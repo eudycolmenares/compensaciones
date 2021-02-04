@@ -13,7 +13,6 @@ export class TableComponent implements OnInit {
   @Input() dataBase: object[];
   @Input() structure: object[];
   @Input() buttons: Buttons[] = [Buttons.edit, Buttons.disable, Buttons.delete];
-  @Input() hideActionButtons: boolean = false;
   @Input() validation: boolean = false;
   @Output() editRecord: EventEmitter<object> ;
   @Output() disableRecord: EventEmitter<object> ;
@@ -58,10 +57,13 @@ export class TableComponent implements OnInit {
     console.log('asdasdsd');
     this.confirmationSvc.confirm({
       message: `Toda la información asociada a este registro se eliminará de forma permanente. Esta operación no se puede deshacer.`,
+      header: '¿Estás seguro de que deseas eliminar este registro?',
+      icon: 'pi pi-info-circle',
       accept: () => {
         this.sendDataToDelete(item);
       },
       reject: () => { },
+      key: "confirmTable"
     });
   }
 }
