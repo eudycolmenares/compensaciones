@@ -14,7 +14,6 @@ import { ConfirmationService } from 'primeng/api';
     LoadFaultsRoutingModule,
     DashboardModule,
     ConfirmDialogModule,
-    ConfirmDialogModule,
   ],
   exports: [LoadFaultsComponent],
   providers: [ConfirmationService],

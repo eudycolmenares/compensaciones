@@ -7,6 +7,7 @@ import { FaultsService } from '../../../services/faults/faults.service';
 import { faultsApiModel } from '../../../models/faults';
 
 import { ConfirmationService } from 'primeng/api';
+import { CustomValidation } from 'src/app/utils/custom-validation';
 
 @Component({
   selector: 'app-load-faults',
@@ -35,9 +36,10 @@ export class LoadFaultsComponent implements OnInit {
   createForm() {
     this.form = this.fb.group({
       type: ['', Validators.required],
-      file: ['', [Validators.required, this.fileExtensionValidator('.xlsx')],],
+      file: ['', [Validators.required, CustomValidation.fileIsAllowed('xlsx')],],
     })
   }
+
   get invalidType() {
     return this.form.get('type').touched && this.form.get('type').invalid;
   }
@@ -119,12 +121,5 @@ export class LoadFaultsComponent implements OnInit {
     this.form.controls.file.setValue('');
     this.fileBaseName = '';
   }
-  fileExtensionValidator(validExt: string) {
-    return (control: AbstractControl): { [key: string]: boolean } | null => {
-      if (control.value !== null && control.value.substr(-4) === validExt) {
-        return null;
-      }
-      return { fileExtValidator: true };
-    };
-  }
+  
 }
