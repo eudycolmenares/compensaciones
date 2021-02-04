@@ -19,6 +19,14 @@ export class LoadFaultsComponent implements OnInit {
   form: FormGroup;
   fileBaseData: string;
   fileBaseName = '';
+  templateOptionsList: object[] = [
+    { valueOption: 'RESIDENTIAL', nameOption: 'Residencial' },
+    { valueOption: 'BUILDINGS', nameOption: 'Edificios' },
+    { valueOption: 'SMES', nameOption: 'Pymes' },
+    { valueOption: 'RESIDENTIAL_SETTING', nameOption: 'Ajuste Residencial' },
+    { valueOption: 'SME_ADJUSTMENT', nameOption: 'Ajuste Pymes' },
+    { valueOption: 'MAINTENANCE_ORDERS', nameOption: 'Ordenes Mantenimiento' },
+  ];
 
   constructor(
     private fb: FormBuilder,
@@ -74,11 +82,17 @@ export class LoadFaultsComponent implements OnInit {
       'loadType': this.form.get('type').value,
       'userName': 'test', // seteado
     }
+    console.log('dataRequest: ', dataRequest);
+
     this.faultsScv.loadFaults(dataRequest).subscribe((resp: faultsApiModel) => {
-      // const idLoad = resp.Loads.Load[0].idLoad;
+      console.log('Respuesta al cargar servicio??', resp);
+
+
       if(resp.GeneralResponse.code === '0') {
         this.toastScv.showSuccess(resp.GeneralResponse.descriptionCode);
       }else{
+        console.log('error??');
+
         this.toastScv.showError(resp.GeneralResponse.descriptionCode);
         // this.faultsScv.readByIdFaults(idLoad).subscribe(resp => { //seteado 353
         // });
@@ -97,11 +111,34 @@ export class LoadFaultsComponent implements OnInit {
     };
   }
 
-  downloadTemplate() {
-    const fileToDownload = 'assets/documents/PLANTILLA_CARGUE_BASE_RESIDENCIAL.xlsx';
+  downloadTemplate(option) {
+    console.log('downloadTemplate() ', option);
+    let nameFile = '';
+    switch (option) {
+      case 'RESIDENTIAL':
+        nameFile = 'Template-BaseResidencial-FallasRR';
+        break;
+      case 'BUILDINGS':
+        nameFile = 'Template-Edificios-FallasRR';
+        break;
+      case 'SMES':
+        nameFile = 'Template-BasePymes-FallasRR';
+        break;
+      case 'RESIDENTIAL_SETTING':
+        nameFile = 'Template-AjusteResidencial-FallasRR';
+        break;
+      case 'SME_ADJUSTMENT':
+        nameFile = 'Template-AjustesPymes-FallasRR';
+        break;
+      case 'MAINTENANCE_ORDERS':
+        nameFile = 'Template-OrdenesMantenimiento-FallasRR';
+        break;
+    }
+
+    const fileToDownload = `assets/documents/${nameFile}.xlsx`;
     const link = document.createElement('a');
     if (link.download !== undefined) {
-      let filename = 'PLANTILLA_CARGUE_BASE_RESIDENCIAL.xlsx';
+      let filename = `${nameFile}.xlsx`;
       link.setAttribute('href', fileToDownload);
       link.setAttribute('download', filename);
       link.style.visibility = 'hidden';
@@ -121,5 +158,5 @@ export class LoadFaultsComponent implements OnInit {
     this.form.controls.file.setValue('');
     this.fileBaseName = '';
   }
-  
+
 }
