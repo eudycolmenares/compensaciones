@@ -4,8 +4,7 @@ import { CommonModule } from '@angular/common';
 import { RrCompensatedAccountsRoutingModule } from './rr-compensated-accounts-routing.module';
 import { RrCompensatedAccountsComponent } from './rr-compensated-accounts.component';
 import { DashboardModule } from '../../dashboard/dashboard.module';
-
-// import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { DropdownModule } from 'primeng/dropdown';
 
 @NgModule({
   declarations: [RrCompensatedAccountsComponent],
@@ -13,7 +12,7 @@ import { DashboardModule } from '../../dashboard/dashboard.module';
     CommonModule,
     RrCompensatedAccountsRoutingModule,
     DashboardModule,
-    // NgbDropdownModule,
+    DropdownModule,
   ]
 })
 export class RrCompensatedAccountsModule { }

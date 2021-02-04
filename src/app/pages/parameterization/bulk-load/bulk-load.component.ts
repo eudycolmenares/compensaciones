@@ -141,12 +141,15 @@ export class BulkLoadComponent implements OnInit {
       this._confirmationService.confirm({
         message: `Toda la información de Cargue Masivo que contiene el archivo quedará
                 registrada en la base de datos.`,
+        header: '¿Estás seguro de que deseas eliminar este registro?',
+        icon: 'pi pi-exclamation-triangle',
         accept: () => {
           this.sendFileToService();
         },
         reject: () => {
           this.bulkLoadForm.get('uploadType').setValue('');
         },
+        key: "confirmBulkLoad"
       });
     }
   }
@@ -171,7 +174,8 @@ export class BulkLoadComponent implements OnInit {
   createCauseApi(dataRequest: BulkLoadRequestModel) {
     this._bulkLoadSvc
       .createBulkLoad(dataRequest)
-      .subscribe((resp: GeneralResponse) => {
+      .subscribe((resp: GeneralResponse) => {console.log(resp);debugger
+      
         if (resp.code === 'SEND-FILE-VALRES-1' || resp.code === '0') {
           this._toastScv.showSuccess(resp.messageCode);
           // this.fileSent();
