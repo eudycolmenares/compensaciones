@@ -13,7 +13,7 @@
               <option value="">- Seleccione -</option>
               <option value="RESIDENTIAL_BASE">Residencial</option>
               <option value="BUILDINGS_BASE">Edificios</option>
-              <option value="SME_SETTING">Pymes</option>
+              <option value="SME_BASE">Pymes</option>
               <option value="RESIDENTIAL_SETTING">Ajuste Residencial</option>
               <option value="SME_SETTING">Ajustes Pymes</option>
               <option value="MAINTENANCE_ORDER">Ordenes Mantenimiento</option>
@@ -21,8 +21,6 @@
             <small class="text-danger" *ngIf="invalidType">{{ textsFormInvalid("type") }}</small>
           </div>
           <div class="col-sm mx-1 mt-1 p-0">
-            <!-- <input type="file" class="form-control-file" formControlName="file" (change)="handleFileInput($event)" [class.is-invalid]="invalidFile">
-            <small class="text-danger" *ngIf="invalidFile">{{ textsFormInvalid("file") }}</small> -->
             <div class="row" style="margin: 0 -3px">
               <ng-container *ngIf="!fileBaseName; else elseNamefile">
                 <div class="col-sm box-upload py-1 mx-1 p-0">
@@ -59,10 +57,6 @@
         </div>
       </form>
     </div>
-
-    <!-- <div class="row text-light text-center justify-content-center mt-4">
-      <button pButton pRipple type="button" label="Descargar plantilla" class="p-button-raised p-button-sm" (click)="downloadTemplate()"></button>
-    </div> -->
 
     <div class="row text-light justify-content-center mt-4">
       <p-dropdown [options]="templateOptionsList" optionLabel="nameOption" [showClear]="true" class="p-inputtext-sm" placeholder="Descargar Plantillas">
