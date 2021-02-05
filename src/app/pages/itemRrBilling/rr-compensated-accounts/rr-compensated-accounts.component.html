@@ -4,34 +4,18 @@
     <div class="row text-light text-left mt-4">
 
       <div class="col-md-3 p-3">
-        <!-- <div ngbDropdown class="d-inline-block">
-          <button class="btn btn-outline-primary" ngbDropdownToggle>
-            -- Seleccione --
-          </button>
-          <div ngbDropdownMenu>
-            <button ngbDropdownItem (click)="selectedTable('DetalleCompensacion', $event.target.innerText)">
-            DetalleCompensacion {{currentDate | date:'yyyyMMdd HHmmss'}}
-            </button>
-            <button ngbDropdownItem (click)="selectedTable('TCAAUF00', $event.target.innerText)">
-              TCAAUF00 {{currentDate | date:'yyyyMMdd HHmmss'}}
-            </button>
-            <button ngbDropdownItem (click)="selectedTable('NotasCompensacion', $event.target.innerText)">
-              Notas_Compensacion {{currentDate | date:'yyyyMMdd HHmmss'}}
-            </button>
-          </div>
-        </div> -->
-        <!-- <p-dropdown
+        <p-dropdown
         [options]="templateOptionsList"
         optionLabel="nameOption"
         class="p-inputtext-sm"
         placeholder="-- Seleccione --"
       >
         <ng-template let-option pTemplate="item">
-          <div (click)="downloadModelDocument(option.valueOption)">
-            {{ option.nameOption }}
+          <div (click)="selectedTable(option.valueOption, $event.target.innerText)">
+            {{ option.nameOption }} {{currentDate | date:'yyyyMMdd HHmmss'}}
           </div>
         </ng-template>
-      </p-dropdown> -->
+      </p-dropdown>
       </div>
 
       <div class="col-sm bg-dark p-3">

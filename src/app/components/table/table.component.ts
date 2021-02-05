@@ -34,6 +34,10 @@ export class TableComponent implements OnInit {
     this._selectedColumns = this.cols;
   }
 
+  ngOnChanges() {
+    this.ngOnInit();
+  }
+
   sendDataToEdit(item) {
     this.editRecord.emit(item);
   }
@@ -54,7 +58,6 @@ export class TableComponent implements OnInit {
   // modal
 
   openModal(item: object) {
-    console.log('asdasdsd');
     this.confirmationSvc.confirm({
       message: `Toda la información asociada a este registro se eliminará de forma permanente. Esta operación no se puede deshacer.`,
       header: '¿Estás seguro de que deseas eliminar este registro?',
