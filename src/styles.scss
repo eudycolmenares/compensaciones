@@ -146,3 +146,10 @@ input[type="number"] {
     box-shadow: none;
   }
 }
+
+// PRIMENG Toast
+.p-toast-message {
+  .p-toast-message-content {
+    text-transform: capitalize;
+  }
+}

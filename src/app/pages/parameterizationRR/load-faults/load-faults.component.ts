@@ -33,7 +33,7 @@ export class LoadFaultsComponent implements OnInit {
     private gnrSvc: GeneralFunctionsService,
     private toastScv: ToastService,
     private faultsScv: FaultsService,
-    private _confirmationService: ConfirmationService,
+    private confirmationSvc: ConfirmationService,
   ) {
     this.createForm();
   }
@@ -64,7 +64,7 @@ export class LoadFaultsComponent implements OnInit {
         control.markAsTouched();
       })
     }else {
-      this._confirmationService.confirm({
+      this.confirmationSvc.confirm({
         message: `Toda la información de Carga de Fallas que contiene el archivo quedará
                 registrada en la base de datos.`,
         accept: () => {
@@ -89,13 +89,9 @@ export class LoadFaultsComponent implements OnInit {
 
 
       if(resp.GeneralResponse.code === '0') {
-        this.toastScv.showSuccess(resp.GeneralResponse.descriptionCode);
-      }else{
-        console.log('error??');
-
-        this.toastScv.showError(resp.GeneralResponse.descriptionCode);
-        // this.faultsScv.readByIdFaults(idLoad).subscribe(resp => { //seteado 353
-        // });
+        this.toastScv.showSuccess(resp.GeneralResponse.descriptionCode, resp.GeneralResponse.messageCode);
+      } else {
+        this.toastScv.showError(resp.GeneralResponse.descriptionCode, resp.GeneralResponse.messageCode);
       }
       this.cleanForm();
     })

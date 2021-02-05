@@ -2,10 +2,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
-import { ToastComponent } from './components/toast/toast.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 
 import { LoadingInterceptor } from './services/interceptor/loading.interceptor';
@@ -13,7 +14,6 @@ import { LoadingInterceptor } from './services/interceptor/loading.interceptor';
 @NgModule({
   declarations: [
     AppComponent,
-    ToastComponent,
     SpinnerComponent,
   ],
   imports: [
@@ -21,9 +21,9 @@ import { LoadingInterceptor } from './services/interceptor/loading.interceptor';
     HttpClientModule,
     BrowserModule,
     AppRoutingModule,
+    ToastModule
   ],
   exports: [
-    ToastComponent,
     SpinnerComponent
   ],
   providers: [
@@ -31,7 +31,8 @@ import { LoadingInterceptor } from './services/interceptor/loading.interceptor';
       provide: HTTP_INTERCEPTORS,
       useClass: LoadingInterceptor,
       multi: true
-    }
+    },
+    MessageService
   ],
   bootstrap: [AppComponent]
 })

@@ -25,7 +25,6 @@ export class FaultsService {
   }
 
   readByIdFaults(id): Observable<faultsApiModel> {
-    console.log('id: ', id);
     return this.http.get<faultsApiModel>(env.URL_API_BATCHRR + env.endpoints.faults_read_id + `/${id}`, {
       headers: this.headers,
     });

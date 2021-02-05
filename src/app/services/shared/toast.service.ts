@@ -1,4 +1,5 @@
 import { Injectable, TemplateRef } from '@angular/core';
+import { MessageService } from 'primeng/api';
 
 @Injectable({
   providedIn: 'root'
@@ -7,40 +8,33 @@ import { Injectable, TemplateRef } from '@angular/core';
 export class ToastService {
   toasts: any[] = [];
 
-  constructor() { }
+  constructor(private messageSvc: MessageService) { }
 
-  show(textOrTpl: string | TemplateRef<any>, options: any = {}) {
-    this.toasts.push({ textOrTpl, ...options });
+  show(typeSeverity, message, title, time) {
+    this.messageSvc.add({
+      severity: typeSeverity,
+      summary: title,
+      detail: message,
+      life: time
+    });
+  }
+
+  showSuccess(message: string, title = '', time = 5000) {
+    this.show('success', message, title, time);
+  }
+
+  showError(message: string, title = '', time = 5000) {
+    this.show('error', message, title, time);
   }
 
   remove(toast) {
-    this.toasts = this.toasts.filter(t => t !== toast);
+    // this.toasts = this.toasts.filter(t => t !== toast);
   }
-
-  //
 
   showStandard(msg: string, time = 5000) {
-    this.show(msg, {
-      delay: time,
-      autohide: true
-    });
-  }
-
-  showSuccess(msg: string, time = 5000) {
-    this.show(msg, {
-      classname: 'bg-success text-light',
-      delay: time ,
-      autohide: true,
-      // headertext: 'Toast Header'
-    });
-  }
-
-  showError(msg: string, time = 5000) {
-    this.show(msg, {
-      classname: 'bg-danger text-light',
-      delay: time,
-      autohide: true,
-      // headertext: 'Error!!!'
-    });
+    // this.show(msg, {
+    //   delay: time,
+    //   autohide: true
+    // });
   }
 }

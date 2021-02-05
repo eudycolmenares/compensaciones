@@ -110,20 +110,20 @@ export class StratumComponent implements OnInit {
   createStratumApi(dataRequest: requestModel) {
     this.stratumSvc.createStratum(dataRequest).subscribe((resp: responseModel) => {
       if(resp.generalResponse.code === '0') {
-        this.toastScv.showSuccess(resp.generalResponse.messageCode);
+        this.toastScv.showSuccess(resp.generalResponse.messageCode, resp.generalResponse.descriptionCode);
         this.initialCharge();
       }else{
-        this.toastScv.showError(resp.generalResponse.messageCode);
+        this.toastScv.showError(resp.generalResponse.messageCode, resp.generalResponse.descriptionCode);
       }
     })
   }
   updateStratumApi(dataRequest: requestModel) {
     this.stratumSvc.updateStratum(dataRequest).subscribe((resp: responseModel) => {
       if(resp.generalResponse.code === '0') {
-        this.toastScv.showSuccess(resp.generalResponse.messageCode);
+        this.toastScv.showSuccess(resp.generalResponse.messageCode, resp.generalResponse.descriptionCode);
         this.initialCharge();
       }else{
-        this.toastScv.showError(resp.generalResponse.messageCode);
+        this.toastScv.showError(resp.generalResponse.messageCode, resp.generalResponse.descriptionCode);
       }
     })
   }
@@ -150,10 +150,10 @@ export class StratumComponent implements OnInit {
   deleteStratum(stratum: stratumModel) {
     this.stratumSvc.deleteStratum(stratum.idSocialStatus).subscribe(resp => {
       if(resp.generalResponse.code === '0') {
-        this.toastScv.showSuccess(resp.generalResponse.messageCode);
+        this.toastScv.showSuccess(resp.generalResponse.messageCode, resp.generalResponse.descriptionCode);
         this.initialCharge();
       }else{
-        this.toastScv.showError(resp.generalResponse.messageCode);
+        this.toastScv.showError(resp.generalResponse.messageCode, resp.generalResponse.descriptionCode);
       }
     })
   }
