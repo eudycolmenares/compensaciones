@@ -102,8 +102,14 @@ export class LoadFaultsComponent implements OnInit {
     let reader = new FileReader();
     reader.readAsDataURL(e.target['files'][0]);
     reader.onload = () => {
-      const fileString = reader.result.toString().split(';base64,');
+      const data = reader.result;
+      console.log('onload()', data);
+      const fileString = data.toString().split(';base64,');
       this.fileBaseData = fileString[fileString.length -1];
+
+      // xlsx
+
+
     };
   }
 
