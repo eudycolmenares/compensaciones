@@ -6,6 +6,9 @@ import { ToastService } from '../../../services/shared/toast.service';
 import { FaultsService } from '../../../services/faults/faults.service';
 import { faultsApiModel } from '../../../models/faults';
 
+// xlsx
+import * as XLSX from 'xlsx';
+
 import { ConfirmationService } from 'primeng/api';
 import { CustomValidation } from 'src/app/utils/custom-validation';
 
@@ -19,6 +22,7 @@ export class LoadFaultsComponent implements OnInit {
   form: FormGroup;
   fileBaseData: string;
   fileBaseName = '';
+  dataPreview: any = null;
   templateOptionsList: object[] = [
     { valueOption: 'RESIDENTIAL', nameOption: 'Residencial' },
     { valueOption: 'BUILDINGS', nameOption: 'Edificios' },
@@ -27,6 +31,10 @@ export class LoadFaultsComponent implements OnInit {
     { valueOption: 'SME_ADJUSTMENT', nameOption: 'Ajuste Pymes' },
     { valueOption: 'MAINTENANCE_ORDERS', nameOption: 'Ordenes Mantenimiento' },
   ];
+  // table
+  dataToTable: object[];
+  structure: object[] = [];
+  sheetOptionsList: object[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -82,12 +90,8 @@ export class LoadFaultsComponent implements OnInit {
       'loadType': this.form.get('type').value,
       'userName': 'test', // seteado
     }
-    console.log('dataRequest: ', dataRequest);
-
     this.faultsScv.loadFaults(dataRequest).subscribe((resp: faultsApiModel) => {
       console.log('Respuesta al cargar servicio??', resp);
-
-
       if(resp.GeneralResponse.code === '0') {
         this.toastScv.showSuccess(resp.GeneralResponse.descriptionCode, resp.GeneralResponse.messageCode);
       } else {
@@ -103,14 +107,43 @@ export class LoadFaultsComponent implements OnInit {
     reader.readAsDataURL(e.target['files'][0]);
     reader.onload = () => {
       const data = reader.result;
-      console.log('onload()', data);
       const fileString = data.toString().split(';base64,');
       this.fileBaseData = fileString[fileString.length -1];
-
-      // xlsx
-
-
     };
+  }
+
+  handlePreviewFileInput(e: Event) {
+    const file = e.target['files'][0];
+    let reader = new FileReader();
+    reader.onload = () => {
+      const data = reader.result;
+      const workBook = XLSX.read(data, { type: 'binary' });
+      const jsonData = workBook.SheetNames.reduce((initial, name) => {
+        const sheet = workBook.Sheets[name];
+        initial[name] = XLSX.utils.sheet_to_json(sheet);
+        return initial;
+      }, {});
+      this.prepareDataToPreview(jsonData);
+    };
+    reader.readAsBinaryString(file);
+
+    //
+    this.handleFileInput(e);
+  }
+
+  prepareDataToPreview(data: Object) {
+    const sheets = Object.keys(data);
+    this.dataPreview = (sheets.length > 0) ? data : null;
+    this.sheetOptionsList = sheets.map(sheet => ({valueOption: sheet, nameOption: sheet}))
+  }
+
+  informationToTable(option) {
+    const data: object[] = this.dataPreview[option];
+    if(data.length > 0) {
+      const items = Object.keys(data[0]);
+      this.structure = items.map(item => ({ name:  item, description: item, validation: ''}));
+      this.dataToTable = data;
+    }
   }
 
   downloadTemplate(option) {
@@ -155,10 +188,14 @@ export class LoadFaultsComponent implements OnInit {
       type: ''
     });
     this.fileBaseName = '';
+    this.cleanInputFile()
   }
   cleanInputFile() {
     this.form.controls.file.setValue('');
     this.fileBaseName = '';
+    this.dataPreview = null;
+    this.structure = [];
+    this.dataToTable = [];
   }
 
 }

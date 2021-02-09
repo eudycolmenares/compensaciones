@@ -24,7 +24,7 @@
             <div class="row" style="margin: 0 -3px">
               <ng-container *ngIf="!fileBaseName; else elseNamefile">
                 <div class="col-sm box-upload py-1 mx-1 p-0">
-                  <input type="file" class="form-control form-control-sm" formControlName="file" (change)="handleFileInput($event)"/>
+                  <input type="file" class="form-control form-control-sm" formControlName="file" (change)="handlePreviewFileInput($event)"/>
                   <p>Arrastra el archivo aquí ó</p>
                   <label>Busca el archivo</label>
                 </div>
@@ -68,7 +68,22 @@
 
     <hr class="mt-5 mb-5" />
 
-    <!-- <app-table [dataBase]="dataToTable" [structure]="structure" (editRecord)="updateOrigin($event)" (disableRecord)="disableOrigin($event)" (deleteRecord)="deleteOrigin($event)"></app-table> -->
+    <ng-container *ngIf="dataPreview">
+      <div class="row pl-3 pb-3">
+        <div class="col-sm">
+          <p-dropdown [options]="sheetOptionsList" optionLabel="nameOption" [showClear]="true" class="p-inputtext-sm" placeholder="Seleccione Hoja del Libro">
+            <ng-template let-option pTemplate="item">
+              <div (click)="informationToTable(option.valueOption)">{{ option.nameOption }}</div>
+            </ng-template>
+          </p-dropdown>
+        </div>
+      </div>
+      <div class="row" *ngIf="structure.length > 0">
+        <div class="col-sm">
+          <app-table [dataBase]="dataToTable" [structure]="structure" buttons="[]"></app-table>
+        </div>
+      </div>
+    </ng-container>
   </section>
 
 <p-confirmDialog
