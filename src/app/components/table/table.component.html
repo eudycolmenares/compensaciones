@@ -22,7 +22,9 @@
       <colgroup>
           <col style="width: 3rem">
           <col *ngFor="let col of columns">
-          <col style="width: 9rem" *ngIf="buttons.length !== 0">
+          <ng-container *ngIf="buttons.length !== 0">
+            <col style="width: 9rem">
+          </ng-container>
       </colgroup>
     </ng-template>
 

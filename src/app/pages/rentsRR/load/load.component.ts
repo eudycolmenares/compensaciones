@@ -1,6 +1,9 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService } from 'primeng/api';
+
+import { GeneralFunctionsService } from '../../../services/general-functions.service';
+import { CustomValidation } from 'src/app/utils/custom-validation';
 
 @Component({
   selector: 'app-load',
@@ -9,147 +12,77 @@ import { ConfirmationService } from 'primeng/api';
 })
 
 export class LoadComponent implements OnInit {
-  @ViewChild('inputFileTxt') inputForTxt: ElementRef;
-  structureToTable: object[] = [{}];
-  dataToTable = [{}];
-  structureNodes: object[] = [
-    {
-      name: 'DDCRTD',
-      description: 'DDCRTD',
-      validation: '',
-    },
-    {
-      name: 'DDACCT',
-      description: 'DDACCT',
-      validation: '',
-    },
-    {
-      name: 'ESTRATO',
-      description: 'ESTRATO',
-      validation: '',
-    },
-    {
-      name: 'TARIFA',
-      description: 'TARIFA',
-      validation: '',
-    },
-    {
-      name: 'DDSERV',
-      description: 'DDSERV',
-      validation: '',
-    },
-    {
-      name: 'DDDESC',
-      description: 'DDDESC',
-      validation: '',
-    },
-    {
-      name: 'GRUPO',
-      description: 'GRUPO',
-      validation: '',
-    },
-    {
-      name: 'SUBGRUP',
-      description: 'SUBGRUP',
-      validation: '',
-    },
-    {
-      name: 'DDAMT$',
-      description: 'DDAMT$',
-      validation: '',
-    },
-    {
-      name: 'NODO',
-      description: 'NODO',
-      validation: '',
-    }
-  ];
-  structureAccounts: object[] = [
-    {
-      name: 'DDCRTD',
-      description: 'DDCRTD',
-      validation: '',
-    },
-    {
-      name: 'DDACCT',
-      description: 'DDACCT',
-      validation: '',
-    },
-    {
-      name: 'ESTRATO',
-      description: 'ESTRATO',
-      validation: '',
-    },
-    {
-      name: 'TARIFA',
-      description: 'TARIFA',
-      validation: '',
-    },
-    {
-      name: 'DDSERV',
-      description: 'DDSERV',
-      validation: '',
-    },
-    {
-      name: 'DDDESC',
-      description: 'DDDESC',
-      validation: '',
-    },
-    {
-      name: 'GRUPO',
-      description: 'GRUPO',
-      validation: '',
-    },
-    {
-      name: 'SUBGRUP',
-      description: 'SUBGRUP',
-      validation: '',
-    },
-    {
-      name: 'DDAMT$',
-      description: 'DDAMT$',
-      validation: '',
-    }
-  ];
-  caseUse = '';
-  templateOptionsList: object[] = [{valueOption: 'nodes', nameOption: 'Nodos'}, {valueOption: 'accounts', nameOption: 'Cuentas'}] ;
+  // @ViewChild('inputFileTxt') inputForTxt: ElementRef;
+  form: FormGroup;
+  fileBaseName = '';
+  // fileBaseLines = null;
+  structureToTable: object[] = [];
+  dataToTable = [];
+  arrayNodes = ['DDCRTD', 'DDACCT', 'ESTRATO', 'TARIFA', 'DDSERV', 'DDDESC', 'GRUPO', 'SUBGRUP', 'DDAMT$', 'NODO'];
+  arrayAccounts = ['DDCRTD', 'DDACCT', 'ESTRATO', 'TARIFA', 'DDSERV', 'DDDESC', 'GRUPO', 'SUBGRUP', 'DDAMT$'];
+  selectOptionsList: object[] = [{valueOption: 'nodes', nameOption: 'Nodos'}, {valueOption: 'accounts', nameOption: 'Cuentas'}] ;
 
   constructor(
-    private _confirmationService: ConfirmationService
-  ) { }
+    private fb: FormBuilder,
+    private confirmationSvc: ConfirmationService,
+    private gnrSvc: GeneralFunctionsService,
+  ) {
+    this.createForm();
+  }
 
   ngOnInit(): void {
   }
 
-  generateClickInput(option: string): void {
-    this.caseUse = option;
-    this.inputForTxt.nativeElement.click();
+  createForm() {
+    this.form = this.fb.group({
+      type: ['', Validators.required],
+      file: ['', [Validators.required, CustomValidation.fileIsAllowed('txt')],],
+    })
   }
 
-  async handleChangeInputFile(event: Event): Promise<void> {
-    console.log('handleChangeInputFile()');
-    const filesCsv: FileList = event.target['files'];
-    const nameFile = filesCsv[0].name;
-    if (filesCsv.length) {
+  get invalidType() {
+    return this.form.get('type').touched && this.form.get('type').invalid;
+  }
+  get invalidFile() {
+    return this.form.get('file').touched && this.form.get('file').invalid;
+  }
+  textsFormInvalid(field: string) {
+    return this.gnrSvc.validationFormTextRequired(this.form, field);
+  }
+
+  handleFileInput(e: Event) {
+    console.log('handleFileInput()');
+    this.fileBaseName = e.target['files'][0]['name'];
+    const filesCsv: FileList = e.target['files'];
+    if (!this.form.invalid) {
       const lector = new FileReader();
       lector.onload = (e) => {
         const content = e.target.result;
         const contentLines = (content as string).split(/\r?\n/);
-        switch (this.caseUse) {
+
+
+        console.log('AHORA SI MOSTRAR LA TABLA');
+        let structure = null;
+        switch (this.form.get('type').value) {
           case 'nodes':
             console.log('nodes!!!');
-            this.structureDataTable(contentLines, this.structureNodes);
+            structure = this.arrayNodes.map(item => ({ name:  item, description: item, validation: ''}));
+            this.structureDataTable(contentLines, structure);
             break;
           case 'accounts':
             console.log('accounts!!!');
-            this.structureDataTable(contentLines, this.structureAccounts);
+            structure = this.arrayAccounts.map(item => ({ name:  item, description: item, validation: ''}));
+            this.structureDataTable(contentLines, structure);
             break;
         }
+
+
       };
       lector.readAsText(filesCsv[0]);
-      this.inputForTxt.nativeElement.value = '';
+      // this.inputForTxt.nativeElement.value = '';
     }
   }
+
 
   structureDataTable(contentLines: string[], structure: object[]) {
     this.structureToTable = [];
@@ -166,13 +99,35 @@ export class LoadComponent implements OnInit {
     this.structureToTable = structure;
   }
 
-  openModal() {
-    this._confirmationService.confirm({
-      message: `Todos estos registros reflejados en la tabla, seran almacenados para su posterior procesamiento</p>`,
-      accept: () => {
-        // this.sendDataToDelete(item);
-      },
-      reject: () => { },
+  onSubmit() {
+    if(this.form.invalid) {
+      return Object.values(this.form.controls).forEach(control => {
+        control.markAsTouched();
+      })
+    }else {
+      this.confirmationSvc.confirm({
+        message: `Toda la información de Carga de Fallas que contiene el archivo quedará
+                registrada en la base de datos.`,
+        accept: () => {
+          // this.sendFileToService();
+        },
+        reject: () => { },
+      });
+    }
+  }
+
+  cleanForm() {
+    this.form.reset({
+      type: ''
     });
+    this.fileBaseName = '';
+    this.cleanInputFile()
+  }
+  cleanInputFile() {
+    this.form.controls.file.setValue('');
+    this.fileBaseName = '';
+    // this.dataPreview = null;
+    this.structureToTable = [];
+    this.dataToTable = [];
   }
 }
