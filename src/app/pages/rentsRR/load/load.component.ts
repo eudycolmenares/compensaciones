@@ -3,8 +3,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService } from 'primeng/api';
 
 import { GeneralFunctionsService } from '../../../services/general-functions.service';
+import { FaultsService } from '../../../services/faults/faults.service';
 import { CustomValidation } from 'src/app/utils/custom-validation';
-
+import { faultsApiModel } from '../../../models/faults';
+import { ToastService } from '../../../services/shared/toast.service';
 @Component({
   selector: 'app-load',
   templateUrl: './load.component.html',
@@ -12,20 +14,21 @@ import { CustomValidation } from 'src/app/utils/custom-validation';
 })
 
 export class LoadComponent implements OnInit {
-  // @ViewChild('inputFileTxt') inputForTxt: ElementRef;
   form: FormGroup;
+  fileBaseData: string;
   fileBaseName = '';
-  // fileBaseLines = null;
   structureToTable: object[] = [];
   dataToTable = [];
   arrayNodes = ['DDCRTD', 'DDACCT', 'ESTRATO', 'TARIFA', 'DDSERV', 'DDDESC', 'GRUPO', 'SUBGRUP', 'DDAMT$', 'NODO'];
   arrayAccounts = ['DDCRTD', 'DDACCT', 'ESTRATO', 'TARIFA', 'DDSERV', 'DDDESC', 'GRUPO', 'SUBGRUP', 'DDAMT$'];
-  selectOptionsList: object[] = [{valueOption: 'nodes', nameOption: 'Nodos'}, {valueOption: 'accounts', nameOption: 'Cuentas'}] ;
+  selectOptionsList: object[] = [{valueOption: 'NODES_RENT', nameOption: 'Nodos'}, {valueOption: 'ACCOUNT_RENT', nameOption: 'Cuentas'}] ;
 
   constructor(
     private fb: FormBuilder,
     private confirmationSvc: ConfirmationService,
     private gnrSvc: GeneralFunctionsService,
+    private faultsScv: FaultsService,
+    private toastScv: ToastService,
   ) {
     this.createForm();
   }
@@ -50,39 +53,39 @@ export class LoadComponent implements OnInit {
     return this.gnrSvc.validationFormTextRequired(this.form, field);
   }
 
-  handleFileInput(e: Event) {
-    console.log('handleFileInput()');
-    this.fileBaseName = e.target['files'][0]['name'];
+  handlePreviewFileInput(e: Event) {
     const filesCsv: FileList = e.target['files'];
     if (!this.form.invalid) {
       const lector = new FileReader();
       lector.onload = (e) => {
         const content = e.target.result;
         const contentLines = (content as string).split(/\r?\n/);
-
-
-        console.log('AHORA SI MOSTRAR LA TABLA');
         let structure = null;
         switch (this.form.get('type').value) {
-          case 'nodes':
-            console.log('nodes!!!');
+          case 'NODES_RENT':
             structure = this.arrayNodes.map(item => ({ name:  item, description: item, validation: ''}));
             this.structureDataTable(contentLines, structure);
             break;
-          case 'accounts':
-            console.log('accounts!!!');
+          case 'ACCOUNT_RENT':
             structure = this.arrayAccounts.map(item => ({ name:  item, description: item, validation: ''}));
             this.structureDataTable(contentLines, structure);
             break;
         }
-
-
       };
-      lector.readAsText(filesCsv[0]);
-      // this.inputForTxt.nativeElement.value = '';
+      lector.readAsText(filesCsv[0]); // read as text for table
+      this.handleFileInput(e); // read as url for base 64
     }
   }
-
+  handleFileInput(e: Event) {
+    this.fileBaseName = e.target['files'][0]['name'];
+    let reader = new FileReader();
+    reader.readAsDataURL(e.target['files'][0]);
+    reader.onload = () => {
+      const data = reader.result;
+      const fileString = data.toString().split(';base64,');
+      this.fileBaseData = fileString[fileString.length -1];
+    };
+  }
 
   structureDataTable(contentLines: string[], structure: object[]) {
     this.structureToTable = [];
@@ -109,11 +112,27 @@ export class LoadComponent implements OnInit {
         message: `Toda la información de Carga de Fallas que contiene el archivo quedará
                 registrada en la base de datos.`,
         accept: () => {
-          // this.sendFileToService();
+          this.sendFileToService();
         },
         reject: () => { },
       });
     }
+  }
+  sendFileToService() {
+    const dataRequest = {
+      'file': this.fileBaseData,
+      'fileName': this.fileBaseName,
+      'loadType': this.form.get('type').value,
+      'userName': 'test', // seteado
+    }
+    this.faultsScv.loadFaults(dataRequest).subscribe((resp: faultsApiModel) => {
+      if(resp.GeneralResponse.code === '0') {
+        this.toastScv.showSuccess(resp.GeneralResponse.descriptionCode, resp.GeneralResponse.messageCode);
+      } else {
+        this.toastScv.showError(resp.GeneralResponse.descriptionCode, resp.GeneralResponse.messageCode);
+      }
+      this.cleanForm();
+    })
   }
 
   cleanForm() {

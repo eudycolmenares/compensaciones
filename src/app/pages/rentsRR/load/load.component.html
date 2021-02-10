@@ -20,7 +20,7 @@
           <div class="row" style="margin: 0 -3px">
             <ng-container *ngIf="!fileBaseName; else elseNamefile">
               <div class="col-sm box-upload py-1 mx-1 p-0">
-                <input type="file" class="form-control form-control-sm" formControlName="file" (change)="handleFileInput($event)"/>
+                <input type="file" class="form-control form-control-sm" formControlName="file" (change)="handlePreviewFileInput($event)"/>
                 <p>Arrastra el archivo aquí ó</p>
                 <label>Busca el archivo</label>
               </div>
@@ -54,28 +54,11 @@
     </form>
   </div>
 
-
-
-
-  <!-- <div class="px-sm-2 px-md-5">
-    <div class="row text-light mt-4">
-      <div class="col-sm container-buttons">
-        <input type="file" (change)="handleChangeInputFile($event)" class="d-none" #inputFileTxt accept=".txt">
-        <p-dropdown [options]="templateOptionsList" optionLabel="nameOption" class="p-inputtext-sm" placeholder="Seleccione">
-          <ng-template let-option pTemplate="item" class="p-inputtext-sm">
-            <div (click)="generateClickInput(option.valueOption)">
-              {{ option.nameOption }}
-            </div>
-          </ng-template>
-        </p-dropdown>
-        <button type="button" class="btn btn-primary btn-sm ml-3" (click)="openModal()">Enviar</button>
-      </div>
-    </div>
-  </div> -->
-
   <hr class="mt-5 mb-5" />
 
-  <app-table [dataBase]="dataToTable" [structure]="structureToTable" [buttons]="[]"></app-table>
+  <ng-container *ngIf="structureToTable.length > 0">
+    <app-table [dataBase]="dataToTable" [structure]="structureToTable" [buttons]="[]"></app-table>
+  </ng-container>
 </section>
 
 <p-confirmDialog

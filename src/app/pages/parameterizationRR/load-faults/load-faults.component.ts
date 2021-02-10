@@ -91,7 +91,6 @@ export class LoadFaultsComponent implements OnInit {
       'userName': 'test', // seteado
     }
     this.faultsScv.loadFaults(dataRequest).subscribe((resp: faultsApiModel) => {
-      console.log('Respuesta al cargar servicio??', resp);
       if(resp.GeneralResponse.code === '0') {
         this.toastScv.showSuccess(resp.GeneralResponse.descriptionCode, resp.GeneralResponse.messageCode);
       } else {
@@ -125,10 +124,8 @@ export class LoadFaultsComponent implements OnInit {
       }, {});
       this.prepareDataToPreview(jsonData);
     };
-    reader.readAsBinaryString(file);
-
-    //
-    this.handleFileInput(e);
+    reader.readAsBinaryString(file); // binary read for table
+    this.handleFileInput(e); // read as url for base 64
   }
 
   prepareDataToPreview(data: Object) {
@@ -147,7 +144,6 @@ export class LoadFaultsComponent implements OnInit {
   }
 
   downloadTemplate(option) {
-    console.log('downloadTemplate() ', option);
     let nameFile = '';
     switch (option) {
       case 'RESIDENTIAL':
