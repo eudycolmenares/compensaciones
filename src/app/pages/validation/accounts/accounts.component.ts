@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
+import { ValidationAccountsService } from '../../../services/validationAccounts/validation-accounts.service';
 @Component({
   selector: 'app-accounts',
   templateUrl: './accounts.component.html',
@@ -57,9 +58,23 @@ export class AccountsComponent implements OnInit {
     },
   ];
 
-  constructor() { }
+  constructor(
+    private accountsSvc: ValidationAccountsService
+  ) {
+    this.initializeVariables();
+  }
 
   ngOnInit(): void {
   }
 
+  initializeVariables() {
+    this.initialCharge(); // table
+  }
+
+  initialCharge() {
+    this.accountsSvc.allValidationAccounts().subscribe((resp: any) => {
+      console.log('Consulta Accounts Validations: ', resp);
+      // this.dataToTable = resp.symptom;
+    });
+  }
 }

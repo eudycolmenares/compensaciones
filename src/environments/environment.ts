@@ -52,6 +52,13 @@ export const environment = {
     // Faults
     faults_load: 'LoadService/load',
     faults_read_id: 'LoadService/read/id',
+    // Maintenance Orders Symptoms
+    orders_symptoms_all: 'maintenanceOrderDiagnostic/list',
+    order_symptom_create: 'maintenanceOrderDiagnostic/create',
+    order_symptom_update: 'maintenanceOrderDiagnostic/update',
+    order_symptom_delete: 'maintenanceOrderDiagnostic/delete',
+    // Validation Accounts
+    validation_accounts_all: 'crcCompensation/list'
   },
 };
 

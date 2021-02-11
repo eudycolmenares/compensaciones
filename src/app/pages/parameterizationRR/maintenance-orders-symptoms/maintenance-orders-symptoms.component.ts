@@ -2,8 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { GeneralFunctionsService } from '../../../services/general-functions.service';
+import { MaintenanceOrdersSymptomsService } from '../../../services/maintenanceOrdersSymptoms/maintenance-orders-symptoms.service';
 import { ToastService } from '../../../services/shared/toast.service';
 import { SelectStatus, SelectCompensate, ServicesSettings as Services } from '../../../libraries/utilities.library';
+import {
+  requestOrderSymptomModel as  requestModel,
+  orderSymptomModel
+} from '../../../models/maintenance-orders-symptoms';
 
 @Component({
   selector: 'app-maintenance-orders-symptoms',
@@ -21,12 +26,12 @@ export class MaintenanceOrdersSymptomsComponent implements OnInit {
   dataToTable: object[];
   structure: object[] = [
     {
-      name: 'code',
+      name: 'diagnostic',
       description: 'Código',
       validation: '',
     },
     {
-      name: 'description',
+      name: 'diagnosticDescription',
       description: 'Descripción',
       validation: '',
     },
@@ -36,7 +41,7 @@ export class MaintenanceOrdersSymptomsComponent implements OnInit {
       validation: 'active-desactive'
     },
     {
-      name: 'compensate',
+      name: 'compensation',
       description: 'Compensa',
       validation: 'yes-no',
     },
@@ -46,7 +51,7 @@ export class MaintenanceOrdersSymptomsComponent implements OnInit {
       validation: 'yes-no'
     },
     {
-      name: 'telephone',
+      name: 'phone',
       description: 'Telefonía',
       validation: 'service'
     },
@@ -65,30 +70,14 @@ export class MaintenanceOrdersSymptomsComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private gnrSvc: GeneralFunctionsService,
-    private toastScv: ToastService
+    private toastScv: ToastService,
+    private symptomsSvc : MaintenanceOrdersSymptomsService,
   ) {
     this.createForm();
     this.initializeVariables();
   }
 
   ngOnInit(): void {
-  }
-
-  ngAfterViewInit() { // seteado
-    setTimeout(()=>{
-      this.dataToTable = [
-        {
-          code: 'T1',
-          description: 'Descripción sintoma T1',
-          state: '1',
-          compensate: '1',
-          maintenance: '0',
-          telephone: '0',
-          television: '1',
-          internet: '0'
-        }
-      ];
-    },100)
   }
 
   createForm() {
@@ -100,8 +89,6 @@ export class MaintenanceOrdersSymptomsComponent implements OnInit {
       state: ['', Validators.required],
       compensate: ['', Validators.required],
       services: ['', Validators.required],
-      user: [''],
-      updateDate: ['']
     })
   }
   get invalidCode() {
@@ -136,12 +123,13 @@ export class MaintenanceOrdersSymptomsComponent implements OnInit {
     for (const i of Object.entries(Services)) {
       this.services.push({key: i[0], value: i[1]})
     }
+    this.initialCharge(); // table
   }
   initialCharge() {
     this.cleanForm();
-    // this.symptomSvc.allSymptoms().subscribe((resp: symptomsApiModel) => {
-    //   this.dataToTable = resp.symptom;
-    // });
+    this.symptomsSvc.allOrdersSymptoms().subscribe((resp) => {
+      this.dataToTable = resp.list;
+    });
   }
 
   onSubmit() {
@@ -150,14 +138,86 @@ export class MaintenanceOrdersSymptomsComponent implements OnInit {
         control.markAsTouched();
       })
     }else {
-      // seteado
-      this.toastScv.showSuccess('Registro emulado correctamente');
-      this.initialCharge();
+      const dataRequest: requestModel = {
+        'maintenanceOrderDiagnostic': {
+          'diagnostic': this.form.get('code').value,
+          'diagnosticDescription': this.form.get('description').value,
+          'state': this.form.get('state').value,
+          'maintenance': (this.form.get('maintenance').value === '1') ?  'Si' : 'No',
+          'compensation': (this.form.get('compensate').value === '1') ?  'Si' : 'No' ,
+          'television': (this.form.get('services').value.find(svc => svc === 'television') ? 1 : 0),
+          'internet': (this.form.get('services').value.find(svc => svc === 'internet') ? 1 : 0),
+          'phone': (this.form.get('services').value.find(svc => svc === 'telephone') ? 1 : 0)
+        }
+      }
+      if(this.actionForm === 'create') {
+        this.createOrderSymptomApi(dataRequest);
+      }else { // update
+        dataRequest.maintenanceOrderDiagnostic.id = this.form.get('id').value;
+        this.updateOrderSymptomApi(dataRequest);
+      }
     }
+  }
+  createOrderSymptomApi(dataRequest: requestModel) {
+    this.symptomsSvc.createOrderSymptom(dataRequest).subscribe(resp => {
+      if(resp.response.code === '0') {
+        this.toastScv.showSuccess(resp.response.descriptionCode, resp.response.messageCode);
+        this.initialCharge();
+      }else{
+        this.toastScv.showError(resp.response.descriptionCode, resp.response.messageCode);
+      }
+    })
+  }
+  updateOrderSymptomApi(dataRequest: requestModel) {
+    this.symptomsSvc.updateOrderSymptom(dataRequest).subscribe(resp => {
+      if(resp.response.code === '0') {
+        this.toastScv.showSuccess(resp.response.descriptionCode, resp.response.messageCode);
+        this.initialCharge();
+      }else{
+        this.toastScv.showError(resp.response.descriptionCode, resp.response.messageCode);
+      }
+    })
+  }
+
+  updateOrderSymptom(orderSymptom: orderSymptomModel) {
+    this.setForm(orderSymptom);
+    this.actionForm = 'update';
+  }
+  setForm(data: orderSymptomModel) {
+    data['telephone'] = data.phone;
+    this.form.reset({
+      id: data.id,
+      code: data.diagnostic,
+      description: data.diagnosticDescription,
+      state: data.state,
+      maintenance: (data.maintenance.toUpperCase() === 'SI') ? '1': '0',
+      compensate: (data.compensation.toUpperCase() === 'SI') ? '1': '0',
+      services: Object.keys(Services).filter(scv => data[scv] === 1) ,
+    });
+  }
+
+  disableOrderSymptom(orderSymptom: orderSymptomModel) {
+    const dataRequest: requestModel = { maintenanceOrderDiagnostic: {...orderSymptom, state: 0} };
+    this.updateOrderSymptomApi(dataRequest);
+  }
+
+  deleteOrderSymptom(orderSymptom: orderSymptomModel) {
+    this.symptomsSvc.deleteOrderSymptom(orderSymptom).subscribe(resp => {
+      if(resp.response.code === '0') {
+        this.toastScv.showSuccess(resp.response.descriptionCode, resp.response.messageCode);
+        this.initialCharge();
+      }else{
+        this.toastScv.showError(resp.response.descriptionCode, resp.response.messageCode);
+      }
+    })
   }
 
   cleanForm() {
-    this.form.reset();
+    this.form.reset({
+      state: '',
+      compensate: '',
+      maintenance: ''
+    });
     this.actionForm = 'create';
   }
 }

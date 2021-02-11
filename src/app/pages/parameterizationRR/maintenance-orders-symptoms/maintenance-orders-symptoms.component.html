@@ -61,5 +61,5 @@
 
   <hr class="mt-5 mb-5" />
 
-  <app-table [dataBase]="dataToTable" [structure]="structure"></app-table>
+  <app-table [dataBase]="dataToTable" [structure]="structure" (editRecord)="updateOrderSymptom($event)" (disableRecord)="disableOrderSymptom($event)" (deleteRecord)="deleteOrderSymptom($event)"></app-table>
 </section>
