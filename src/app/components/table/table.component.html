@@ -42,7 +42,7 @@
       <tr>
         <td style="width: 1rem">{{ i + 1 }}</td>
         <ng-container *ngFor="let opt of columns" [ngSwitch]="opt.validation" >
-          <td *ngSwitchCase="'yes-no'">{{ (item[opt.name] === '1' || item[opt.name] === 1) ? 'Si' : 'No' }}</td>
+          <td *ngSwitchCase="'yes-no'">{{ (item[opt.name].toString() === '1' || item[opt.name].toUpperCase() === 'SI') ? 'Si' : 'No' }}</td>
           <td *ngSwitchCase="'active-desactive'">{{ (item[opt.name] === '1' || item[opt.name] === 1) ? 'Activo' : 'Inactivo' }}</td>
           <td *ngSwitchCase="'service'">{{ (item[opt.name] === '1' || item[opt.name] === 1) ? 'Aplica' : 'N/A' }}</td>
           <td *ngSwitchCase="'object'">{{ item[opt.name][opt.subname] }}</td>
@@ -64,11 +64,8 @@
         </ng-container>
       </tr>
     </ng-template>
-
   </p-table>
-
 </div>
-
 
 <p-confirmDialog key="confirmTable" rejectLabel="Cancelar" acceptLabel="Aceptar">
 </p-confirmDialog>
