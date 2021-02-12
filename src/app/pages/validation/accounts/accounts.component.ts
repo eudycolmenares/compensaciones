@@ -12,49 +12,39 @@ export class AccountsComponent implements OnInit {
   dataToTable: object[];
   structure: object[] = [
     {
-      name: 'code',
+      name: 'amount',
       description: 'MONTO',
+      validation: 'amount',
+    },
+    {
+      name: 'changeService',
+      description: 'CHANGE_SERVICE',
       validation: '',
     },
     {
-      name: 'description',
-      description: 'CHARGE_SERVICE',
-      validation: '',
-    },
-    {
-      name: 'state',
-      description: 'CUSTNUM',
-      validation: 'active-desactive'
-    },
-    {
-      name: 'compensate',
-      description: 'CUSTOMER_ID',
-      validation: 'yes-no',
-    },
-    {
-      name: 'maintenance',
+      name: 'contractCode',
       description: 'CO_CODE',
-      validation: 'yes-no'
+      validation: ''
     },
     {
-      name: 'telephone',
+      name: 'contractId',
       description: 'CO_ID',
-      validation: 'service'
+      validation: ''
     },
     {
-      name: 'television',
+      name: 'customerId',
+      description: 'CUSTOMER_ID',
+      validation: '',
+    },
+    {
+      name: 'customerNumber',
+      description: 'CUSTNUM',
+      validation: ''
+    },
+    {
+      name: 'validFrom',
       description: 'VALID_FROM',
-      validation: 'service'
-    },
-    {
-      name: 'internet',
-      description: 'AMOUNT',
-      validation: 'service'
-    },
-    {
-      name: 'internet',
-      description: 'REMARK',
-      validation: 'service'
+      validation: 'date'
     },
   ];
 
@@ -74,7 +64,7 @@ export class AccountsComponent implements OnInit {
   initialCharge() {
     this.accountsSvc.allValidationAccounts().subscribe((resp: any) => {
       console.log('Consulta Accounts Validations: ', resp);
-      // this.dataToTable = resp.symptom;
+      this.dataToTable = resp.list;
     });
   }
 }

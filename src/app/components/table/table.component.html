@@ -39,8 +39,8 @@
     </ng-template>
 
     <ng-template pTemplate="body" let-item let-i="rowIndex" let-columns="columns">
-      <tr>
-        <td style="width: 1rem">{{ i + 1 }}</td>
+      <tr [ngClass]="{'amount-high': item['highAmount'] === '1'}">
+        <td style="width: 1rem">{{ i + 1}}</td>
         <ng-container *ngFor="let opt of columns" [ngSwitch]="opt.validation" >
           <td *ngSwitchCase="'yes-no'">{{ (item[opt.name].toString() === '1' || item[opt.name].toUpperCase() === 'SI') ? 'Si' : 'No' }}</td>
           <td *ngSwitchCase="'active-desactive'">{{ (item[opt.name] === '1' || item[opt.name] === 1) ? 'Activo' : 'Inactivo' }}</td>
@@ -48,6 +48,8 @@
           <td *ngSwitchCase="'object'">{{ item[opt.name][opt.subname] }}</td>
           <td *ngSwitchCase="'observation'"><textarea class="form-control form-control-sm" [value]="item[opt.name]" (change)="item[opt.name]=$event.target.value"></textarea></td>
           <td *ngSwitchCase="''">{{ item[opt.name] }}</td>
+          <td *ngSwitchCase="'date'">{{ item[opt.name] | date }}</td>
+          <td *ngSwitchCase="'amount'">{{ item[opt.name] | currency }}</td>
         </ng-container>
         <ng-container *ngIf="buttons.length !== 0">
           <td class="text-center">

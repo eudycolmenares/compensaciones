@@ -109,8 +109,7 @@ export class LoadComponent implements OnInit {
       })
     }else {
       this.confirmationSvc.confirm({
-        message: `Toda la información de Carga de Fallas que contiene el archivo quedará
-                registrada en la base de datos.`,
+        message: `Toda la información de Carga de Fallas que contiene el archivo quedará registrada en la base de datos.`,
         accept: () => {
           this.sendFileToService();
         },
@@ -145,7 +144,6 @@ export class LoadComponent implements OnInit {
   cleanInputFile() {
     this.form.controls.file.setValue('');
     this.fileBaseName = '';
-    // this.dataPreview = null;
     this.structureToTable = [];
     this.dataToTable = [];
   }
