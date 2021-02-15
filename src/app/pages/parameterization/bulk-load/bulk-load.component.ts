@@ -174,7 +174,8 @@ export class BulkLoadComponent implements OnInit {
   createCauseApi(dataRequest: BulkLoadRequestModel) {
     this._bulkLoadSvc
       .createBulkLoad(dataRequest)
-      .subscribe((resp: GeneralResponse) => {
+      .subscribe((resp: GeneralResponse) => {console.log(resp);
+      
         if (resp.code === 'SEND-FILE-VALRES-1' || resp.code === '0') {
           this._toastScv.showSuccess(resp.messageCode);
           // this.fileSent();

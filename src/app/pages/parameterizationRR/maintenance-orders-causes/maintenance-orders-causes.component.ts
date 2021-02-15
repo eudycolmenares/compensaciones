@@ -2,10 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { GeneralFunctionsService } from '../../../services/general-functions.service';
-import { SelectCompensate, ServicesSettingsRR } from '../../../libraries/utilities.library';
+import {
+  SelectCompensate,
+  ServicesSettings,
+  SelectStatus,
+} from '../../../libraries/utilities.library';
 import { MaintenanceOrdersCausesService } from 'src/app/services/maintenanceOrdersCauses/maintenance-orders-causes.service';
 import { DataList } from '../../../models/general';
 import { ToastService } from 'src/app/services/shared/toast.service';
+import {
+  MaintenanceOrderCauseModel,
+  RequestModel,
+  ResponseModel,
+} from 'src/app/models/maintenance-orders-causes';
 
 @Component({
   selector: 'app-maintenance-orders-causes',
@@ -16,13 +25,14 @@ export class MaintenanceOrdersCausesComponent implements OnInit {
   MOCauseForm: FormGroup;
   selectYesNo: DataList[] = [];
   selectService: DataList[] = [];
+  selectStatus: DataList[] = [];
 
   actionForm = 'create'; // create, update
   // table
   dataToTable: object[];
   structure: object[] = [
     {
-      name: 'causeCode',
+      name: 'cause',
       description: 'Código causa',
       validation: '',
     },
@@ -32,9 +42,9 @@ export class MaintenanceOrdersCausesComponent implements OnInit {
       validation: '',
     },
     {
-      name: 'currentlyUse',
+      name: 'state',
       description: 'Estado',
-      validation: 'active-desactive'
+      validation: 'active-desactive',
     },
     {
       name: 'compensation',
@@ -43,19 +53,34 @@ export class MaintenanceOrdersCausesComponent implements OnInit {
     },
     {
       name: 'maintenance',
-      description: 'En mantenimiento',
+      description: 'En Mantenimiento',
       validation: '',
     },
     {
-      name: 'affectedServices',
-      description: 'Servicios',
+      name: 'affectedService',
+      description: 'Servicios Afectados',
       validation: '',
+    },
+    {
+      name: 'internet',
+      description: 'Internet',
+      validation: 'service',
+    },
+    {
+      name: 'phone',
+      description: 'Telefonía',
+      validation: 'service',
+    },
+    {
+      name: 'television',
+      description: 'Telvisión',
+      validation: 'service',
     },
   ];
 
   constructor(
     private _fb: FormBuilder,
-    private _causeSvc: MaintenanceOrdersCausesService,
+    private _MOCauseSvc: MaintenanceOrdersCausesService,
     private _gnrScv: GeneralFunctionsService,
     private _toastScv: ToastService
   ) {
@@ -65,13 +90,15 @@ export class MaintenanceOrdersCausesComponent implements OnInit {
 
   createForm() {
     this.MOCauseForm = this._fb.group({
-      currentlyUse: ['', [Validators.required]],
+      idMOcause: [null],
+      currentlyUse: ['Si'],
       causeCode: ['', [Validators.required]],
       diagnosticDescription: ['', [Validators.required]],
+      state: ['', [Validators.required]],
+      compensation: ['', [Validators.required]],
       maintenance: ['', [Validators.required]],
       affectedServices: ['', [Validators.required]],
-      compensation: ['', [Validators.required]],
-      user: [''],
+      detailAffectation: ['', [Validators.required]],
     });
   }
 
@@ -90,73 +117,160 @@ export class MaintenanceOrdersCausesComponent implements OnInit {
 
   initializeVariables() {
     for (const i of Object.entries(SelectCompensate)) {
-      this.selectYesNo.push({ key: i[1], value: i[0] });
+      this.selectYesNo.push({ key: i[0], value: i[0] });
     }
-    for (const i of Object.entries(ServicesSettingsRR)) {
+    this.selectYesNo.splice(0, 1, { key: '', value: '-- Seleccione --' });
+
+    for (const i of Object.entries(ServicesSettings)) {
       this.selectService.push({ key: i[0], value: i[1] });
+    }
+    for (const i of Object.entries(SelectStatus)) {
+      this.selectStatus.push({ key: i[1], value: i[0] });
     }
     this.initialCharge(); // table
   }
 
   initialCharge() {
-  }
-
-  ngAfterViewInit() { // seteado
-    setTimeout(()=>{
-      this.dataToTable = [
-        {
-          currentlyUse: 'SI',
-          causeCode: 'T10',
-          diagnosticDescription: 'Daño puerto telefonico eMTA',
-          maintenance: 'SI',
-          affectedServices: 'Telefonia',
-          compensation: 'Si',
-        },
-        {
-          currentlyUse: 'SI',
-          causeCode: 'L13',
-          diagnosticDescription: 'Cambio MTA Dañado',
-          maintenance: 'SI',
-          affectedServices: 'Telefonia-Internet',
-          compensation: 'Si',
-        },
-        {
-          currentlyUse: 'SI',
-          causeCode: 'DH2',
-          diagnosticDescription: 'DTH Conectores Sueltos o En Daño',
-          maintenance: 'SI',
-          affectedServices: 'TvDth',
-          compensation: 'Si',
-        },
-        {
-          currentlyUse: 'SI',
-          causeCode: 'D95',
-          diagnosticDescription: 'Aprov.Incompleto Reparar',
-          maintenance: 'SI',
-          affectedServices: 'Tv-Telefonia-Internet',
-          compensation: 'Si',
-        },
-        {
-          currentlyUse: 'SI',
-          causeCode: 'WT0',
-          diagnosticDescription: 'Wth Simcard Danada',
-          maintenance: 'SI',
-          affectedServices: 'VozDth-@Dth',
-          compensation: 'Si',
-        }
-      ];
-    },100)
+    this._MOCauseSvc.allMaintenanceOrdersCauses().subscribe((resp: any) => {
+      this.dataToTable = resp.list;
+    });
   }
 
   onSubmit() {
-    console.log(this.MOCauseForm.value);
-    
     if (this.MOCauseForm.invalid) {
       return Object.values(this.MOCauseForm.controls).forEach((control) => {
         control.markAsTouched();
       });
     } else {
+      let dataRequest: RequestModel = this.structuredData();
+
+      if (this.actionForm === 'create') {
+        this.createMaintenanceOrderCauseApi(dataRequest);
+      } else {
+        dataRequest.maintenanceOrderCause.id = this.MOCauseForm.get(
+          'idMOcause'
+        ).value;
+        this.updateMaintenanceOrderCauseApi(dataRequest);
+      }
     }
+  }
+
+  structuredData() {
+    let servicesSelected = this.MOCauseForm.get('affectedServices').value;
+    let data: RequestModel = {
+      maintenanceOrderCause: {
+        useActually: this.MOCauseForm.get('currentlyUse').value,
+        cause: this.MOCauseForm.get('causeCode').value,
+        diagnosticDescription: this.MOCauseForm.get('diagnosticDescription')
+          .value,
+        maintenance: this.MOCauseForm.get('maintenance').value,
+        affectedService: this.MOCauseForm.get('detailAffectation').value,
+        compensation: this.MOCauseForm.get('compensation').value,
+        internet: servicesSelected.find((svc) => svc['key'] === 'internet')
+          ? 1
+          : 0,
+        phone: servicesSelected.find((svc) => svc['key'] === 'telephone')
+          ? 1
+          : 0,
+        television: servicesSelected.find((svc) => svc['key'] === 'television')
+          ? 1
+          : 0,
+        state: this.MOCauseForm.get('state').value,
+      },
+    };
+    return data;
+  }
+
+  createMaintenanceOrderCauseApi(dataRequest: RequestModel) {
+    this._MOCauseSvc
+      .createMaintenanceOrderCause(dataRequest)
+      .subscribe((resp: ResponseModel) => {
+        this.messageToCustomer(resp);
+      });
+  }
+
+  updateMaintenanceOrderCauseApi(dataRequest: RequestModel) {
+    this._MOCauseSvc
+      .updateMaintenanceOrderCause(dataRequest)
+      .subscribe((resp: ResponseModel) => {
+        this.messageToCustomer(resp);
+      });
+  }
+
+  messageToCustomer(resp: ResponseModel) {
+    console.log('respuesta de la api', resp);
+    if (resp.response.code === '0') {
+      this._toastScv.showSuccess(
+        resp.response.descriptionCode,
+        resp.response.messageCode
+      );
+      this.cleanForm();
+      this.initialCharge(); // table
+    } else {
+      this._toastScv.showError(
+        resp.response.descriptionCode,
+        resp.response.messageCode
+      );
+    }
+  }
+
+  updateMaintenanceOrderCause(MOcause: MaintenanceOrderCauseModel) {
+    this.scrollUp();
+    this.setForm(MOcause);
+    this.actionForm = 'update';
+  }
+
+  scrollUp() {
+    document.getElementById("editScrollTop").scrollIntoView({behavior:"smooth"});
+  }
+
+  setForm(data: MaintenanceOrderCauseModel) {
+    this.MOCauseForm.reset({
+      idMOcause: data.id,
+      currentlyUse: data.useActually,
+      causeCode: data.cause,
+      diagnosticDescription: data.diagnosticDescription,
+      state: data.state,
+      compensation: data.compensation,
+      maintenance: data.maintenance,
+      affectedServices: this.returnServiceName(data),
+      detailAffectation: data.affectedService,
+    });
+  }
+
+  returnServiceName(data: MaintenanceOrderCauseModel): string[] {
+    let svcSelected = [];
+    if (data.phone === 1) {
+      svcSelected.push(
+        this.selectService.filter((svc) => svc.key === 'telephone')[0]
+      );
+    }
+    if (data.television === 1) {
+      svcSelected.push(
+        this.selectService.filter((svc) => svc.key === 'television')[0]
+      );
+    }
+    if (data.internet === 1) {
+      svcSelected.push(
+        this.selectService.filter((svc) => svc.key === 'internet')[0]
+      );
+    }
+    return svcSelected;
+  }
+
+  disableMaintenanceOrderCause(MOcause: MaintenanceOrderCauseModel) {
+    const dataRequest: RequestModel = {
+      maintenanceOrderCause: { ...MOcause, state: 0 },
+    };
+    this.updateMaintenanceOrderCauseApi(dataRequest);
+  }
+
+  deleteMaintenanceOrderCause(MOcause: MaintenanceOrderCauseModel) {
+    this._MOCauseSvc
+      .deleteMaintenanceOrderCause(MOcause.id)
+      .subscribe((resp: ResponseModel) => {
+        this.messageToCustomer(resp);
+      });
   }
 
   cleanForm() {
@@ -164,6 +278,7 @@ export class MaintenanceOrdersCausesComponent implements OnInit {
       currentlyUse: '',
       maintenance: '',
       compensation: '',
+      state: '',
     });
     this.actionForm = 'create';
   }

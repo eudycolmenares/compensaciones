@@ -6,9 +6,10 @@ import {
   RRServicesFailure,
   ServicesSettings,
 } from '../../../libraries/utilities.library';
-import { MaintenanceOrdersCausesService } from 'src/app/services/maintenanceOrdersCauses/maintenance-orders-causes.service';
 import { DataList } from '../../../models/general';
 import { ToastService } from 'src/app/services/shared/toast.service';
+import { FailureValidationService } from 'src/app/services/failureValidation/failure-validation.service';
+import * as models from '../../../models/failure-validation';
 
 @Component({
   selector: 'app-rr-failure-validation',
@@ -23,10 +24,11 @@ export class RrFailureValidationComponent implements OnInit {
   // table
   dataToTable: object[];
   structure: object[] = [];
+  columNames: object[] = [];
 
   constructor(
     private _fb: FormBuilder,
-    private _rrFailureSvc: MaintenanceOrdersCausesService,
+    private _failureValidationScv: FailureValidationService,
     private _gnrScv: GeneralFunctionsService,
     private _toastScv: ToastService
   ) {
@@ -71,112 +73,72 @@ export class RrFailureValidationComponent implements OnInit {
   initialCharge() {}
 
   selectedTableRrFailure(selectTable) {
-    console.log(selectTable);
 
     switch (selectTable) {
       case 'by_nodo_4296_Tel_Int_48h':
-      case 'by_nodo_acuer11_2006_TV16H':
-        this.structure = [
-          {
-            name: 'incident',
-            description: 'Incidente',
-            validation: '',
-          },
-          {
-            name: 'node',
-            description: 'Nodo',
-            validation: '',
-          },
-          {
-            name: 'cause',
-            description: 'Causa',
-            validation: '',
-          },
-          {
-            name: 'time',
-            description: 'Tiempo',
-            validation: '',
-          },
-          {
-            name: 'service',
-            description: 'Servicio',
-            validation: '',
-          },
-        ];
-        if (selectTable == 'by_nodo_4296_Tel_Int_48h') {
-          setTimeout(() => {
-            this.dataToTable = [
-              {
-                incident: 'test 1',
-                node: 123,
-                cause: 'test',
-                time: '10-12-2020',
-                service: 'television',
-              },
-              {
-                incident: 'test 2',
-                node: 234,
-                cause: 'test',
-                time: '13-12-2020',
-                service: 'telefonia',
-              },
-            ];
-            console.log('funciona');
+        this.structure = this._failureValidationScv.structureIntTelNodes48H();
+        this._failureValidationScv
+          .allIntTelNodes48H()
+          .subscribe((resp: models.IntTelNodes48HApiModel) => {
+            this.dataToTable = resp.IntTelNodes48H.IntTelNode48H;
           });
-        }
-        if (selectTable === 'by_nodo_acuer11_2006_TV16H') {
-        }
+        this.columNames = this._failureValidationScv.columNamesIntTelNodes48H();
         break;
+
+      case 'by_nodo_acuer11_2006_TV16H':
+        this.structure = this._failureValidationScv.structureTvNodes16H();
+        this._failureValidationScv
+          .allTvNodes16H()
+          .subscribe((resp: models.TvNodes16HApiModel) => {
+            this.dataToTable = resp.TvNodes16H.TvNode16H;
+          });
+        break;
+
       case 'compens_arreglo_TV16H':
-      case 'compens_arreglos_telef_48H':
-        this.structure = [
-          {
-            name: 'account',
-            description: 'Cuenta',
-            validation: '',
-          },
-          {
-            name: 'call',
-            description: 'Llamada',
-            validation: '',
-          },
-          {
-            name: 'time',
-            description: 'Tiempo',
-            validation: '',
-          },
-          {
-            name: 'service',
-            description: 'Servicio',
-            validation: '',
-          },
-        ];
+        this.structure = this._failureValidationScv.structureTvSettings16H();
+        this._failureValidationScv
+          .allTvSettings16H()
+          .subscribe((resp: models.TvSettings16HApiModel) => {
+            this.dataToTable = resp.TvSettings16H.TvSetting16H;
+          });
         break;
+
+      case 'compens_arreglos_telef_48H':
+        this.structure = this._failureValidationScv.structureTelepSettlemCompensas();
+        this._failureValidationScv
+          .allTelepSettlemCompensas()
+          .subscribe((resp: models.TelepSettlemCompensasApiModel) => {
+            this.dataToTable =
+              resp.TblArrangementTelInt48h.TblArrangementTelInt48h;
+          });
+        break;
+
       case 'compes_telef_48H':
+        this.structure = this._failureValidationScv.structureTelepCompensas();
+        this._failureValidationScv
+          .allTelepCompensas()
+          .subscribe((resp: models.TelepCompensasApiModel) => {
+            this.dataToTable = resp.TblCompesTelInt48h.TblCompesTelInt48h;
+          });
+        break;
+
       case 'compes_TV_16H':
+        this.structure = this._failureValidationScv.structureTelevCompensas();
+        this._failureValidationScv
+          .allTelevCompensas()
+          .subscribe((resp: models.TelevCompensasApiModel) => {
+            this.dataToTable = resp.TblCompesTv16h.TblCompesTv16h;
+          });
+        break;
+
       case 'improcedencia_falla_masiva':
-        this.structure = [
-          {
-            name: 'account',
-            description: 'Cuenta',
-            validation: '',
-          },
-          {
-            name: 'incident',
-            description: 'Incidente',
-            validation: '',
-          },
-          {
-            name: 'service',
-            description: 'Servicio',
-            validation: '',
-          },
-          {
-            name: 'time',
-            description: 'Tiempo',
-            validation: '',
-          },
-        ];
+        this.structure = this._failureValidationScv.structureMassImproperFailures();
+        this._failureValidationScv
+          .allMassImproperFailures()
+          .subscribe((resp: models.MassImproperFailuresApiModel) => {
+            this.dataToTable =
+              resp.TblImprocedureCompensation.TblImprocedureCompensation;
+          });
         break;
 
       default:
@@ -200,10 +162,13 @@ export class RrFailureValidationComponent implements OnInit {
     if (!rows || !rows.length) {
       return;
     }
+    console.log(this.columNames);
+    
     const separator = '|';
-    const keys = Object.keys(rows[0]);
+    const keys = this.columNames[0]['english'];
+    const keysSpanish = this.columNames[1]['spanish'];
     const csvContent =
-      keys.join(separator) +
+    keysSpanish.join(separator) +
       '\n' +
       rows
         .map((row) => {

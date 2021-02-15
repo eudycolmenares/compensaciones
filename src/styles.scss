@@ -186,3 +186,38 @@ input[type="number"] {
     margin-bottom: 0.1rem;
   }
 }
+
+// Form Style
+.container-add {
+  font-size: 0.875rem;
+
+  @extend .px-sm-2, .px-md-5;
+
+  .formLayout {
+    @extend .row, .px-md-5;
+
+    .formSection {
+      @extend .col-sm, .text-light, .text-center, .px-sm-1, .mb-4;
+
+      .formLabel {
+        @extend .bg-primary, .py-1, .mb-1;
+      }
+
+      .formField {
+        @extend .text-left;
+
+        small {
+          @extend .text-danger;
+        }
+      }
+    }
+
+    .actionsButtons {
+      @extend .col-sm, .text-light, .text-center, .px-sm-1, .mb-4;
+
+      button {
+        min-width: 6rem;
+      }
+    }
+  }
+}

@@ -3,17 +3,12 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { environment as env } from 'src/environments/environment';
-import {
-  MaintenanceOrderCauseModel,
-  MaintenanceOrdersCausesApiModel,
-  RequestModel,
-  ResponseModel,
-} from '../../models/maintenance-orders-causes';
+import {} from '../../models/maintenance-orders-causes';
 
 @Injectable({
   providedIn: 'root',
 })
-export class MaintenanceOrdersCausesService {
+export class NodesValidationService {
   headers = new HttpHeaders({
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
@@ -22,19 +17,19 @@ export class MaintenanceOrdersCausesService {
 
   constructor(private _http: HttpClient) {}
 
-  allMaintenanceOrdersCauses() {
+  allNodesValidation() {
     return this._http.get<any>(
-      env.URL_API + env.endpoints.maintenanceOrdersCauses_read,
+      env.URL_API + env.endpoints.validationNodes_read,
       {
         headers: this.headers,
       }
     );
   }
 
-  createMaintenanceOrderCause(body: RequestModel): Observable<ResponseModel> {
+  createNodeValidation(body: any): Observable<any> {
     console.log('body', body);
 
-    return this._http.post<ResponseModel>(
+    return this._http.post<any>(
       env.URL_API + env.endpoints.maintenanceOrderCause_create,
       body,
       {
@@ -43,10 +38,10 @@ export class MaintenanceOrdersCausesService {
     );
   }
 
-  updateMaintenanceOrderCause(body: RequestModel): Observable<ResponseModel> {
+  updateNodeValidation(body: any): Observable<any> {
     console.log('body', body);
 
-    return this._http.put<ResponseModel>(
+    return this._http.put<any>(
       env.URL_API + env.endpoints.maintenanceOrderCause_update,
       body,
       {
@@ -55,11 +50,9 @@ export class MaintenanceOrdersCausesService {
     );
   }
 
-  deleteMaintenanceOrderCause(
-    id: number
-  ): Observable<MaintenanceOrdersCausesApiModel> {
-    return this._http.delete<MaintenanceOrdersCausesApiModel>(
-      env.URL_API + env.endpoints.maintenanceOrderCause_delete + `/${id}`
+  deleteNodeValidation(): Observable<any> {
+    return this._http.delete<any>(
+      env.URL_API + env.endpoints.maintenanceOrderCause_delete
     );
   }
 }

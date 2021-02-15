@@ -7,7 +7,7 @@
         <div class="col-sm bg-primary py-1 mx-1">Origen (*)</div>
         <div class="col-sm bg-primary py-1 mx-1">Tipo de Origen (*)</div>
         <div class="col-sm bg-primary py-1 mx-1">Código Anomalía (*)</div>
-        <div class="col-sm bg-primary py-1 mx-1">Descripción Anomalía (*)</div>
+        <div class="col-sm bg-primary py-1 mx-1">Descripción Anomalía</div>
       </div>
 
       <div class="row px-sm-0 px-md-5">
@@ -177,7 +177,9 @@
             [options]="selectService"
             defaultLabel="-- Seleccione --"
             optionLabel="value"
-            class="multiselect-custom"
+            [ngClass]="{
+              'ng-invalid ng-dirty': this.invalidFieldForm('services')
+            }"
             [filter]="false"
           ></p-multiSelect>
           <small class="text-danger" *ngIf="this.invalidFieldForm('services')">

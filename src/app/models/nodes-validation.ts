@@ -1,4 +1,4 @@
-export interface MaintenanceOrderCauseModel {
+export interface NodesValidationModel {
   id?: number;
   useActually: string;
   cause: string;
@@ -13,19 +13,18 @@ export interface MaintenanceOrderCauseModel {
 }
 
 interface GeneralResponse {
-  code: string;
-  descriptionCode: string;
-  messageCode: string;
+  code?: number;
+  description?: string;
 }
 export interface ResponseModel {
   response: GeneralResponse;
 }
 
-export interface MaintenanceOrdersCausesApiModel {
-  list: MaintenanceOrderCauseModel[];
+export interface NodesValidationApiModel {
+  list: NodesValidationModel[];
   response: GeneralResponse;
 }
 
 export interface RequestModel {
-  maintenanceOrderCause: MaintenanceOrderCauseModel;
+  list: NodesValidationModel;
 }

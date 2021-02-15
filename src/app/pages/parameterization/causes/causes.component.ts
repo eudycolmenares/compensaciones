@@ -151,16 +151,16 @@ export class CausesComponent implements OnInit {
   createForm() {
     this.causeForm = this._fb.group({
       origin: ['', [Validators.required]],
-      typeOrigin: [''],
+      typeOrigin: ['', [Validators.required]],
       idCause: [''],
       codeAnomaly: ['', [Validators.required]],
       descriptionAnomaly: [''],
       problemCode: ['', [Validators.required]],
-      descriptionProblem: ['', [Validators.required]],
-      causeCode: [''],
+      descriptionProblem: [''],
+      causeCode: ['', [Validators.required]],
       descriptionCause: ['', [Validators.required]],
-      services: [''],
-      status: [''],
+      services: ['', [Validators.required]],
+      status: ['', [Validators.required]],
       user: [''],
     });
     this.causeForm.get('origin').valueChanges.subscribe((selectValue) => {
@@ -328,7 +328,8 @@ export class CausesComponent implements OnInit {
   }
 
   deleteCause(cause: CauseModel) {
-    this._causeSvc.deleteCause(cause.id).subscribe((resp) => {
+    this._causeSvc.deleteCause(cause.id).subscribe((resp) => {console.log(resp);
+    
       if (resp.GeneralResponse.code === '0') {
         this._toastScv.showSuccess(resp.GeneralResponse.messageCode);
         this.initialCharge(); // table

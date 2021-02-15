@@ -6,7 +6,7 @@ import {
   SelectCompensate,
   ServicesSettings,
 } from '../../../libraries/utilities.library';
-import { MaintenanceOrdersCausesService } from 'src/app/services/maintenanceOrdersCauses/maintenance-orders-causes.service';
+import { NodesValidationService } from 'src/app/services/nodes-validation/nodes-validation.service';
 import { DataList } from '../../../models/general';
 import { ToastService } from 'src/app/services/shared/toast.service';
 
@@ -24,22 +24,17 @@ export class NodesComponent implements OnInit {
   dataToTable: object[];
   structure: object[] = [
     {
-      name: 'origin',
-      description: 'Origen',
-      validation: '',
-    },
-    {
-      name: 'incident',
+      name: 'incidence',
       description: 'Incidente',
       validation: '',
     },
     {
-      name: 'ci',
+      name: 'nodeAdic',
       description: 'CI',
       validation: '',
     },
     {
-      name: 'duration',
+      name: 'nodeDuration',
       description: 'Duración',
       validation: '',
     },
@@ -49,16 +44,31 @@ export class NodesComponent implements OnInit {
       validation: 'active-desactive',
     },
     {
-      name: 'observations',
+      name: 'anomaliaClassDesc',
       description: 'Observación',
       validation: 'observation',
+    },
+    {
+      name: 'compensatesInt',
+      description: 'Internet',
+      validation: 'service',
+    },
+    {
+      name: 'compensatesTel',
+      description: 'Telefonía',
+      validation: 'service',
+    },
+    {
+      name: 'compensatesTv',
+      description: 'Telvisión',
+      validation: 'service',
     },
   ];
   changeIconVlidation = true;
 
   constructor(
     private _fb: FormBuilder,
-    private _causeSvc: MaintenanceOrdersCausesService,
+    private _nodesSvc: NodesValidationService,
     private _gnrScv: GeneralFunctionsService,
     private _toastScv: ToastService
   ) {
@@ -96,22 +106,10 @@ export class NodesComponent implements OnInit {
     this.initialCharge(); // table
   }
 
-  initialCharge() {}
-
-  ngAfterViewInit() {
-    // seteado
-    setTimeout(() => {
-      this.dataToTable = [
-        {
-          ci: 'MG7',
-          origin: '1',
-          state: '1',
-          duration: '1',
-          observations: 'test',
-          incident: '',
-        },
-      ];
-    }, 100);
+  initialCharge() {
+    this._nodesSvc.allNodesValidation().subscribe((resp: any) => {
+      this.dataToTable = resp.tblMaximoInc;
+    });
   }
 
   onSubmit() {

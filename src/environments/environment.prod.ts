@@ -52,5 +52,10 @@ export const environment = {
     // Faults
     faults_load: 'LoadService/load',
     faults_read_id: 'LoadService/read/id',
+    // Maintenance Orders Causes
+    maintenanceOrderCause_create: 'maintenanceOrderCause/create',
+    maintenanceOrderCause_delete: 'maintenanceOrderCause/delete',
+    maintenanceOrderCause_update: 'maintenanceOrderCause/update',
+    maintenanceOrdersCauses_read: 'maintenanceOrderCause/list',
   },
 };

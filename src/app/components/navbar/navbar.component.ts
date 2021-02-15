@@ -95,7 +95,7 @@ export class NavbarComponent implements OnInit {
         icon:'pi pi-fw pi-pencil',
         items: [
           {
-            label: 'Nodo',
+            label: 'Nodos',
             icon:'pi pi-fw pi-align-left',
             routerLink: ['/dashboard/nodes-validation']
           },
@@ -134,7 +134,7 @@ export class NavbarComponent implements OnInit {
         ]
       },
       {
-        label: 'Supervición',
+        label: 'Supervisión',
         icon:'pi pi-fw pi-pencil',
         items: [
           {
