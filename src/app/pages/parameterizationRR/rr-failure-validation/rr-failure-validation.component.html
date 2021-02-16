@@ -38,7 +38,11 @@
 
   <hr />
 
-  <app-table [dataBase]="dataToTable" [structure]="structure"></app-table>
+  <app-table
+    [dataBase]="dataToTable"
+    [structure]="structure"
+    [buttons]="[]"
+  ></app-table>
 
   <div *ngIf="dataToTable" class="text-center justify-content-center">
     <button

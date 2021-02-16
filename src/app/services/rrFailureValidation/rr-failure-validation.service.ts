@@ -3,12 +3,12 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { environment as env } from 'src/environments/environment';
-import * as models from '../../models/failure-validation';
+import * as models from '../../models/rr-failure-validation';
 
 @Injectable({
   providedIn: 'root',
 })
-export class FailureValidationService {
+export class RrFailureValidationService {
   headers = new HttpHeaders({
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
@@ -18,44 +18,39 @@ export class FailureValidationService {
   constructor(private http: HttpClient) {}
 
   structureIntTelNodes48H() {
-    return [
-      {
-        name: 'issue',
-        description: 'Incidente',
-        validation: '',
-      },
-      {
-        name: 'node',
-        description: 'Nodo',
-        validation: '',
-      },
-      {
-        name: 'cause',
-        description: 'Causa',
-        validation: '',
-      },
-      {
-        name: 'time',
-        description: 'Tiempo',
-        validation: '',
-      },
-      {
-        name: 'service',
-        description: 'Servicio',
-        validation: '',
-      },
-    ];
-  }
-
-  columNamesIntTelNodes48H() {
-    return [
-      {
+    return {
+      structure: [
+        {
+          name: 'issue',
+          description: 'Incidente',
+          validation: '',
+        },
+        {
+          name: 'node',
+          description: 'Nodo',
+          validation: '',
+        },
+        {
+          name: 'cause',
+          description: 'Causa',
+          validation: '',
+        },
+        {
+          name: 'time',
+          description: 'Tiempo',
+          validation: '',
+        },
+        {
+          name: 'service',
+          description: 'Servicio',
+          validation: '',
+        },
+      ],
+      columNames: {
         english: ['issue', 'node', 'cause', 'time', 'service'],
-      },
-      {
         spanish: ['INCIDENTE', 'NODO', 'CAUSA', 'DURACIÓN FALLA', 'SERVICIO'],
       },
-    ];
+    };
   }
 
   allIntTelNodes48H(): Observable<models.IntTelNodes48HApiModel> {
@@ -85,28 +80,34 @@ export class FailureValidationService {
   /////////////////////////////////////////////////////////////////
 
   structureTvSettings16H() {
-    return [
-      {
-        name: 'account',
-        description: 'Cuenta',
-        validation: '',
+    return {
+      structure: [
+        {
+          name: 'account',
+          description: 'Cuenta',
+          validation: '',
+        },
+        {
+          name: 'call',
+          description: 'Llamada',
+          validation: '',
+        },
+        {
+          name: 'time',
+          description: 'Tiempo',
+          validation: '',
+        },
+        {
+          name: 'service',
+          description: 'Servicio',
+          validation: '',
+        },
+      ],
+      columNames: {
+        english: ['account', 'call', 'time', 'service'],
+        spanish: ['CUENTA', 'LLAMADA', 'TIEMPO', 'SERVICIO'],
       },
-      {
-        name: 'call',
-        description: 'Llamada',
-        validation: '',
-      },
-      {
-        name: 'time',
-        description: 'Tiempo',
-        validation: '',
-      },
-      {
-        name: 'service',
-        description: 'Servicio',
-        validation: '',
-      },
-    ];
+    };
   }
 
   allTvSettings16H(): Observable<models.TvSettings16HApiModel> {
@@ -126,7 +127,7 @@ export class FailureValidationService {
 
   allTelepSettlemCompensas(): Observable<models.TelepSettlemCompensasApiModel> {
     return this.http.get<models.TelepSettlemCompensasApiModel>(
-      env.urlApi_failureValidation + env.endpoints.TelepSettlemCompensas_read,
+      env.URL_API_BATCHRR + env.endpoints.TelepSettlemCompensas_read,
       {
         headers: this.headers,
       }
@@ -136,33 +137,39 @@ export class FailureValidationService {
   /////////////////////////////////////////////////////////////////
 
   structureTelepCompensas() {
-    return [
-      {
-        name: 'account',
-        description: 'Cuenta',
-        validation: '',
+    return {
+      structure: [
+        {
+          name: 'account',
+          description: 'Cuenta',
+          validation: '',
+        },
+        {
+          name: 'incident',
+          description: 'Incidente',
+          validation: '',
+        },
+        {
+          name: 'service',
+          description: 'Servicio',
+          validation: '',
+        },
+        {
+          name: 'time',
+          description: 'Tiempo',
+          validation: '',
+        },
+      ],
+      columNames: {
+        english: ['account', 'incident', 'service', 'time'],
+        spanish: ['CUENTA', 'INCIDENTE', 'SERVICIO', 'TIEMPO'],
       },
-      {
-        name: 'incident',
-        description: 'Incidente',
-        validation: '',
-      },
-      {
-        name: 'service',
-        description: 'Servicio',
-        validation: '',
-      },
-      {
-        name: 'time',
-        description: 'Tiempo',
-        validation: '',
-      },
-    ];
+    };
   }
 
   allTelepCompensas(): Observable<models.TelepCompensasApiModel> {
     return this.http.get<models.TelepCompensasApiModel>(
-      env.urlApi_failureValidation + env.endpoints.TelepCompensas_read,
+      env.URL_API_BATCHRR + env.endpoints.TelepCompensas_read,
       {
         headers: this.headers,
       }
@@ -177,7 +184,7 @@ export class FailureValidationService {
 
   allTelevCompensas(): Observable<models.TelevCompensasApiModel> {
     return this.http.get<models.TelevCompensasApiModel>(
-      env.urlApi_failureValidation + env.endpoints.TelevCompensas_read,
+      env.URL_API_BATCHRR + env.endpoints.TelevCompensas_read,
       {
         headers: this.headers,
       }
@@ -187,12 +194,14 @@ export class FailureValidationService {
   /////////////////////////////////////////////////////////////////
 
   structureMassImproperFailures() {
-    return this.structureTelepCompensas();
+    let dataChange = this.structureTelepCompensas();
+    dataChange.columNames.spanish[3] = 'DURACIÓN FALLA';
+    return dataChange;
   }
 
   allMassImproperFailures(): Observable<models.MassImproperFailuresApiModel> {
     return this.http.get<models.MassImproperFailuresApiModel>(
-      env.urlApi_failureValidation + env.endpoints.MassImproperFailures_read,
+      env.URL_API_BATCHRR + env.endpoints.MassImproperFailures_read,
       {
         headers: this.headers,
       }
