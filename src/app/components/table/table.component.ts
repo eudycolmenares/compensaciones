@@ -20,6 +20,11 @@ export class TableComponent implements OnInit {
   // Filter colums to view
   cols: any[];
   _selectedColumns: any[];
+  // Filter
+  highAmount = [
+    { label: 'Monto Alto', value: '1' },
+    { label: 'Monto Bajo', value: '0' },
+]
 
   constructor(
     private confirmationSvc: ConfirmationService,

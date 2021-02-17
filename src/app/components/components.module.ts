@@ -8,6 +8,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
+import { DropdownModule } from 'primeng/dropdown';
 
 import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
 import { TableComponent } from './table/table.component';
@@ -26,7 +27,8 @@ import { SortableDirective } from '../directives/sortable.directive';
     MultiSelectModule,
     InputTextModule,
     ButtonModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    DropdownModule
   ],
   exports: [
     BreadcrumbComponent,

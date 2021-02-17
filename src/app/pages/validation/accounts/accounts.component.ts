@@ -46,6 +46,11 @@ export class AccountsComponent implements OnInit {
       description: 'VALID_FROM',
       validation: 'date'
     },
+    {
+      name: 'highAmount',
+      description: 'HIGH_AMOUNT',
+      validation: 'highAmount'
+    },
   ];
 
   constructor(

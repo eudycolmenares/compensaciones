@@ -3,7 +3,7 @@
   <p-table #dt1 dataKey="id" styleClass="p-datatable-sm" selectionMode="single"
     [value]="dataBase" [columns]="selectedColumns"
     [paginator]="true" [rows]="5" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,20]"
-    [globalFilterFields]="selectedColumns"
+    [globalFilterFields]="selectedColumns" [globalFilterFields]="['amount']"
   >
 
     <ng-template pTemplate="caption">
@@ -31,7 +31,23 @@
     <ng-template pTemplate="header" let-columns>
       <tr>
         <th scope="col">#</th>
-        <th *ngFor="let opt of columns" [pSortableColumn]="opt.field">{{opt.description}} <p-sortIcon [field]="opt.field"></p-sortIcon></th>
+        <th *ngFor="let opt of columns" [ngSwitch]="opt.field" [pSortableColumn]="opt.field">
+          <ng-container *ngSwitchCase="'highAmount'">
+            {{opt.description}}
+            <p-columnFilter [field]="opt.field" matchMode="equals" display="menu">
+              <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                  <p-dropdown [ngModel]="value" [options]="highAmount" (onChange)="filter($event.value)" placeholder="Any">
+                      <ng-template let-option pTemplate="item">
+                          <span [class]="'customer-badge status-' + option.value">{{option.label}}</span>
+                      </ng-template>
+                  </p-dropdown>
+              </ng-template>
+            </p-columnFilter>
+          </ng-container>
+          <ng-container *ngSwitchDefault>
+            {{opt.description}} <p-sortIcon [field]="opt.field"></p-sortIcon>
+          </ng-container>
+        </th>
         <ng-container *ngIf="buttons.length !== 0">
           <th scope="col" class="text-center">Acciones</th>
         </ng-container>
@@ -39,7 +55,7 @@
     </ng-template>
 
     <ng-template pTemplate="body" let-item let-i="rowIndex" let-columns="columns">
-      <tr [ngClass]="{'amount-high': item['highAmount'] === '1'}">
+      <tr>
         <td style="width: 1rem">{{ i + 1}}</td>
         <ng-container *ngFor="let opt of columns" [ngSwitch]="opt.validation" >
           <td *ngSwitchCase="'yes-no'">{{ (item[opt.name].toString() === '1' || item[opt.name].toUpperCase() === 'SI') ? 'Si' : 'No' }}</td>
@@ -50,6 +66,10 @@
           <td *ngSwitchCase="''">{{ item[opt.name] }}</td>
           <td *ngSwitchCase="'date'">{{ item[opt.name] | date }}</td>
           <td *ngSwitchCase="'amount'">{{ item[opt.name] | currency }}</td>
+          <td *ngSwitchCase="'highAmount'">
+            <div *ngIf="item[opt.name] === '1'"><span class="badge badge-warning">Monto Alto</span></div>
+            <div *ngIf="item[opt.name] === '0'"><span class="badge badge-light">Monto Bajo</span></div>
+          </td>
         </ng-container>
         <ng-container *ngIf="buttons.length !== 0">
           <td class="text-center">
