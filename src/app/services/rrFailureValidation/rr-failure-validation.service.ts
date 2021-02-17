@@ -17,6 +17,17 @@ export class RrFailureValidationService {
 
   constructor(private http: HttpClient) {}
 
+  private convertSelectedServices_string (arrayServices: []) {
+    let arrayServices_modified = [];
+    for (const iterator of arrayServices) {
+      arrayServices_modified.push(iterator['value'])
+    }
+
+    return arrayServices_modified.join(',');
+  }
+
+  /////////////////////////////////////////////////////////////////
+
   structureIntTelNodes48H() {
     return {
       structure: [
@@ -56,6 +67,44 @@ export class RrFailureValidationService {
   allIntTelNodes48H(): Observable<models.IntTelNodes48HApiModel> {
     return this.http.get<models.IntTelNodes48HApiModel>(
       env.urlApi_failureValidation + env.endpoints.IntTelNodes48H_read,
+      {
+        headers: this.headers,
+      }
+    );
+  }
+
+  structureRequest_IntTelNode48H(
+    dataForm: any
+  ): models.IntTelNodes48HRequestModel {
+    let dataRequest: models.IntTelNodes48HRequestModel = {
+      IntTelNode48H: {
+        id: dataForm.id,
+        issue: dataForm.issue,
+        node: dataForm.node,
+        cause: dataForm.cause,
+        time: dataForm.time,
+        service: this.convertSelectedServices_string(dataForm.service),
+      },
+    };
+    return dataRequest;
+  }
+
+  createRequest_IntTelNode48H(
+    body: models.IntTelNode48HModel
+  ): Observable<models.ResponseModel> {
+    return this.http.post<models.ResponseModel>(
+      env.urlApi_failureValidation + env.endpoints.IntTelNodes48H_create,
+      body,
+      {
+        headers: this.headers,
+      }
+    );
+  }
+
+  updateRequest_IntTelNode48H(body: models.IntTelNode48HModel): Observable<models.ResponseModel> {
+    return this.http.put<models.ResponseModel>(
+      env.urlApi_failureValidation + env.endpoints.IntTelNodes48H_create,
+      body,
       {
         headers: this.headers,
       }

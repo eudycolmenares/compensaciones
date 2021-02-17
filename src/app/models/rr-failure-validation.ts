@@ -4,6 +4,10 @@ interface GeneralResponse {
   messageCode: string;
 }
 
+export interface ResponseModel {
+  GeneralResponse: GeneralResponse;
+}
+
 /////////////////////////////////////////////////
 
 export interface IntTelNode48HModel {
@@ -20,6 +24,10 @@ export interface IntTelNodes48HApiModel {
   IntTelNodes48H: {
     IntTelNode48H: IntTelNode48HModel[];
   };
+}
+
+export interface IntTelNodes48HRequestModel {
+  IntTelNode48H: IntTelNode48HModel;
 }
 
 /////////////////////////////////////////////////

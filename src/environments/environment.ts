@@ -72,6 +72,7 @@ export const environment = {
 
     // failure validation - TBL_NODO_TEL_INT_48H - By_nodo_4296_Tel_Int_48h
     IntTelNodes48H_read: 'IntTelNode48HService/read/all',
+    IntTelNodes48H_create: 'IntTelNode48HService/create',
     // failure validation - TBL_NODO_TV_16H - By_nodo_acuer11_2006_TV16H
     TvNodes16H_read: 'TvNode16HService/read/all',
     // failure validation - TBL_ARREGLO_TV_16H - Compens_arreglo_TV16H

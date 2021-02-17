@@ -29,7 +29,7 @@ export class NodesComponent implements OnInit {
       validation: '',
     },
     {
-      name: 'nodeAdic',
+      name: 'ciPpal',
       description: 'CI',
       validation: '',
     },
@@ -41,10 +41,10 @@ export class NodesComponent implements OnInit {
     {
       name: 'state',
       description: 'Estado',
-      validation: 'active-desactive',
+      validation: '',
     },
     {
-      name: 'anomaliaClassDesc',
+      name: 'stateDesc',
       description: 'Observación',
       validation: 'observation',
     },
@@ -109,6 +109,8 @@ export class NodesComponent implements OnInit {
   initialCharge() {
     this._nodesSvc.allNodesValidation().subscribe((resp: any) => {
       this.dataToTable = resp.tblMaximoInc;
+      console.log(this.dataToTable);
+      
     });
   }
 

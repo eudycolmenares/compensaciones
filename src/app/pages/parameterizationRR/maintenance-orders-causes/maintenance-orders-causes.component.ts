@@ -198,7 +198,6 @@ export class MaintenanceOrdersCausesComponent implements OnInit {
   }
 
   messageToCustomer(resp: ResponseModel) {
-    console.log('respuesta de la api', resp);
     if (resp.response.code === '0') {
       this._toastScv.showSuccess(
         resp.response.descriptionCode,

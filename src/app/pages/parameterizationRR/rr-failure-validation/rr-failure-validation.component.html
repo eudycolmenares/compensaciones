@@ -36,12 +36,321 @@
     </form>
   </div>
 
+  <!-- form option 1  -->
+  <section id="editScrollTop" *ngIf="selectedForm !== null">
+    <hr />
+    <div class="container-add mt-4">
+      <form
+        autocomplete="off"
+        [formGroup]="formOption1"
+        (ngSubmit)="onSubmit_formOption1()"
+        *ngIf="selectedForm === 1"
+      >
+        <div class="formLayout">
+          <div class="formSection">
+            <div class="formLabel">Incidente (*)</div>
+            <div class="formField">
+              <input
+                type="text"
+                formControlName="issue"
+                class="form-control form-control-sm"
+                [ngClass]="{
+                  'is-invalid': this.invalidField_FormOption1('issue')
+                }"
+                placeholder="Cód Incidente"
+              />
+              <small *ngIf="this.invalidField_FormOption1('issue')">
+                {{ textsFormInvalid_formOption1("issue") }}
+              </small>
+            </div>
+          </div>
+          <div class="formSection">
+            <div class="formLabel">Nodo (*)</div>
+            <div class="formField">
+              <input
+                type="text"
+                formControlName="node"
+                class="form-control form-control-sm"
+                [ngClass]="{
+                  'is-invalid': this.invalidField_FormOption1('node')
+                }"
+                placeholder="Cód Nodo"
+              />
+              <small *ngIf="this.invalidField_FormOption1('node')">
+                {{ textsFormInvalid_formOption1("node") }}
+              </small>
+            </div>
+          </div>
+          <div class="formSection">
+            <div class="formLabel">Causa (*)</div>
+            <div class="formField">
+              <input
+                type="text"
+                formControlName="cause"
+                class="form-control form-control-sm"
+                [ngClass]="{
+                  'is-invalid': this.invalidField_FormOption1('cause')
+                }"
+                placeholder="Desc Causa"
+              />
+              <small *ngIf="this.invalidField_FormOption1('cause')">
+                {{ textsFormInvalid_formOption1("cause") }}
+              </small>
+            </div>
+          </div>
+          <div class="formSection">
+            <div class="formLabel">Tiempo (*)</div>
+            <div class="formField">
+              <input
+                type="text"
+                formControlName="time"
+                class="form-control form-control-sm"
+                [ngClass]="{
+                  'is-invalid': this.invalidField_FormOption1('time')
+                }"
+                placeholder="Duración Falla"
+              />
+              <small *ngIf="this.invalidField_FormOption1('time')">
+                {{ textsFormInvalid_formOption1("time") }}
+              </small>
+            </div>
+          </div>
+          <div class="formSection">
+            <div class="formLabel">Servicio (*)</div>
+            <div class="formField">
+              <p-multiSelect
+                formControlName="service"
+                [options]="selectService"
+                defaultLabel="-- Seleccione --"
+                optionLabel="value"
+                [ngClass]="{
+                  'ng-invalid ng-dirty': this.invalidField_FormOption1('service')
+                }"
+                [filter]="false"
+              ></p-multiSelect>
+              <small *ngIf="this.invalidField_FormOption1('service')">
+                {{ textsFormInvalid_formOption1("service") }}
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="formLayout">
+          <div class="actionsButtons">
+            <button type="submit" class="btn btn-primary mr-3 btn-sm">
+              {{ actionForm === "create" ? "Crear" : "Actualizar" }}
+            </button>
+            <button
+              type="button"
+              class="btn btn-secondary btn-sm"
+              (click)="cleanForm()"
+            >
+              Limpiar
+            </button>
+          </div>
+        </div>
+      </form>
+
+      <!-- form option 2 -->
+      <form
+        autocomplete="off"
+        [formGroup]="formOption2"
+        (ngSubmit)="onSubmit_formOption2()"
+        *ngIf="selectedForm === 2"
+      >
+        <div class="formLayout">
+          <div class="formSection">
+            <div class="formLabel">Cuenta (*)</div>
+            <div class="formField">
+              <input
+                type="text"
+                formControlName="account"
+                class="form-control form-control-sm"
+                [ngClass]="{
+                  'is-invalid': this.invalidField_FormOption2('account')
+                }"
+                placeholder="Cód Cuenta"
+              />
+              <small *ngIf="this.invalidField_FormOption2('account')">
+                {{ textsFormInvalid_formOption2("account") }}
+              </small>
+            </div>
+          </div>
+          <div class="formSection">
+            <div class="formLabel">Llamada (*)</div>
+            <div class="formField">
+              <input
+                type="text"
+                formControlName="call"
+                class="form-control form-control-sm"
+                [ngClass]="{
+                  'is-invalid': this.invalidField_FormOption2('call')
+                }"
+                placeholder="Cód Llamada"
+              />
+              <small *ngIf="this.invalidField_FormOption2('call')">
+                {{ textsFormInvalid_formOption2("call") }}
+              </small>
+            </div>
+          </div>
+          <div class="formSection">
+            <div class="formLabel">Tiempo (*)</div>
+            <div class="formField">
+              <input
+                type="text"
+                formControlName="time"
+                class="form-control form-control-sm"
+                [ngClass]="{
+                  'is-invalid': this.invalidField_FormOption2('time')
+                }"
+                placeholder="Duración Falla"
+              />
+              <small *ngIf="this.invalidField_FormOption2('time')">
+                {{ textsFormInvalid_formOption2("time") }}
+              </small>
+            </div>
+          </div>
+          <div class="formSection">
+            <div class="formLabel">Servicio (*)</div>
+            <div class="formField">
+              <p-multiSelect
+                formControlName="service"
+                [options]="selectService"
+                defaultLabel="-- Seleccione --"
+                optionLabel="value"
+                [ngClass]="{
+                  'ng-invalid ng-dirty': this.invalidField_FormOption2('service')
+                }"
+                [filter]="false"
+              ></p-multiSelect>
+              <small *ngIf="this.invalidField_FormOption2('service')">
+                {{ textsFormInvalid_formOption2("service") }}
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="formLayout">
+          <div class="actionsButtons">
+            <button type="submit" class="btn btn-primary mr-3 btn-sm">
+              {{ actionForm === "create" ? "Crear" : "Actualizar" }}
+            </button>
+            <button
+              type="button"
+              class="btn btn-secondary btn-sm"
+              (click)="cleanForm()"
+            >
+              Limpiar
+            </button>
+          </div>
+        </div>
+      </form>
+
+      <!-- form option 3 -->
+      <form
+        autocomplete="off"
+        [formGroup]="formOption3"
+        (ngSubmit)="onSubmit_formOption3()"
+        *ngIf="selectedForm === 3"
+      >
+        <div class="formLayout">
+          <div class="formSection">
+            <div class="formLabel">Cuenta (*)</div>
+            <div class="formField">
+              <input
+                type="text"
+                formControlName="account"
+                class="form-control form-control-sm"
+                [ngClass]="{
+                  'is-invalid': this.invalidField_FormOption3('account')
+                }"
+                placeholder="Cód Cuenta"
+              />
+              <small *ngIf="this.invalidField_FormOption3('account')">
+                {{ textsFormInvalid_formOption3("account") }}
+              </small>
+            </div>
+          </div>
+          <div class="formSection">
+            <div class="formLabel">Incidente (*)</div>
+            <div class="formField">
+              <input
+                type="text"
+                formControlName="incident"
+                class="form-control form-control-sm"
+                [ngClass]="{
+                  'is-invalid': this.invalidField_FormOption3('incident')
+                }"
+                placeholder="Cód Incidente"
+              />
+              <small *ngIf="this.invalidField_FormOption3('incident')">
+                {{ textsFormInvalid_formOption3("incident") }}
+              </small>
+            </div>
+          </div>
+          <div class="formSection">
+            <div class="formLabel">Servicio (*)</div>
+            <div class="formField">
+              <p-multiSelect
+                formControlName="service"
+                [options]="selectService"
+                defaultLabel="-- Seleccione --"
+                optionLabel="value"
+                [ngClass]="{
+                  'ng-invalid ng-dirty': this.invalidField_FormOption3('service')
+                }"
+                [filter]="false"
+              ></p-multiSelect>
+              <small *ngIf="this.invalidField_FormOption3('service')">
+                {{ textsFormInvalid_formOption3("service") }}
+              </small>
+            </div>
+          </div>
+          <div class="formSection">
+            <div class="formLabel">Tiempo (*)</div>
+            <div class="formField">
+              <input
+                type="text"
+                formControlName="time"
+                class="form-control form-control-sm"
+                [ngClass]="{
+                  'is-invalid': this.invalidField_FormOption3('time')
+                }"
+                placeholder="Duración Falla"
+              />
+              <small *ngIf="this.invalidField_FormOption3('time')">
+                {{ textsFormInvalid_formOption3("time") }}
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="formLayout">
+          <div class="actionsButtons">
+            <button type="submit" class="btn btn-primary mr-3 btn-sm">
+              {{ actionForm === "create" ? "Crear" : "Actualizar" }}
+            </button>
+            <button
+              type="button"
+              class="btn btn-secondary btn-sm"
+              (click)="cleanForm()"
+            >
+              Limpiar
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
+
   <hr />
 
   <app-table
     [dataBase]="dataToTable"
     [structure]="structure"
-    [buttons]="[]"
+    (editRecord)="updateData($event)"
+    (disableRecord)="disableData($event)"
+    (deleteRecord)="deleteData($event)"
   ></app-table>
 
   <div *ngIf="dataToTable" class="text-center justify-content-center">
