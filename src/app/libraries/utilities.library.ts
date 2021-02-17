@@ -119,3 +119,7 @@ export enum RRServicesFailure {
   compes_TV_16H = 'Compes_TV_16H',
   improcedencia_falla_masiva = 'Improcedencia_falla_masiva',
 }
+
+export enum itemsStorage {
+  menu = 'open_menu',
+}

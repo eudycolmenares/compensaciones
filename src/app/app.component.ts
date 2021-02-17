@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import {delay} from 'rxjs/operators';
 
 import { LoadingService } from './services/loading/loading.service';
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -12,9 +11,7 @@ import { LoadingService } from './services/loading/loading.service';
 export class AppComponent {
   loading = false;
 
-  constructor(
-    private loadingSvc: LoadingService
-  ){
+  constructor(private loadingSvc: LoadingService){
     this.listenToLoading();
   }
 
