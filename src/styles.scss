@@ -21,7 +21,6 @@ hr {
   color: var(--gray);
   background-color: var(--gray);
 }
-
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -104,6 +103,15 @@ input[type="number"] {
   .p-panelmenu-header-link {
     background: var(--primary) !important;
     color: var(--light) !important;
+
+    // TEST
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    padding: 1rem 1rem 1.25rem !important;
+  }
+  .p-panelmenu-icon {
+    margin-right: 0 !important;
   }
   .p-menuitem-link-active {
     span {
@@ -113,8 +121,22 @@ input[type="number"] {
   .p-panelmenu-header > a:focus {
     box-shadow: 0 0 0 0.2rem rgb(211 34 21 / 50%) !important;
   }
-  .p-panelmenu-content .p-menuitem .p-menuitem-link:focus {
-    box-shadow: 0 0 0 0.2rem rgb(211 34 21 / 50%) !important;
+  .p-panelmenu-content {
+    .p-menuitem .p-menuitem-link:focus {
+      box-shadow: 0 0 0 0.2rem rgb(211 34 21 / 50%) !important;
+    }
+
+    // TEST
+    .p-menuitem-link {
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: space-between;
+      padding: 0.75rem 0.75rem 1rem !important;
+      .p-menuitem-icon {
+        margin-right: 0 !important;
+      }
+    }
+
   }
 }
 
@@ -125,7 +147,6 @@ input[type="number"] {
     height: 15px;
   }
 }
-
 
 //PRIMENG button dialog confirm
 .p-confirm-dialog-reject {
@@ -150,6 +171,7 @@ input[type="number"] {
 }
 
 // PRIMENG Toast
+
 .p-toast-message {
   .p-toast-message-content {
     text-transform: capitalize;
@@ -188,33 +210,26 @@ input[type="number"] {
 }
 
 // Form Style
+
 .container-add {
   font-size: 0.875rem;
-
   @extend .px-sm-2, .px-md-5;
-
   .formLayout {
     @extend .row, .px-md-5;
-
     .formSection {
       @extend .col-sm, .text-light, .text-center, .px-sm-1, .mb-4;
-
       .formLabel {
         @extend .bg-primary, .py-1, .mb-1;
       }
-
       .formField {
         @extend .text-left;
-
         small {
           @extend .text-danger;
         }
       }
     }
-
     .actionsButtons {
       @extend .col-sm, .text-light, .text-center, .px-sm-1, .mb-4;
-
       button {
         min-width: 6rem;
       }
