@@ -94,7 +94,8 @@ export class SettingsComponent implements OnInit {
   initialCharge() {
     this.cleanForm();
     this.stgsSvc.allSettings().subscribe((resp: settingsApiModel) => {
-      this.dataToTable = resp.Settings.Setting;
+      // this.dataToTable = resp.Settings.Setting;
+      this.dataToTable = resp.Settings.Setting.map(setting => ({...setting, socialStratum: setting.socialStratums?.socialStratum}) );
     });
   }
 
@@ -141,7 +142,7 @@ export class SettingsComponent implements OnInit {
           'description': this.formStgs.get('description').value,
           'state': this.formStgs.get('state').value,
           'user': 'test', // seteado
-          'socialStratum': this.formStgs.get('strata').value,
+          'socialStratums': this.formStgs.get('strata').value.map(stratum => ({ socialStratum: stratum })),
           'television': (servicesSelected.find(svc => svc === 'television') ? '1' : '0'),
           'internet': (servicesSelected.find(svc => svc === 'internet') ? '1' : '0'),
           'telephone': (servicesSelected.find(svc => svc === 'telephone') ? '1' : '0')
@@ -158,25 +159,27 @@ export class SettingsComponent implements OnInit {
   createSettingApi(dataRequest: requestModel) {
     this.stgsSvc.createSetting(dataRequest).subscribe(resp => {
       if(resp.GeneralResponse.code === '0') {
-        this.toastScv.showSuccess(resp.GeneralResponse.messageCode);
+        this.toastScv.showSuccess(resp.GeneralResponse.messageCode, resp.GeneralResponse.descriptionCode);
         this.initialCharge();
       }else{
-        this.toastScv.showError(resp.GeneralResponse.messageCode);
+        this.toastScv.showError(resp.GeneralResponse.messageCode, resp.GeneralResponse.descriptionCode);
       }
     })
   }
   updateSettingApi(dataRequest: requestModel) {
     this.stgsSvc.updateSetting(dataRequest).subscribe(resp => {
       if(resp.GeneralResponse.code === '0') {
-        this.toastScv.showSuccess(resp.GeneralResponse.messageCode);
+        this.toastScv.showSuccess(resp.GeneralResponse.messageCode, resp.GeneralResponse.descriptionCode);
         this.initialCharge();
       }else{
-        this.toastScv.showError(resp.GeneralResponse.messageCode);
+        this.toastScv.showError(resp.GeneralResponse.messageCode, resp.GeneralResponse.descriptionCode);
       }
     })
   }
 
   updateSetting(setting: settingModel) {
+    console.log('updateSetting() ', setting);
+
     this.setForm(setting);
     this.actionForm = 'update';
   }
@@ -200,16 +203,16 @@ export class SettingsComponent implements OnInit {
   deleteSetting(setting: settingModel) {
     this.stgsSvc.deleteSetting(setting.id).subscribe(resp => {
       if(resp.GeneralResponse.code === '0') {
-        this.toastScv.showSuccess(resp.GeneralResponse.messageCode);
+        this.toastScv.showSuccess(resp.GeneralResponse.messageCode, resp.GeneralResponse.descriptionCode);
         this.initialCharge();
       }else{
-        this.toastScv.showError(resp.GeneralResponse.messageCode);
+        this.toastScv.showError(resp.GeneralResponse.messageCode, resp.GeneralResponse.descriptionCode);
       }
     })
   }
 
   cleanForm() {
-    this.formStgs.reset();
+    this.formStgs.reset({'state': ''});
     this.actionForm = 'create';
   }
 }

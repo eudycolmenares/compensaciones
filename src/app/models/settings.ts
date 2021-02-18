@@ -18,7 +18,8 @@ export interface settingModel {
   description: string;
   state: string;
   user?: string;
-  socialStratum: string;
+  socialStratums: { socialStratum: string[] };
+  socialStratum?:  string[];
   television?: string;
   internet?: string;
   telephone?: string;
