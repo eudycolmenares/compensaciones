@@ -72,19 +72,39 @@ export const environment = {
 
     // failure validation - TBL_NODO_TEL_INT_48H - By_nodo_4296_Tel_Int_48h
     IntTelNodes48H_read: 'IntTelNode48HService/read/all',
-    IntTelNodes48H_create: 'IntTelNode48HService/create',
+    IntTelNode48H_create: 'IntTelNode48HService/create',
+    IntTelNode48H_update: 'IntTelNode48HService/update',
+    IntTelNode48H_delete_id: 'IntTelNode48HService/delete',
     // failure validation - TBL_NODO_TV_16H - By_nodo_acuer11_2006_TV16H
     TvNodes16H_read: 'TvNode16HService/read/all',
+    TvNode16H_create: 'TvNode16HService/create',
+    TvNode16H_update: 'TvNode16HService/update',
+    TvNode16H_delete_id: 'TvNode16HService/delete',
     // failure validation - TBL_ARREGLO_TV_16H - Compens_arreglo_TV16H
     TvSettings16H_read: 'TvSetting16HService/read/all',
+    TvSetting16H_create: 'TvSetting16HService/create',
+    TvSetting16H_update: 'TvSetting16HService/update',
+    TvSetting16H_delete_id: 'TvSetting16HService/delete_id',
     // failure validation - TBL_ARREGLO_TEL_INT_48H - Compens_arreglos_telef_48H
     TelepSettlemCompensas_read: 'TelepSettlemCompensaService/readAll',
+    TelepSettlemCompensa_create: 'TelepSettlemCompensaService/create',
+    TelepSettlemCompensa_update: 'TelepSettlemCompensaService/update',
+    TelepSettlemCompensa_delete_id: 'TelepSettlemCompensaService/delete',
     // failure validation - TBL_COMPES_TEL_INT_48H - Compes_telef_48H
     TelepCompensas_read: 'TelepCompensaService/readAll',
+    TelepCompensa_create: 'TelepCompensaService/create',
+    TelepCompensa_update: 'TelepCompensaService/update',
+    TelepCompensa_delete_id: 'TelepCompensaService/delete',
     // failure validation - TBL_COMPES_TV_16H - Compes_TV_16H
     TelevCompensas_read: 'TelevCompensaService/readAll',
+    TelevCompensa_create: 'TelevCompensaService/create',
+    TelevCompensa_update: 'TelevCompensaService/update',
+    TelevCompensa_delete_id: 'TelevCompensaService/delete',
     // failure validation - TBL_COMPES_IMPROCEDENCIA - Improcedencia_falla_masiva
     MassImproperFailures_read: 'MassImproperFailureService/readAll',
+    MassImproperFailure_create: 'MassImproperFailureService/create',
+    MassImproperFailure_update: 'MassImproperFailureService/update',
+    MassImproperFailure_delete_id: 'MassImproperFailureService/delete',
   },
 };
 
