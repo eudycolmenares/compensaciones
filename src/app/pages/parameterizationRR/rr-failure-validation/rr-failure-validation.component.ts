@@ -32,7 +32,7 @@ export class RrFailureValidationComponent implements OnInit {
 
   //download file
   columNames: { english: string[]; spanish: string[] };
-  name_selectedTable: string;
+  name_selectedTable: DataList;
   dataRequest: any;
 
   constructor(
@@ -145,7 +145,7 @@ export class RrFailureValidationComponent implements OnInit {
             this.dataToTable = resp.IntTelNodes48H.IntTelNode48H;
           });
         this.columNames = this._RrfailureValidationScv.structureIntTelNodes48H().columNames;
-        this.name_selectedTable = this.selectTable[0].value;
+        this.name_selectedTable = this.selectTable[0];
         this.selectedForm = 1;
         break;
 
@@ -157,7 +157,7 @@ export class RrFailureValidationComponent implements OnInit {
             this.dataToTable = resp.TvNodes16H.TvNode16H;
           });
         this.columNames = this._RrfailureValidationScv.structureTvNodes16H().columNames;
-        this.name_selectedTable = this.selectTable[1].value;
+        this.name_selectedTable = this.selectTable[1];
         this.selectedForm = 1;
         break;
 
@@ -169,7 +169,7 @@ export class RrFailureValidationComponent implements OnInit {
             this.dataToTable = resp.TvSettings16H.TvSetting16H;
           });
         this.columNames = this._RrfailureValidationScv.structureTvSettings16H().columNames;
-        this.name_selectedTable = this.selectTable[2].value;
+        this.name_selectedTable = this.selectTable[2];
         this.selectedForm = 2;
         break;
 
@@ -182,7 +182,7 @@ export class RrFailureValidationComponent implements OnInit {
               resp.TblArrangementTelInt48h.TblArrangementTelInt48h;
           });
         this.columNames = this._RrfailureValidationScv.structureTelepSettlemCompensas().columNames;
-        this.name_selectedTable = this.selectTable[3].value;
+        this.name_selectedTable = this.selectTable[3];
         this.selectedForm = 2;
         break;
 
@@ -194,7 +194,7 @@ export class RrFailureValidationComponent implements OnInit {
             this.dataToTable = resp.TblCompesTelInt48h.TblCompesTelInt48h;
           });
         this.columNames = this._RrfailureValidationScv.structureTelepCompensas().columNames;
-        this.name_selectedTable = this.selectTable[4].value;
+        this.name_selectedTable = this.selectTable[4];
         this.selectedForm = 3;
         break;
 
@@ -206,7 +206,7 @@ export class RrFailureValidationComponent implements OnInit {
             this.dataToTable = resp.TblCompesTv16h.TblCompesTv16h;
           });
         this.columNames = this._RrfailureValidationScv.structureTelevCompensas().columNames;
-        this.name_selectedTable = this.selectTable[5].value;
+        this.name_selectedTable = this.selectTable[5];
         this.selectedForm = 3;
         break;
 
@@ -219,7 +219,7 @@ export class RrFailureValidationComponent implements OnInit {
               resp.TblImprocedureCompensation.TblImprocedureCompensation;
           });
         this.columNames = this._RrfailureValidationScv.structureMassImproperFailures().columNames;
-        this.name_selectedTable = this.selectTable[6].value;
+        this.name_selectedTable = this.selectTable[6];
         this.selectedForm = 3;
         break;
 
@@ -229,11 +229,12 @@ export class RrFailureValidationComponent implements OnInit {
         this.selectedForm = null;
         break;
     }
+    this.cleanForm();
   }
 
-  reloadTableData(){
-    this.selectedTableRrFailure(this.selectTable[0].key);
-  };
+  reloadTableData() {
+    this.selectedTableRrFailure(this.name_selectedTable.key);
+  }
 
   downloadDataTable() {
     if (this.dataToTable.length > 0) {
@@ -291,14 +292,14 @@ export class RrFailureValidationComponent implements OnInit {
     const blob = new Blob([csvContent], { type: 'text/html;charset=utf-8;' });
     if (navigator.msSaveBlob) {
       // IE 10+
-      navigator.msSaveBlob(blob, this.name_selectedTable + '.txt');
+      navigator.msSaveBlob(blob, this.name_selectedTable.value + '.txt');
     } else {
       const link = document.createElement('a');
       if (link.download !== undefined) {
         // Browsers that support HTML5 download attribute
         const url = URL.createObjectURL(blob);
         link.setAttribute('href', url);
-        link.setAttribute('download', this.name_selectedTable + '.txt');
+        link.setAttribute('download', this.name_selectedTable.value + '.txt');
         link.style.visibility = 'hidden';
         document.body.appendChild(link);
         link.click();
@@ -344,74 +345,199 @@ export class RrFailureValidationComponent implements OnInit {
     if (this.actionForm === 'create') {
       this.ApiOptions('createData');
     } else {
-      // this.dataRequest.maintenanceOrderCause.id = this.formOption1.get(
-      //   'id'
-      // ).value;
       this.ApiOptions('updateData');
     }
   }
 
-  ApiOptions(actionApi: string) {
-    switch (this.name_selectedTable) {
+  ApiOptions(actionApi: string, dataAditionals?: Object[]) {
+    switch (this.name_selectedTable.value) {
       case this.selectTable[0].value: // By_nodo_4296_Tel_Int_48h
         if (actionApi === 'structureData') {
           this.dataRequest = this._RrfailureValidationScv.structureRequest_IntTelNode48H(
             this.formOption1.value
           );
-          console.log('datarequest', this.dataRequest);
-          
         } else if (actionApi === 'createData') {
           this._RrfailureValidationScv
             .createRequest_IntTelNode48H(this.dataRequest)
             .subscribe((resp: models.ResponseModel) => {
               this.messageToCustomer(resp);
             });
-
         } else if (actionApi === 'updateData') {
-          this._RrfailureValidationScv.updateRequest_IntTelNode48H(this.formOption1.value);  //quede en este proceso - error de vpn
+          this._RrfailureValidationScv
+            .updateRequest_IntTelNode48H(this.dataRequest)
+            .subscribe((resp: models.ResponseModel) => {
+              this.messageToCustomer(resp);
+            });
         } else if (actionApi === 'deleteData') {
+          this._RrfailureValidationScv
+            .deleteRequest_IntTelNode48H(dataAditionals['id'])
+            .subscribe((resp: models.ResponseModel) => {
+              this.messageToCustomer(resp);
+            });
         }
         break;
 
       case this.selectTable[1].value: // By_nodo_acuer11_2006_TV16H
-        if (actionApi === 'createData') {
+        if (actionApi === 'structureData') {
+          this.dataRequest = this._RrfailureValidationScv.structureRequest_TvNode16H(
+            this.formOption1.value
+          );
+        } else if (actionApi === 'createData') {
+          this._RrfailureValidationScv
+            .createRequest_TvNode16H(this.dataRequest)
+            .subscribe((resp: models.ResponseModel) => {
+              this.messageToCustomer(resp);
+            });
         } else if (actionApi === 'updateData') {
+          this._RrfailureValidationScv
+            .updateRequest_TvNode16H(this.dataRequest)
+            .subscribe((resp: models.ResponseModel) => {
+              this.messageToCustomer(resp);
+            });
         } else if (actionApi === 'deleteData') {
+          this._RrfailureValidationScv
+            .deleteRequest_TvNode16H(dataAditionals['id'])
+            .subscribe((resp: models.ResponseModel) => {
+              this.messageToCustomer(resp);
+            });
         }
         break;
 
       case this.selectTable[2].value: // Compens_arreglo_TV16H
-        if (actionApi === 'createData') {
+        if (actionApi === 'structureData') {
+          this.dataRequest = this._RrfailureValidationScv.structureRequest_TvSetting16H(
+            this.formOption2.value
+          );
+        } else if (actionApi === 'createData') {
+          this._RrfailureValidationScv
+            .createRequest_TvSetting16H(this.dataRequest)
+            .subscribe((resp: models.ResponseModel) => {
+              this.messageToCustomer(resp);
+            });
         } else if (actionApi === 'updateData') {
+          this._RrfailureValidationScv
+            .updateRequest_TvSetting16H(this.dataRequest)
+            .subscribe((resp: models.ResponseModel) => {
+              this.messageToCustomer(resp);
+            });
         } else if (actionApi === 'deleteData') {
+          this._RrfailureValidationScv
+            .deleteRequest_TvSetting16H(dataAditionals['id'])
+            .subscribe((resp: models.ResponseModel) => {
+              this.messageToCustomer(resp);
+            });
         }
         break;
 
       case this.selectTable[3].value: // Compens_arreglos_telef_48H
-        if (actionApi === 'createData') {
+        if (actionApi === 'structureData') {
+          this.dataRequest = this._RrfailureValidationScv.structureRequest_TelepSettlemCompensa(
+            this.formOption2.value
+          );
+        } else if (actionApi === 'createData') {
+          this._RrfailureValidationScv
+            .createRequest_TelepSettlemCompensa(this.dataRequest)
+            .subscribe((resp: models.ResponseModel) => {
+              this.messageToCustomer(resp);
+            });
         } else if (actionApi === 'updateData') {
+          this._RrfailureValidationScv
+            .updateRequest_TelepSettlemCompensa(this.dataRequest)
+            .subscribe((resp: models.ResponseModel) => {
+              this.messageToCustomer(resp);
+            });
         } else if (actionApi === 'deleteData') {
+          this._RrfailureValidationScv
+            .deleteRequest_TelepSettlemCompensa(
+              dataAditionals['idTblArrangementTelInt48h']
+            )
+            .subscribe((resp: models.ResponseModel) => {
+              this.messageToCustomer(resp);
+            });
         }
         break;
 
       case this.selectTable[4].value: // Compes_telef_48H
-        if (actionApi === 'createData') {
+        if (actionApi === 'structureData') {
+          this.dataRequest = this._RrfailureValidationScv.structureRequest_TelepCompensa(
+            this.formOption3.value
+          );
+        } else if (actionApi === 'createData') {
+          this._RrfailureValidationScv
+            .createRequest_TelepCompensa(this.dataRequest)
+            .subscribe((resp: models.ResponseModel) => {
+              this.messageToCustomer(resp);
+            });
         } else if (actionApi === 'updateData') {
+          this._RrfailureValidationScv
+            .updateRequest_TelepCompensa(this.dataRequest)
+            .subscribe((resp: models.ResponseModel) => {
+              this.messageToCustomer(resp);
+            });
         } else if (actionApi === 'deleteData') {
+          this._RrfailureValidationScv
+            .deleteRequest_TelepCompensa(
+              dataAditionals['TblCompesTelInt48h']
+            )
+            .subscribe((resp: models.ResponseModel) => {
+              this.messageToCustomer(resp);
+            });
         }
         break;
 
       case this.selectTable[5].value: // Compes_TV_16H
-        if (actionApi === 'createData') {
+        if (actionApi === 'structureData') {
+          this.dataRequest = this._RrfailureValidationScv.structureRequest_TelevCompensa(
+            this.formOption3.value
+          );
+        } else if (actionApi === 'createData') {
+          this._RrfailureValidationScv
+            .createRequest_TelevCompensa(this.dataRequest)
+            .subscribe((resp: models.ResponseModel) => {
+              this.messageToCustomer(resp);
+            });
         } else if (actionApi === 'updateData') {
+          this._RrfailureValidationScv
+            .updateRequest_TelevCompensa(this.dataRequest)
+            .subscribe((resp: models.ResponseModel) => {
+              this.messageToCustomer(resp);
+            });
         } else if (actionApi === 'deleteData') {
+          this._RrfailureValidationScv
+            .deleteRequest_TelevCompensa(
+              dataAditionals['TblCompesTv16h']
+            )
+            .subscribe((resp: models.ResponseModel) => {
+              this.messageToCustomer(resp);
+            });
         }
         break;
 
       case this.selectTable[6].value: // Improcedencia_falla_masiva
-        if (actionApi === 'createData') {
+        if (actionApi === 'structureData') {
+          this.dataRequest = this._RrfailureValidationScv.structureRequest_MassImproperFailure(
+            this.formOption3.value
+          );
+        } else if (actionApi === 'createData') {
+          this._RrfailureValidationScv
+            .createRequest_MassImproperFailure(this.dataRequest)
+            .subscribe((resp: models.ResponseModel) => {
+              this.messageToCustomer(resp);
+            });
         } else if (actionApi === 'updateData') {
+          this._RrfailureValidationScv
+            .updateRequest_MassImproperFailure(this.dataRequest)
+            .subscribe((resp: models.ResponseModel) => {
+              this.messageToCustomer(resp);
+            });
         } else if (actionApi === 'deleteData') {
+          this._RrfailureValidationScv
+            .deleteRequest_MassImproperFailure(
+              dataAditionals['idTblImprocedureCompensation']
+            )
+            .subscribe((resp: models.ResponseModel) => {
+              this.messageToCustomer(resp);
+            });
         }
         break;
 
@@ -443,9 +569,6 @@ export class RrFailureValidationComponent implements OnInit {
   }
 
   setForm(data: any) {
-    console.log(this.selectTable);
-    console.log(data);
-
     switch (this.selectedForm) {
       case 1:
         this.formOption1.reset({
@@ -454,27 +577,27 @@ export class RrFailureValidationComponent implements OnInit {
           node: data.node,
           cause: data.cause,
           time: data.time,
-          service: data.service,
+          service: this.returnServiceName(data.service),
         });
 
         break;
 
       case 2:
         this.formOption2.reset({
-          id: data.id,
+          id: data.id || data.idTblArrangementTelInt48h,
           account: data.account,
           call: data.call,
           time: data.time,
-          service: data.service,
+          service: this.returnServiceName(data.service),
         });
         break;
 
       case 3:
         this.formOption3.reset({
-          id: data.id,
+          id: data.idTblTelIntCompe48h || data.idTblTvCompe16h || data.idTblImprocedureCompensation,
           account: data.account,
           incident: data.incident,
-          service: data.service,
+          service: this.returnServiceName(data.service),
           time: data.time,
         });
         break;
@@ -490,6 +613,31 @@ export class RrFailureValidationComponent implements OnInit {
       .scrollIntoView({ behavior: 'smooth' });
   }
 
-  disableData(dataSelected) {}
-  deleteData(dataSelected) {}
+  returnServiceName(dataServices: string): string[] {
+    let arrayServices = dataServices.split(',');
+    let svcSelected = [];
+
+    for (const iterator of arrayServices) {
+      if (iterator === 'Telefonía') {
+        svcSelected.push(
+          this.selectService.filter((svc) => svc.key === 'telephone')[0]
+        );
+      }
+      if (iterator === 'Televisión') {
+        svcSelected.push(
+          this.selectService.filter((svc) => svc.key === 'television')[0]
+        );
+      }
+      if (iterator === 'Internet') {
+        svcSelected.push(
+          this.selectService.filter((svc) => svc.key === 'internet')[0]
+        );
+      }
+    }
+    return svcSelected;
+  }
+
+  deleteData(dataSelected: Object[]) {
+    this.ApiOptions('deleteData', dataSelected);
+  }
 }

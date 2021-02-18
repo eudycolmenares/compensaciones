@@ -289,6 +289,23 @@
             </div>
           </div>
           <div class="formSection">
+            <div class="formLabel">Tiempo (*)</div>
+            <div class="formField">
+              <input
+                type="text"
+                formControlName="time"
+                class="form-control form-control-sm"
+                [ngClass]="{
+                  'is-invalid': this.invalidField_FormOption3('time')
+                }"
+                placeholder="Duración Falla"
+              />
+              <small *ngIf="this.invalidField_FormOption3('time')">
+                {{ textsFormInvalid_formOption3("time") }}
+              </small>
+            </div>
+          </div>
+          <div class="formSection">
             <div class="formLabel">Servicio (*)</div>
             <div class="formField">
               <p-multiSelect
@@ -303,23 +320,6 @@
               ></p-multiSelect>
               <small *ngIf="this.invalidField_FormOption3('service')">
                 {{ textsFormInvalid_formOption3("service") }}
-              </small>
-            </div>
-          </div>
-          <div class="formSection">
-            <div class="formLabel">Tiempo (*)</div>
-            <div class="formField">
-              <input
-                type="text"
-                formControlName="time"
-                class="form-control form-control-sm"
-                [ngClass]="{
-                  'is-invalid': this.invalidField_FormOption3('time')
-                }"
-                placeholder="Duración Falla"
-              />
-              <small *ngIf="this.invalidField_FormOption3('time')">
-                {{ textsFormInvalid_formOption3("time") }}
               </small>
             </div>
           </div>
@@ -349,8 +349,8 @@
     [dataBase]="dataToTable"
     [structure]="structure"
     (editRecord)="updateData($event)"
-    (disableRecord)="disableData($event)"
     (deleteRecord)="deleteData($event)"
+    [buttons]="['edit','','delete']"
   ></app-table>
 
   <div *ngIf="dataToTable" class="text-center justify-content-center">

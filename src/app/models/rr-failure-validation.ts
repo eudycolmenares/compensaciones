@@ -26,7 +26,7 @@ export interface IntTelNodes48HApiModel {
   };
 }
 
-export interface IntTelNodes48HRequestModel {
+export interface IntTelNode48HRequestModel {
   IntTelNode48H: IntTelNode48HModel;
 }
 
@@ -47,6 +47,10 @@ export interface MassImproperFailuresApiModel {
   };
 }
 
+export interface MassImproperFailureRequestModel {
+  TblImprocedureCompensation: MassImproperFailureModel;
+}
+
 /////////////////////////////////////////////////
 
 export interface TelepCompensaModel {
@@ -62,6 +66,10 @@ export interface TelepCompensasApiModel {
   TblCompesTelInt48h: {
     TblCompesTelInt48h: TelepCompensaModel[];
   };
+}
+
+export interface TelepCompensaRequestModel {
+  TblCompesTelInt48h: TelepCompensaModel;
 }
 
 /////////////////////////////////////////////////
@@ -81,6 +89,10 @@ export interface TelepSettlemCompensasApiModel {
   };
 }
 
+export interface TelepSettlemCompensaRequestModel {
+  TblArrangementTelInt48h: TelepSettlemCompensaModel;
+}
+
 /////////////////////////////////////////////////
 
 export interface TelevCompensaModel {
@@ -96,6 +108,10 @@ export interface TelevCompensasApiModel {
   TblCompesTv16h: {
     TblCompesTv16h: TelevCompensaModel[];
   };
+}
+
+export interface TelevCompensaRequestModel {
+  TblCompesTv16h: TelevCompensaModel;
 }
 
 /////////////////////////////////////////////////
@@ -116,6 +132,10 @@ export interface TvNodes16HApiModel {
   };
 }
 
+export interface TvNode16HRequestModel {
+  TvNode16H: TvNode16HModel;
+}
+
 /////////////////////////////////////////////////
 
 export interface TvSetting16HModel {
@@ -131,6 +151,10 @@ export interface TvSettings16HApiModel {
   TvSettings16H: {
     TvSetting16H: TvSetting16HModel[];
   };
+}
+
+export interface TvSetting16HRequestModel {
+  TvSetting16H: TvSetting16HModel;
 }
 
 /////////////////////////////////////////////////

@@ -75,8 +75,8 @@ export class RrFailureValidationService {
 
   structureRequest_IntTelNode48H(
     dataForm: any
-  ): models.IntTelNodes48HRequestModel {
-    let dataRequest: models.IntTelNodes48HRequestModel = {
+  ): models.IntTelNode48HRequestModel {
+    let dataRequest: models.IntTelNode48HRequestModel = {
       IntTelNode48H: {
         id: dataForm.id,
         issue: dataForm.issue,
@@ -93,7 +93,7 @@ export class RrFailureValidationService {
     body: models.IntTelNode48HModel
   ): Observable<models.ResponseModel> {
     return this.http.post<models.ResponseModel>(
-      env.urlApi_failureValidation + env.endpoints.IntTelNodes48H_create,
+      env.urlApi_failureValidation + env.endpoints.IntTelNode48H_create,
       body,
       {
         headers: this.headers,
@@ -103,8 +103,17 @@ export class RrFailureValidationService {
 
   updateRequest_IntTelNode48H(body: models.IntTelNode48HModel): Observable<models.ResponseModel> {
     return this.http.put<models.ResponseModel>(
-      env.urlApi_failureValidation + env.endpoints.IntTelNodes48H_create,
+      env.urlApi_failureValidation + env.endpoints.IntTelNode48H_update,
       body,
+      {
+        headers: this.headers,
+      }
+    );
+  }
+
+  deleteRequest_IntTelNode48H(id: string): Observable<models.ResponseModel> {
+    return this.http.delete<models.ResponseModel>(
+      env.urlApi_failureValidation + env.endpoints.IntTelNode48H_delete_id + `/${id}`,
       {
         headers: this.headers,
       }
@@ -120,6 +129,53 @@ export class RrFailureValidationService {
   allTvNodes16H(): Observable<models.TvNodes16HApiModel> {
     return this.http.get<models.TvNodes16HApiModel>(
       env.urlApi_failureValidation + env.endpoints.TvNodes16H_read,
+      {
+        headers: this.headers,
+      }
+    );
+  }
+
+  structureRequest_TvNode16H(
+    dataForm: any
+  ): models.TvNode16HRequestModel {
+    let dataRequest: models.TvNode16HRequestModel = {
+      TvNode16H: {
+        id: dataForm.id,
+        issue: dataForm.issue,
+        node: dataForm.node,
+        cause: dataForm.cause,
+        time: dataForm.time,
+        service: this.convertSelectedServices_string(dataForm.service),
+      },
+    };
+    return dataRequest;
+  }
+
+  createRequest_TvNode16H(
+    body: models.TvNode16HModel
+  ): Observable<models.ResponseModel> {
+    return this.http.post<models.ResponseModel>(
+      env.urlApi_failureValidation + env.endpoints.TvNode16H_create,
+      body,
+      {
+        headers: this.headers,
+      }
+    );
+  }
+
+  updateRequest_TvNode16H(body: models.TvNode16HModel): Observable<models.ResponseModel> {
+    return this.http.put<models.ResponseModel>(
+      env.urlApi_failureValidation + env.endpoints.TvNode16H_update,
+      body,
+      {
+        headers: this.headers,
+      }
+    );
+  }
+
+  deleteRequest_TvNode16H(id: string): Observable<models.ResponseModel> {
+    return this.http.delete<models.ResponseModel>(
+      env.urlApi_failureValidation + env.endpoints.TvNode16H_delete_id + `/${id}`,
       {
         headers: this.headers,
       }
@@ -168,6 +224,52 @@ export class RrFailureValidationService {
     );
   }
 
+  structureRequest_TvSetting16H(
+    dataForm: any
+  ): models.TvSetting16HRequestModel {
+    let dataRequest: models.TvSetting16HRequestModel = {
+      TvSetting16H: {
+        id: dataForm.id,
+        account: dataForm.account,
+        call: dataForm.call,
+        time: dataForm.time,
+        service: this.convertSelectedServices_string(dataForm.service),
+      },
+    };
+    return dataRequest;
+  }
+
+  createRequest_TvSetting16H(
+    body: models.TvSetting16HModel
+  ): Observable<models.ResponseModel> {
+    return this.http.post<models.ResponseModel>(
+      env.urlApi_failureValidation + env.endpoints.TvSetting16H_create,
+      body,
+      {
+        headers: this.headers,
+      }
+    );
+  }
+
+  updateRequest_TvSetting16H(body: models.TvSetting16HModel): Observable<models.ResponseModel> {
+    return this.http.put<models.ResponseModel>(
+      env.urlApi_failureValidation + env.endpoints.TvSetting16H_update,
+      body,
+      {
+        headers: this.headers,
+      }
+    );
+  }
+
+  deleteRequest_TvSetting16H(id: string): Observable<models.ResponseModel> {
+    return this.http.delete<models.ResponseModel>(
+      env.urlApi_failureValidation + env.endpoints.TvSetting16H_delete_id + `/${id}`,
+      {
+        headers: this.headers,
+      }
+    );
+  }
+
   /////////////////////////////////////////////////////////////////
 
   structureTelepSettlemCompensas() {
@@ -177,6 +279,52 @@ export class RrFailureValidationService {
   allTelepSettlemCompensas(): Observable<models.TelepSettlemCompensasApiModel> {
     return this.http.get<models.TelepSettlemCompensasApiModel>(
       env.URL_API_BATCHRR + env.endpoints.TelepSettlemCompensas_read,
+      {
+        headers: this.headers,
+      }
+    );
+  }
+
+  structureRequest_TelepSettlemCompensa(
+    dataForm: any
+  ): models.TelepSettlemCompensaRequestModel {
+    let dataRequest: models.TelepSettlemCompensaRequestModel = {
+      TblArrangementTelInt48h: {
+        idTblArrangementTelInt48h: dataForm.id,
+        account: dataForm.account,
+        call: dataForm.call,
+        time: dataForm.time,
+        service: this.convertSelectedServices_string(dataForm.service),
+      },
+    };
+    return dataRequest;
+  }
+
+  createRequest_TelepSettlemCompensa(
+    body: models.TelepSettlemCompensaModel
+  ): Observable<models.ResponseModel> {
+    return this.http.post<models.ResponseModel>(
+      env.URL_API_BATCHRR + env.endpoints.TelepSettlemCompensa_create,
+      body,
+      {
+        headers: this.headers,
+      }
+    );
+  }
+
+  updateRequest_TelepSettlemCompensa(body: models.TelepSettlemCompensaModel): Observable<models.ResponseModel> {
+    return this.http.put<models.ResponseModel>(
+      env.URL_API_BATCHRR + env.endpoints.TelepSettlemCompensa_update,
+      body,
+      {
+        headers: this.headers,
+      }
+    );
+  }
+
+  deleteRequest_TelepSettlemCompensa(id: string): Observable<models.ResponseModel> {
+    return this.http.delete<models.ResponseModel>(
+      env.URL_API_BATCHRR + env.endpoints.TelepSettlemCompensa_delete_id + `/${id}`,
       {
         headers: this.headers,
       }
@@ -199,19 +347,19 @@ export class RrFailureValidationService {
           validation: '',
         },
         {
-          name: 'service',
-          description: 'Servicio',
-          validation: '',
-        },
-        {
           name: 'time',
           description: 'Tiempo',
           validation: '',
         },
+        {
+          name: 'service',
+          description: 'Servicio',
+          validation: '',
+        },
       ],
       columNames: {
-        english: ['account', 'incident', 'service', 'time'],
-        spanish: ['CUENTA', 'INCIDENTE', 'SERVICIO', 'TIEMPO'],
+        english: ['account', 'incident', 'time', 'service'],
+        spanish: ['CUENTA', 'INCIDENTE', 'TIEMPO', 'SERVICIO'],
       },
     };
   }
@@ -219,6 +367,52 @@ export class RrFailureValidationService {
   allTelepCompensas(): Observable<models.TelepCompensasApiModel> {
     return this.http.get<models.TelepCompensasApiModel>(
       env.URL_API_BATCHRR + env.endpoints.TelepCompensas_read,
+      {
+        headers: this.headers,
+      }
+    );
+  }
+
+  structureRequest_TelepCompensa(
+    dataForm: any
+  ): models.TelepCompensaRequestModel {
+    let dataRequest: models.TelepCompensaRequestModel = {
+      TblCompesTelInt48h: {
+        idTblTelIntCompe48h: dataForm.id,
+        account: dataForm.account,
+        incident: dataForm.incident,
+        service: this.convertSelectedServices_string(dataForm.service),
+        time: dataForm.time,
+      },
+    };
+    return dataRequest;
+  }
+
+  createRequest_TelepCompensa(
+    body: models.TelepCompensaModel
+  ): Observable<models.ResponseModel> {
+    return this.http.post<models.ResponseModel>(
+      env.URL_API_BATCHRR + env.endpoints.TelepCompensa_create,
+      body,
+      {
+        headers: this.headers,
+      }
+    );
+  }
+
+  updateRequest_TelepCompensa(body: models.TelepCompensaModel): Observable<models.ResponseModel> {
+    return this.http.put<models.ResponseModel>(
+      env.URL_API_BATCHRR + env.endpoints.TelepCompensa_update,
+      body,
+      {
+        headers: this.headers,
+      }
+    );
+  }
+
+  deleteRequest_TelepCompensa(id: string): Observable<models.ResponseModel> {
+    return this.http.delete<models.ResponseModel>(
+      env.URL_API_BATCHRR + env.endpoints.TelepCompensa_delete_id + `/${id}`,
       {
         headers: this.headers,
       }
@@ -240,6 +434,52 @@ export class RrFailureValidationService {
     );
   }
 
+  structureRequest_TelevCompensa(
+    dataForm: any
+  ): models.TelevCompensaRequestModel {
+    let dataRequest: models.TelevCompensaRequestModel = {
+      TblCompesTv16h: {
+        idTblTvCompe16h: dataForm.id,
+        account: dataForm.account,
+        incident: dataForm.incident,
+        service: this.convertSelectedServices_string(dataForm.service),
+        time: dataForm.time,
+      },
+    };
+    return dataRequest;
+  }
+
+  createRequest_TelevCompensa(
+    body: models.TelevCompensaModel
+  ): Observable<models.ResponseModel> {
+    return this.http.post<models.ResponseModel>(
+      env.URL_API_BATCHRR + env.endpoints.TelevCompensa_create,
+      body,
+      {
+        headers: this.headers,
+      }
+    );
+  }
+
+  updateRequest_TelevCompensa(body: models.TelevCompensaModel): Observable<models.ResponseModel> {
+    return this.http.put<models.ResponseModel>(
+      env.URL_API_BATCHRR + env.endpoints.TelevCompensa_update,
+      body,
+      {
+        headers: this.headers,
+      }
+    );
+  }
+
+  deleteRequest_TelevCompensa(id: string): Observable<models.ResponseModel> {
+    return this.http.delete<models.ResponseModel>(
+      env.URL_API_BATCHRR + env.endpoints.TelevCompensa_delete_id + `/${id}`,
+      {
+        headers: this.headers,
+      }
+    );
+  }
+
   /////////////////////////////////////////////////////////////////
 
   structureMassImproperFailures() {
@@ -251,6 +491,52 @@ export class RrFailureValidationService {
   allMassImproperFailures(): Observable<models.MassImproperFailuresApiModel> {
     return this.http.get<models.MassImproperFailuresApiModel>(
       env.URL_API_BATCHRR + env.endpoints.MassImproperFailures_read,
+      {
+        headers: this.headers,
+      }
+    );
+  }
+
+  structureRequest_MassImproperFailure(
+    dataForm: any
+  ): models.MassImproperFailureRequestModel {
+    let dataRequest: models.MassImproperFailureRequestModel = {
+      TblImprocedureCompensation: {
+        idTblImprocedureCompensation: dataForm.id,
+        account: dataForm.account,
+        incident: dataForm.incident,
+        service: this.convertSelectedServices_string(dataForm.service),
+        time: dataForm.time,
+      },
+    };
+    return dataRequest;
+  }
+
+  createRequest_MassImproperFailure(
+    body: models.MassImproperFailureModel
+  ): Observable<models.ResponseModel> {
+    return this.http.post<models.ResponseModel>(
+      env.URL_API_BATCHRR + env.endpoints.MassImproperFailure_create,
+      body,
+      {
+        headers: this.headers,
+      }
+    );
+  }
+
+  updateRequest_MassImproperFailure(body: models.MassImproperFailureModel): Observable<models.ResponseModel> {
+    return this.http.put<models.ResponseModel>(
+      env.URL_API_BATCHRR + env.endpoints.MassImproperFailure_update,
+      body,
+      {
+        headers: this.headers,
+      }
+    );
+  }
+
+  deleteRequest_MassImproperFailure(id: string): Observable<models.ResponseModel> {
+    return this.http.delete<models.ResponseModel>(
+      env.URL_API_BATCHRR + env.endpoints.MassImproperFailure_delete_id + `/${id}`,
       {
         headers: this.headers,
       }
