@@ -477,7 +477,7 @@ export class RrFailureValidationComponent implements OnInit {
         } else if (actionApi === 'deleteData') {
           this._RrfailureValidationScv
             .deleteRequest_TelepCompensa(
-              dataAditionals['TblCompesTelInt48h']
+              dataAditionals['idTblTelIntCompe48h']
             )
             .subscribe((resp: models.ResponseModel) => {
               this.messageToCustomer(resp);
@@ -505,7 +505,7 @@ export class RrFailureValidationComponent implements OnInit {
         } else if (actionApi === 'deleteData') {
           this._RrfailureValidationScv
             .deleteRequest_TelevCompensa(
-              dataAditionals['TblCompesTv16h']
+              dataAditionals['idTblTvCompe16h']
             )
             .subscribe((resp: models.ResponseModel) => {
               this.messageToCustomer(resp);
@@ -549,15 +549,15 @@ export class RrFailureValidationComponent implements OnInit {
   messageToCustomer(resp: models.ResponseModel) {
     if (resp.GeneralResponse.code === '0') {
       this._toastScv.showSuccess(
+        resp.GeneralResponse.messageCode,
         resp.GeneralResponse.descriptionCode,
-        resp.GeneralResponse.messageCode
       );
       this.cleanForm();
       this.reloadTableData();
     } else {
       this._toastScv.showError(
+        resp.GeneralResponse.messageCode,
         resp.GeneralResponse.descriptionCode,
-        resp.GeneralResponse.messageCode
       );
     }
   }

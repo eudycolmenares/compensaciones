@@ -84,7 +84,7 @@ export const environment = {
     TvSettings16H_read: 'TvSetting16HService/read/all',
     TvSetting16H_create: 'TvSetting16HService/create',
     TvSetting16H_update: 'TvSetting16HService/update',
-    TvSetting16H_delete_id: 'TvSetting16HService/delete_id',
+    TvSetting16H_delete_id: 'TvSetting16HService/delete',
     // failure validation - TBL_ARREGLO_TEL_INT_48H - Compens_arreglos_telef_48H
     TelepSettlemCompensas_read: 'TelepSettlemCompensaService/readAll',
     TelepSettlemCompensa_create: 'TelepSettlemCompensaService/create',
