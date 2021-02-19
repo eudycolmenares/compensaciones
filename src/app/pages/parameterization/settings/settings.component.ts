@@ -94,8 +94,7 @@ export class SettingsComponent implements OnInit {
   initialCharge() {
     this.cleanForm();
     this.stgsSvc.allSettings().subscribe((resp: settingsApiModel) => {
-      // this.dataToTable = resp.Settings.Setting;
-      this.dataToTable = resp.Settings.Setting.map(setting => ({...setting, socialStratum: setting.socialStratums?.socialStratum}) );
+      this.dataToTable = resp.Settings.Setting.map(setting => ({...setting, socialStratum: setting.socialStratums?.socialStratum.map(stratum => stratum['statusSocial'])}) );
     });
   }
 
@@ -140,9 +139,9 @@ export class SettingsComponent implements OnInit {
         'Setting': {
           'code': this.formStgs.get('code').value,
           'description': this.formStgs.get('description').value,
-          'state': this.formStgs.get('state').value,
+          'state': parseInt(this.formStgs.get('state').value),
           'user': 'test', // seteado
-          'socialStratums': this.formStgs.get('strata').value.map(stratum => ({ socialStratum: stratum })),
+          'socialStratums': { socialStratum: this.formStgs.get('strata').value.map(stratum => ({ idSocialStatus: stratum })) },
           'television': (servicesSelected.find(svc => svc === 'television') ? '1' : '0'),
           'internet': (servicesSelected.find(svc => svc === 'internet') ? '1' : '0'),
           'telephone': (servicesSelected.find(svc => svc === 'telephone') ? '1' : '0')
@@ -178,8 +177,6 @@ export class SettingsComponent implements OnInit {
   }
 
   updateSetting(setting: settingModel) {
-    console.log('updateSetting() ', setting);
-
     this.setForm(setting);
     this.actionForm = 'update';
   }
@@ -189,14 +186,13 @@ export class SettingsComponent implements OnInit {
       code: data.code,
       description: data.description,
       state: data.state,
-      strata: data.socialStratum,
+      strata: data.socialStratums.socialStratum.reduce((prev, current) => [...prev, current.idSocialStatus], []),
       services: Object.keys(Services).filter(scv => data[scv] === '1') ,
     });
   }
 
   disableSetting(setting: settingModel) {
-    const dataRequest: requestModel = { Setting: {...setting, state: '0'} };
-    // delete dataRequest.OriginType.updateDate;
+    const dataRequest: requestModel = { Setting: {...setting, state: 0} };
     this.updateSettingApi(dataRequest);
   }
 

@@ -16,9 +16,9 @@ export interface settingModel {
   id?: string;
   code: string;
   description: string;
-  state: string;
+  state: number;
   user?: string;
-  socialStratums: { socialStratum: string[] };
+  socialStratums: { socialStratum: {idSocialStatus: number}[] };
   socialStratum?:  string[];
   television?: string;
   internet?: string;
