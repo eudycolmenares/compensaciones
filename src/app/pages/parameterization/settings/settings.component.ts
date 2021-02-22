@@ -1,16 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import {
-  SelectStatus,
-  ServicesSettings as Services,
-} from '../../../libraries/utilities.library';
+import { SelectStatus, ServicesSettings as Services } from '../../../libraries/utilities.library';
+import { DataList } from '../../../models/general';
 import { GeneralFunctionsService } from '../../../services/general-functions.service';
 import { SettingsService } from '../../../services/settings/settings.service';
 import { StratumService } from '../../../services/stratum/stratum.service';
 import { ToastService } from '../../../services/shared/toast.service';
 import { requestSettingsModel as requestModel, settingModel, settingsApiModel } from '../../../models/settings';
-import { strataApiModel } from "../../../models/stratum";
+import { strataApiModel, stratumModel } from "../../../models/stratum";
 
 @Component({
   selector: 'app-settings',
@@ -21,7 +19,7 @@ import { strataApiModel } from "../../../models/stratum";
 export class SettingsComponent implements OnInit {
   strataBase: object[] = [];
   selectStatus: object[] = [];
-  servicesBase: object[] = [];
+  servicesBase: DataList[] = [];
   formStgs: FormGroup;
   actionForm = 'create'; // create, update
   // table
@@ -94,7 +92,10 @@ export class SettingsComponent implements OnInit {
   initialCharge() {
     this.cleanForm();
     this.stgsSvc.allSettings().subscribe((resp: settingsApiModel) => {
-      this.dataToTable = resp.Settings.Setting.map(setting => ({...setting, socialStratum: setting.socialStratums?.socialStratum.map(stratum => stratum['statusSocial'])}) );
+      this.dataToTable = resp.Settings.Setting.map(setting => ({
+          ...setting,
+          socialStratum: setting.socialStratums?.socialStratum.map(stratum => stratum['statusSocial'])
+      }));
     });
   }
 
@@ -141,10 +142,13 @@ export class SettingsComponent implements OnInit {
           'description': this.formStgs.get('description').value,
           'state': parseInt(this.formStgs.get('state').value),
           'user': 'test', // seteado
-          'socialStratums': { socialStratum: this.formStgs.get('strata').value.map(stratum => ({ idSocialStatus: stratum })) },
-          'television': (servicesSelected.find(svc => svc === 'television') ? '1' : '0'),
-          'internet': (servicesSelected.find(svc => svc === 'internet') ? '1' : '0'),
-          'telephone': (servicesSelected.find(svc => svc === 'telephone') ? '1' : '0')
+          'socialStratums': {
+              socialStratum: this.formStgs.get('strata').value
+                .map((stratum: stratumModel) => ({ idSocialStatus: stratum.idSocialStatus }))
+          },
+          'television': (servicesSelected.find((svc: DataList) => svc.key === 'television') ? '1' : '0'),
+          'internet': (servicesSelected.find((svc: DataList) => svc.key === 'internet') ? '1' : '0'),
+          'telephone': (servicesSelected.find((svc: DataList) => svc.key === 'telephone') ? '1' : '0')
         }
       }
       if(this.actionForm === 'create') {
@@ -186,8 +190,8 @@ export class SettingsComponent implements OnInit {
       code: data.code,
       description: data.description,
       state: data.state,
-      strata: data.socialStratums.socialStratum.reduce((prev, current) => [...prev, current.idSocialStatus], []),
-      services: Object.keys(Services).filter(scv => data[scv] === '1') ,
+      strata: data.socialStratums.socialStratum,
+      services: this.servicesBase.filter((item: DataList) => data[item.key] === '1')
     });
   }
 

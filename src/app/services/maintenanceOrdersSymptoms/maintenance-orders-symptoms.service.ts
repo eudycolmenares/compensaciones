@@ -39,9 +39,9 @@ export class MaintenanceOrdersSymptomsService {
     });
   }
 
-  deleteOrderSymptom(body: orderSymptomModel): Observable<responseModel> {
-    return this.http.request<responseModel>('delete', env.URL_API + env.endpoints.order_symptom_delete, {
-      headers: this.headers, body: body
+  deleteOrderSymptom(id: number): Observable<responseModel> {
+    return this.http.delete<responseModel>(env.URL_API + env.endpoints.order_symptom_delete + `/${id}`, {
+      headers: this.headers
     });
   }
 }

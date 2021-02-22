@@ -202,7 +202,7 @@ export class MaintenanceOrdersSymptomsComponent implements OnInit {
   }
 
   deleteOrderSymptom(orderSymptom: orderSymptomModel) {
-    this.symptomsSvc.deleteOrderSymptom(orderSymptom).subscribe(resp => {
+    this.symptomsSvc.deleteOrderSymptom(orderSymptom.id).subscribe(resp => {
       if(resp.response.code === '0') {
         this.toastScv.showSuccess(resp.response.descriptionCode, resp.response.messageCode);
         this.initialCharge();

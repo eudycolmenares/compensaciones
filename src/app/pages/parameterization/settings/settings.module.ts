@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { SettingsRoutingModule } from './settings-routing.module';
 import { SettingsComponent } from './settings.component';
 import { ComponentsModule } from '../../../components/components.module';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { ComponentsModule } from '../../../components/components.module';
     CommonModule,
     SettingsRoutingModule,
     ComponentsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MultiSelectModule
   ],
   exports: [SettingsComponent],
   bootstrap: [SettingsComponent],
