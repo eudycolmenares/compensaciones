@@ -1,12 +1,72 @@
 <section class="container py-3">
   <app-breadcrumb></app-breadcrumb>
 
+
+
+  <div class="container-add px-sm-2 px-md-5">
+    <div class="row">
+      <div class="col-sm py-3 mx-1 background-colum">
+        <form autocomplete="off" [formGroup]="formNode" (ngSubmit)="submitNode()">
+          <div class="row text-light text-center">
+            <div class="col-sm bg-primary py-1 mx-1">Nodo(*)</div>
+          </div>
+          <div class="row">
+            <div class="col-sm mx-1 mt-1 p-0">
+              <input class="form-control form-control-sm" type="text" formControlName="node" [class.is-invalid]="invalidNode" placeholder="Nodo">
+              <small class="text-danger" *ngIf="invalidNode">{{ textsFormInvalid("node") }}</small>
+            </div>
+          </div>
+          <div class="row text-light text-center mt-4">
+            <div class="col-sm container-buttons">
+              <button type="submit" class="btn btn-primary mr-3 btn-sm">{{ (actionFormNode === 'create' ? 'Crear' : 'Actualizar' )}}</button>
+              <button type="button" class="btn btn-secondary btn-sm" (click)="cleanForm()">Limpiar</button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+
+      <div class="col-sm py-3 mx-1 background-colum">
+        <form autocomplete="off" [formGroup]="formAccount" (ngSubmit)="submitAccount()">
+          <div class="row text-light text-center">
+            <div class="col-sm bg-primary py-1 mx-1">Cuentas(*)</div>
+          </div>
+          <div class="row">
+            <div class="col-sm mx-1 mt-1 p-0">
+              <input class="form-control form-control-sm" type="text" placeholder="Cuentas"
+                formControlName="account"
+                [class.is-invalid]="invalidAccount">
+              <small class="text-danger" *ngIf="invalidAccount">{{ textsFormInvalid("account") }}</small>
+            </div>
+          </div>
+          <div class="row text-light text-center mt-4">
+            <div class="col-sm container-buttons">
+              <button type="submit" class="btn btn-primary mr-3 btn-sm">{{ (actionFormAccount === 'create' ? 'Crear' : 'Actualizar' )}}</button>
+              <button type="button" class="btn btn-secondary btn-sm" (click)="cleanForm()">Limpiar</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </div>
+
+
+
+  <hr class="mt-5 mb-5" />
+
   <div class="px-sm-2 px-md-5">
     <div class="row">
       <div class="col-sm py-3 mx-1 background-colum">
         <div class="row">
           <div class="col-sm p-0">
-            <app-table [dataBase]="dataToTableNodes" [structure]="structureNodes" [buttons]="[]"></app-table>
+            <app-table
+              [dataBase]="dataToTableNodes"
+              [structure]="structureNodes"
+              (editRecord)="updateNode($event)"
+              (deleteRecord)="deleteNode($event)"
+              [buttons]="['edit', 'delete']"
+            ></app-table>
           </div>
         </div>
         <div class="row text-light text-center mt-2">
@@ -19,7 +79,13 @@
       <div class="col-sm py-3 mx-1 background-colum">
         <div class="row">
           <div class="col-sm p-0">
-            <app-table [dataBase]="dataToTableAccounts" [structure]="structureAccounts" [buttons]="[]"></app-table>
+            <app-table
+              [dataBase]="dataToTableAccounts"
+              [structure]="structureAccounts"
+              (editRecord)="updateAccount($event)"
+              (deleteRecord)="deleteAccount($event)"
+              [buttons]="['edit', 'delete']">
+            </app-table>
           </div>
         </div>
         <div class="row text-light text-center mt-2">
@@ -30,7 +96,5 @@
       </div>
     </div>
   </div>
-
-  <hr class="mt-5 mb-5" />
 
 </section>

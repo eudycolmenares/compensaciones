@@ -6,10 +6,9 @@ export const environment = {
   production: false,
   URL_API: '/WSCompensaciones-web/webresources/WSCompensaciones/',
   urlApi_bulkLoad: '/CompensacionesBatch-web/webresources/CompensacionesBatch/',
-  URL_API_BATCHRR:
-    '/WSCompensacionesBatchRR-web/webresources/WSCompensacionesBatchRR/',
-  urlApi_failureValidation:
-    '/WSCompensacionesBatchRR-web/webresources/WSValidacionFallasRR/',
+  URL_API_BATCHRR: '/WSCompensacionesBatchRR-web/webresources/WSCompensacionesBatchRR/',
+  urlApi_failureValidation: '/WSCompensacionesBatchRR-web/webresources/WSValidacionFallasRR/',
+  urlApi_rentsRR: '/WSCompensacionesBatchRR-web/webresources/WSRentasRR/',
   endpoints: {
     // Settings
     settings_all: 'SettingsService/read/all',
@@ -69,7 +68,6 @@ export const environment = {
     validation_accounts_all: 'crcCompensation/list',
     // Validation Nodes
     validationNodes_read: 'MaximoService/readAll',
-
     // failure validation - TBL_NODO_TEL_INT_48H - By_nodo_4296_Tel_Int_48h
     IntTelNodes48H_read: 'IntTelNode48HService/read/all',
     IntTelNode48H_create: 'IntTelNode48HService/create',
@@ -105,6 +103,16 @@ export const environment = {
     MassImproperFailure_create: 'MassImproperFailureService/create',
     MassImproperFailure_update: 'MassImproperFailureService/update',
     MassImproperFailure_delete_id: 'MassImproperFailureService/delete',
+    // Nodes Rents RR
+    nodes_rents_all: 'NodeRentService/read/all',
+    node_rent_create: 'NodeRentService/create',
+    node_rent_update: 'NodeRentService/update',
+    node_rent_delete: 'NodeRentService/delete',
+    // Accounts Rents RR
+    accounts_rents_all: 'AccountRentService/read/all',
+    account_rent_create: 'AccountRentService/create',
+    account_rent_update: 'AccountRentService/update',
+    account_rent_delete: 'AccountRentService/delete',
   },
 };
 
