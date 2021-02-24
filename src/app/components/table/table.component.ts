@@ -24,7 +24,8 @@ export class TableComponent implements OnInit {
   highAmount = [
     { label: 'Monto Alto', value: '1' },
     { label: 'Monto Bajo', value: '0' },
-]
+  ];
+  randomKey: string;
 
   constructor(
     private confirmationSvc: ConfirmationService,
@@ -32,6 +33,7 @@ export class TableComponent implements OnInit {
     this.editRecord = new EventEmitter();
     this.disableRecord = new EventEmitter();
     this.deleteRecord = new EventEmitter();
+    this.randomKey = Math.ceil(Math.random() * 10000).toString();
   }
 
   ngOnInit(): void {
@@ -71,7 +73,7 @@ export class TableComponent implements OnInit {
         this.sendDataToDelete(item);
       },
       reject: () => { },
-      key: "confirmTable"
+      key: this.randomKey
     });
   }
 }
