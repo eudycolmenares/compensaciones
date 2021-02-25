@@ -8,6 +8,7 @@ export const environment = {
   urlApi_bulkLoad: '/CompensacionesBatch-web/webresources/CompensacionesBatch/',
   URL_API_BATCHRR: '/WSCompensacionesBatchRR-web/webresources/WSCompensacionesBatchRR/',
   urlApi_failureValidation: '/WSCompensacionesBatchRR-web/webresources/WSValidacionFallasRR/',
+  urlApi_billingRR: '/WSCompensacionesBatchRR-web/webresources/WSFacturacionRR/',
   urlApi_rentsRR: '/WSCompensacionesBatchRR-web/webresources/WSRentasRR/',
   endpoints: {
     // Settings
@@ -103,6 +104,21 @@ export const environment = {
     MassImproperFailure_create: 'MassImproperFailureService/create',
     MassImproperFailure_update: 'MassImproperFailureService/update',
     MassImproperFailure_delete_id: 'MassImproperFailureService/delete',
+    // nota compensación (ITEM FACTURACIÓN RR / CUENTAS COMPENSADAS RR)
+    CompensationNotes_read: '/CompensationNoteService/readAll',
+    CompensationNote_create: '/CompensationNoteService/create',
+    CompensationNote_update: '/CompensationNoteService/update',
+    CompensationNote_delete_id: '/CompensationNoteService/delete',
+    // detalle compensación (ITEM FACTURACIÓN RR / CUENTAS COMPENSADAS RR)
+    CompensationDetails_read: '/CompensationDetailService/read/all',
+    CompensationDetail_create: '/CompensationDetailService/create',
+    CompensationDetail_update: '/CompensationDetailService/update',
+    CompensationDetail_delete_id: '/CompensationDetailService/delete',
+    // total compensación (ITEM FACTURACIÓN RR / CUENTAS COMPENSADAS RR)
+    TotalCompensation_read: '/TotalCompensationService/readAll',
+    TotalCompensation_create: '/TotalCompensationService/create',
+    TotalCompensation_update: '/TotalCompensationService/update',
+    TotalCompensation_delete_id: '/TotalCompensationService/delete',
     // Nodes Rents RR
     nodes_rents_all: 'NodeRentService/read/all',
     node_rent_create: 'NodeRentService/create',

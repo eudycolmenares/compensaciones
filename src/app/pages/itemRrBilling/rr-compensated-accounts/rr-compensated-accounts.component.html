@@ -1,26 +1,30 @@
 <section class="container py-3">
   <app-breadcrumb></app-breadcrumb>
-  <div class="container-statistic px-sm-2 px-md-5">
-    <div class="row text-light text-left mt-4">
-
-      <div class="col-md-3 p-3">
-        <p-dropdown
-        [options]="templateOptionsList"
-        optionLabel="nameOption"
-        class="p-inputtext-sm"
-        placeholder="-- Seleccione --"
-      >
-        <ng-template let-option pTemplate="item">
-          <div (click)="selectedTable(option.valueOption, $event.target.innerText)">
-            {{ option.nameOption }} {{currentDate | date:'yyyyMMdd HHmmss'}}
-          </div>
-        </ng-template>
-      </p-dropdown>
+  <div class="container-add">
+    <div class="formLayout">
+      <div class="col-sm-3">
+        <form autocomplete="off" [formGroup]="rrCompensatedAccountsForm">
+          <p-dropdown
+            [options]="selectTableList"
+            optionLabel="value"
+            class="p-inputtext-sm"
+            placeholder="-- Seleccione --"
+            formControlName="tableOptions"
+          >
+            <ng-template let-option pTemplate="item">
+              <div
+                (click)="nameSelectedTable_Download($event.target.innerText)"
+              >
+                {{ option.value }} {{ currentDate | date: "yyyyMMdd HHmmss" }}
+              </div>
+            </ng-template>
+          </p-dropdown>
+        </form>
       </div>
 
-      <div class="col-sm bg-dark p-3">
+      <div class="formSection bg-dark p-3 container-statistic">
         <p class="font-weight-bold mb-0">Valor Total Compensación</p>
-        <span>{{nameSelectedTable}}</span>
+        <span>{{ nameSelectedTable }}</span>
         <h4 class="mt-3">$240.500,06</h4>
         <div class="progress">
           <div
@@ -35,23 +39,496 @@
         <span class="mt-3">Lorem ipsum dolor sit amet</span>
       </div>
     </div>
+  </div>
 
+  <section
+    id="editScrollTop"
+    *ngIf="selectedForm !== null && selectedForm !== 3"
+  >
     <hr />
-
-    <app-table
-      [dataBase]="dataToTable"
-      [structure]="structure"
-      buttons=""
-    ></app-table>
-
-    <div *ngIf="dataToTable" class="text-center justify-content-center">
-      <button
-        type="button"
-        class="btn btn-primary mr-3 btn-sm"
-        (click)="downloadDataTable()"
+    <div class="container-add mt-4">
+      <!-- form option 1 -->
+      <form
+        autocomplete="off"
+        [formGroup]="compensationDetailForm"
+        (ngSubmit)="onSubmit_compensationDetailForm()"
+        *ngIf="selectedForm === 1"
       >
-        Descargar CSV
-      </button>
+        <div class="formLayout">
+          <div class="formSection">
+            <div class="formLabel">Cuenta (*)</div>
+            <div class="formField">
+              <input
+                type="text"
+                formControlName="account"
+                class="form-control form-control-sm"
+                [ngClass]="{
+                  'is-invalid': this.invalidField_compensationDetailForm(
+                    'account'
+                  )
+                }"
+                placeholder="Cód Cuenta"
+              />
+              <small
+                *ngIf="this.invalidField_compensationDetailForm('account')"
+              >
+                {{ textsFormInvalid_compensationNoteForm("account") }}
+              </small>
+            </div>
+          </div>
+          <div class="formSection">
+            <div class="formLabel">Des. Categoría (*)</div>
+            <div class="formField">
+              <input
+                type="text"
+                formControlName="categoryDescription"
+                class="form-control form-control-sm"
+                [ngClass]="{
+                  'is-invalid': this.invalidField_compensationDetailForm(
+                    'categoryDescription'
+                  )
+                }"
+                placeholder="Des. Categoría"
+              />
+              <small
+                *ngIf="
+                  this.invalidField_compensationDetailForm(
+                    'categoryDescription'
+                  )
+                "
+              >
+                {{
+                  textsFormInvalid_compensationDetailForm("categoryDescription")
+                }}
+              </small>
+            </div>
+          </div>
+          <div class="formSection">
+            <div class="formLabel">Nombre Servicio (*)</div>
+            <div class="formField">
+              <input
+                type="text"
+                formControlName="serviceName"
+                class="form-control form-control-sm"
+                [ngClass]="{
+                  'is-invalid': this.invalidField_compensationDetailForm(
+                    'serviceName'
+                  )
+                }"
+                placeholder="Servicio"
+              />
+              <small
+                *ngIf="this.invalidField_compensationDetailForm('serviceName')"
+              >
+                {{ textsFormInvalid_compensationDetailForm("serviceName") }}
+              </small>
+            </div>
+          </div>
+          <div class="formSection">
+            <div class="formLabel">Desc. Servicio (*)</div>
+            <div class="formField">
+              <input
+                type="text"
+                formControlName="serviceDescription"
+                class="form-control form-control-sm"
+                [ngClass]="{
+                  'is-invalid': this.invalidField_compensationDetailForm(
+                    'serviceDescription'
+                  )
+                }"
+                placeholder="Desc. Servicio"
+              />
+              <small
+                *ngIf="
+                  this.invalidField_compensationDetailForm('serviceDescription')
+                "
+              >
+                {{
+                  textsFormInvalid_compensationDetailForm("serviceDescription")
+                }}
+              </small>
+            </div>
+          </div>
+        </div>
+        <div class="formLayout">
+          <div class="formSection">
+            <div class="formLabel">Nombre Producto (*)</div>
+            <div class="formField">
+              <input
+                type="text"
+                formControlName="productName"
+                class="form-control form-control-sm"
+                [ngClass]="{
+                  'is-invalid': this.invalidField_compensationDetailForm(
+                    'productName'
+                  )
+                }"
+                placeholder="Producto"
+              />
+              <small
+                *ngIf="this.invalidField_compensationDetailForm('productName')"
+              >
+                {{ textsFormInvalid_compensationDetailForm("productName") }}
+              </small>
+            </div>
+          </div>
+          <div class="formSection">
+            <div class="formLabel">Trf Pqr Aviso (*)</div>
+            <div class="formField">
+              <input
+                type="text"
+                formControlName="trfPqrWarning"
+                class="form-control form-control-sm"
+                [ngClass]="{
+                  'is-invalid': this.invalidField_compensationDetailForm(
+                    'trfPqrWarning'
+                  )
+                }"
+                placeholder="Trf Pqr Aviso"
+              />
+              <small
+                *ngIf="
+                  this.invalidField_compensationDetailForm('trfPqrWarning')
+                "
+              >
+                {{ textsFormInvalid_compensationDetailForm("trfPqrWarning") }}
+              </small>
+            </div>
+          </div>
+          <div class="formSection">
+            <div class="formLabel">Número Ticket (*)</div>
+            <div class="formField">
+              <input
+                type="text"
+                formControlName="ticketNumber"
+                class="form-control form-control-sm"
+                [ngClass]="{
+                  'is-invalid': this.invalidField_compensationDetailForm(
+                    'ticketNumber'
+                  )
+                }"
+                placeholder="Ticket"
+              />
+              <small
+                *ngIf="this.invalidField_compensationDetailForm('ticketNumber')"
+              >
+                {{ textsFormInvalid_compensationDetailForm("ticketNumber") }}
+              </small>
+            </div>
+          </div>
+          <div class="formSection">
+            <div class="formLabel">Fecha (*)</div>
+            <div class="formField">
+              <p-calendar
+                [showIcon]="true"
+                formControlName="date"
+                dateFormat="yy-mm-dd"
+              ></p-calendar>
+              <small *ngIf="this.invalidField_compensationDetailForm('date')">
+                {{ textsFormInvalid_compensationDetailForm("date") }}
+              </small>
+            </div>
+          </div>
+        </div>
+        <div class="formLayout">
+          <div class="formSection">
+            <div class="formLabel">Fecha Últ. renta (*)</div>
+            <div class="formField">
+              <p-calendar
+                [showIcon]="true"
+                formControlName="lastRentDate"
+                dateFormat="yy-mm-dd"
+                [ngClass]="{
+                  'is-invalid': this.invalidField_compensationDetailForm(
+                    'lastRentDate'
+                  )
+                }"
+                placeholder="Fecha Últ. renta"
+              ></p-calendar>
+              <small
+                *ngIf="this.invalidField_compensationDetailForm('lastRentDate')"
+              >
+                {{ textsFormInvalid_compensationDetailForm("lastRentDate") }}
+              </small>
+            </div>
+          </div>
+          <div class="formSection">
+            <div class="formLabel">Código Compensión (*)</div>
+            <div class="formField">
+              <input
+                type="text"
+                formControlName="compensationCode"
+                class="form-control form-control-sm"
+                [ngClass]="{
+                  'is-invalid': this.invalidField_compensationDetailForm(
+                    'compensationCode'
+                  )
+                }"
+                placeholder="Ticket"
+              />
+              <small
+                *ngIf="
+                  this.invalidField_compensationDetailForm('compensationCode')
+                "
+              >
+                {{
+                  textsFormInvalid_compensationDetailForm("compensationCode")
+                }}
+              </small>
+            </div>
+          </div>
+          <div class="formSection">
+            <div class="formLabel">Valor Def. Promedio (*)</div>
+            <div class="formField">
+              <input
+                type="text"
+                formControlName="averangeDefValue"
+                class="form-control form-control-sm"
+                [ngClass]="{
+                  'is-invalid': this.invalidField_compensationDetailForm(
+                    'averangeDefValue'
+                  )
+                }"
+                placeholder="Valor Def. Promedio"
+              />
+              <small
+                *ngIf="
+                  this.invalidField_compensationDetailForm('averangeDefValue')
+                "
+              >
+                {{
+                  textsFormInvalid_compensationDetailForm("averangeDefValue")
+                }}
+              </small>
+            </div>
+          </div>
+          <div class="formSection">
+            <div class="formLabel">Valor Compensación (*)</div>
+            <div class="formField">
+              <input
+                type="text"
+                formControlName="compesationValue"
+                class="form-control form-control-sm"
+                [ngClass]="{
+                  'is-invalid': this.invalidField_compensationDetailForm(
+                    'compesationValue'
+                  )
+                }"
+                placeholder="Valor Compensación"
+              />
+              <small
+                *ngIf="
+                  this.invalidField_compensationDetailForm('compesationValue')
+                "
+              >
+                {{
+                  textsFormInvalid_compensationDetailForm("compesationValue")
+                }}
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="formLayout">
+          <div class="actionsButtons">
+            <button type="submit" class="btn btn-primary mr-3 btn-sm">
+              {{ actionForm === "create" ? "Crear" : "Actualizar" }}
+            </button>
+            <button
+              type="button"
+              class="btn btn-secondary btn-sm"
+              (click)="cleanForm()"
+            >
+              Limpiar
+            </button>
+          </div>
+        </div>
+      </form>
+      <!-- form option 2 -->
+      <form
+        autocomplete="off"
+        [formGroup]="TCAAUF00Form"
+        (ngSubmit)="onSubmit_TCAAUF00Form()"
+        *ngIf="selectedForm === 2"
+      >
+        <div class="formLayout">
+          <div class="formSection">
+            <div class="formLabel">Cuenta (*)</div>
+            <div class="formField">
+              <input
+                type="text"
+                formControlName="account"
+                class="form-control form-control-sm"
+                [ngClass]="{
+                  'is-invalid': this.invalidField_TCAAUF00Form('account')
+                }"
+                placeholder="Cód Cuenta"
+              />
+              <small *ngIf="this.invalidField_TCAAUF00Form('account')">
+                {{ textsFormInvalid_TCAAUF00Form("account") }}
+              </small>
+            </div>
+          </div>
+          <div class="formSection">
+            <div class="formLabel">Valor Compensación (*)</div>
+            <div class="formField">
+              <input
+                type="text"
+                formControlName="compensationValue"
+                class="form-control form-control-sm"
+                [ngClass]="{
+                  'is-invalid': this.invalidField_TCAAUF00Form(
+                    'compensationValue'
+                  )
+                }"
+                placeholder="Ingrese valor"
+              />
+              <small
+                *ngIf="this.invalidField_TCAAUF00Form('compensationValue')"
+              >
+                {{ textsFormInvalid_TCAAUF00Form("compensationValue") }}
+              </small>
+            </div>
+          </div>
+          <div class="formSection">
+            <div class="formLabel">Código Compensación (*)</div>
+            <div class="formField">
+              <input
+                type="text"
+                formControlName="compensationcode"
+                class="form-control form-control-sm"
+                [ngClass]="{
+                  'is-invalid': this.invalidField_TCAAUF00Form(
+                    'compensationcode'
+                  )
+                }"
+                placeholder="Ingrese Código"
+              />
+              <small *ngIf="this.invalidField_TCAAUF00Form('compensationcode')">
+                {{ textsFormInvalid_TCAAUF00Form("compensationcode") }}
+              </small>
+            </div>
+          </div>
+          <div class="formSection">
+            <div class="formLabel">Fecha (*)</div>
+            <div class="formField">
+              <p-calendar
+                [showIcon]="true"
+                formControlName="date"
+                dateFormat="yy-mm-dd"
+              ></p-calendar>
+              <small *ngIf="this.invalidField_TCAAUF00Form('date')">
+                {{ textsFormInvalid_TCAAUF00Form("date") }}
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="formLayout">
+          <div class="actionsButtons">
+            <button type="submit" class="btn btn-primary mr-3 btn-sm">
+              {{ actionForm === "create" ? "Crear" : "Actualizar" }}
+            </button>
+            <button
+              type="button"
+              class="btn btn-secondary btn-sm"
+              (click)="cleanForm()"
+            >
+              Limpiar
+            </button>
+          </div>
+        </div>
+      </form>
+      <!-- form option 3 -->
+      <!-- <form
+        autocomplete="off"
+        [formGroup]="compensationNoteForm"
+        (ngSubmit)="onSubmit_compensationNoteForm()"
+        *ngIf="selectedForm === 3"
+      >
+        <div class="formLayout">
+          <div class="formSection">
+            <div class="formLabel">Cuenta (*)</div>
+            <div class="formField">
+              <input
+                type="text"
+                formControlName="account"
+                class="form-control form-control-sm"
+                [ngClass]="{
+                  'is-invalid': this.invalidField_compensationNotesForm(
+                    'account'
+                  )
+                }"
+                placeholder="Cód Cuenta"
+              />
+              <small *ngIf="this.invalidField_compensationNotesForm('account')">
+                {{ textsFormInvalid_compensationNoteForm("account") }}
+              </small>
+            </div>
+          </div>
+          <div class="formSection">
+            <div class="formLabel">Nota (*)</div>
+            <div class="formField">
+              <input
+                type="text"
+                formControlName="note"
+                class="form-control form-control-sm"
+                [ngClass]="{
+                  'is-invalid': this.invalidField_compensationNotesForm('note')
+                }"
+                placeholder="Nota ..."
+              />
+              <small *ngIf="this.invalidField_compensationNotesForm('note')">
+                {{ textsFormInvalid_compensationNoteForm("note") }}
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="formLayout">
+          <div class="actionsButtons">
+            <button type="submit" class="btn btn-primary mr-3 btn-sm">
+              {{ actionForm === "create" ? "Crear" : "Actualizar" }}
+            </button>
+            <button
+              type="button"
+              class="btn btn-secondary btn-sm"
+              (click)="cleanForm()"
+            >
+              Limpiar
+            </button>
+          </div>
+        </div>
+      </form> -->
     </div>
+  </section>
+
+  <hr />
+
+  <app-table
+    *ngIf="selectedForm !== 3"
+    [dataBase]="dataToTable"
+    [structure]="structure"
+    (editRecord)="updateData($event)"
+    (deleteRecord)="deleteData($event)"
+    [buttons]="['edit', '', 'delete']"
+  ></app-table>
+
+  <app-table
+    *ngIf="selectedForm === 3"
+    [dataBase]="dataToTable"
+    [structure]="structure"
+    (deleteRecord)="deleteData($event)"
+    [buttons]="['', '', 'delete']"
+  ></app-table>
+
+  <div *ngIf="dataToTable" class="text-center justify-content-center">
+    <button
+      type="button"
+      class="btn btn-primary mr-3 btn-sm"
+      (click)="downloadDataTable()"
+    >
+      Descargar CSV
+    </button>
   </div>
 </section>

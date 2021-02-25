@@ -5,6 +5,7 @@ import { RrCompensatedAccountsRoutingModule } from './rr-compensated-accounts-ro
 import { RrCompensatedAccountsComponent } from './rr-compensated-accounts.component';
 import { DashboardModule } from '../../dashboard/dashboard.module';
 import { DropdownModule } from 'primeng/dropdown';
+import { CalendarModule } from 'primeng/calendar';
 
 @NgModule({
   declarations: [RrCompensatedAccountsComponent],
@@ -13,6 +14,7 @@ import { DropdownModule } from 'primeng/dropdown';
     RrCompensatedAccountsRoutingModule,
     DashboardModule,
     DropdownModule,
+    CalendarModule,
   ]
 })
 export class RrCompensatedAccountsModule { }
