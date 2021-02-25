@@ -62,16 +62,20 @@ export class DownloadComponent implements OnInit {
   initializeVariables() {
     this.initialCharge(); // table
   }
-  initialCharge() {
+  initialCharge(caseUse = '') {
     this.cleanForm();
-    this.nodesSvc.allNodesRents().subscribe((resp: responseModel) => {
-      console.log('allNodes() ', resp);
-      this.dataToTableNodes = resp.NodesRents.NodeRent;
-    });
-    this.accountSvc.allAccounts().subscribe((resp: responseAccountsModel) => {
-      console.log('allAccounts() ', resp);
-      this.dataToTableAccounts = resp.AccountsRents.AccountRent;
-    });
+    if(caseUse === 'node' || caseUse === '') {
+      this.nodesSvc.allNodesRents().subscribe((resp: responseModel) => {
+        console.log('allNodes() ', resp);
+        this.dataToTableNodes = resp.NodesRents.NodeRent;
+      });
+    }
+    if(caseUse === 'account' || caseUse === '') {
+      this.accountSvc.allAccounts().subscribe((resp: responseAccountsModel) => {
+        console.log('allAccounts() ', resp);
+        this.dataToTableAccounts = resp.AccountsRents.AccountRent;
+      });
+    }
   }
 
   createForm() {
@@ -127,7 +131,7 @@ export class DownloadComponent implements OnInit {
     this.nodesSvc.createNodeRent(dataRequest).subscribe(resp => {
       if(resp.GeneralResponse.code === '0') {
         this.toastScv.showSuccess(resp.GeneralResponse.messageCode, resp.GeneralResponse.descriptionCode);
-        this.initialCharge();
+        this.initialCharge('node');
       }else{
         this.toastScv.showError(resp.GeneralResponse.messageCode, resp.GeneralResponse.descriptionCode);
       }
@@ -137,7 +141,7 @@ export class DownloadComponent implements OnInit {
     this.nodesSvc.updateNode(dataRequest).subscribe(resp => {
       if(resp.GeneralResponse.code === '0') {
         this.toastScv.showSuccess(resp.GeneralResponse.messageCode, resp.GeneralResponse.descriptionCode);
-        this.initialCharge();
+        this.initialCharge('node');
       }else{
         this.toastScv.showError(resp.GeneralResponse.messageCode, resp.GeneralResponse.descriptionCode);
       }
@@ -159,7 +163,7 @@ export class DownloadComponent implements OnInit {
     this.nodesSvc.deleteNode(node.id).subscribe(resp => {
       if(resp.GeneralResponse.code === '0') {
         this.toastScv.showSuccess(resp.GeneralResponse.messageCode, resp.GeneralResponse.descriptionCode);
-        this.initialCharge();
+        this.initialCharge('node');
       }else{
         this.toastScv.showError(resp.GeneralResponse.messageCode, resp.GeneralResponse.descriptionCode);
       }
@@ -190,7 +194,7 @@ export class DownloadComponent implements OnInit {
     this.accountSvc.createAccountRent(dataRequest).subscribe(resp => {
       if(resp.GeneralResponse.code === '0') {
         this.toastScv.showSuccess(resp.GeneralResponse.messageCode, resp.GeneralResponse.descriptionCode);
-        this.initialCharge();
+        this.initialCharge('account');
       }else{
         this.toastScv.showError(resp.GeneralResponse.messageCode, resp.GeneralResponse.descriptionCode);
       }
@@ -200,7 +204,7 @@ export class DownloadComponent implements OnInit {
     this.accountSvc.updateAccount(dataRequest).subscribe(resp => {
       if(resp.GeneralResponse.code === '0') {
         this.toastScv.showSuccess(resp.GeneralResponse.messageCode, resp.GeneralResponse.descriptionCode);
-        this.initialCharge();
+        this.initialCharge('account');
       }else{
         this.toastScv.showError(resp.GeneralResponse.messageCode, resp.GeneralResponse.descriptionCode);
       }
@@ -222,7 +226,7 @@ export class DownloadComponent implements OnInit {
     this.accountSvc.deleteAccount(account.id).subscribe(resp => {
       if(resp.GeneralResponse.code === '0') {
         this.toastScv.showSuccess(resp.GeneralResponse.messageCode, resp.GeneralResponse.descriptionCode);
-        this.initialCharge();
+        this.initialCharge('account');
       }else{
         this.toastScv.showError(resp.GeneralResponse.messageCode, resp.GeneralResponse.descriptionCode);
       }
@@ -238,13 +242,13 @@ export class DownloadComponent implements OnInit {
         for (const item of this.dataToTableNodes) {
           (content === '') ? content = item['node'] : content = `${content}\n${item['node']}`;
         }
-        namefile = 'nodes-test.txt'
+        namefile = 'nodes-rent-rr.txt'
         break;
       case 'accounts':
         for (const item of this.dataToTableAccounts) {
           (content === '') ? content = item['account'] : content = `${content}\n${item['account']}`;
         }
-        namefile = 'accounts-test.txt'
+        namefile = 'accounts-rent-rr.txt'
         break;
     }
     this.exportToFile(content , namefile)
@@ -262,10 +266,14 @@ export class DownloadComponent implements OnInit {
     window.URL.revokeObjectURL(url);
   }
 
-  cleanForm() {
-    this.formNode.reset();
-    this.actionFormNode = 'create';
-    this.formAccount.reset();
-    this.actionFormAccount = 'create';
+  cleanForm(caseUse = '') {
+    if(caseUse === 'node' || caseUse === '') {
+      this.formNode.reset();
+      this.actionFormNode = 'create';
+    }
+    if(caseUse === 'account' || caseUse === ''){
+      this.formAccount.reset();
+      this.actionFormAccount = 'create';
+    }
   }
 }

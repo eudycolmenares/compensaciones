@@ -1,11 +1,9 @@
 <section class="container py-3">
   <app-breadcrumb></app-breadcrumb>
 
-
-
   <div class="container-add px-sm-2 px-md-5">
     <div class="row">
-      <div class="col-sm py-3 mx-1 background-colum">
+      <div class="col-sm py-3 mx-1">
         <form autocomplete="off" [formGroup]="formNode" (ngSubmit)="submitNode()">
           <div class="row text-light text-center">
             <div class="col-sm bg-primary py-1 mx-1">Nodo(*)</div>
@@ -19,14 +17,12 @@
           <div class="row text-light text-center mt-4">
             <div class="col-sm container-buttons">
               <button type="submit" class="btn btn-primary mr-3 btn-sm">{{ (actionFormNode === 'create' ? 'Crear' : 'Actualizar' )}}</button>
-              <button type="button" class="btn btn-secondary btn-sm" (click)="cleanForm()">Limpiar</button>
+              <button type="button" class="btn btn-secondary btn-sm" (click)="cleanForm('node')">Limpiar</button>
             </div>
           </div>
         </form>
       </div>
-
-
-      <div class="col-sm py-3 mx-1 background-colum">
+      <div class="col-sm py-3 mx-1">
         <form autocomplete="off" [formGroup]="formAccount" (ngSubmit)="submitAccount()">
           <div class="row text-light text-center">
             <div class="col-sm bg-primary py-1 mx-1">Cuentas(*)</div>
@@ -42,16 +38,13 @@
           <div class="row text-light text-center mt-4">
             <div class="col-sm container-buttons">
               <button type="submit" class="btn btn-primary mr-3 btn-sm">{{ (actionFormAccount === 'create' ? 'Crear' : 'Actualizar' )}}</button>
-              <button type="button" class="btn btn-secondary btn-sm" (click)="cleanForm()">Limpiar</button>
+              <button type="button" class="btn btn-secondary btn-sm" (click)="cleanForm('account')">Limpiar</button>
             </div>
           </div>
         </form>
       </div>
     </div>
-
   </div>
-
-
 
   <hr class="mt-5 mb-5" />
 
@@ -75,7 +68,6 @@
           </div>
         </div>
       </div>
-
       <div class="col-sm py-3 mx-1 background-colum">
         <div class="row">
           <div class="col-sm p-0">
@@ -96,5 +88,4 @@
       </div>
     </div>
   </div>
-
 </section>
