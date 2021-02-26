@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule, DecimalPipe } from '@angular/common';
 import { ReactiveFormsModule } from "@angular/forms";
+import { MultiSelectModule } from 'primeng/multiselect';
 
 import { SymptomRoutingModule } from './symptom-routing.module';
 import { SymptomComponent } from './symptom.component';
@@ -12,7 +13,8 @@ import { ComponentsModule } from  '../../../components/components.module';
     CommonModule,
     SymptomRoutingModule,
     ComponentsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MultiSelectModule
   ],
   exports: [SymptomComponent],
   bootstrap: [SymptomComponent],

@@ -5,6 +5,7 @@ import { SymptomService } from '../../../services/symptom/symptom.service';
 import { GeneralFunctionsService } from '../../../services/general-functions.service';
 import { ToastService } from '../../../services/shared/toast.service';
 import { SelectStatus, ServicesSettings as Services } from '../../../libraries/utilities.library';
+import { DataList } from '../../../models/general';
 import { requestModel, responseModel, symptomModel, symptomsApiModel } from '../../../models/symptom';
 
 interface originModel {
@@ -50,7 +51,7 @@ export class SymptomComponent implements OnInit {
   formSymptom: FormGroup;
   actionForm = 'create'; // create, update
   selectStatus: object[] = [];
-  services: object[] = [];
+  services: DataList[] = [];
   // table
   dataToTable: symptomModel[];
   structure: object[] = [
@@ -165,9 +166,9 @@ export class SymptomComponent implements OnInit {
           'state': this.formSymptom.get('state').value,
           'originId': originSelected['id'],
           'origin': originSelected['name'],
-          'television': (servicesSelected.find(svc => svc === 'television') ? '1' : '0'),
-          'internet': (servicesSelected.find(svc => svc === 'internet') ? '1' : '0'),
-          'telephone': (servicesSelected.find(svc => svc === 'telephone') ? '1' : '0'),
+          'television': (servicesSelected.find((svc: DataList) => svc.key === 'television') ? '1' : '0'),
+          'internet': (servicesSelected.find((svc: DataList) => svc.key === 'internet') ? '1' : '0'),
+          'telephone': (servicesSelected.find((svc: DataList) => svc.key === 'telephone') ? '1' : '0'),
           'user': 'test', // seteado
         }
       }
@@ -211,7 +212,7 @@ export class SymptomComponent implements OnInit {
       description: data.description,
       state: data.state,
       origin: data.originId,
-      services: Object.keys(Services).filter(scv => data[scv] === '1'),
+      services: this.services.filter((item: DataList) => data[item.key] === '1')
     });
   }
 
@@ -234,7 +235,8 @@ export class SymptomComponent implements OnInit {
 
   cleanForm() {
     this.formSymptom.reset({
-      state: ''
+      state: '',
+      origin: ''
     });
     this.actionForm = 'create';
   }
