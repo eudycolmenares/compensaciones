@@ -88,7 +88,7 @@ export class RrCompensatedAccountsComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   invalidFieldForm(fieldName: string) {
     return (
@@ -308,23 +308,23 @@ export class RrCompensatedAccountsComponent implements OnInit {
         this.compensationDetailForm
           .get('date')
           .setValue(
-            this.compensationDetailForm
-              .get('date')
-              .value.toISOString()
+            new Date(this.compensationDetailForm.get('date').value)
+              .toISOString()
               .substring(0, 10)
           );
         this.compensationDetailForm
           .get('lastRentDate')
           .setValue(
-            this.compensationDetailForm
-              .get('lastRentDate')
-              .value.toISOString()
+            new Date(this.compensationDetailForm.get('lastRentDate').value)
+              .toISOString()
               .substring(0, 10)
           );
         break;
       case 2:
         this.TCAAUF00Form.get('date').setValue(
-          this.TCAAUF00Form.get('date').value.toISOString().substring(0, 10)
+          new Date(this.TCAAUF00Form.get('date').value)
+            .toISOString()
+            .substring(0, 10)
         );
         break;
       default:

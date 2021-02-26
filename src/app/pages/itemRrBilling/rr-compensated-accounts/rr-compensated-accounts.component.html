@@ -2,7 +2,7 @@
   <app-breadcrumb></app-breadcrumb>
   <div class="container-add">
     <div class="formLayout">
-      <div class="col-sm-3">
+      <div class="col-sm-4">
         <form autocomplete="off" [formGroup]="rrCompensatedAccountsForm">
           <p-dropdown
             [options]="selectTableList"
@@ -222,6 +222,7 @@
               <p-calendar
                 [showIcon]="true"
                 formControlName="date"
+                placeholder="yyyy-mm-dd"
                 dateFormat="yy-mm-dd"
               ></p-calendar>
               <small *ngIf="this.invalidField_compensationDetailForm('date')">
@@ -243,7 +244,7 @@
                     'lastRentDate'
                   )
                 }"
-                placeholder="Fecha Últ. renta"
+                placeholder="yyyy-mm-dd"
               ></p-calendar>
               <small
                 *ngIf="this.invalidField_compensationDetailForm('lastRentDate')"
@@ -415,6 +416,7 @@
               <p-calendar
                 [showIcon]="true"
                 formControlName="date"
+                placeholder="yyyy-mm-dd"
                 dateFormat="yy-mm-dd"
               ></p-calendar>
               <small *ngIf="this.invalidField_TCAAUF00Form('date')">
