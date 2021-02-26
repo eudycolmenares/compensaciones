@@ -88,7 +88,7 @@ export class SymptomComponent implements OnInit {
       name: 'state',
       description: 'Estado',
       validation: 'active-desactive'
-    }    
+    }
   ];
 
   constructor(
@@ -233,7 +233,9 @@ export class SymptomComponent implements OnInit {
   }
 
   cleanForm() {
-    this.formSymptom.reset();
+    this.formSymptom.reset({
+      state: ''
+    });
     this.actionForm = 'create';
   }
 }

@@ -182,7 +182,10 @@ export class OriginTypeComponent implements OnInit {
   }
 
   cleanForm() {
-    this.formOrigin.reset();
+    this.formOrigin.reset({
+      compensate: '',
+      state: ''
+    });
     this.actionForm = 'create';
   }
 }

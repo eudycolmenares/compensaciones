@@ -73,13 +73,13 @@
         </ng-container>
         <ng-container *ngIf="buttons.length !== 0">
           <td class="text-center">
-            <button type="button" class="btn btn-primary btn-sm mr-2" (click)="sendDataToEdit(item)" *ngIf="(buttons.indexOf('edit') > -1)" data-toggle="tooltip" data-placement="top" [title]="validation? 'Aprobado' : ''">
+            <button type="button" class="btn btn-primary btn-sm mr-1" (click)="sendDataToEdit(item)" *ngIf="(buttons.indexOf('edit') > -1)" data-toggle="tooltip" data-placement="top" [title]="validation? 'Aprobado' : ''">
               <i [class]="validation? 'pi pi-check' : 'bi bi-pencil-fill' "></i>
             </button>
-            <button type="button" class="btn btn-secondary btn-sm mr-2" (click)="sendDataToDisable(item)" [disabled]="item.state?.toString() === '0'" *ngIf="(buttons.indexOf('disable') > -1)" data-toggle="tooltip" data-placement="top" [title]="validation? 'Rechazado por calidad' : ''">
+            <button type="button" class="btn btn-secondary btn-sm mr-1" (click)="sendDataToDisable(item)" [disabled]="item.state?.toString() === '0'" *ngIf="(buttons.indexOf('disable') > -1)" data-toggle="tooltip" data-placement="top" [title]="validation? 'Rechazado por calidad' : ''">
               <i [class]="validation? 'bi bi-file-earmark-break' : 'bi bi-eye-slash' "></i>
             </button>
-            <button type="button" class="btn btn-secondary btn-sm mr-2" (click)="openModal(item)" *ngIf="(buttons.indexOf('delete') > -1)" data-toggle="tooltip" data-placement="top" [title]="validation? 'Rechazado' : ''">
+            <button type="button" class="btn btn-secondary btn-sm" (click)="openModal(item)" *ngIf="(buttons.indexOf('delete') > -1)" data-toggle="tooltip" data-placement="top" [title]="validation? 'Rechazado' : ''">
               <i [class]="validation? 'pi pi-times' : 'pi pi-trash' "></i>
             </button>
           </td>
