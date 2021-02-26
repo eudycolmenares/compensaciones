@@ -9,6 +9,7 @@ import {
   requestOrderSymptomModel as  requestModel,
   orderSymptomModel
 } from '../../../models/maintenance-orders-symptoms';
+import { DataList } from '../../../models/general';
 
 @Component({
   selector: 'app-maintenance-orders-symptoms',
@@ -21,7 +22,7 @@ export class MaintenanceOrdersSymptomsComponent implements OnInit {
   actionForm = 'create'; // create, update
   selectStatus: object[] = [];
   selectCompensate: object[] = [];
-  services: object[] = [];
+  services: DataList[] = [];
   // table
   dataToTable: object[];
   structure: object[] = [
@@ -34,11 +35,6 @@ export class MaintenanceOrdersSymptomsComponent implements OnInit {
       name: 'diagnosticDescription',
       description: 'Descripción',
       validation: '',
-    },
-    {
-      name: 'state',
-      description: 'Estado',
-      validation: 'active-desactive'
     },
     {
       name: 'compensation',
@@ -64,6 +60,11 @@ export class MaintenanceOrdersSymptomsComponent implements OnInit {
       name: 'internet',
       description: 'Internet',
       validation: 'service'
+    },
+    {
+      name: 'state',
+      description: 'Estado',
+      validation: 'active-desactive'
     },
   ];
 
@@ -138,6 +139,7 @@ export class MaintenanceOrdersSymptomsComponent implements OnInit {
         control.markAsTouched();
       })
     }else {
+      const servicesSelected = this.form.get('services').value;
       const dataRequest: requestModel = {
         'maintenanceOrderDiagnostic': {
           'diagnostic': this.form.get('code').value,
@@ -145,9 +147,9 @@ export class MaintenanceOrdersSymptomsComponent implements OnInit {
           'state': this.form.get('state').value,
           'maintenance': (this.form.get('maintenance').value === '1') ?  'Si' : 'No',
           'compensation': (this.form.get('compensate').value === '1') ?  'Si' : 'No' ,
-          'television': (this.form.get('services').value.find(svc => svc === 'television') ? 1 : 0),
-          'internet': (this.form.get('services').value.find(svc => svc === 'internet') ? 1 : 0),
-          'phone': (this.form.get('services').value.find(svc => svc === 'telephone') ? 1 : 0)
+          'television': (servicesSelected.find((svc: DataList) => svc.key === 'television') ? 1 : 0),
+          'internet': (servicesSelected.find((svc: DataList) => svc.key === 'internet') ? 1 : 0),
+          'phone': (servicesSelected.find((svc: DataList) => svc.key === 'telephone') ? 1 : 0)
         }
       }
       if(this.actionForm === 'create') {
@@ -192,7 +194,7 @@ export class MaintenanceOrdersSymptomsComponent implements OnInit {
       state: data.state,
       maintenance: (data.maintenance.toUpperCase() === 'SI') ? '1': '0',
       compensate: (data.compensation.toUpperCase() === 'SI') ? '1': '0',
-      services: Object.keys(Services).filter(scv => data[scv] === 1) ,
+      services: this.services.filter((item: DataList) => data[item.key] === 1)
     });
   }
 

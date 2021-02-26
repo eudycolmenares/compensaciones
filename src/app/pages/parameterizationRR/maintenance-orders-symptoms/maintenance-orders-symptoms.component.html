@@ -31,21 +31,25 @@
       </div>
       <div class="row">
         <div class="col-sm mx-1 mt-1 p-0">
-          <select class="form-control form-control-sm" formControlName="compensate" [class.is-invalid]="invalidCompensate" size="3">
+          <select class="form-control form-control-sm" formControlName="compensate" [class.is-invalid]="invalidCompensate">
             <option *ngFor="let opt of selectCompensate" [value]="opt.key">{{ opt.value }}</option>
           </select>
           <small class="text-danger" *ngIf="invalidCompensate">{{ textsFormInvalid("compensate") }}</small>
         </div>
         <div class="col-sm mx-1 mt-1 p-0">
-          <select class="form-control form-control-sm" formControlName="maintenance" [class.is-invalid]="invalidMaintenance" size="3">
+          <select class="form-control form-control-sm" formControlName="maintenance" [class.is-invalid]="invalidMaintenance">
             <option *ngFor="let opt of selectCompensate" [value]="opt.key">{{ opt.value }}</option>
           </select>
           <small class="text-danger" *ngIf="invalidMaintenance">{{ textsFormInvalid("maintenance") }}</small>
         </div>
         <div class="col-sm py-1 mx-1 p-0 text-left">
-          <select class="form-control form-control-sm" formControlName="services" multiple [class.is-invalid]="invalidServices" size="3">
-            <option *ngFor="let service of services" [value]="service.key">{{ service.value }}</option>
-          </select>
+          <p-multiSelect
+            [options]="services"
+            formControlName="services"
+            [ngClass]="{'ng-invalid ng-dirty': invalidServices}"
+            defaultLabel="- Seleccione -"
+            optionLabel="value"
+          ></p-multiSelect>
           <small class="text-danger" *ngIf="invalidServices">{{ textsFormInvalid("services") }}</small>
         </div>
       </div>
