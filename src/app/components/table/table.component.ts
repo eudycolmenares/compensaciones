@@ -12,7 +12,7 @@ import { ConfirmationService } from 'primeng/api';
 export class TableComponent implements OnInit {
   @Input() dataBase: object[];
   @Input() structure: object[];
-  @Input() buttons: Buttons[] = [Buttons.edit, Buttons.disable, Buttons.delete];
+  @Input() buttons: string[] = [Buttons.edit, Buttons.disable, Buttons.delete];
   @Input() validation: boolean = false;
   @Output() editRecord: EventEmitter<object> ;
   @Output() disableRecord: EventEmitter<object> ;

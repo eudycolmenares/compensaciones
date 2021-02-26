@@ -310,6 +310,7 @@ export class RrFailureValidationComponent implements OnInit {
   }
 
   onSubmit_formOption1() {
+    console.log(this.formOption1.value);
     if (this.formOption1.invalid) {
       return Object.values(this.formOption1.controls).forEach((control) => {
         control.markAsTouched();
@@ -320,6 +321,7 @@ export class RrFailureValidationComponent implements OnInit {
   }
 
   onSubmit_formOption2() {
+    console.log(this.formOption2.value);
     if (this.formOption2.invalid) {
       return Object.values(this.formOption2.controls).forEach((control) => {
         control.markAsTouched();
@@ -330,6 +332,7 @@ export class RrFailureValidationComponent implements OnInit {
   }
 
   onSubmit_formOption3() {
+    console.log(this.formOption3.value);
     if (this.formOption3.invalid) {
       return Object.values(this.formOption3.controls).forEach((control) => {
         control.markAsTouched();

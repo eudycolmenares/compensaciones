@@ -262,6 +262,7 @@ export class RrCompensatedAccountsComponent implements OnInit {
   }
 
   onSubmit_compensationDetailForm() {
+    console.log(this.compensationDetailForm.value);
     if (this.compensationDetailForm.invalid) {
       return Object.values(this.compensationDetailForm.controls).forEach(
         (control) => {
@@ -275,6 +276,7 @@ export class RrCompensatedAccountsComponent implements OnInit {
   }
 
   onSubmit_TCAAUF00Form() {
+    console.log(this.TCAAUF00Form.value);
     if (this.TCAAUF00Form.invalid) {
       return Object.values(this.TCAAUF00Form.controls).forEach((control) => {
         control.markAsTouched();
@@ -288,6 +290,7 @@ export class RrCompensatedAccountsComponent implements OnInit {
   }
 
   onSubmit_compensationNoteForm() {
+    console.log(this.compensationNoteForm.value);
     if (this.compensationNoteForm.invalid) {
       return Object.values(this.compensationNoteForm.controls).forEach(
         (control) => {
