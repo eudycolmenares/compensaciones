@@ -119,7 +119,7 @@ export class MaintenanceOrdersCausesComponent implements OnInit {
     for (const i of Object.entries(SelectCompensate)) {
       this.selectYesNo.push({ key: i[0], value: i[0] });
     }
-    this.selectYesNo.splice(0, 1, { key: '', value: '-- Seleccione --' });
+    this.selectYesNo.splice(0, 1, { key: '', value: '- Seleccione -' });
 
     for (const i of Object.entries(ServicesSettings)) {
       this.selectService.push({ key: i[0], value: i[1] });

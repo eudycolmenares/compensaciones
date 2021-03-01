@@ -29,7 +29,7 @@ export class LoadFaultsComponent implements OnInit {
     { valueOption: 'SMES', nameOption: 'Pymes' },
     { valueOption: 'RESIDENTIAL_SETTING', nameOption: 'Ajuste Residencial' },
     { valueOption: 'SME_ADJUSTMENT', nameOption: 'Ajuste Pymes' },
-    { valueOption: 'MAINTENANCE_ORDERS', nameOption: 'Ordenes Mantenimiento' },
+    { valueOption: 'MAINTENANCE_ORDERS', nameOption: 'Órdenes Mantenimiento' },
   ];
   // table
   dataToTable: object[];

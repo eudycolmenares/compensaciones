@@ -17,7 +17,7 @@
               'is-invalid': this.invalidFieldForm('tableOptions')
             }"
           >
-            <option value="">-- Seleccione --</option>
+            <option value="">- Seleccione -</option>
             <option
               *ngFor="let listTables of selectTable"
               [value]="listTables.key"
@@ -121,7 +121,7 @@
               <p-multiSelect
                 formControlName="service"
                 [options]="selectService"
-                defaultLabel="-- Seleccione --"
+                defaultLabel="- Seleccione -"
                 optionLabel="value"
                 [ngClass]="{
                   'ng-invalid ng-dirty': this.invalidField_FormOption1('service')
@@ -216,7 +216,7 @@
               <p-multiSelect
                 formControlName="service"
                 [options]="selectService"
-                defaultLabel="-- Seleccione --"
+                defaultLabel="- Seleccione -"
                 optionLabel="value"
                 [ngClass]="{
                   'ng-invalid ng-dirty': this.invalidField_FormOption2('service')
@@ -311,7 +311,7 @@
               <p-multiSelect
                 formControlName="service"
                 [options]="selectService"
-                defaultLabel="-- Seleccione --"
+                defaultLabel="- Seleccione -"
                 optionLabel="value"
                 [ngClass]="{
                   'ng-invalid ng-dirty': this.invalidField_FormOption3('service')

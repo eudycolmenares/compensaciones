@@ -19,7 +19,7 @@
               'is-invalid': this.invalidFieldForm('origin')
             }"
           >
-            <option value="" selected>-- Seleccione --</option>
+            <option value="" selected>- Seleccione -</option>
             <option
               *ngFor="let listTypeOrigin of origin"
               [value]="listTypeOrigin.id"
@@ -39,7 +39,7 @@
               'is-invalid': this.invalidFieldForm('typeOrigin')
             }"
           >
-            <option value="" selected>-- Seleccione --</option>
+            <option value="" selected>- Seleccione -</option>
             <option
               *ngFor="let listTypeOrigin of originTypeList"
               [value]="listTypeOrigin.id"
@@ -175,7 +175,7 @@
           <p-multiSelect
             formControlName="services"
             [options]="selectService"
-            defaultLabel="-- Seleccione --"
+            defaultLabel="- Seleccione -"
             optionLabel="value"
             [ngClass]="{
               'ng-invalid ng-dirty': this.invalidFieldForm('services')
