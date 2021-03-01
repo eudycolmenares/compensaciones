@@ -24,7 +24,7 @@ export class HeaderComponent implements OnInit {
         }
       },
       {
-        label: 'Cambiar contraseña',
+        label: 'Cambiar Contraseña',
         icon: 'pi pi-key',
         command: () => {
           // this.delete();

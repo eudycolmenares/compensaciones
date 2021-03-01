@@ -13,11 +13,11 @@ export const RoutesData = {
   },
   'system-status': {
     url: ['dashboard', 'system-status'],
-    breadcrumb: ['Parametrización', 'Estado sistema'],
+    breadcrumb: ['Parametrización', 'Estado Sistema'],
   },
   'symptom': {
     url: ['dashboard', 'symptom'],
-    breadcrumb: ['Parametrización', 'Sintoma']
+    breadcrumb: ['Parametrización', 'Síntoma']
   },
   'priorities': {
     url: ['dashboard', 'priorities'],
@@ -41,15 +41,15 @@ export const RoutesData = {
   },
   'orders-symptoms': {
     url: ['dashboard', 'orders-symptoms'],
-    breadcrumb: ['Parametrización RR', 'Síntomas para Ordenes Mantenimiento']
+    breadcrumb: ['Parametrización RR', 'Síntomas para Órdenes Mantenimiento']
   },
   'maintenance-orders-causes': {
     url: ['dashboard', 'maintenance-orders-causes'],
-    breadcrumb: ['Parametrización RR', 'Causas para órdenes mantenimiento']
+    breadcrumb: ['Parametrización RR', 'Causas para Órdenes Mantenimiento']
   },
   'rr-failure-validation': {
     url: ['dashboard', 'rr-failure-validation'],
-    breadcrumb: ['Parametrización RR', 'Validación fallas RR']
+    breadcrumb: ['Parametrización RR', 'Validación Fallas RR']
   },
   'nodes-validation': {
     url: ['dashboard', 'nodes-validation'],
@@ -122,4 +122,40 @@ export enum RRServicesFailure {
 
 export enum itemsStorage {
   menu = 'open_menu',
+}
+
+export const languagePrimeNG = {
+  "startsWith": "Comienza con",
+  "contains": "Contiene",
+  "notContains": "No contiene",
+  "endsWith": "Termina con",
+  "equals": "Igual",
+  "notEquals": "No es igual",
+  "noFilter": "Sin filtro",
+  "lt": "Menos que",
+  "lte": "Menos que o igual a",
+  "gt": "Mayor que",
+  "gte": "Mayor que o igual",
+  "is": "Es",
+  "isNot": "No es",
+  "before": "Antes",
+  "after": "Después",
+  "clear": "Limpiar",
+  "apply": "Aplicar",
+  "matchAll": "Coincidir todo",
+  "matchAny": "Coincidir cualquiera",
+  "addRule": "Agregar regla",
+  "removeRule": "Eliminar regla",
+  "accept": "Sí",
+  "reject": "No",
+  "choose": "Seleccionar",
+  "upload": "Subir",
+  "cancel": "Cancelar",
+  "dayNames": ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
+  "dayNamesShort": ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sab"],
+  "dayNamesMin": ["Do","Lu","Ma","Mi","Ju","Vi","Sa"],
+  "monthNames": ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Deciembre"],
+  "monthNamesShort": ["Ene", "Feb", "Mar", "Abr", "May", "Jun","Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
+  "today": "Hoy",
+  "weekHeader": "Wk"
 }
