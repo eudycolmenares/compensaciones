@@ -105,8 +105,8 @@ export class NavbarComponent implements OnInit {
                 routerLink: ['/dashboard/rents-download']
               },
               {
-                label: 'Cargue Rentas RR',
-                title: 'Cargue Rentas RR',
+                label: 'Cargue Rentas',
+                title: 'Cargue Rentas',
                 icon:'pi pi-fw pi-upload',
                 routerLink: ['/dashboard/rents-load']
               }
@@ -123,14 +123,8 @@ export class NavbarComponent implements OnInit {
                 routerLink: ['/dashboard/nodes-validation']
               },
               {
-                label: 'Cuentas',
-                title: 'Cuentas',
-                icon:'pi pi-fw pi-book',
-                routerLink: ['/dashboard/validation-accounts']
-              },
-              {
-                label: 'Validación Fallas RR',
-                title: 'Validación Fallas RR',
+                label: 'Validación Fallas',
+                title: 'Validación Fallas',
                 icon:'pi pi-fw pi-check-square',
                 routerLink: ['/dashboard/rr-failure-validation']
               }
@@ -141,8 +135,8 @@ export class NavbarComponent implements OnInit {
             title: 'Facturación',
             items: [
               {
-                label: 'Cuentas Compensadas RR',
-                title: 'Cuentas Compensadas RR',
+                label: 'Cuentas Compensadas',
+                title: 'Cuentas Compensadas',
                 icon:'pi pi-fw pi-dollar',
                 routerLink: ['/dashboard/item-rr-billing']
               }
@@ -153,8 +147,8 @@ export class NavbarComponent implements OnInit {
             title: 'Supervisión',
             items: [
               {
-                label: 'Proceso RR',
-                title: 'Proceso RR',
+                label: 'Procesos',
+                title: 'Procesos',
                 icon:'pi pi-fw pi-chart-line',
                 routerLink: ['/dashboard/process-rr']
               }
@@ -243,8 +237,8 @@ export class NavbarComponent implements OnInit {
             title: 'Supervisión',
             items: [
               {
-                label: 'Proceso',
-                title: 'Proceso',
+                label: 'Procesos',
+                title: 'Procesos',
                 icon:'pi pi-fw pi-chart-line',
                 routerLink: ['/dashboard/process-rr']
               }
