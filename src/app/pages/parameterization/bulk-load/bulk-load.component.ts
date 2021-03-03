@@ -14,7 +14,7 @@ import {
 import { BulkLoadService } from '../../../services/bulkLoad/bulk-load.service';
 import { GeneralFunctionsService } from '../../../services/general-functions.service';
 import { CustomValidation } from '../../../utils/custom-validation';
-import { ToastService } from 'src/app/services/shared/toast.service';
+import { ToastService } from '../../../shared/services/toast.service';
 
 import { ConfirmationService } from 'primeng/api';
 
@@ -175,7 +175,7 @@ export class BulkLoadComponent implements OnInit {
     this._bulkLoadSvc
       .createBulkLoad(dataRequest)
       .subscribe((resp: GeneralResponse) => {console.log(resp);
-      
+
         if (resp.code === 'SEND-FILE-VALRES-1' || resp.code === '0') {
           this._toastScv.showSuccess(resp.messageCode);
           // this.fileSent();

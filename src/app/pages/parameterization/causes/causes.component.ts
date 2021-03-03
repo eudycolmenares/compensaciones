@@ -15,7 +15,7 @@ import {
 import { CauseService } from 'src/app/services/cause/cause.service';
 import { OriginTypeService } from 'src/app/services/originType/origin-type.service';
 import { DataList } from '../../../models/general';
-import { ToastService } from 'src/app/services/shared/toast.service';
+import { ToastService } from '../../../shared/services/toast.service';
 import {
   originsApiModel,
   originModel as originTypeModel,
@@ -329,7 +329,7 @@ export class CausesComponent implements OnInit {
 
   deleteCause(cause: CauseModel) {
     this._causeSvc.deleteCause(cause.id).subscribe((resp) => {console.log(resp);
-    
+
       if (resp.GeneralResponse.code === '0') {
         this._toastScv.showSuccess(resp.GeneralResponse.messageCode);
         this.initialCharge(); // table

@@ -1,29 +1,61 @@
 <section class="section-login">
-    <div class="background-blur"></div>
-    <div class="container-login">
-        <div class="logo">
-            <img src="assets/img/logo-login.png">
-        </div>
-        <div class="form-login">
-            <p class="title-main">Bienvenido</p>
-            <p class="title-secondary">Un solo login para todas tus aplicaciones Claro</p>
-            <div class="form">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text bg-white" id="basic-addon1">&#9733;</span>
-                    </div>
-                    <input type="text" class="form-control input-light" placeholder="Nombre de usuario">
-                </div>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text bg-white text-dark" id="basic-addon1">&#10070;</span>
-                    </div>
-                    <input type="password" class="form-control input-light" placeholder="Contraseña">
-                </div>
-                <p>Olvidé mi contraseña</p>
-            </div>
-            <button type="button" class="btn btn-primary" (click)="loginUser()">Ingresar</button>
-        </div>
+  <div class="background-blur"></div>
+  <div class="container-login">
+    <div class="logo">
+      <img src="assets/img/logo-login.png">
     </div>
-    <img class="logo-claro" src="assets/img/claro-logo.png" alt="">
+    <div class="form-login">
+      <p class="title-main">Bienvenido</p>
+      <p class="title-secondary">Un solo login para todas tus aplicaciones Claro</p>
+
+      <div class="form">
+        <form autocomplete="off" [formGroup]="form" (ngSubmit)="onSubmit()">
+          <div class="row">
+            <div class="col-sm">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text bg-white" id="basic-addon1">&#9733;</span>
+                </div>
+                <input type="text" class="form-control input-light"
+                  placeholder="Nombre de usuario"
+                  formControlName="usuario"
+                  [class.is-invalid]="invalidUser"
+                >
+              </div>
+            </div>
+          </div>
+          <!-- <div class="row">
+            <div class="col-sm">
+              <small class="text-danger" *ngIf="invalidUser">{{ textsFormInvalid("usuario") }}</small>
+            </div>
+          </div> -->
+          <div class="row mt-3">
+            <div class="col-sm">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text bg-white text-dark" id="basic-addon1">&#10070;</span>
+                </div>
+                <input type="password" class="form-control input-light"
+                  placeholder="Contraseña"
+                  formControlName="password"
+                  [class.is-invalid]="invalidPassword"
+                >
+              </div>
+            </div>
+          </div>
+          <!-- <div class="row">
+            <div class="col-sm">
+              <small class="text-danger" *ngIf="invalidPassword">{{ textsFormInvalid("password") }}</small>
+            </div>
+          </div> -->
+          <!-- <p>Olvidé mi contraseña</p> -->
+          <p (click)="closeSession()">Cerrar Sesión</p>
+          <p (click)="getSession()">Consultar Sesión</p>
+          <button type="submit" class="btn btn-primary mt-3">Ingresar</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+  <img class="logo-claro" src="assets/img/claro-logo.png" alt="">
 </section>

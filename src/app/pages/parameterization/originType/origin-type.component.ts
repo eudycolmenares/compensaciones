@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { GeneralFunctionsService } from '../../../services/general-functions.service';
 import { OriginTypeService } from '../../../services/originType/origin-type.service';
-import { ToastService } from '../../../services/shared/toast.service';
+import { ToastService } from '../../../shared/services/toast.service';
 import { SelectStatus, SelectCompensate } from '../../../libraries/utilities.library';
 import { originModel, requestModel, responseModel, originsApiModel } from '../../../models/origin-type'
 

@@ -6,7 +6,7 @@ import { GeneralFunctionsService } from '../../../services/general-functions.ser
 import { FaultsService } from '../../../services/faults/faults.service';
 import { CustomValidation } from 'src/app/utils/custom-validation';
 import { faultsApiModel } from '../../../models/faults';
-import { ToastService } from '../../../services/shared/toast.service';
+import { ToastService } from '../../../shared/services/toast.service';
 @Component({
   selector: 'app-load',
   templateUrl: './load.component.html',

@@ -8,7 +8,7 @@ import {
 } from '../../../libraries/utilities.library';
 import { NodesValidationService } from 'src/app/services/nodes-validation/nodes-validation.service';
 import { DataList } from '../../../models/general';
-import { ToastService } from 'src/app/services/shared/toast.service';
+import { ToastService } from '../../../shared/services/toast.service';
 
 @Component({
   selector: 'app-nodes',
@@ -110,7 +110,7 @@ export class NodesComponent implements OnInit {
     this._nodesSvc.allNodesValidation().subscribe((resp: any) => {
       this.dataToTable = resp.tblMaximoInc;
       console.log(this.dataToTable);
-      
+
     });
   }
 

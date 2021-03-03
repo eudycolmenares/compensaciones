@@ -10,6 +10,7 @@ export const environment = {
   urlApi_failureValidation: '/WSCompensacionesBatchRR-web/webresources/WSValidacionFallasRR/',
   urlApi_billingRR: '/WSCompensacionesBatchRR-web/webresources/WSFacturacionRR/',
   urlApi_rentsRR: '/WSCompensacionesBatchRR-web/webresources/WSRentasRR/',
+  urlApi_users: '/WsPortalUsuariosRest-web/ws/WsPortalUsuariosRest/',
   endpoints: {
     // Settings
     settings_all: 'SettingsService/read/all',
@@ -129,6 +130,8 @@ export const environment = {
     account_rent_create: 'AccountRentService/create',
     account_rent_update: 'AccountRentService/update',
     account_rent_delete: 'AccountRentService/delete',
+    // Users
+    user_login: 'autentica'
   },
 };
 

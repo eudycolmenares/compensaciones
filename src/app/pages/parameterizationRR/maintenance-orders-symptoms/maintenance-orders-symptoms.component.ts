@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { GeneralFunctionsService } from '../../../services/general-functions.service';
 import { MaintenanceOrdersSymptomsService } from '../../../services/maintenanceOrdersSymptoms/maintenance-orders-symptoms.service';
-import { ToastService } from '../../../services/shared/toast.service';
+import { ToastService } from '../../../shared/services/toast.service';
 import { SelectStatus, SelectCompensate, ServicesSettings as Services } from '../../../libraries/utilities.library';
 import {
   requestOrderSymptomModel as  requestModel,

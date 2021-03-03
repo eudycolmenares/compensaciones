@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { NodesRentsRRService } from '../../../services/nodesRentsRR/nodes-rents-rr.service';
 import { AccountsRentsRRService } from '../../../services/accountsRentsRR/accounts-rents-rr.service';
-import { ToastService } from '../../../services/shared/toast.service';
+import { ToastService } from '../../../shared/services/toast.service';
 import {
   responseNodesModel as responseModel,
   nodeRentModel as nodeModel,

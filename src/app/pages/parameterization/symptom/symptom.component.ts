@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { SymptomService } from '../../../services/symptom/symptom.service';
 import { GeneralFunctionsService } from '../../../services/general-functions.service';
-import { ToastService } from '../../../services/shared/toast.service';
+import { ToastService } from '../../../shared/services/toast.service';
 import { SelectStatus, ServicesSettings as Services } from '../../../libraries/utilities.library';
 import { DataList } from '../../../models/general';
 import { requestModel, responseModel, symptomModel, symptomsApiModel } from '../../../models/symptom';

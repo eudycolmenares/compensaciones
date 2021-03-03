@@ -14,7 +14,7 @@ import {
 } from 'src/app/models/system-status';
 import { SystemStatusService } from 'src/app/services/system-status/system-status.service';
 import { DataList } from '../../../models/general';
-import { ToastService } from 'src/app/services/shared/toast.service';
+import { ToastService } from '../../../shared/services/toast.service';
 
 @Component({
   selector: 'app-system-status',

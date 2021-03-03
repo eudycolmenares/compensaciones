@@ -10,15 +10,23 @@ export class StorageService {
     (typeof(Storage)) ? this.supported = true : this.supported = false;
   }
 
-  setItem(item, value) {
+  setItem(itemBD, data) {
+    data = JSON.stringify(data);
     if(this.supported) {
-      localStorage.setItem(item, value);
+      localStorage.setItem(itemBD, data);
     }
   }
 
   getItem(item) {
     if(this.supported) {
-      return localStorage.getItem(item);
+      const data = localStorage.getItem(item);
+      return JSON.parse(data);
+    }
+  }
+
+  removeItem(itemBD) {
+    if(this.supported) {
+      localStorage.removeItem(itemBD);
     }
   }
 }

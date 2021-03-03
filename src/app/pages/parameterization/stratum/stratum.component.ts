@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { StratumService } from '../../../services/stratum/stratum.service';
 import { GeneralFunctionsService } from '../../../services/general-functions.service';
-import { ToastService } from '../../../services/shared/toast.service';
+import { ToastService } from '../../../shared/services/toast.service';
 import { strataApiModel, stratumModel, requestModel, responseModel } from '../../../models/stratum';
 import { ButtonsTable as Buttons, SelectStatus } from '../../../libraries/utilities.library';
 

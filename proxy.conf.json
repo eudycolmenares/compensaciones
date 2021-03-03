@@ -16,5 +16,11 @@
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
+  },
+  "/WsPortalUsuariosRest-web/*": {
+    "target": "http://100.126.0.150:11051",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
   }
 }

@@ -6,7 +6,7 @@ import { DataList } from '../../../models/general';
 import { GeneralFunctionsService } from '../../../services/general-functions.service';
 import { SettingsService } from '../../../services/settings/settings.service';
 import { StratumService } from '../../../services/stratum/stratum.service';
-import { ToastService } from '../../../services/shared/toast.service';
+import { ToastService } from '../../../shared/services/toast.service';
 import { requestSettingsModel as requestModel, settingModel, settingsApiModel } from '../../../models/settings';
 import { strataApiModel, stratumModel } from "../../../models/stratum";
 

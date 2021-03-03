@@ -7,7 +7,7 @@ import {
   ServicesSettings,
 } from '../../../libraries/utilities.library';
 import { DataList } from '../../../models/general';
-import { ToastService } from 'src/app/services/shared/toast.service';
+import { ToastService } from '../../../shared/services/toast.service';
 import { RrFailureValidationService } from 'src/app/services/rrFailureValidation/rr-failure-validation.service';
 import * as models from '../../../models/rr-failure-validation';
 

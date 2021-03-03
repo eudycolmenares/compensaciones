@@ -5,7 +5,7 @@ import { GeneralFunctionsService } from '../../../services/general-functions.ser
 import { DataList } from '../../../models/general';
 import { RrCompensatedAccountsService } from 'src/app/services/rrCompensatedAccounts/rr-compensated-accounts.service';
 import * as models from '../../../models/rr-compensated-accounts';
-import { ToastService } from 'src/app/services/shared/toast.service';
+import { ToastService } from '../../../shared/services/toast.service';
 
 @Component({
   selector: 'app-rr-compensated-accounts',

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 
 import { GeneralFunctionsService } from '../../../services/general-functions.service';
-import { ToastService } from '../../../services/shared/toast.service';
+import { ToastService } from '../../../shared/services/toast.service';
 import { FaultsService } from '../../../services/faults/faults.service';
 import { faultsApiModel } from '../../../models/faults';
 

@@ -9,7 +9,7 @@ import {
 } from '../../../libraries/utilities.library';
 import { MaintenanceOrdersCausesService } from 'src/app/services/maintenanceOrdersCauses/maintenance-orders-causes.service';
 import { DataList } from '../../../models/general';
-import { ToastService } from 'src/app/services/shared/toast.service';
+import { ToastService } from '../../../shared/services/toast.service';
 import {
   MaintenanceOrderCauseModel,
   RequestModel,

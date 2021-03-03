@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { StorageService } from '../../services/shared/storage.service';
+import { StorageService } from '../../shared/services/storage.service';
 import { itemsStorage } from '../../libraries/utilities.library';
 
 @Component({
@@ -14,7 +14,7 @@ export class DashboardComponent implements OnInit {
 
   constructor(private storageSvc: StorageService) {
     const checkMenu = this.storageSvc.getItem(itemsStorage.menu);
-    (checkMenu === null) ? this.opened = true : this.opened = (checkMenu === 'true');
+    (checkMenu === null || checkMenu === true) ? this.opened = true : this.opened = false;
   }
 
   ngOnInit(): void { }
