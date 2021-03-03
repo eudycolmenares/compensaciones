@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 
+import { AuthService } from '../../shared/services/auth.service';
+import { ResponseLoginModel as UserModel } from '../../models/users';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -11,10 +13,12 @@ export class HeaderComponent implements OnInit {
   @Input() opened: boolean;
   @Output() swToggle = new EventEmitter<boolean>();
   items: MenuItem[];
+  userData: UserModel = null;
 
-  constructor() { }
+  constructor(private authSvc: AuthService) { }
 
   ngOnInit(): void {
+    this.userData = this.authSvc.userData;
     this.items = [
       {
         label: 'Perfil',
@@ -35,9 +39,16 @@ export class HeaderComponent implements OnInit {
       },
       {
         label: 'Cerrar Sesión',
-        icon: 'pi pi-sign-out'
+        icon: 'pi pi-sign-out',
+        command: () => {
+          this.closeSession();
+        }
       }
-  ];
+    ]
+  }
+
+  closeSession() {
+    this.authSvc.logout();
   }
 
   toggleSidebar() {

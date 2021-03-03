@@ -1,9 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { GuestGuard } from './shared/guards/guest.guard';
+
 const ROUTES: Routes = [
   {
   	path: 'login',
+    canActivate: [GuestGuard],
     loadChildren: () => import('./pages/login/login.module').then(m => m.LoginModule),
 	},
 	{

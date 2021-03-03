@@ -28,6 +28,10 @@ export class AuthService {
     this.stgSvc.removeItem(itemsStorage.user)
   }
 
+  isAuthenticated() {
+    return (this.authState.value) ? true : false;
+  }
+
   public get userData() {
     return this.authState.value;
   }

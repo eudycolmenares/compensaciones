@@ -70,14 +70,4 @@ export class LoginComponent implements OnInit {
       })
     }
   }
-
-  // TEST
-  closeSession() {
-    console.log('closeSession()');
-    this.authSvc.logout();
-  }
-  getSession() {
-    console.log('getSession()');
-    console.log(this.authSvc.userData);
-  }
 }
