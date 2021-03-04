@@ -52,15 +52,13 @@ export class LoginComponent implements OnInit {
       return Object.values(this.form.controls).forEach(control => {
         control.markAsTouched();
       })
-    }else {
-      console.log('onSubmit()', this.form.value);
+    }else{
       const dataRequest: loginModel  = {
         usuario: this.form.get('usuario').value,
         password: this.form.get('password').value,
         idApp : "AT" // SETEADO
       }
       this.usersSvc.login(dataRequest).subscribe(resp => {
-        console.log('login() ', resp);
         if(resp.token_session !== '') {
           this.authSvc.login(resp);
           this.toastScv.showSuccess('Sesión iniciada corectamente.');

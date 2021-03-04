@@ -51,7 +51,6 @@ export class AppComponent {
 
   subscribeUserState() {
     this.authSvc.authState.subscribe(resp => {
-      console.log('APPCOMPONENT() Subscripcion: ', resp);
       if(resp !== null) {
         this.router.navigateByUrl('/dashboard')
       }else{

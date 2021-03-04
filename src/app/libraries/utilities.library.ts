@@ -160,3 +160,5 @@ export const languagePrimeNG = {
   "today": "Hoy",
   "weekHeader": "Wk"
 }
+
+export const timeExpirationMinutes = 15;

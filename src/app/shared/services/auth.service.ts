@@ -3,7 +3,10 @@ import { BehaviorSubject } from 'rxjs';
 
 import { StorageService } from '../services/storage.service';
 import { ResponseLoginModel as LoginModel } from '../../models/users';
-import { itemsStorage } from '../../libraries/utilities.library';
+import {
+  itemsStorage,
+  timeExpirationMinutes as timeExp
+} from '../../libraries/utilities.library';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +14,7 @@ import { itemsStorage } from '../../libraries/utilities.library';
 
 export class AuthService {
   authState = new BehaviorSubject<LoginModel>(null);
+  timeOutSesion = null;
 
   constructor(private stgSvc : StorageService) { }
 
@@ -21,9 +25,11 @@ export class AuthService {
 
   login(user: LoginModel) {
     this.setDataUser(user);
+    this.startMyTimeOut();
   }
 
   logout() {
+    this.clearMyTimeOut();
     this.setDataUser(<LoginModel>(null));
     this.stgSvc.removeItem(itemsStorage.user)
   }
@@ -34,5 +40,18 @@ export class AuthService {
 
   public get userData() {
     return this.authState.value;
+  }
+
+  startMyTimeOut() {
+    this.timeOutSesion = setTimeout(() => {
+      this.logout();
+    }, (timeExp * 60000) )
+  }
+  clearMyTimeOut() {
+    clearTimeout(this.timeOutSesion)
+  }
+  resetMyTimeOut() {
+    this.clearMyTimeOut();
+    this.startMyTimeOut();
   }
 }

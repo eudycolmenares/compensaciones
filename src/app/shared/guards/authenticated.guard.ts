@@ -8,7 +8,7 @@ import { AuthService } from '../services/auth.service';
   providedIn: 'root'
 })
 
-export class GuestGuard implements CanActivate {
+export class AuthenticatedGuard implements CanActivate {
 
   constructor(private authSvc: AuthService) {}
 
@@ -16,6 +16,7 @@ export class GuestGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
   {
-    return !this.authSvc.isAuthenticated();
+    this.authSvc.isAuthenticated() && this.authSvc.resetMyTimeOut();
+    return this.authSvc.isAuthenticated();
   }
 }

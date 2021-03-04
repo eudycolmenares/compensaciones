@@ -3,7 +3,7 @@ import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpResponse } fr
 import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators'
 
-import { LoadingService } from '../loading/loading.service';
+import { LoadingService } from '../../services/loading/loading.service';
 
 @Injectable()
 export class LoadingInterceptor implements HttpInterceptor {
@@ -18,7 +18,7 @@ export class LoadingInterceptor implements HttpInterceptor {
         return err;
       }))
       .pipe(map<HttpEvent<any>, any>((evt: HttpEvent<any>) => {
-        if (evt instanceof HttpResponse) {  
+        if (evt instanceof HttpResponse) {
           this.loadingSvc.setLoading(false, request.url);
         }
         return evt;
