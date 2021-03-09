@@ -14,7 +14,9 @@
             <div class="col-sm">
               <div class="input-group">
                 <div class="input-group-prepend">
-                  <span class="input-group-text bg-white" id="basic-addon1">&#9733;</span>
+                  <span class="input-group-text bg-white" id="basic-addon1">
+                    <i class="bi bi-person-fill"></i>
+                  </span>
                 </div>
                 <input type="text" class="form-control input-light"
                   placeholder="Nombre de usuario"
@@ -33,13 +35,21 @@
             <div class="col-sm">
               <div class="input-group">
                 <div class="input-group-prepend">
-                  <span class="input-group-text bg-white text-dark" id="basic-addon1">&#10070;</span>
+                  <span class="input-group-text bg-white text-dark" id="basic-addon1">
+                    <i class="bi bi-key-fill"></i>
+                  </span>
                 </div>
-                <input type="password" class="form-control input-light"
+                <input class="form-control input-light"
+                  [type]="iconShowHidePass === 'bi bi-eye-fill' ? 'password' : 'text'"
                   placeholder="Contraseña"
                   formControlName="password"
                   [class.is-invalid]="invalidPassword"
                 >
+                <div class="input-group-append">
+                  <span class="input-group-text" (click)="changeStylePass()">
+                    <i [class]="iconShowHidePass"></i>
+                  </span>
+                </div>
               </div>
             </div>
           </div>

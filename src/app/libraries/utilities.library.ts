@@ -122,7 +122,8 @@ export enum RRServicesFailure {
 
 export enum itemsStorage {
   menu = 'open_menu',
-  user = 'data_user'
+  user = 'data_user',
+  lastUser = 'last_user'
 }
 
 export const languagePrimeNG = {

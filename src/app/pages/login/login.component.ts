@@ -2,10 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { GeneralFunctionsService } from '../../services/general-functions.service';
+import { ToastService } from '../../shared/services/toast.service';
+import { StorageService } from '../../shared/services/storage.service';
 import { UsersService } from '../../services/users/users.service';
 import { AuthService } from '../../shared/services/auth.service';
 import { RequestLoginModel as loginModel } from '../../models/users';
-import { ToastService } from '../../shared/services/toast.service';
+import { itemsStorage } from '../../libraries/utilities.library';
 
 @Component({
   selector: 'app-login',
@@ -15,13 +17,15 @@ import { ToastService } from '../../shared/services/toast.service';
 
 export class LoginComponent implements OnInit {
   form: FormGroup;
+  iconShowHidePass = 'bi bi-eye-fill';
 
   constructor(
     private fb: FormBuilder,
     private gnrScv: GeneralFunctionsService,
     private usersSvc: UsersService,
     private toastScv: ToastService,
-    private authSvc: AuthService
+    private authSvc: AuthService,
+    private storageSvc: StorageService
   ) {
     this.createForm();
   }
@@ -30,10 +34,11 @@ export class LoginComponent implements OnInit {
   }
 
   createForm() {
-    this.form = this.fb.group({ // SETEADO
+    const lastUser = this.storageSvc.getItem(itemsStorage.lastUser);
+    this.form = this.fb.group({
       id: [''],
-      usuario: ['ECM8053I', [Validators.required, Validators.maxLength(20)]],
-      password: ['Holly_2095', [Validators.required, Validators.maxLength(40)]],
+      usuario: [(lastUser === null) ? '' : lastUser, [Validators.required, Validators.maxLength(20)]],
+      password: ['', [Validators.required, Validators.maxLength(40)]],
       idApp: [''],
     })
   }
@@ -62,10 +67,17 @@ export class LoginComponent implements OnInit {
         if(resp.token_session !== '') {
           this.authSvc.login(resp);
           this.toastScv.showSuccess('Sesión iniciada corectamente.');
+          this.storageSvc.setItem(itemsStorage.lastUser, dataRequest.usuario);
         }else{
           this.toastScv.showError(resp.estado);
         }
       })
     }
+  }
+
+  changeStylePass() {    
+    (this.iconShowHidePass === 'bi bi-eye-fill')
+      ? this.iconShowHidePass = 'bi bi-eye-slash-fill'
+      : this.iconShowHidePass = 'bi bi-eye-fill';
   }
 }
