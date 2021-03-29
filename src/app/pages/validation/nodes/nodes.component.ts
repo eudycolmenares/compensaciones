@@ -2,12 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { GeneralFunctionsService } from '../../../services/general-functions.service';
-import {
-  SelectCompensate,
-  ServicesSettings,
-} from '../../../libraries/utilities.library';
+import { ServicesSettings } from '../../../libraries/utilities.library';
 import { NodesValidationService } from 'src/app/services/nodes-validation/nodes-validation.service';
 import { DataList } from '../../../models/general';
+import * as models from '../../../models/nodes-validation';
 import { ToastService } from '../../../shared/services/toast.service';
 
 @Component({
@@ -17,7 +15,6 @@ import { ToastService } from '../../../shared/services/toast.service';
 })
 export class NodesComponent implements OnInit {
   nodeForm: FormGroup;
-  selectYesNo: DataList[] = [];
   selectService: DataList[] = [];
 
   // table
@@ -36,7 +33,7 @@ export class NodesComponent implements OnInit {
     {
       name: 'nodeDuration',
       description: 'Duración',
-      validation: '',
+      validation: 'time-min',
     },
     {
       name: 'state',
@@ -44,27 +41,27 @@ export class NodesComponent implements OnInit {
       validation: '',
     },
     {
-      name: 'stateDesc',
+      name: 'userObservation',
       description: 'Observación',
       validation: 'observation',
     },
     {
       name: 'compensatesInt',
       description: 'Internet',
-      validation: 'service',
+      validation: 'yes-no-x',
     },
     {
       name: 'compensatesTel',
-      description: 'Telefonía',
-      validation: 'service',
+      description: 'Compensa TelefonÍa',
+      validation: 'yes-no-x',
     },
     {
       name: 'compensatesTv',
-      description: 'Telvisión',
-      validation: 'service',
-    },
+      description: 'Compensa Televisión',
+      validation: 'yes-no-x',
+    }
   ];
-  changeIconVlidation = true;
+  changeIconValidation = true;
 
   constructor(
     private _fb: FormBuilder,
@@ -97,21 +94,27 @@ export class NodesComponent implements OnInit {
   }
 
   initializeVariables() {
-    for (const i of Object.entries(SelectCompensate)) {
-      this.selectYesNo.push({ key: i[1], value: i[0] });
-    }
     for (const i of Object.entries(ServicesSettings)) {
       this.selectService.push({ key: i[0], value: i[1] });
     }
-    this.initialCharge(); // table
+
+    this.initialCharge();
   }
 
   initialCharge() {
-    this._nodesSvc.allNodesValidation().subscribe((resp: any) => {
-      this.dataToTable = resp.tblMaximoInc;
-      console.log(this.dataToTable);
-
-    });
+    this._nodesSvc
+        .allApprovedNodes()
+        .subscribe((resp: models.NodesValidationApiModel) => {
+          this.dataToTable = resp.tblMaximum.filter(
+            (data) =>
+              (data.srInternet === 1 &&
+                this.nodeForm.get('services').value.key === 'internet') ||
+              (data.srTv === 1 &&
+                this.nodeForm.get('services').value.key === 'television') ||
+              (data.srVoz === 1 &&
+                this.nodeForm.get('services').value.key === 'telephone')
+          );
+        });
   }
 
   onSubmit() {
@@ -125,31 +128,81 @@ export class NodesComponent implements OnInit {
     }
   }
 
-  approvedNode(node) {}
-  rejectedQualityNode(node) {
-    if (node.observations === '') {
-      this._toastScv.showError(
-        'Debe ingresar un comentario en el campo de observación'
-      );
-    } else {
-      console.log(node);
-    }
+  approvedNode(node) {
+    let data: models.RequestModel = {
+      tblMaximum: {
+        ...node,
+        revision: 'APROBADO',
+      },
+    };
+
+    this._nodesSvc
+      .updateNodeValidation(data)
+      .subscribe((resp: models.ResponseModel) => {
+        this.messageToCustomer(resp);
+      });
+
+    this.initialCharge();
   }
-  rejectedNode(node) {
-    if (node.observations === '') {
+
+  rejectedQualityNode(node) {
+    if (node.userObservation === '' || node.userObservation === undefined) {
       this._toastScv.showError(
         'Debe ingresar un comentario en el campo de observación'
       );
     } else {
-      console.log(node);
+      let data: models.RequestModel = {
+        tblMaximum: {
+          ...node,
+          revision: 'RECHAZADO CALIDAD',
+        },
+      };
+
+      this._nodesSvc
+        .updateNodeValidation(data)
+        .subscribe((resp: models.ResponseModel) => {
+          this.messageToCustomer(resp);
+        });
+
+      this.initialCharge();
     }
   }
 
-  cleanForm() {
-    this.nodeForm.reset({
-      currentlyUse: '',
-      maintenance: '',
-      compensation: '',
-    });
+  rejectedNode(node: models.NodesValidationModel) {
+    if (node.userObservation === '' || node.userObservation === undefined) {
+      this._toastScv.showError(
+        'Debe ingresar un comentario en el campo de observación'
+      );
+    } else {
+      let data: models.RequestModel = {
+        tblMaximum: {
+          ...node,
+          revision: 'RECHAZADO',
+        },
+      };
+
+      this._nodesSvc
+        .updateNodeValidation(data)
+        .subscribe((resp: models.ResponseModel) => {
+          this.messageToCustomer(resp);
+        });
+
+      this.initialCharge();
+    }
+  }
+
+  messageToCustomer(resp: models.ResponseModel) {
+    if (resp.generalResponse.code === '0') {
+      this._toastScv.showSuccess(
+        resp.generalResponse.messageCode,
+        resp.generalResponse.descriptionCode
+      );
+      // this.reloadTableData();
+    } else {
+      this._toastScv.showError(
+        resp.generalResponse.messageCode,
+        resp.generalResponse.descriptionCode
+      );
+    }
   }
 }

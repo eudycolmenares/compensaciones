@@ -1,30 +1,72 @@
 export interface NodesValidationModel {
-  id?: number;
-  useActually: string;
+  incidence: string;
+  incidenceDesc: string;
+  state: string;
+  stateDesc: string;
+  ciPpal: string;
+  principalCi: string;
+  techniqueUbi: string;
   cause: string;
-  diagnosticDescription: string;
-  maintenance: string;
-  affectedService: string;
-  compensation: string;
-  internet: number;
-  phone: number;
-  television: number;
-  state: number;
+  causeDesc: string;
+  anomaliaClass: string;
+  anomaliaClassDesc: string;
+  problem: string;
+  problemDesc: string;
+  classificationCod: string;
+  problDescCod: string;
+  resolution: string;
+  resolutionDesc: string;
+  priority: number;
+  nodeAdic: string;
+  CreationDate: Date;
+  dateResolution: Date;
+  timeCreation: string;
+  timeResolution: string;
+  incidenceDuration: number;
+  dateInNode: Date;
+  dateEndNode: Date;
+  timeInNode: string;
+  timeEndNode: string;
+  nodeDuration: number;
+  Department: string;
+  municipality: string;
+  responsibleAreaCode: string;
+  sds: string;
+  createdBy: string;
+  descriptionCreatedBy: string;
+  teamAddress: string;
+  responsibleIng: string;
+  descriptionIngResponsible: string;
+  externalTicket: string;
+  excluded: number;
+  mExcluded: string;
+  online: number;
+  compensatesTv: string;
+  compensatesInt: string;
+  compensatesTel: string;
+  log: string;
+  revision: string;
+  srTv: number;
+  srInternet: number;
+  srVoz: number;
+  originType: string;
+  userObservation: string;
 }
 
 interface GeneralResponse {
-  code?: number;
-  description?: string;
+  code: string;
+  descriptionCode: string;
+  messageCode: string;
 }
 export interface ResponseModel {
-  response: GeneralResponse;
+  generalResponse: GeneralResponse;
 }
 
 export interface NodesValidationApiModel {
-  list: NodesValidationModel[];
-  response: GeneralResponse;
+  tblMaximum: NodesValidationModel[];
+  generalResponse: GeneralResponse;
 }
 
 export interface RequestModel {
-  list: NodesValidationModel;
+  tblMaximum: NodesValidationModel;
 }

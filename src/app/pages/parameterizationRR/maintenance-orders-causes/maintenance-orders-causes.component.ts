@@ -137,6 +137,8 @@ export class MaintenanceOrdersCausesComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log(this.MOCauseForm.value);
+    
     if (this.MOCauseForm.invalid) {
       return Object.values(this.MOCauseForm.controls).forEach((control) => {
         control.markAsTouched();

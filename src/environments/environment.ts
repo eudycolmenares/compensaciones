@@ -2,6 +2,10 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+let Url_WSCompensations = '/WSCompensaciones-web/webresources/WSCompensaciones/';
+let Url_WSBilling = '/WSCompensaciones-web/webresources/WSBilling/';
+let Url_WSCompensationsBatchRR = '/WSCompensacionesBatchRR-web/webresources/WSBilligRR/';
+
 export const environment = {
   production: false,
   URL_API: '/WSCompensaciones-web/webresources/WSCompensaciones/',
@@ -135,6 +139,39 @@ export const environment = {
     user_login: 'autentica',
     // Processes Rules
     nodes_rules: 'NodesRulesService/run',
+  },
+
+  
+  // RR - parameterization - billing periods
+  BillingPeriods: {
+    url: Url_WSBilling,
+    endpoints: {
+      readAll: 'BillingPeriodsService/read/all',
+      create: 'BillingPeriodsService/create',
+      update: 'BillingPeriodsService/update',
+      delete: 'BillingPeriodsService/delete',
+    },
+  },
+
+  // RR - validation - node
+  NodesValidation: {
+    url: Url_WSCompensations,
+    endpoints: {
+      // read all nodes
+      readAll: 'MaximoService/readAll',
+      // read all nodes approved
+      readAllApproved: 'MaximoService/readAllApproved',
+      // update
+      update: 'MaximoService/update',
+    },
+  },
+
+  // RR - Billing - RR Compensated Accounts
+  compensatedAccounts: {
+    url: Url_WSCompensationsBatchRR,
+    endpoints: {
+      run: 'BillingService/run',
+    },
   },
 };
 

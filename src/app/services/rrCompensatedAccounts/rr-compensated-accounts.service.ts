@@ -329,4 +329,14 @@ export class RrCompensatedAccountsService {
       }
     );
   }
+
+
+  allCompensationRun(): Observable<any> {
+    return this._http.post<any>(
+      env.compensatedAccounts.url + env.compensatedAccounts.endpoints.run,
+      {
+        headers: this.headers,
+      }
+    );
+  }
 }

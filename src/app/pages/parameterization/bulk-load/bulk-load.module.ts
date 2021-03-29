@@ -17,7 +17,6 @@ import { DropdownModule } from 'primeng/dropdown';
     ConfirmDialogModule,
     DropdownModule,
   ],
-  exports: [BulkLoadComponent],
   providers: [ConfirmationService],
 })
 export class BulkLoadModule {}
