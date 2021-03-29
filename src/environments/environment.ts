@@ -11,6 +11,7 @@ export const environment = {
   urlApi_billingRR: '/WSCompensacionesBatchRR-web/webresources/WSFacturacionRR/',
   urlApi_rentsRR: '/WSCompensacionesBatchRR-web/webresources/WSRentasRR/',
   urlApi_users: '/WsPortalUsuariosRest-web/ws/WsPortalUsuariosRest/',
+  urlApi_rules: '/WSCompensaciones-web/webresources/WSNodesRules/',
   endpoints: {
     // Settings
     settings_all: 'SettingsService/read/all',
@@ -131,7 +132,9 @@ export const environment = {
     account_rent_update: 'AccountRentService/update',
     account_rent_delete: 'AccountRentService/delete',
     // Users
-    user_login: 'autentica'
+    user_login: 'autentica',
+    // Processes Rules
+    nodes_rules: 'NodesRulesService/run',
   },
 };
 

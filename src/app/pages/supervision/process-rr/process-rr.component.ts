@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 
+import { ProcessesService } from '../../../services/processes/processes.service';
+
 @Component({
   selector: 'app-process-rr',
   templateUrl: './process-rr.component.html',
   styleUrls: ['./process-rr.component.scss']
 })
+
 export class ProcessRRComponent implements OnInit {
   stages = [
     {
@@ -35,7 +38,7 @@ export class ProcessRRComponent implements OnInit {
     }
   ];
 
-  constructor() { }
+  constructor(private processesSvc: ProcessesService) { }
   stageSelected = 2;
 
   ngOnInit(): void {
@@ -44,6 +47,12 @@ export class ProcessRRComponent implements OnInit {
   changeStage(stage) {
     console.log('changeState()', stage);
     this.stageSelected = stage.stage;
+  }
 
+  runRuleNodes() {
+    this.processesSvc.runNodesRules().subscribe(resp => {
+      console.log('runNodesRules()', resp);
+
+    })
   }
 }

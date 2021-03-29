@@ -12,7 +12,7 @@ import {
 import {
   responseAccountsModel,
   requestAccountRentModel as requestAccountModel,
-  accountRentModel as accountModel
+  accountRentModel as accountModel,
 } from '../../../models/accounts-rents-rr';
 import { GeneralFunctionsService } from '../../../services/general-functions.service';
 
@@ -25,7 +25,7 @@ import { GeneralFunctionsService } from '../../../services/general-functions.ser
 export class DownloadComponent implements OnInit {
   // table
   dataToTableNodes: nodeModel[];
-  dataToTableAccounts: object[];
+  dataToTableAccounts: accountModel[];
   structureNodes: object[] = [
     {
       name: 'node',
@@ -66,14 +66,23 @@ export class DownloadComponent implements OnInit {
     this.cleanForm();
     if(caseUse === 'node' || caseUse === '') {
       this.nodesSvc.allNodesRents().subscribe((resp: responseModel) => {
-        console.log('allNodes() ', resp);
-        this.dataToTableNodes = resp.NodesRents.NodeRent;
+        this.dataToTableNodes = resp.NodesRents.NodeRent.map(node => (
+          {
+            id: node,
+            node: node
+          }
+        ));
       });
     }
     if(caseUse === 'account' || caseUse === '') {
       this.accountSvc.allAccounts().subscribe((resp: responseAccountsModel) => {
-        console.log('allAccounts() ', resp);
-        this.dataToTableAccounts = resp.AccountsRents.AccountRent;
+        // this.dataToTableAccounts = resp.AccountsRents.AccountRent;
+        this.dataToTableAccounts = resp.AccountsRents.AccountRent.map(account => (
+          {
+            id: account,
+            account:  (Math.trunc(parseInt(account))).toString()
+          }
+        ));
       });
     }
   }
@@ -110,8 +119,6 @@ export class DownloadComponent implements OnInit {
         control.markAsTouched();
       })
     }else {
-      console.log('crear data request!');
-
       // const servicesSelected = this.formStgs.get('services').value;
       const dataRequest: requestModel = {
         'NodeRent': {
@@ -148,7 +155,6 @@ export class DownloadComponent implements OnInit {
     })
   }
   updateNode(node: nodeModel) {
-    console.log('updateNode: ', node);
     this.setFormNode(node);
     this.actionFormNode = 'update';
   }
@@ -211,7 +217,6 @@ export class DownloadComponent implements OnInit {
     })
   }
   updateAccount(account: accountModel) {
-    console.log('updateAccount: ', account);
     this.setFormAccount(account);
     this.actionFormAccount = 'update';
   }
@@ -234,7 +239,6 @@ export class DownloadComponent implements OnInit {
   }
 
   generateFile(caseUse: string) {
-    console.log('generateFile() > ', caseUse);
     let content = '';
     let namefile = '';
     switch (caseUse) {

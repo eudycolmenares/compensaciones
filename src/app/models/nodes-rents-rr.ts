@@ -14,11 +14,11 @@ interface generalResponse {
 }
 
 interface NodeRent {
-  NodeRent: nodeRentModel[]
+  NodeRent: string[]
 }
 
 export interface nodeRentModel {
-  id?: number;
+  id?: string;
   node: string;
   date?: Date;
 }

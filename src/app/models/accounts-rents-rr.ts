@@ -10,11 +10,11 @@ interface generalResponse {
 }
 
 interface AccountRent {
-  AccountRent: accountRentModel[]
+  AccountRent: string[]
 }
 
 export interface accountRentModel {
-  id?: number;
+  id?: string;
   account: string;
   date?: Date;
 }

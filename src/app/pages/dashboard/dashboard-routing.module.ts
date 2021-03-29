@@ -9,7 +9,7 @@ const ROUTES: Routes = [
     path: '',
     component: DashboardComponent,
     children: [
-      { path: '', pathMatch: 'full', redirectTo: 'nodes-validation' },
+      { path: '', pathMatch: 'full', redirectTo: 'nodes-validation' }, // seteo nodes-validation
       {
         path: 'settings',
         canActivate: [AuthenticatedGuard],
