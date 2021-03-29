@@ -1,5 +1,8 @@
 <section class="section-navbar">
   <div class="nav-head text-center mb-5">
+    <div class="section-date">
+      <p>{{ dateSystem | date:'fullDate' }}</p>
+    </div>
     <img src="assets/img/logo-claro-blanco.svg" alt="" srcset="">
   </div>
   <p-panelMenu [model]="items" [multiple]="false"></p-panelMenu>

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { MenuItem } from 'primeng/api';
-import { validateLocaleAndSetLanguage } from 'typescript';
+// import { validateLocaleAndSetLanguage } from 'typescript';
 
 @Component({
   selector: 'app-navbar',
@@ -13,6 +13,7 @@ export class NavbarComponent implements OnInit {
   @Input() opened: boolean;
   @Output() swToggle = new EventEmitter<boolean>();
   items: MenuItem[];
+  dateSystem = new Date();
 
   constructor() { }
 
