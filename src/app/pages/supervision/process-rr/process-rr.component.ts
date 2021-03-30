@@ -21,7 +21,7 @@ export class ProcessRRComponent implements OnInit {
     },{
       stage: 3,
       status: 'notcompleted', // completed | process | notcompleted
-      title: 'Cargue archivos Fallas RR',
+      title: 'Reglas de Negocio RR',
     },
     {
       stage: 4,
