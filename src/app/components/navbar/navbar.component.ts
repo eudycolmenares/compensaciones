@@ -93,6 +93,12 @@ export class NavbarComponent implements OnInit {
                 icon:'pi pi-fw pi-search',
                 routerLink: ['/dashboard/orders-symptoms']
               },
+              {
+                label: 'Periodos de facturación',
+                title: 'Periodos de facturación',
+                icon:'bi bi-calendar2-week',
+                routerLink: ['/dashboard/billing-periods']
+              },
             ]
           },
           {

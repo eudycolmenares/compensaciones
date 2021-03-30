@@ -66,6 +66,11 @@ const ROUTES: Routes = [
         loadChildren: () => import('../parameterizationRR/maintenance-orders-causes/maintenance-orders-causes.module').then(m => m.MaintenanceOrdersCausesModule),
       },
       {
+        path: 'billing-periods',
+        canActivate: [AuthenticatedGuard],
+        loadChildren: () => import('../parameterization/billing-periods/billing-periods.module').then(m => m.BillingPeriodsModule),
+      },
+      {
         path: 'rr-failure-validation',
         canActivate: [AuthenticatedGuard],
         loadChildren: () => import('../parameterizationRR/rr-failure-validation/rr-failure-validation.module').then(m => m.RrFailureValidationModule),

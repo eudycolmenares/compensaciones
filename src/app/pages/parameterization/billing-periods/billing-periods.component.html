@@ -1,0 +1,57 @@
+<section class="container py-3" id="editScrollTop">
+  <app-breadcrumb></app-breadcrumb>
+  <div class="container-add">
+    <form
+      autocomplete="off"
+      [formGroup]="billingPeriodForm"
+      (ngSubmit)="onSubmit()"
+    >
+      <div class="formLayout">
+        <div class="formSection">
+          <div class="formLabel">Fechas de facturación (*)</div>
+          <div class="formField">
+            <p-calendar
+              formControlName="billingDate"
+              placeholder="dd/mm/yyyy"
+              dateFormat="dd/mm/yy"
+              [monthNavigator]="true"
+              [yearNavigator]="true" yearRange="1980:2050"
+              selectionMode="range" 
+              [readonlyInput]="true"
+            ></p-calendar>
+            <small *ngIf="this.invalidFieldForm('billingDate')">
+              {{ textsFormInvalid("billingDate") }}
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <div class="formLayout">
+        <div class="actionsButtons">
+          <button type="submit" class="btn btn-primary mr-3 btn-sm">
+            {{ actionForm === "create" ? "Crear" : "Actualizar" }}
+          </button>
+          <button
+            type="button"
+            class="btn btn-secondary btn-sm"
+            (click)="cleanForm()"
+          >
+            Limpiar
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <hr />
+
+  <app-table
+    [dataBase]="dataToTable"
+    [structure]="structure"
+    (editRecord)="updateBillingPeriod($event)"
+    (deleteRecord)="deleteBillingPeriod($event)"
+    [buttons]="['edit', 'delete']"
+  >
+    ></app-table
+  >
+</section>

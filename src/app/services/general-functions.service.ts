@@ -42,4 +42,15 @@ export class GeneralFunctionsService {
       ? 'El campo supera lo permitido'
       : '';
   }
+
+  formatDate(template, customDate) {
+    var specs = 'YYYY:MM:DD:HH:mm:ss'.split(':');
+    var date = new Date(customDate);
+    return date
+      .toISOString()
+      .split(/[-:.TZ]/)
+      .reduce(function (template, item, i) {
+        return template.split(specs[i]).join(item);
+      }, template);
+  }
 }

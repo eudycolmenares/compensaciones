@@ -3,7 +3,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { environment as env } from 'src/environments/environment';
-import {} from '../../models/maintenance-orders-causes';
+import {
+  NodesValidationApiModel,
+  ResponseModel,
+  RequestModel
+} from '../../models/nodes-validation';
 
 @Injectable({
   providedIn: 'root',
@@ -17,42 +21,31 @@ export class NodesValidationService {
 
   constructor(private _http: HttpClient) {}
 
-  allNodesValidation() {
-    return this._http.get<any>(
-      env.URL_API + env.endpoints.validationNodes_read,
+  allNodesValidation(): Observable<NodesValidationApiModel> {
+    return this._http.get<NodesValidationApiModel>(
+      env.NodesValidation.url + env.NodesValidation.endpoints.readAll,
       {
         headers: this.headers,
       }
     );
   }
 
-  createNodeValidation(body: any): Observable<any> {
-    console.log('body', body);
+  allApprovedNodes(): Observable<NodesValidationApiModel> {
+    return this._http.get<NodesValidationApiModel>(
+      env.NodesValidation.url + env.NodesValidation.endpoints.readAllApproved,
+      {
+        headers: this.headers,
+      }
+    );
+  }
 
-    return this._http.post<any>(
-      env.URL_API + env.endpoints.maintenanceOrderCause_create,
+  updateNodeValidation(body: RequestModel): Observable<ResponseModel> {
+    return this._http.put<ResponseModel>(
+      env.NodesValidation.url + env.NodesValidation.endpoints.update,
       body,
       {
         headers: this.headers,
       }
-    );
-  }
-
-  updateNodeValidation(body: any): Observable<any> {
-    console.log('body', body);
-
-    return this._http.put<any>(
-      env.URL_API + env.endpoints.maintenanceOrderCause_update,
-      body,
-      {
-        headers: this.headers,
-      }
-    );
-  }
-
-  deleteNodeValidation(): Observable<any> {
-    return this._http.delete<any>(
-      env.URL_API + env.endpoints.maintenanceOrderCause_delete
     );
   }
 }

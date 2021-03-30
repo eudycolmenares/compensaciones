@@ -65,15 +65,20 @@ export class TableComponent implements OnInit {
   // modal
 
   openModal(item: object) {
-    this.confirmationSvc.confirm({
-      message: `Toda la información asociada a este registro se eliminará de forma permanente. Esta operación no se puede deshacer.`,
-      header: '¿Estás seguro de que deseas eliminar este registro?',
-      icon: 'pi pi-info-circle',
-      accept: () => {
-        this.sendDataToDelete(item);
-      },
-      reject: () => { },
-      key: this.randomKey
-    });
+    if (this.validation){
+      this.sendDataToDelete(item);
+    } else {
+      this.confirmationSvc.confirm({
+        message: `Toda la información asociada a este registro se eliminará de forma permanente. Esta operación no se puede deshacer.`,
+        header: '¿Estás seguro de que deseas eliminar este registro?',
+        icon: 'pi pi-info-circle',
+        accept: () => {
+          this.sendDataToDelete(item);
+        },
+        reject: () => { },
+        key: this.randomKey
+      });
+    }
+
   }
 }

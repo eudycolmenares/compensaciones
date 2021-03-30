@@ -16,6 +16,7 @@ export class RrCompensatedAccountsComponent implements OnInit {
   currentDate: Date = new Date();
   nameSelectedTable: string;
   selectTableList: DataList[];
+  totalCompensationValue: string = '';
 
   // forms
   rrCompensatedAccountsForm: FormGroup;
@@ -149,6 +150,10 @@ export class RrCompensatedAccountsComponent implements OnInit {
       { key: 'TCAAUF00', value: 'TCAAUF00' },
       { key: 'NotasCompensacion', value: 'Notas_Compensacion' },
     ];
+
+    this._RrCompensatedAccountsScv.allCompensationRun().subscribe((resp: any) => {
+      this.totalCompensationValue = resp.totalCompensationValue;
+    });
   }
 
   selectedTable(selectedTable: string) {
@@ -449,7 +454,7 @@ export class RrCompensatedAccountsComponent implements OnInit {
       return;
     }
 
-    const separator = '   ';
+    const separator = ';';
     const keys = this.columNames.english;
     const keysSpanish = this.columNames.spanish;
     const csvContent =
