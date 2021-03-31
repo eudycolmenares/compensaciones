@@ -167,3 +167,60 @@ export const languagePrimeNG = {
 }
 
 export const timeExpirationMinutes = 15;
+
+export const bodyMailService = {
+  "headerRequest" : {
+    "transactionId" : "transactionId431",
+    "system" : "system432",
+    "user" : "user433",
+    "password" : "password434",
+    "requestDate" : "2018-03-06T11:29:01.410",
+    "ipApplication" : "ipApplication435",
+    "traceabilityId" : "traceabilityId436"
+  },
+  "message" : `{
+    \"pushType\": \"SINGLE\",
+    \"typeCostumer\": \"9F1AA44D-B90F-E811-80ED-FA163E10DFBE\",
+    \"messageBox\": [
+      {
+        \"messageChannel\": \"SMTP\",
+        \"messageBox\": [
+          {
+            \"customerId\": \"9F1AA44D-B90F-E811-80ED-FA163E10DFBE\",
+            \"customerBox\": \"$$MAIL$$\"
+          }
+        ]
+      }
+    ],
+    \"profileId\": [\"SMTP_FS_TCRM1\",\"SMS_FS_TCRM1\"],
+    \"communicationType\": [\"REGULATORIO\"],
+    \"communicationOrigin\": \"TCRM\",
+    \"deliveryReceipts\": \"NO\",
+    \"contentType\": \"MESSAGE\",
+    \"messageContent\": \"$$CONTENT$$\"
+  }]}`
+};
+
+export const superProcessParams = {
+  email: {
+    exps: [
+      {
+        exp: '$$MAIL$$',
+        description: 'Correo a reemplazar',
+        content: 'eudy.colmenares@novatec.com.co'
+      },
+      {
+        exp: '$$CONTENT$$',
+        description: 'Contenido del Mensaje',
+        content: '¡Etapa del Proceso de Supervisión ejecutada satisfactoriamente!'
+      }
+    ]
+  },
+  confirByStages: {
+    1: {
+      header: '¿Estás seguro de que deseas ejecutar las Reglas para Nodos?',
+      msg: `Luego deberá dirigirse al módulo de Validación de Nodos para validar los datos,
+        y luego volver a Supervisión y en la etapa 2 confirmar la validación de Nodos.`
+    }
+  }
+}

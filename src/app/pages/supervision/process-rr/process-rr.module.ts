@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 // import { NgbDropdownModule } from "@ng-bootstrap/ng-bootstrap";
 
 import { ProcessRRRoutingModule } from './process-rr-routing.module';
@@ -12,6 +13,7 @@ import { ComponentsModule } from '../../../components/components.module';
     CommonModule,
     ProcessRRRoutingModule,
     ComponentsModule,
+    ConfirmDialogModule,
     // NgbDropdownModule
   ],
   exports: [ProcessRRComponent],

@@ -8,20 +8,22 @@
           <div class="step-item" (click)="changeStage(stage)">
             <div class="step-item-icon step-item-icon-process"
               [ngClass]=" {
-                'step-item-icon-process':stage.status == 'process',
-                'step-item-icon-notcompleted':stage.status == 'notcompleted',
-                'step-item-icon-completed':stage.status == 'completed'
+                'step-item-icon-process':stage.status == 1 && stage.stage == stageSelected,
+                'step-item-icon-notcompleted':stage.status == 0,
+                'step-item-icon-completed':stage.status == 1 && stage.stage != stageSelected
               }"
             >{{ i + 1 }}</div>
-            <div class="step-item-content">
+            <div class="step-item-content" [ngClass]="{'selected-item': stage.stage == stageSelected}">
+              <label class="title">{{ stage.title }}</label>
               <ng-container ng-switch="myVar">
                 <ng-container [ngSwitch]="stage.status">
-                  <label class="title" *ngSwitchCase="'completed'">Completado</label>
+                  <label class="title" *ngSwitchCase="1">Completado</label>
                   <label class="title" *ngSwitchCase="'process'">En proceso</label>
-                  <label class="title" *ngSwitchCase="'notcompleted'">No completado</label>
+                  <label class="subtitle" *ngSwitchCase="0">No completado</label>
+                  <!-- <span class="badge badge-light">No Completado</span> -->
                 </ng-container>
               </ng-container>
-              <label class="subtitle">{{ stage.title }}</label>
+
             </div>
             <ng-container *ngIf="i+1 !== stages.length">
               <div class="step-item-bar" [ngClass]=" {
@@ -34,16 +36,24 @@
       </div>
       <div class="col-sm-8 col-md-9 text-center container-stages">
         <ng-container [ngSwitch]="stageSelected">
+
+          <!-- STEP 1 -->
           <ng-container *ngSwitchCase="1">
-            <div class="alert alert-success" role="alert">
+            <div *ngIf="stages[stageSelected -1].status == 1" class="alert alert-success" role="alert">
               ¡El proceso ejecución reglas para Nodos ha sido completado!
+            </div>
+            <div *ngIf="stages[stageSelected -1].status == 0" class="alert alert-secondary" role="alert">
+              ¡El proceso ejecución de reglas para Nodos no se ha ejecutado!
             </div>
             <div class="row text-light text-center mt-4">
               <div class="col-sm container-buttons">
-                <button type="button" (click)="runRuleNodes()" class="btn btn-primary btn-sm">Ejecutar Reglas</button>
+                <button type="button" (click)="openModal()" [disabled]="stages[stageSelected -1].status == 1" class="btn btn-primary btn-sm">
+                  Ejecutar Reglas
+                </button>
               </div>
             </div>
           </ng-container>
+
           <ng-container *ngSwitchCase="2">
             <p>¡Por favor seleccione estado del proceso Validación de Nodos!</p>
             <div ngbDropdown class="d-inline-block">
@@ -55,6 +65,7 @@
               </div>
             </div>
           </ng-container>
+
           <ng-container *ngSwitchCase="3">
             <!-- <p>¡Por favor indique el estado del proceso de Carga de Archivos de Fallas RR!</p> -->
             <div class="alert alert-warning" role="alert">
@@ -75,6 +86,7 @@
   </div>
 
   <hr class="mt-5 mb-5" />
-
-  <!-- <app-table [dataBase]="dataToTable" [structure]="structure" (editRecord)="updateOrigin($event)" (disableRecord)="disableOrigin($event)" (deleteRecord)="deleteOrigin($event)"></app-table> -->
 </section>
+
+<p-confirmDialog [key]="randomKey" rejectLabel="Cancelar" acceptLabel="Aceptar">
+</p-confirmDialog>
