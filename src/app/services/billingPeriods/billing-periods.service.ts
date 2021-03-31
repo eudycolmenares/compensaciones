@@ -10,6 +10,7 @@ import {
 } from '../../models/billing-periods';
 import { GeneralFunctionsService } from '../../services/general-functions.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
+import { promise } from 'selenium-webdriver';
 
 @Injectable({
   providedIn: 'root',
@@ -38,43 +39,38 @@ export class BillingPeriodsService {
     );
   }
 
-  validationBillingPeriods(): Observable<any> {
-    let dateNow = new Date().setHours(0,0,0,0);
-
-    this.allBillingPeriods().subscribe(async (resp: BillingPeriodsApiModel) => {
-      try {
-        this.currentPeriod = await resp.tblBillingPeriods.filter(
+  validationBillingPeriods(): Promise<any> {
+    const promise = new Promise((resol, reject) => {
+      const  dateNow = new Date().setHours(0,0,0,0);
+      this.allBillingPeriods().subscribe((resp: BillingPeriodsApiModel) => {
+        this.currentPeriod = resp.tblBillingPeriods.filter(
           (data) =>
             dateNow >= this._gnrScv.formatDate_billingPeriods(data.startDate).setHours(0,0,0,0) &&
             dateNow <= this._gnrScv.formatDate_billingPeriods(data.endDate).setHours(23,59,59,999)
         );
-        
-      } catch (error) {
-        console.log(error);
-      }
-    });
-
-        let DataNumber = this.currentPeriod.length;
-
+        const DataNumber = this.currentPeriod.length;
         if (DataNumber > 0) {
-          return Object({
+          resol({
             exists: true,
             message: 'Existe un periodo de facturación en curso',
             currentPeriod: this.currentPeriod[DataNumber-1],
           });
+        } else {
+          reject({
+            exists: false,
+            message: 'No existe un periodo de facturación en curso',
+            currentPeriod: this.currentPeriod,
+          });
         }
-
-        return Object({
-          exists: false,
-          message: 'No existe un periodo de facturación en curso',
-          currentPeriod: this.currentPeriod,
-        });
+      });
+    });
+    return promise;
   }
 
   createBillingPeriod(body: RequestModel): Observable<ResponseModel> {
     let responseValidation: any = this.validationBillingPeriods();
     console.log('responseValidation', responseValidation);
-    
+
     if (responseValidation['exists']) {
       this._toastScv.showError('', responseValidation['message']);
       return;
