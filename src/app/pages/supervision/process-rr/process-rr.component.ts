@@ -61,10 +61,7 @@ export class ProcessRRComponent implements OnInit {
     }
   stageSelected = 1;
 
-  ngOnInit(): void {
-    console.log('??? ', this.stages[this.stageSelected -1]);
-
-  }
+  ngOnInit(): void { }
 
   changeStage(stage) {
     console.log('changeState()', stage);

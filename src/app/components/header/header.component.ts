@@ -1,8 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 
+import { BillingPeriodsService } from '../../services/billingPeriods/billing-periods.service';
 import { AuthService } from '../../shared/services/auth.service';
 import { ResponseLoginModel as UserModel } from '../../models/users';
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -15,9 +17,13 @@ export class HeaderComponent implements OnInit {
   items: MenuItem[];
   userData: UserModel = null;
 
-  constructor(private authSvc: AuthService) { }
+  constructor(
+    private authSvc: AuthService,
+    private periods: BillingPeriodsService,
+  ) { }
 
   ngOnInit(): void {
+    this.currentPeriod();
     this.userData = this.authSvc.userData;
     this.items = [
       {
@@ -45,6 +51,14 @@ export class HeaderComponent implements OnInit {
         }
       }
     ]
+  }
+
+  currentPeriod() {
+    const period = this.periods.validationBillingPeriods();
+    period.then(resp => {
+      console.log('Respuesta promesa: ', resp);
+
+    }).catch(err => {})
   }
 
   closeSession() {

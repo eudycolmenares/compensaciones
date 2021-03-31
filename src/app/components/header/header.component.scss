@@ -18,4 +18,12 @@
   .btn:focus {
     box-shadow: none;
   }
+  p {
+    margin: 0;
+  }
+  .period {
+    font-style: italic;
+    font-size: .8rem;
+    font-weight: bold;
+  }
 }
