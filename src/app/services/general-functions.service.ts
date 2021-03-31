@@ -53,4 +53,10 @@ export class GeneralFunctionsService {
         return template.split(specs[i]).join(item);
       }, template);
   }
+
+  formatDate_billingPeriods(date) {
+    date = date.split('/');
+    date = date[2] +'/'+ date[1] +'/'+ date[0];
+    return new Date(date);
+  }
 }

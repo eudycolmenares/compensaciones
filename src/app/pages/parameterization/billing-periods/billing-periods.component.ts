@@ -29,12 +29,12 @@ export class BillingPeriodsComponent implements OnInit {
     {
       name: 'startDate',
       description: 'Fecha inico',
-      validation: 'date',
+      validation: '',
     },
     {
       name: 'endDate',
       description: 'Fecha fin',
-      validation: 'date',
+      validation: '',
     },
   ];
 
