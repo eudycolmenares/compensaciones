@@ -19,10 +19,20 @@ export class ProcessesService {
     private http: HttpClient,
   ) { }
 
-  // 100.126.19.74:7669
-  // http://localhost:7001/WSCompensaciones-web/webresources/WSNodesRules/ NodesRulesService/run
   runNodesRules(): Observable<any> {
     return this.http.post<any>(env.urlApi_rules + env.endpoints.nodes_rules, {
+      headers: this.headers,
+    });
+  }
+
+  runBusinessRules(): Observable<any> {
+    return this.http.post<any>(env.urlApi_Businessrules + env.endpoints.business_rules, {
+      headers: this.headers,
+    });
+  }
+
+  confirmBillingFiles(): Observable<any> {
+    return this.http.post<any>(env.urlApi_BillingFiles + env.endpoints.billing_files, {
       headers: this.headers,
     });
   }

@@ -17,8 +17,8 @@
               <label class="title">{{ stage.title }}</label>
               <ng-container ng-switch="myVar">
                 <ng-container [ngSwitch]="stage.status">
-                  <label class="title" *ngSwitchCase="1">Completado</label>
-                  <label class="title" *ngSwitchCase="'process'">En proceso</label>
+                  <label class="subtitle" *ngSwitchCase="1">Completado</label>
+                  <label class="subtitle" *ngSwitchCase="'process'">En proceso</label>
                   <label class="subtitle" *ngSwitchCase="0">No completado</label>
                   <!-- <span class="badge badge-light">No Completado</span> -->
                 </ng-container>
@@ -38,12 +38,13 @@
         <ng-container [ngSwitch]="stageSelected">
 
           <!-- STEP 1 -->
+          <!-- seteado -->
           <ng-container *ngSwitchCase="1">
-            <div *ngIf="stages[stageSelected -1].status == 1" class="alert alert-success" role="alert">
-              ¡El proceso ejecución reglas para Nodos ha sido completado!
-            </div>
             <div *ngIf="stages[stageSelected -1].status == 0" class="alert alert-secondary" role="alert">
               ¡El proceso ejecución de reglas para Nodos no se ha ejecutado!
+            </div>
+            <div *ngIf="stages[stageSelected -1].status == 1" class="alert alert-success" role="alert">
+              ¡El proceso ejecución reglas para Nodos ha sido completado!
             </div>
             <div class="row text-light text-center mt-4">
               <div class="col-sm container-buttons">
@@ -53,31 +54,79 @@
               </div>
             </div>
           </ng-container>
-
+          <!-- STEP 2 -->
           <ng-container *ngSwitchCase="2">
-            <p>¡Por favor seleccione estado del proceso Validación de Nodos!</p>
-            <div ngbDropdown class="d-inline-block">
-              <button class="btn btn-outline-primary"  id="dropdownBasic1" ngbDropdownToggle>Seleccione Estado</button>
-              <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                <button ngbDropdownItem>Completado</button>
-                <button ngbDropdownItem>En proceso</button>
-                <button ngbDropdownItem>No completado</button>
+            <div *ngIf="stages[stageSelected - 2].status == 0" class="alert alert-secondary" role="alert">
+              ¡Esta opcíon se encuentra inhabilitada, debe haber ejecutado las Reglas de Nodos para poder continuar!
+            </div>
+            <div *ngIf="stages[stageSelected -2].status == 1 && stages[stageSelected - 1].status == 0" class="alert alert-secondary" role="alert">
+              ¡Aún no ha confirmado la validación de Nodos!
+            </div>
+            <div *ngIf="stages[stageSelected - 1].status == 1" class="alert alert-success" role="alert">
+              ¡El proceso Validación de Nodos ha sido completado!
+            </div>
+            <div class="row text-light text-center mt-4">
+              <div class="col-sm container-buttons">
+                <button type="button" (click)="openModal()" [disabled]="stages[stageSelected -2].status == 0 || stages[stageSelected -1].status == 1" class="btn btn-primary btn-sm">
+                  Validar Nodos
+                </button>
               </div>
             </div>
           </ng-container>
-
+          <!-- STEP 3 -->
           <ng-container *ngSwitchCase="3">
-            <!-- <p>¡Por favor indique el estado del proceso de Carga de Archivos de Fallas RR!</p> -->
-            <div class="alert alert-warning" role="alert">
-              ¡Esta opción se encuentra inhabilitada, hasta que los procesos anteriores hayan sido completados!
+            <div *ngIf="stages[stageSelected - 2].status == 0" class="alert alert-secondary" role="alert">
+              ¡Esta opcíon se encuentra inhabilitada, debe haber confirmado la Validación de Nodos para poder continuar!
             </div>
-            <div ngbDropdown class="d-inline-block">
-              <button class="btn btn-outline-primary" id="dropdownBasic1" disabled ngbDropdownToggle>Seleccione Estado</button>
-              <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                <button ngbDropdownItem>Completado</button>
-                <button ngbDropdownItem>En proceso</button>
-                <button ngbDropdownItem>No completado</button>
+            <div *ngIf="stages[stageSelected -2].status == 1 && stages[stageSelected - 1].status == 0" class="alert alert-secondary" role="alert">
+              ¡Aún no ha ejecutado las Reglas de Negocio RR!
+            </div>
+            <div *ngIf="stages[stageSelected - 1].status == 1" class="alert alert-success" role="alert">
+              ¡El proceso ejecución de Reglas de Negocio RR ha sido completado, se generará los Nodos y Cuentas!
+            </div>
+            <div class="row text-light text-center mt-4">
+              <div class="col-sm container-buttons">
+                <button type="button" (click)="openModal()" [disabled]="stages[stageSelected -2].status == 0 || stages[stageSelected -1].status == 1" class="btn btn-primary btn-sm">
+                  Ejecutar Reglas Negocio RR
+                </button>
               </div>
+            </div>
+          </ng-container>
+          <!-- STEP 4 -->
+          <ng-container *ngSwitchCase="4">
+            <div *ngIf="stages[stageSelected - 2].status == 0" class="alert alert-secondary" role="alert">
+              ¡Esta opcíon se encuentra inhabilitada, debe haber ejecutado las Reglas de Negocio para poder continuar!
+            </div>
+            <div *ngIf="stages[stageSelected - 1].status == 1" class="alert alert-success" role="alert">
+              ¡El proceso generación de Nodos y Cuentas ha sido completado, puede proceder al cargue de información!
+            </div>
+          </ng-container>
+          <!-- STEP 5 -->
+          <ng-container *ngSwitchCase="5">
+            <div *ngIf="stages[stageSelected - 2].status == 0" class="alert alert-secondary" role="alert">
+              ¡Esta opcíon se encuentra inhabilitada, debe haber generado los Nodos y Cuentas para poder continuar!
+            </div>
+            <div *ngIf="stages[stageSelected -2].status == 1 && stages[stageSelected - 1].status == 0" class="alert alert-secondary" role="alert">
+              ¡Aún no ha confirmado la carga de información de Rentas!
+            </div>
+            <div *ngIf="stages[stageSelected - 1].status == 1" class="alert alert-success" role="alert">
+              ¡El proceso confirmación de carga de información de Rentas ha sido completado, se generará los archivos de Facturación!
+            </div>
+            <div class="row text-light text-center mt-4">
+              <div class="col-sm container-buttons">
+                <button type="button" (click)="openModal()" [disabled]="stages[stageSelected -2].status == 0 || stages[stageSelected -1].status == 1" class="btn btn-primary btn-sm">
+                  Confirmar Información Rentas
+                </button>
+              </div>
+            </div>
+          </ng-container>
+          <!-- STEP 6 -->
+          <ng-container *ngSwitchCase="6">
+            <div *ngIf="stages[stageSelected - 2].status == 0" class="alert alert-secondary" role="alert">
+              ¡Esta opcíon se encuentra inhabilitada, debe haber cargado la información de Rentas para poder continuar!
+            </div>
+            <div *ngIf="stages[stageSelected - 1].status == 1" class="alert alert-success" role="alert">
+              ¡El proceso generación Archivos de Facturación ha sido completado!
             </div>
           </ng-container>
         </ng-container>

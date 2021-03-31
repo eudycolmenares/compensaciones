@@ -219,8 +219,23 @@ export const superProcessParams = {
   confirByStages: {
     1: {
       header: '¿Estás seguro de que deseas ejecutar las Reglas para Nodos?',
-      msg: `Luego deberá dirigirse al módulo de Validación de Nodos para validar los datos,
+      msg: `Al completarse este proceso recibirá un correo de confirmación, deberá dirigirse al módulo de Validación de Nodos para validar los datos,
         y luego volver a Supervisión y en la etapa 2 confirmar la validación de Nodos.`
-    }
+    },
+    2: {
+      header: '¿Estás seguro que ha realizado la validación de Nodos?',
+      msg: `Al completarse este proceso recibirá un correo de confirmación,
+        y deberá dirigirse al paso 3, que es ejecutar las Reglas de Negocio RR.`
+    },
+    3: {
+      header: '¿Estás seguro de que deseas ejecutar las Reglas de Negocio RR?',
+      msg: `Al completarse este proceso recibirá un correo de confirmación,
+        y generará automáticamente los Nodos y Cuentas.`
+    },
+    5: {
+      header: '¿Estás seguro que ha realizado el cargue Información de Rentas?',
+      msg: `Al completarse este proceso recibirá un correo de confirmación,
+        y generará automáticamente los archivos de facturación.`
+    },
   }
 }

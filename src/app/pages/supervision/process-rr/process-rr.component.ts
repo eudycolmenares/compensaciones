@@ -60,9 +60,6 @@ export class ProcessRRComponent implements OnInit {
       this.randomKey = Math.ceil(Math.random() * 10000).toString();
     }
   stageSelected = 1;
-  // emailToNotify = 'eudy.colmenares@novatec.com.co';
-  // emailBody: 'Prueba generada satisfactoriamente';
-
 
   ngOnInit(): void {
     console.log('??? ', this.stages[this.stageSelected -1]);
@@ -86,9 +83,38 @@ export class ProcessRRComponent implements OnInit {
       }
     })
   }
+  runRuleBusiness() {
+    this.processesSvc.runBusinessRules().subscribe(resp => {
+      console.log('runBusinessRules()', resp);
+      if (resp.GeneralResponse.code === '0') {
+        this.toastScv.showSuccess(resp.GeneralResponse.messageCode, resp.GeneralResponse.descriptionCode);
+        this.sendEmailNotification();
+        this.changeStatusStage(true);
+        this.changePostStatusStage(true);
+      } else {
+        this.toastScv.showError(resp.GeneralResponse.messageCode, resp.GeneralResponse.descriptionCode);
+      }
+    })
+  }
+  confirmBillingFiles() {
+    this.processesSvc.confirmBillingFiles().subscribe(resp => {
+      console.log('confirmBillingFiles()', resp);
+      if (resp.GeneralResponse.code === '0') {
+        this.toastScv.showSuccess(resp.GeneralResponse.messageCode, resp.GeneralResponse.descriptionCode);
+        this.sendEmailNotification();
+        this.changeStatusStage(true);
+        this.changePostStatusStage(true);
+      } else {
+        this.toastScv.showError(resp.GeneralResponse.messageCode, resp.GeneralResponse.descriptionCode);
+      }
+    })
+  }
 
   changeStatusStage(success: boolean) {
     (success) ? this.stages[this.stageSelected -1].status = 1 : '';
+  }
+  changePostStatusStage(success: boolean) {
+    (success) ? this.stages[this.stageSelected].status = 1 : '';
   }
 
   // modal - confirmation
@@ -105,6 +131,14 @@ export class ProcessRRComponent implements OnInit {
             this.runRuleNodes();
             break;
           case 2:
+            this.changeStatusStage(true);
+            this.sendEmailNotification();
+            break;
+          case 3:
+            this.runRuleBusiness();
+            break;
+          case 5:
+            this.confirmBillingFiles();
             break;
         }
       },
@@ -125,6 +159,9 @@ export class ProcessRRComponent implements OnInit {
     const newBodySvc = { ...bodyMailService, 'message': msg };
     this.mailSvc.sendMail(newBodySvc).subscribe(resp => {
       console.log('sendMail(resp): ', resp);
+      if (resp?.isValid == 'true') {
+        this.toastScv.showSuccess('Se ha enviado la notificación satisfactoriamente.');
+      }
     });
   }
 }

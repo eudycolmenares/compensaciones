@@ -16,6 +16,8 @@ export const environment = {
   urlApi_rentsRR: '/WSCompensacionesBatchRR-web/webresources/WSRentasRR/',
   urlApi_users: '/WsPortalUsuariosRest-web/ws/WsPortalUsuariosRest/',
   urlApi_rules: '/WSCompensaciones-web/webresources/WSNodesRules/',
+  urlApi_Businessrules: '/WSCompensacionesBatchRR-web/webresources/WSBusinessRulesRR/',
+  urlApi_BillingFiles: '/WSCompensacionesBatchRR-web/webresources/WSBilligRR/',
   urlApi_notifications: '/Notification/V2.0/Rest/',
   endpoints: {
     // Settings
@@ -140,6 +142,8 @@ export const environment = {
     user_login: 'autentica',
     // Processes Rules
     nodes_rules: 'NodesRulesService/run',
+    business_rules: 'BusinessRulesService/run',
+    billing_files: 'BillingService/run',
     // Notifications Mails
     send_mail: 'PutMessage',
   },
