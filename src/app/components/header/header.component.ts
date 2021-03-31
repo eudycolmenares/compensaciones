@@ -16,6 +16,7 @@ export class HeaderComponent implements OnInit {
   @Output() swToggle = new EventEmitter<boolean>();
   items: MenuItem[];
   userData: UserModel = null;
+  currPeriod: object = null;
 
   constructor(
     private authSvc: AuthService,
@@ -56,8 +57,7 @@ export class HeaderComponent implements OnInit {
   currentPeriod() {
     const period = this.periods.validationBillingPeriods();
     period.then(resp => {
-      console.log('Respuesta promesa: ', resp);
-
+      (resp.exists == true) ? this.currPeriod = resp.currentPeriod : '';
     }).catch(err => {})
   }
 

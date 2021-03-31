@@ -7,7 +7,14 @@
     <!-- <img class="access ml-2" src="assets/img/browser.svg" alt="" srcset="">
     <img class="access ml-2" src="assets/img/mail.svg" alt="" srcset="">
     <img class="access ml-2" src="assets/img/notification.svg" alt="" srcset=""> -->
-    <p class="period">Período I</p>
+    <p class="period" *ngIf="currPeriod != null">
+      <i class="bi bi-calendar-range-fill mr-1"></i>
+      {{ currPeriod['startDate'] }} - {{ currPeriod['endDate'] }}
+      <span class="font-weight-bold ml-1">Período: </span> {{ currPeriod['pediodId'] }}
+    </p>
+    <p class="period" *ngIf="currPeriod == null">
+      <i class="bi bi-calendar-range-fill mr-1"></i>Sin Período Facturación
+    </p>
     <img class="user ml-3" src="assets/img/user.svg" alt="" srcset="">
     <p-splitButton [label]="userData?.usuario.usuario" [model]="items" styleClass=""></p-splitButton>
   </div>
