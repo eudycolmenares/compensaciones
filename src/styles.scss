@@ -216,8 +216,10 @@ input[type="number"] {
   @extend .px-sm-2, .px-md-5;
   .formLayout {
     @extend .row, .px-md-5;
-    .formSection {
-      @extend .col-sm, .text-light, .text-center, .px-sm-1, .mb-4;
+    .formSection {@extend .col-sm, .text-light, .text-center, .px-sm-1, .mb-4;}
+    .formSection2 {@extend .col-sm-6, .text-light, .text-center, .px-sm-1, .mb-4;}
+    
+    .formSection, .formSection2 {
       .formLabel {
         @extend .bg-primary, .py-1, .mb-1;
       }

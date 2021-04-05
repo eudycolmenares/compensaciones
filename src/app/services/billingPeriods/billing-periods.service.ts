@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 import { environment as env } from 'src/environments/environment';
 import {
@@ -10,7 +10,6 @@ import {
 } from '../../models/billing-periods';
 import { GeneralFunctionsService } from '../../services/general-functions.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
-import { promise } from 'selenium-webdriver';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +21,7 @@ export class BillingPeriodsService {
     'Content-Type': 'application/json; charset=utf-8',
   });
 
-  currentPeriod= [];
+  currentPeriod = [];
 
   constructor(
     private _http: HttpClient,
@@ -41,19 +40,25 @@ export class BillingPeriodsService {
 
   validationBillingPeriods(): Promise<any> {
     const promise = new Promise((resol, reject) => {
-      const  dateNow = new Date().setHours(0,0,0,0);
+      const dateNow = new Date().setHours(0, 0, 0, 0);
       this.allBillingPeriods().subscribe((resp: BillingPeriodsApiModel) => {
         this.currentPeriod = resp.tblBillingPeriods.filter(
           (data) =>
-            dateNow >= this._gnrScv.formatDate_billingPeriods(data.startDate).setHours(0,0,0,0) &&
-            dateNow <= this._gnrScv.formatDate_billingPeriods(data.endDate).setHours(23,59,59,999)
+            dateNow >=
+              this._gnrScv
+                .formatDate_billingPeriods(data.startDate)
+                .setHours(0, 0, 0, 0) &&
+            dateNow <=
+              this._gnrScv
+                .formatDate_billingPeriods(data.endDate)
+                .setHours(23, 59, 59, 999)
         );
         const DataNumber = this.currentPeriod.length;
         if (DataNumber > 0) {
           resol({
             exists: true,
             message: 'Existe un periodo de facturación en curso',
-            currentPeriod: this.currentPeriod[DataNumber-1],
+            currentPeriod: this.currentPeriod[DataNumber - 1],
           });
         } else {
           reject({
@@ -67,55 +72,145 @@ export class BillingPeriodsService {
     return promise;
   }
 
-  createBillingPeriod(body: RequestModel): Observable<ResponseModel> {
-    let responseValidation: any = this.validationBillingPeriods();
-    console.log('responseValidation', responseValidation);
+  validationBillingPeriodsBetween(
+    startDate: string | Date,
+    endDate: string | Date
+  ): Promise<any> {
+    console.log('datos segunda validacion', startDate, endDate);
 
-    if (responseValidation['exists']) {
-      this._toastScv.showError('', responseValidation['message']);
-      return;
-    }
-    return this._http.post<ResponseModel>(
-      env.BillingPeriods.url + env.BillingPeriods.endpoints.create,
-      body,
-      {
-        headers: this.headers,
+    const promise = new Promise((resol) => {
+      let dataFilter = this.currentPeriod.filter(
+        (data) =>
+          (this._gnrScv
+            .formatDate_billingPeriods(data.startDate)
+            .setHours(0, 0, 0, 0) >=
+            this._gnrScv
+              .formatDate_billingPeriods(startDate)
+              .setHours(0, 0, 0, 0) &&
+            this._gnrScv
+              .formatDate_billingPeriods(data.startDate)
+              .setHours(0, 0, 0, 0) <=
+              this._gnrScv
+                .formatDate_billingPeriods(endDate)
+                .setHours(23, 59, 59, 999)) ||
+          (this._gnrScv
+            .formatDate_billingPeriods(data.endDate)
+            .setHours(0, 0, 0, 0) >=
+            this._gnrScv
+              .formatDate_billingPeriods(startDate)
+              .setHours(0, 0, 0, 0) &&
+            this._gnrScv
+              .formatDate_billingPeriods(data.endDate)
+              .setHours(0, 0, 0, 0) <=
+              this._gnrScv
+                .formatDate_billingPeriods(endDate)
+                .setHours(23, 59, 59, 999))
+      );
+      const DataNumber = dataFilter.length;
+      console.log('DataNumber - dataFilter', dataFilter);
+
+      if (DataNumber > 0) {
+        resol({
+          exists: true,
+          generalResponse: {
+            code: '-1',
+            messageCode:
+              'No se puede eliminar, modificar, crear porque esta en curso este periodo de facturación',
+            descriptionCode: 'Periodo de facturación en curso',
+          },
+          currentPeriod: this.currentPeriod[DataNumber - 1],
+        });
+      } else {
+        resol({
+          exists: false,
+          message: 'No existe un periodo de facturación en curso',
+          currentPeriod: this.currentPeriod,
+        });
       }
-    );
+    });
+    return promise;
   }
 
-  updateBillingPeriod(body: RequestModel): Observable<ResponseModel> {
+  actionsBillingPeriod(
+    body: RequestModel,
+    action: string
+  ): Promise<ResponseModel> {
     let responseValidation: any = this.validationBillingPeriods();
-    if (responseValidation['exists']) {
-      this._toastScv.showError('', responseValidation['message']);
-      return;
-    }
 
-    this.validationBillingPeriods();
-    return this._http.put<ResponseModel>(
-      env.BillingPeriods.url + env.BillingPeriods.endpoints.update,
-      body,
-      {
-        headers: this.headers,
+    return responseValidation.then((resp) => {
+      if (resp['exists']) {
+        let responseValidationBetween: any = this.validationBillingPeriodsBetween(
+          body.TblBillingPeriods.startDate,
+          body.TblBillingPeriods.endDate
+        );
+
+        return responseValidationBetween.then((response) => {
+          if (response['exists']) {
+            return response;
+          } else {
+            return this.actionSelected(action, body);
+          }
+        });
+      } else {
+        return this.actionSelected(action, body);
       }
-    );
+    });
   }
 
-  deleteBillingPeriod(periodId: number): Observable<ResponseModel> {
-    let responseValidation: any = this.validationBillingPeriods();
-    if (responseValidation['exists']) {
-      this._toastScv.showError('', responseValidation['message']);
-      return;
+  actionSelected(action, body): Promise<ResponseModel> {
+    if (action === 'create') {
+      return this.create(body).then((res) => {
+        return res;
+      });
+    } else if (action === 'update') {
+      return this.update(body).then((res) => {
+        console.log('respuesta final de creacion ', res);
+        return res;
+      });
+    } else if (action === 'delete') {
+      return this.delete(body['TblBillingPeriods']['pediodId']).then((res) => {
+        console.log('respuesta final de creacion ', res);
+        return res;
+      });
     }
+  }
 
-    this.validationBillingPeriods();
-    return this._http.delete<ResponseModel>(
-      env.BillingPeriods.url +
-        env.BillingPeriods.endpoints.delete +
-        `/${periodId}`,
-      {
-        headers: this.headers,
-      }
-    );
+  create(body: RequestModel): Promise<ResponseModel> {
+    return this._http
+      .post<ResponseModel>(
+        env.BillingPeriods.url + env.BillingPeriods.endpoints.create,
+        body,
+        {
+          headers: this.headers,
+        }
+      )
+      .toPromise();
+  }
+
+  update(body: RequestModel): Promise<ResponseModel> {
+    return this._http
+      .put<ResponseModel>(
+        env.BillingPeriods.url + env.BillingPeriods.endpoints.update,
+        body,
+        {
+          headers: this.headers,
+        }
+      )
+      .toPromise();
+  }
+
+  delete(periodId: number): Promise<ResponseModel> {
+    console.log('periodId', periodId);
+
+    return this._http
+      .delete<ResponseModel>(
+        env.BillingPeriods.url +
+          env.BillingPeriods.endpoints.delete +
+          `/${periodId}`,
+        {
+          headers: this.headers,
+        }
+      )
+      .toPromise();
   }
 }

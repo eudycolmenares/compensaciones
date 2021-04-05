@@ -47,7 +47,7 @@ export class NodesComponent implements OnInit {
     },
     {
       name: 'compensatesInt',
-      description: 'Internet',
+      description: 'Compensa Internet',
       validation: 'yes-no-x',
     },
     {
@@ -59,7 +59,7 @@ export class NodesComponent implements OnInit {
       name: 'compensatesTv',
       description: 'Compensa Televisión',
       validation: 'yes-no-x',
-    }
+    },
   ];
   changeIconValidation = true;
 
@@ -75,7 +75,7 @@ export class NodesComponent implements OnInit {
 
   createForm() {
     this.nodeForm = this._fb.group({
-      services: ['', [Validators.required]],
+      services: [{ key: 'internet', value: 'Internet' }, [Validators.required]],
       user: ['test'],
     });
   }
@@ -103,18 +103,18 @@ export class NodesComponent implements OnInit {
 
   initialCharge() {
     this._nodesSvc
-        .allApprovedNodes()
-        .subscribe((resp: models.NodesValidationApiModel) => {
-          this.dataToTable = resp.tblMaximum.filter(
-            (data) =>
-              (data.srInternet === 1 &&
-                this.nodeForm.get('services').value.key === 'internet') ||
-              (data.srTv === 1 &&
-                this.nodeForm.get('services').value.key === 'television') ||
-              (data.srVoz === 1 &&
-                this.nodeForm.get('services').value.key === 'telephone')
-          );
-        });
+      .allApprovedNodes()
+      .subscribe(async (resp: models.NodesValidationApiModel) => {
+        this.dataToTable = await resp.tblMaximum.filter(
+          (data) =>
+            (data.srInternet === 1 &&
+              this.nodeForm.get('services').value.key === 'internet') ||
+            (data.srTv === 1 &&
+              this.nodeForm.get('services').value.key === 'television') ||
+            (data.srVoz === 1 &&
+              this.nodeForm.get('services').value.key === 'telephone')
+        );
+      });
   }
 
   onSubmit() {

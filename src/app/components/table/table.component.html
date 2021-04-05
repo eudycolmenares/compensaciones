@@ -60,7 +60,7 @@
         <ng-container *ngFor="let opt of columns" [ngSwitch]="opt.validation" >
           <td *ngSwitchCase="'yes-no'">{{ (item[opt.name].toString() === '1' || item[opt.name].toUpperCase() === 'SI') ? 'Si' : 'No' }}</td>
           <td *ngSwitchCase="'no-yes'">{{ (item[opt.name] === 1) ? 'Si' : 'No' }}</td>
-          <td *ngSwitchCase="'yes-no-x'">{{ (item[opt.name] === 'X') ? 'Si' : 'No' }}</td>
+          <td *ngSwitchCase="'yes-no-x'">{{ (item[opt.name] === 'X' || item[opt.name] === 'x') ? 'Si' : 'No' }}</td>
           <td *ngSwitchCase="'active-desactive'">{{ (item[opt.name] === '1' || item[opt.name] === 1) ? 'Activo' : 'Inactivo' }}</td>
           <td *ngSwitchCase="'service'">{{ (item[opt.name] === '1' || item[opt.name] === 1) ? 'Aplica' : 'N/A' }}</td>
           <td *ngSwitchCase="'object'">{{ item[opt.name][opt.subname] }}</td>
@@ -69,6 +69,7 @@
           <td *ngSwitchCase="'date'">{{ item[opt.name] | date }}</td>
           <td *ngSwitchCase="'amount'">{{ item[opt.name] | currency }}</td>
           <td *ngSwitchCase="'time-min'">{{item[opt.name]}} min.</td>
+          <td *ngSwitchCase="'period'">Periodo {{item[opt.name]}}</td>
           <td *ngSwitchCase="'highAmount'">
             <div *ngIf="item[opt.name] === '1'"><span class="badge badge-warning">Monto Alto</span></div>
             <div *ngIf="item[opt.name] === '0'"><span class="badge badge-light">Monto Bajo</span></div>
