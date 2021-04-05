@@ -24,17 +24,17 @@ export class BillingPeriodsComponent implements OnInit {
     {
       name: 'pediodId',
       description: 'Periodo de facturación',
-      validation: '',
+      validation: 'period',
     },
     {
       name: 'startDate',
       description: 'Fecha inico',
-      validation: '',
+      validation: 'date',
     },
     {
       name: 'endDate',
       description: 'Fecha fin',
-      validation: '',
+      validation: 'date',
     },
   ];
 
@@ -51,13 +51,12 @@ export class BillingPeriodsComponent implements OnInit {
   createForm() {
     this.billingPeriodForm = this._fb.group({
       pediodId: [''],
+      invoiced: [''],
       billingDate: ['', [Validators.required]],
     });
   }
 
-  ngOnInit(): void {
-    this._billingPeriodSvc.validationBillingPeriods();
-  }
+  ngOnInit(): void {}
 
   initializeVariables() {
     for (const i of Object.entries(SelectCompensate)) {
@@ -73,6 +72,12 @@ export class BillingPeriodsComponent implements OnInit {
       .allBillingPeriods()
       .subscribe((resp: models.BillingPeriodsApiModel) => {
         this.dataToTable = resp.tblBillingPeriods;
+        this.dataToTable.forEach((data: models.BillingPeriodModel) => {
+          data.startDate = this._gnrScv.formatDate_billingPeriods(
+            data.startDate
+          );
+          data.endDate = this._gnrScv.formatDate_billingPeriods(data.endDate);
+        });
       });
   }
 
@@ -105,7 +110,7 @@ export class BillingPeriodsComponent implements OnInit {
       if (this.actionForm === 'create') {
         this.createBillingPeriodApi(dataRequest);
       } else {
-        dataRequest.tblBillingPeriods.pediodId = this.billingPeriodForm.get(
+        dataRequest.TblBillingPeriods.pediodId = this.billingPeriodForm.get(
           'pediodId'
         ).value;
         this.updateBillingPeriodApi(dataRequest);
@@ -124,6 +129,7 @@ export class BillingPeriodsComponent implements OnInit {
           'DD/MM/YYYY',
           this.billingPeriodForm.get('billingDate').value[1]
         ),
+        invoiced: this.billingPeriodForm.get('invoiced').value,
       },
     };
     return data;
@@ -131,16 +137,16 @@ export class BillingPeriodsComponent implements OnInit {
 
   createBillingPeriodApi(dataRequest: models.RequestModel) {
     this._billingPeriodSvc
-      .createBillingPeriod(dataRequest)
-      .subscribe((resp: models.ResponseModel) => {
+      .actionsBillingPeriod(dataRequest, 'create')
+      .then((resp: models.ResponseModel) => {
         this.messageToCustomer(resp);
       });
   }
 
   updateBillingPeriodApi(dataRequest: models.RequestModel) {
     this._billingPeriodSvc
-      .updateBillingPeriod(dataRequest)
-      .subscribe((resp: models.ResponseModel) => {
+      .actionsBillingPeriod(dataRequest, 'update')
+      .then((resp: models.ResponseModel) => {
         this.messageToCustomer(resp);
       });
   }
@@ -174,24 +180,35 @@ export class BillingPeriodsComponent implements OnInit {
   }
 
   setForm(data: models.BillingPeriodModel) {
-        this.billingPeriodForm.reset({
-
-          pediodId: data.pediodId,
-          startDate: data.startDate,
-          endDate: data.endDate,
-          month: data.month,
-          year: data.year,
-          invoiced: data.invoiced,
-        });
-        console.log(this.billingPeriodForm.value);
-      }
+    this.billingPeriodForm.reset({
+      pediodId: data.pediodId,
+      billingDate: [data.startDate, data.endDate],
+      invoiced: data.invoiced,
+    });
+    console.log(this.billingPeriodForm.value);
+  }
 
   deleteBillingPeriod(billingPeriod: models.BillingPeriodModel) {
     this._billingPeriodSvc
-            .deleteBillingPeriod(billingPeriod.pediodId)
-            .subscribe((resp: models.ResponseModel) => {
-              this.messageToCustomer(resp);
-            });
+      .actionsBillingPeriod(
+        {
+          TblBillingPeriods: {
+            ...billingPeriod,
+            startDate: this._gnrScv.formatDate(
+              'DD/MM/YYYY',
+              billingPeriod.startDate
+            ),
+            endDate: this._gnrScv.formatDate(
+              'DD/MM/YYYY',
+              billingPeriod.endDate
+            ),
+          },
+        },
+        'delete'
+      )
+      .then((resp: models.ResponseModel) => {
+        this.messageToCustomer(resp);
+      });
   }
 
   cleanForm() {

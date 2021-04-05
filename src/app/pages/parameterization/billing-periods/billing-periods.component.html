@@ -6,13 +6,13 @@
       [formGroup]="billingPeriodForm"
       (ngSubmit)="onSubmit()"
     >
-      <div class="formLayout">
-        <div class="formSection">
+      <div class="formLayout justify-content-md-center">
+        <div class="formSection2">
           <div class="formLabel">Fechas de facturación (*)</div>
           <div class="formField">
             <p-calendar
               formControlName="billingDate"
-              placeholder="dd/mm/yyyy"
+              placeholder=" -- Seleccione la fecha de inicio y la fecha final --"
               dateFormat="dd/mm/yy"
               [monthNavigator]="true"
               [yearNavigator]="true" yearRange="1980:2050"
