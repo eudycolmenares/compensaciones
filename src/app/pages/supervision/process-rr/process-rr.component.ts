@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ConfirmationService } from 'primeng/api';
 
 import { ProcessesService } from '../../../services/processes/processes.service';
+import { SupervisionProcessService } from '../../../services/supervision/supervision-process.service';
 import { ToastService } from '../../../shared/services/toast.service';
 import { MailsService } from '../../../shared/services/mails.service';
 
@@ -53,15 +54,19 @@ export class ProcessRRComponent implements OnInit {
 
   constructor(
     private processesSvc: ProcessesService,
+    private supervisionSvc: SupervisionProcessService,
     private toastScv: ToastService,
     private confirmationSvc: ConfirmationService,
     private mailSvc: MailsService
     ) {
       this.randomKey = Math.ceil(Math.random() * 10000).toString();
+      // this.supervisionSvc.allProcess().subscribe(resp => {
+      //   console.log('allProcess ===> ', resp);
+      // })
     }
   stageSelected = 1;
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   changeStage(stage) {
     console.log('changeState()', stage);
