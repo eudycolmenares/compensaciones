@@ -146,6 +146,8 @@ export const environment = {
     billing_files: 'BillingService/run',
     // Notifications Mails
     send_mail: 'PutMessage',
+    // Supervicion Process
+    process_all: 'SupervisionProcessService/read/all',
   },
 
   // RR - parameterization - billing periods
