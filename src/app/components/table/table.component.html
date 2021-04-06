@@ -4,6 +4,8 @@
     [value]="dataBase" [columns]="selectedColumns"
     [paginator]="true" [rows]="5" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,20]"
     [globalFilterFields]="selectedColumns" [globalFilterFields]="['amount']"
+    
+    [autoLayout]="true"
   >
 
     <ng-template pTemplate="caption">
@@ -76,7 +78,8 @@
           </td>
         </ng-container>
         <ng-container *ngIf="buttons.length !== 0">
-          <td class="text-center">
+          <td class="text-center align-middle">
+            <div class="btn-group btn-group-sm">
             <button type="button" class="btn btn-primary btn-sm mr-1" (click)="sendDataToEdit(item)" *ngIf="(buttons.indexOf('edit') > -1)" data-toggle="tooltip" data-placement="top" [title]="validation? 'Aprobado' : ''">
               <i [class]="validation? 'pi pi-check' : 'bi bi-pencil-fill' "></i>
             </button>
@@ -86,6 +89,7 @@
             <button type="button" class="btn btn-secondary btn-sm" (click)="openModal(item)" *ngIf="(buttons.indexOf('delete') > -1)" data-toggle="tooltip" data-placement="top" [title]="validation? 'Rechazado' : ''">
               <i [class]="validation? 'pi pi-times' : 'pi pi-trash' "></i>
             </button>
+          </div>
           </td>
         </ng-container>
       </tr>
