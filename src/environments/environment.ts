@@ -65,17 +65,17 @@ export const environment = {
     faults_load: 'LoadService/load',
     faults_read_id: 'LoadService/read/id',
     // Maintenance Orders Causes
-    maintenanceOrderCause_create: 'maintenanceOrderCause/create',
-    maintenanceOrderCause_delete: 'maintenanceOrderCause/delete',
-    maintenanceOrderCause_update: 'maintenanceOrderCause/update',
-    maintenanceOrdersCauses_read: 'maintenanceOrderCause/list',
+    maintenanceOrderCause_create: 'MaintenanceOrderCauseService/create',
+    maintenanceOrderCause_delete: 'MaintenanceOrderCauseService/delete',
+    maintenanceOrderCause_update: 'MaintenanceOrderCauseService/update',
+    maintenanceOrdersCauses_read: 'MaintenanceOrderCauseService/list',
     // Maintenance Orders Symptoms
-    orders_symptoms_all: 'maintenanceOrderDiagnostic/list',
-    order_symptom_create: 'maintenanceOrderDiagnostic/create',
-    order_symptom_update: 'maintenanceOrderDiagnostic/update',
-    order_symptom_delete: 'maintenanceOrderDiagnostic/delete',
+    orders_symptoms_all: 'MaintenanceOrderDiagnosticService/list',
+    order_symptom_create: 'MaintenanceOrderDiagnosticService/create',
+    order_symptom_update: 'MaintenanceOrderDiagnosticService/update',
+    order_symptom_delete: 'MaintenanceOrderDiagnosticService/delete',
     // Validation Accounts
-    validation_accounts_all: 'crcCompensation/list',
+    validation_accounts_all: 'CrcCompensationService/list',
     // Validation Nodes
     validationNodes_read: 'MaximoService/readAll',
     // failure validation - TBL_NODO_TEL_INT_48H - By_nodo_4296_Tel_Int_48h

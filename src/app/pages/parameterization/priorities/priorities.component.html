@@ -3,116 +3,70 @@
 
   <div class="container-add px-sm-2 px-md-5">
     <form autocomplete="off" [formGroup]="priorityForm" (ngSubmit)="onSubmit()">
-      <div class="row text-light text-center px-sm-0 px-md-5">
-        <div class="col-sm bg-primary py-1 mx-1">Código Prioridad (*)</div>
-        <div class="col-sm bg-primary py-1 mx-1">Descripción Prioridad (*)</div>
-      </div>
-      <div class="row px-sm-0 px-md-5">
-        <div class="col-sm py-1 mx-1 p-0">
-          <input
-            type="text"
-            formControlName="priorityCode"
-            class="form-control form-control-sm"
-            [ngClass]="{
-              'is-invalid': this.invalidFieldForm('priorityCode')
-            }"
-            placeholder="Código prioridad"
-          />
-          <small
-            class="text-danger"
-            *ngIf="this.invalidFieldForm('priorityCode')"
-          >
-            {{ textsFormInvalid("priorityCode") }}
-          </small>
-        </div>
-        <div class="col-sm mx-1 mt-1 p-0">
-          <input
-            type="text"
-            formControlName="priorityDescription"
-            class="form-control form-control-sm"
-            [ngClass]="{
-              'is-invalid': this.invalidFieldForm('priorityDescription')
-            }"
-            placeholder="Descripción"
-          />
-          <small
-            class="text-danger"
-            *ngIf="this.invalidFieldForm('priorityDescription')"
-          >
-            {{ textsFormInvalid("priorityDescription") }}
-          </small>
-        </div>
-      </div>
-      <div class="row text-light text-center mt-4 px-sm-0 px-md-5">
-        <div class="col-sm bg-primary py-1 mx-1">Estado (*)</div>
-        <div class="col-sm bg-primary py-1 mx-1">Compensa Nodo (*)</div>
-        <div class="col-sm bg-primary py-1 mx-1">Compensa Cuenta (*)</div>
-      </div>
-      <div class="row px-sm-0 px-md-5">
-        <div class="col-sm py-1 mx-1 p-0">
-          <select
-            formControlName="state"
-            class="form-control form-control-sm"
-            [ngClass]="{
-              'is-invalid': this.invalidFieldForm('state')
-            }"
-          >
-            <option *ngFor="let stateOp of selectState" [value]="stateOp.key">
-              {{ stateOp.value }}
-            </option>
-          </select>
-          <small class="text-danger" *ngIf="this.invalidFieldForm('state')">
-            {{ textsFormInvalid("state") }}
-          </small>
-        </div>
-        <div class="col-sm mx-1 mt-1 p-0">
-          <select
-            formControlName="compensatesNode"
-            class="form-control form-control-sm"
-            [ngClass]="{
-              'is-invalid': this.invalidFieldForm('compensatesNode')
-            }"
-          >
-            <option
-              *ngFor="let compNodeOp of selectQuestion"
-              [value]="compNodeOp.key"
+      <div class="formLayout">
+        <div class="formSection">
+          <div class="formLabel">Código Prioridad (*)</div>
+          <div class="formField">
+            <input
+              type="text"
+              formControlName="priorityCode"
+              class="form-control form-control-sm"
+              [ngClass]="{
+                'is-invalid': this.invalidFieldForm('priorityCode')
+              }"
+              placeholder="Código prioridad"
+            />
+            <small
+              class="text-danger"
+              *ngIf="this.invalidFieldForm('priorityCode')"
             >
-              {{ compNodeOp.value }}
-            </option>
-          </select>
-          <small
-            class="text-danger"
-            *ngIf="this.invalidFieldForm('compensatesNode')"
-          >
-            {{ textsFormInvalid("compensatesNode") }}
-          </small>
+              {{ textsFormInvalid("priorityCode") }}
+            </small>
+          </div>
         </div>
-        <div class="col-sm mx-1 mt-1 p-0">
-          <select
-            formControlName="compensatesAccount"
-            class="form-control form-control-sm"
-            [ngClass]="{
-              'is-invalid': this.invalidFieldForm('compensatesAccount')
-            }"
-          >
-            <option
-              *ngFor="let compAccountOp of selectQuestion"
-              [value]="compAccountOp.key"
+        <div class="formSection">
+          <div class="formLabel">Descripción Prioridad (*)</div>
+          <div class="formField">
+            <input
+              type="text"
+              formControlName="priorityDescription"
+              class="form-control form-control-sm"
+              [ngClass]="{
+                'is-invalid': this.invalidFieldForm('priorityDescription')
+              }"
+              placeholder="Descripción"
+            />
+            <small
+              class="text-danger"
+              *ngIf="this.invalidFieldForm('priorityDescription')"
             >
-              {{ compAccountOp.value }}
-            </option>
-          </select>
-          <small
-            class="text-danger"
-            *ngIf="this.invalidFieldForm('compensatesAccount')"
-          >
-            {{ textsFormInvalid("compensatesAccount") }}
-          </small>
+              {{ textsFormInvalid("priorityDescription") }}
+            </small>
+          </div>
+        </div>
+        <div class="formSection">
+          <div class="formLabel">Estado (*)</div>
+          <div class="formField">
+            <select
+              formControlName="state"
+              class="form-control form-control-sm"
+              [ngClass]="{
+                'is-invalid': this.invalidFieldForm('state')
+              }"
+            >
+              <option *ngFor="let stateOp of selectState" [value]="stateOp.key">
+                {{ stateOp.value }}
+              </option>
+            </select>
+            <small class="text-danger" *ngIf="this.invalidFieldForm('state')">
+              {{ textsFormInvalid("state") }}
+            </small>
+          </div>
         </div>
       </div>
 
-      <div class="row text-light text-center mt-4">
-        <div class="col-sm container-buttons">
+      <div class="formLayout">
+        <div class="actionsButtons">
           <button type="submit" class="btn btn-primary mr-3 btn-sm">
             {{ actionForm === "create" ? "Crear" : "Actualizar" }}
           </button>

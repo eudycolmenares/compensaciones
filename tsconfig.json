@@ -16,6 +16,9 @@
       "es2018",
       "dom"
     ],
+    "paths": {
+      "@models/*": ["./src/app/models/*"],
+    },
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,

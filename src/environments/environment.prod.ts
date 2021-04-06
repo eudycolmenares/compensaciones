@@ -7,7 +7,7 @@ let Url_WSBilling = domain_compensaciones + '/WSCompensaciones-web/webresources/
 let Url_WSCompensationsBatchRR = domain_compensaciones + '/WSCompensacionesBatchRR-web/webresources/WSBilligRR/';
 
 export const environment = {
-  production: false,
+  production: true,
   URL_API: domain_compensaciones + '/WSCompensaciones-web/webresources/WSCompensaciones/',
   urlApi_bulkLoad: domain_compensaciones + '/CompensacionesBatch-web/webresources/CompensacionesBatch/',
   URL_API_BATCHRR: domain_compensaciones + '/WSCompensacionesBatchRR-web/webresources/WSCompensacionesBatchRR/',
@@ -65,17 +65,17 @@ export const environment = {
     faults_load: 'LoadService/load',
     faults_read_id: 'LoadService/read/id',
     // Maintenance Orders Causes
-    maintenanceOrderCause_create: 'maintenanceOrderCause/create',
-    maintenanceOrderCause_delete: 'maintenanceOrderCause/delete',
-    maintenanceOrderCause_update: 'maintenanceOrderCause/update',
-    maintenanceOrdersCauses_read: 'maintenanceOrderCause/list',
+    maintenanceOrderCause_create: 'MaintenanceOrderCauseService/create',
+    maintenanceOrderCause_delete: 'MaintenanceOrderCauseService/delete',
+    maintenanceOrderCause_update: 'MaintenanceOrderCauseService/update',
+    maintenanceOrdersCauses_read: 'MaintenanceOrderCauseService/list',
     // Maintenance Orders Symptoms
-    orders_symptoms_all: 'maintenanceOrderDiagnostic/list',
-    order_symptom_create: 'maintenanceOrderDiagnostic/create',
-    order_symptom_update: 'maintenanceOrderDiagnostic/update',
-    order_symptom_delete: 'maintenanceOrderDiagnostic/delete',
+    orders_symptoms_all: 'MaintenanceOrderDiagnosticService/list',
+    order_symptom_create: 'MaintenanceOrderDiagnosticService/create',
+    order_symptom_update: 'MaintenanceOrderDiagnosticService/update',
+    order_symptom_delete: 'MaintenanceOrderDiagnosticService/delete',
     // Validation Accounts
-    validation_accounts_all: 'crcCompensation/list',
+    validation_accounts_all: 'CrcCompensationService/list',
     // Validation Nodes
     validationNodes_read: 'MaximoService/readAll',
     // failure validation - TBL_NODO_TEL_INT_48H - By_nodo_4296_Tel_Int_48h
@@ -149,6 +149,7 @@ export const environment = {
     // Supervicion Process
     process_all: 'SupervisionProcessService/read/all',
   },
+
   // RR - parameterization - billing periods
   BillingPeriods: {
     url: Url_WSBilling,
@@ -159,6 +160,7 @@ export const environment = {
       delete: 'BillingPeriodsService/delete',
     },
   },
+
   // RR - validation - node
   NodesValidation: {
     url: Url_WSCompensations,
@@ -171,6 +173,7 @@ export const environment = {
       update: 'MaximoService/update',
     },
   },
+
   // RR - Billing - RR Compensated Accounts
   compensatedAccounts: {
     url: Url_WSCompensationsBatchRR,
