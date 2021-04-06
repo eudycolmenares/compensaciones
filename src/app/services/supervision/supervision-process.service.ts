@@ -18,6 +18,6 @@ export class SupervisionProcessService {
   constructor(private http: HttpClient) { }
 
   allProcess(): Observable<any> {
-    return this.http.get<any>(env.URL_API + env.endpoints.process_all, { headers: this.headers });
+    return this.http.get<any>(env.BillingSupervision.url + env.BillingSupervision.endpoints.readAll, { headers: this.headers });
   }
 }

@@ -10,6 +10,10 @@ import {
   bodyMailService,
   superProcessParams
 } from '../../../libraries/utilities.library';
+import {
+  responseProcessModel,
+  processModel
+} from '../../../models/supervisionProcess';
 
 @Component({
   selector: 'app-process-rr',
@@ -18,39 +22,9 @@ import {
 })
 
 export class ProcessRRComponent implements OnInit {
-  stages = [
-    {
-      stage: 1,
-      status: 0, // notcompleted | completed
-      title: 'Reglas para nodos',
-    },
-    {
-      stage: 2,
-      status: 0, // notcompleted | completed
-      title: 'Validación de nodos',
-    },
-    {
-      stage: 3,
-      status: 0, // notcompleted | completed
-      title: 'Reglas de Negocio RR',
-    },
-    {
-      stage: 4,
-      status: 0, // notcompleted | completed
-      title: 'Generación Nodos y Cuentas',
-    },
-    {
-      stage: 5,
-      status: 0, // notcompleted | completed
-      title: 'Cargue Información de Rentas',
-    },
-    {
-      stage: 6,
-      status: 0, // notcompleted | completed
-      title: 'Generación Archivos de Facturación',
-    }
-  ];
+  stages: processModel[]
   randomKey: string;
+  msgEmptyProcess = superProcessParams.empty;
 
   constructor(
     private processesSvc: ProcessesService,
@@ -60,9 +34,7 @@ export class ProcessRRComponent implements OnInit {
     private mailSvc: MailsService
     ) {
       this.randomKey = Math.ceil(Math.random() * 10000).toString();
-      // this.supervisionSvc.allProcess().subscribe(resp => {
-      //   console.log('allProcess ===> ', resp);
-      // })
+      this.getProcesses();
     }
   stageSelected = 1;
 
@@ -119,6 +91,18 @@ export class ProcessRRComponent implements OnInit {
     (success) ? this.stages[this.stageSelected].status = 1 : '';
   }
 
+  getProcesses() {
+    this.supervisionSvc.allProcess().subscribe((resp: responseProcessModel) => {
+      this.stages = [...resp.tblProcesoSupervision];
+      this.compareToSort(this.stages);
+      this.stages.map(item => {
+        item.stateProcess === 'NO COMPLETADO' ? item.status = 0: item.status = 1;
+        item.stage = parseInt(item.processCode);
+      });
+      console.log('stages ===> ', this.stages);
+    });
+  }
+
   // modal - confirmation
   openModal() {
     const header = superProcessParams['confirByStages'][this.stageSelected]['header'];
@@ -165,5 +149,9 @@ export class ProcessRRComponent implements OnInit {
         this.toastScv.showSuccess('Se ha enviado la notificación satisfactoriamente.');
       }
     });
+  }
+
+  compareToSort(items: processModel[]) {
+    return items.sort((a, b) => parseInt(a.processCode) - parseInt(b.processCode));;
   }
 }

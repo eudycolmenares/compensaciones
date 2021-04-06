@@ -2,7 +2,7 @@
   <app-breadcrumb></app-breadcrumb>
 
   <div class="container-module px-sm-2 px-md-5">
-    <div class="row">
+    <div class="row" *ngIf="stages">
       <div class="col-sm-4 col-md-3 py-3 step-vertical">
         <ng-container *ngFor="let stage of stages; let i = index">
           <div class="step-item" (click)="changeStage(stage)">
@@ -14,13 +14,11 @@
               }"
             >{{ i + 1 }}</div>
             <div class="step-item-content" [ngClass]="{'selected-item': stage.stage == stageSelected}">
-              <label class="title">{{ stage.title }}</label>
+              <label class="title">{{ stage.processName }}</label>
               <ng-container ng-switch="myVar">
                 <ng-container [ngSwitch]="stage.status">
                   <label class="subtitle" *ngSwitchCase="1">Completado</label>
-                  <label class="subtitle" *ngSwitchCase="'process'">En proceso</label>
                   <label class="subtitle" *ngSwitchCase="0">No completado</label>
-                  <!-- <span class="badge badge-light">No Completado</span> -->
                 </ng-container>
               </ng-container>
 
@@ -93,16 +91,16 @@
             </div>
           </ng-container>
           <!-- STEP 4 -->
-          <ng-container *ngSwitchCase="4">
+          <!-- <ng-container *ngSwitchCase="4">
             <div *ngIf="stages[stageSelected - 2].status == 0" class="alert alert-secondary" role="alert">
               ¡Esta opcíon se encuentra inhabilitada, debe haber ejecutado las Reglas de Negocio para poder continuar!
             </div>
             <div *ngIf="stages[stageSelected - 1].status == 1" class="alert alert-success" role="alert">
               ¡El proceso generación de Nodos y Cuentas ha sido completado, puede proceder al cargue de información!
             </div>
-          </ng-container>
+          </ng-container> -->
           <!-- STEP 5 -->
-          <ng-container *ngSwitchCase="5">
+          <!-- <ng-container *ngSwitchCase="5">
             <div *ngIf="stages[stageSelected - 2].status == 0" class="alert alert-secondary" role="alert">
               ¡Esta opcíon se encuentra inhabilitada, debe haber generado los Nodos y Cuentas para poder continuar!
             </div>
@@ -119,17 +117,29 @@
                 </button>
               </div>
             </div>
-          </ng-container>
+          </ng-container> -->
           <!-- STEP 6 -->
-          <ng-container *ngSwitchCase="6">
+          <!-- <ng-container *ngSwitchCase="6">
             <div *ngIf="stages[stageSelected - 2].status == 0" class="alert alert-secondary" role="alert">
               ¡Esta opcíon se encuentra inhabilitada, debe haber cargado la información de Rentas para poder continuar!
             </div>
             <div *ngIf="stages[stageSelected - 1].status == 1" class="alert alert-success" role="alert">
               ¡El proceso generación Archivos de Facturación ha sido completado!
             </div>
-          </ng-container>
+          </ng-container> -->
         </ng-container>
+      </div>
+    </div>
+
+
+
+
+    <!-- Sino hay procesos en BD -->
+    <div class="row" *ngIf="!stages">
+      <div class="col-md py-3">
+        <div class="alert alert-secondary" role="alert">
+          {{ msgEmptyProcess }}
+        </div>
       </div>
     </div>
   </div>

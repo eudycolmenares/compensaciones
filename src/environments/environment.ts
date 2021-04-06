@@ -149,7 +149,6 @@ export const environment = {
     // Supervicion Process
     process_all: 'SupervisionProcessService/read/all',
   },
-
   // RR - parameterization - billing periods
   BillingPeriods: {
     url: Url_WSBilling,
@@ -160,7 +159,13 @@ export const environment = {
       delete: 'BillingPeriodsService/delete',
     },
   },
-
+  // Billing - Supervision Process
+  BillingSupervision: {
+    url: Url_WSBilling,
+    endpoints: {
+      readAll: 'SupervisionProcessService/read/all'
+    },
+  },
   // RR - validation - node
   NodesValidation: {
     url: Url_WSCompensations,
@@ -173,7 +178,6 @@ export const environment = {
       update: 'MaximoService/update',
     },
   },
-
   // RR - Billing - RR Compensated Accounts
   compensatedAccounts: {
     url: Url_WSCompensationsBatchRR,

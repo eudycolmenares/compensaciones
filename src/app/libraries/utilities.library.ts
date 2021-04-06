@@ -237,5 +237,6 @@ export const superProcessParams = {
       msg: `Al completarse este proceso recibirá un correo de confirmación,
         y generará automáticamente los archivos de facturación.`
     },
-  }
+  },
+  empty: '¡No hay  procesos disponibles, intente más tarde!'
 }
