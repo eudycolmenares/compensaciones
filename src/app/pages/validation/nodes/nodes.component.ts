@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-import { GeneralFunctionsService } from '../../../services/general-functions.service';
-import { ServicesSettings } from '../../../libraries/utilities.library';
-import { NodesValidationService } from 'src/app/services/nodes-validation/nodes-validation.service';
-import { DataList } from '../../../models/general';
-import * as models from '../../../models/nodes-validation';
-import { ToastService } from '../../../shared/services/toast.service';
+import { GeneralFunctionsService } from '@services/general-functions.service';
+import { ServicesSettings } from '@libraries/utilities.library';
+import { NodesValidationService } from '@services/nodes-validation/nodes-validation.service';
+import { DataList } from '@models/general';
+import * as models from '@models/nodes-validation';
+import { ToastService } from '@shared_services/toast.service';
+import { ResponseLoginModel as UserModel } from '@models/users';
+import { AuthService } from '@shared_services/auth.service';
 
 @Component({
   selector: 'app-nodes',
@@ -16,6 +18,7 @@ import { ToastService } from '../../../shared/services/toast.service';
 export class NodesComponent implements OnInit {
   nodeForm: FormGroup;
   selectService: DataList[] = [];
+  userData: UserModel = null;
 
   // table
   dataToTable: object[];
@@ -67,8 +70,10 @@ export class NodesComponent implements OnInit {
     private _fb: FormBuilder,
     private _nodesSvc: NodesValidationService,
     private _gnrScv: GeneralFunctionsService,
-    private _toastScv: ToastService
+    private _toastScv: ToastService,
+    private _authSvc: AuthService
   ) {
+    this.userData = this._authSvc.userData;
     this.createForm();
     this.initializeVariables();
   }
@@ -76,7 +81,7 @@ export class NodesComponent implements OnInit {
   createForm() {
     this.nodeForm = this._fb.group({
       services: [{ key: 'internet', value: 'Internet' }, [Validators.required]],
-      user: ['test'],
+      user: [this.userData.usuario.usuario, [Validators.required]],
     });
   }
 

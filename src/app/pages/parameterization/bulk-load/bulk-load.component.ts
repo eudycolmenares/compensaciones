@@ -3,18 +3,19 @@ import {
   FormGroup,
   FormBuilder,
   Validators,
-  AbstractControl,
 } from '@angular/forms';
 
 import {
   BulkLoadRequestModel,
   errorResponse,
   GeneralResponse,
-} from 'src/app/models/bulk-load';
-import { BulkLoadService } from '../../../services/bulkLoad/bulk-load.service';
-import { GeneralFunctionsService } from '../../../services/general-functions.service';
+} from '@models/bulk-load';
+import { BulkLoadService } from '@services/bulkLoad/bulk-load.service';
+import { GeneralFunctionsService } from '@services/general-functions.service';
 import { CustomValidation } from '../../../utils/custom-validation';
-import { ToastService } from '../../../shared/services/toast.service';
+import { ToastService } from '@shared_services/toast.service';
+import { ResponseLoginModel as UserModel } from '@models/users';
+import { AuthService } from '@shared_services/auth.service';
 
 import { ConfirmationService } from 'primeng/api';
 
@@ -28,6 +29,7 @@ export class BulkLoadComponent implements OnInit {
   dataUploaded: any = '';
   dataArraySent: string[];
   fileEncode: string;
+  userData: UserModel = null;
   // table
   dataToTable: errorResponse[];
   structure: object[] = [
@@ -56,8 +58,10 @@ export class BulkLoadComponent implements OnInit {
     private _bulkLoadSvc: BulkLoadService,
     private _gnrScv: GeneralFunctionsService,
     private _toastScv: ToastService,
-    private _confirmationService: ConfirmationService
+    private _confirmationService: ConfirmationService,
+    private _authSvc: AuthService,
   ) {
+    this.userData = this._authSvc.userData;
     this.createForm();
   }
 
@@ -71,7 +75,7 @@ export class BulkLoadComponent implements OnInit {
       ],
       // uploadError: [''],
       uploadType: ['', [Validators.required]],
-      user: ['test'],
+      user: [this.userData.usuario.usuario, [Validators.required]],
     });
   }
 
@@ -165,7 +169,8 @@ export class BulkLoadComponent implements OnInit {
         fileName: this.bulkLoadForm.get('fileName').value,
         file: textEncode,
         uploadType: this.bulkLoadForm.get('uploadType').value,
-        userName: 'test', // seteado
+        userName: this.userData.usuario.usuario,
+
       };
       this.createCauseApi(dataRequest);
     };

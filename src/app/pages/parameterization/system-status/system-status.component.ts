@@ -1,20 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-import { GeneralFunctionsService } from 'src/app/services/general-functions.service';
-import {
-  SelectStatus,
-  SelectCompensate,
-} from 'src/app/libraries/utilities.library';
+import { GeneralFunctionsService } from '@services/general-functions.service';
+import { SelectStatus, SelectCompensate } from '@libraries/utilities.library';
 import {
   SystemStatusModel,
   SystemStatusApiModel,
   RequestModel,
   ResponseModel,
-} from 'src/app/models/system-status';
-import { SystemStatusService } from 'src/app/services/system-status/system-status.service';
-import { DataList } from '../../../models/general';
-import { ToastService } from '../../../shared/services/toast.service';
+} from '@models/system-status';
+import { SystemStatusService } from '@services/system-status/system-status.service';
+import { DataList } from '@models/general';
+import { ToastService } from '@shared_services/toast.service';
+import { ResponseLoginModel as UserModel } from '@models/users';
+import { AuthService } from '@shared_services/auth.service';
 
 @Component({
   selector: 'app-system-status',
@@ -26,6 +25,7 @@ export class SystemStatusComponent implements OnInit {
   selectService: DataList[] = [];
   selectState: DataList[] = [];
   selectQuestion: DataList[] = [];
+  userData: UserModel = null;
 
   actionForm = 'create'; // create, update
   // table
@@ -51,8 +51,10 @@ export class SystemStatusComponent implements OnInit {
     private _fb: FormBuilder,
     private _systemStatusSvc: SystemStatusService,
     private _gnrScv: GeneralFunctionsService,
-    private _toastScv: ToastService
+    private _toastScv: ToastService,
+    private _authSvc: AuthService
   ) {
+    this.userData = this._authSvc.userData;
     this.createForm();
     this.initializeVariables();
   }
@@ -63,7 +65,7 @@ export class SystemStatusComponent implements OnInit {
       description: ['', [Validators.required]],
       compensate: ['', [Validators.required]],
       status: ['', [Validators.required]],
-      user: [''],
+      user: [this.userData.usuario.usuario, [Validators.required]],
     });
   }
 
@@ -117,13 +119,14 @@ export class SystemStatusComponent implements OnInit {
           description: this.systemStatusForm.get('description').value,
           compensate: this.systemStatusForm.get('compensate').value,
           state: this.systemStatusForm.get('status').value,
-          user: 'test', // seteado
+          user: this.userData.usuario.usuario,
         },
       };
       if (this.actionForm === 'create') {
         this.createSystemStatusApi(dataRequest);
       } else {
         dataRequest.SystemStatus.id = this.systemStatusForm.get('id').value;
+        dataRequest.SystemStatus.user = this.userData.usuario.usuario;
         this.updateSystemStatusApi(dataRequest);
       }
     }
