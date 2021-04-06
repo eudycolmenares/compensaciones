@@ -17,6 +17,15 @@ export interface processModel {
   processName: string;
   stateProcess: string;
   supervisionProcessId: number;
+  sendEmail: number;
   status?: number;
   stage?: number;
+}
+
+export interface respUpdateProcessModel {
+  generalResponse: generalResponse
+}
+
+export interface reqUpdateProcessModel {
+  TblSupervisionProcess: processModel
 }

@@ -163,7 +163,8 @@ export const environment = {
   BillingSupervision: {
     url: Url_WSBilling,
     endpoints: {
-      readAll: 'SupervisionProcessService/read/all'
+      readAll: 'SupervisionProcessService/read/all',
+      update: 'SupervisionProcessService/update'
     },
   },
   // RR - validation - node

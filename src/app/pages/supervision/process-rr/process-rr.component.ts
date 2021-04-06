@@ -12,7 +12,9 @@ import {
 } from '../../../libraries/utilities.library';
 import {
   responseProcessModel,
-  processModel
+  processModel,
+  reqUpdateProcessModel as reqUpdateModel,
+  respUpdateProcessModel as respUpdateModel
 } from '../../../models/supervisionProcess';
 
 @Component({
@@ -24,7 +26,7 @@ import {
 export class ProcessRRComponent implements OnInit {
   stages: processModel[]
   randomKey: string;
-  msgEmptyProcess = superProcessParams.empty;
+  processParams = superProcessParams;
 
   constructor(
     private processesSvc: ProcessesService,
@@ -45,7 +47,7 @@ export class ProcessRRComponent implements OnInit {
     this.stageSelected = stage.stage;
   }
 
-  runRuleNodes() {
+  runRuleNodes() { // process 1
     this.processesSvc.runNodesRules().subscribe(resp => {
       console.log('runNodesRules()', resp);
       if (resp.generalResponse.code === '0') {
@@ -83,6 +85,30 @@ export class ProcessRRComponent implements OnInit {
       }
     })
   }
+  changeStatusStageServer() {
+    console.log('changeStatusStageServer()...');
+    console.log('this.stageSelected: ', this.stageSelected);
+    console.log(this.stages[this.stageSelected -1]);
+    const body: reqUpdateModel = {
+      'TblSupervisionProcess': {
+        ...this.stages[this.stageSelected -1],
+        stateProcess: 'COMPLETADO'
+      }
+    }
+    delete body.TblSupervisionProcess.stage
+    delete body.TblSupervisionProcess.status
+    this.supervisionSvc.updateProcess(body).subscribe((resp: respUpdateModel) => {
+      console.log('updateProcess()', resp);
+      if (resp.generalResponse.code != '-1') {
+        this.changeStatusStage(true);
+        this.sendEmailNotification();
+      } else {
+        this.toastScv.showError(resp.generalResponse.messageCode, resp.generalResponse.descriptionCode);
+      }
+    })
+
+
+  }
 
   changeStatusStage(success: boolean) {
     (success) ? this.stages[this.stageSelected -1].status = 1 : '';
@@ -117,8 +143,7 @@ export class ProcessRRComponent implements OnInit {
             this.runRuleNodes();
             break;
           case 2:
-            this.changeStatusStage(true);
-            this.sendEmailNotification();
+            this.changeStatusStageServer();
             break;
           case 3:
             this.runRuleBusiness();
@@ -137,18 +162,25 @@ export class ProcessRRComponent implements OnInit {
 
   // Notificacion - email
   sendEmailNotification() {
-    const arrayExps = superProcessParams['email']['exps'];
-    let msg = bodyMailService['message'];
-    arrayExps.map(exp => {
-      msg = msg.replace(exp['exp'], exp['content'])
-    });
-    const newBodySvc = { ...bodyMailService, 'message': msg };
-    this.mailSvc.sendMail(newBodySvc).subscribe(resp => {
-      console.log('sendMail(resp): ', resp);
-      if (resp?.isValid == 'true') {
-        this.toastScv.showSuccess('Se ha enviado la notificación satisfactoriamente.');
-      }
-    });
+    if (this.stages[this.stageSelected -1].sendEmail === 1 && this.stages[this.stageSelected -1].email) {
+      const arrayExps = superProcessParams['email']['exps'];
+      let msg = bodyMailService['message'];
+      arrayExps.map(exp => { // evaluar si hay cambios
+        (exp['exp'] == '$$MAIL$$')
+          ? msg = msg.replace(exp['exp'], this.stages[this.stageSelected -1].email)
+          : msg = msg.replace(exp['exp'], exp['content'])
+        ;
+      });
+      const newBodySvc = { ...bodyMailService, 'message': msg };
+      this.mailSvc.sendMail(newBodySvc).subscribe(resp => {
+        console.log('sendMail(resp): ', resp);
+        if (resp?.isValid == 'true') {
+          this.toastScv.showSuccess('Se ha enviado la notificación satisfactoriamente.');
+        }
+      });
+    } else if (this.stages[this.stageSelected -1].sendEmail === 1 && !this.stages[this.stageSelected -1].email) {
+      this.toastScv.showError(superProcessParams.emptyEmail);
+    }
   }
 
   compareToSort(items: processModel[]) {

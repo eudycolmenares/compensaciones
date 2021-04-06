@@ -238,5 +238,17 @@ export const superProcessParams = {
         y generará automáticamente los archivos de facturación.`
     },
   },
-  empty: '¡No hay  procesos disponibles, intente más tarde!'
+  msgsByStages: {
+    1: {
+      success: '¡El proceso ejecución de reglas para Nodos no se ha ejecutado!',
+      failed: '¡El proceso ejecución reglas para Nodos ha sido completado!'
+    },
+    2: {
+      success: '¡El proceso Validación de Nodos ha sido completado!',
+      failed: '¡Aún no ha confirmado la validación de Nodos!',
+      disabled: '¡Esta opcíon se encuentra inhabilitada, debe haber ejecutado las Reglas de Nodos para poder continuar!'
+    }
+  },
+  empty: '¡No hay  procesos disponibles, intente más tarde!',
+  emptyEmail: '¡No hay correo almacenado para este proceso, no se enviara notificación!'
 }
