@@ -73,13 +73,13 @@ export class CausesComponent implements OnInit {
     {
       name: 'Disruption',
       subname: 'id',
-      description: 'Código Anolamía',
+      description: 'Código Anomalía',
       validation: 'object',
     },
     {
       name: 'Disruption',
       subname: 'description',
-      description: 'Descripción Anolamía',
+      description: 'Descripción Anomalía',
       validation: 'object',
     },
     {

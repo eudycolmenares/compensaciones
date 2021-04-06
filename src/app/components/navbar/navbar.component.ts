@@ -124,8 +124,8 @@ export class NavbarComponent implements OnInit {
             title: 'Validación',
             items: [
               {
-                label: 'Nodos',
-                title: 'Nodos',
+                label: 'Validación Nodos',
+                title: 'Validación Nodos',
                 icon:'pi pi-fw pi-circle-off',
                 routerLink: ['/dashboard/nodes-validation']
               },
