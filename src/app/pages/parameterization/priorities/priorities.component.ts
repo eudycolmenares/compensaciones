@@ -15,6 +15,8 @@ import {
   ResponseModel,
 } from 'src/app/models/priority';
 import { ToastService } from '../../../shared/services/toast.service';
+import { ResponseLoginModel as UserModel } from '@models/users';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-priorities',
@@ -25,6 +27,8 @@ export class PrioritiesComponent implements OnInit {
   priorityForm: FormGroup;
   selectState: DataList[] = [];
   selectQuestion: DataList[] = [];
+
+  userData: UserModel = null;
 
   actionForm = 'create'; // create, update
   dataToTable: PriorityModel[];
@@ -59,8 +63,10 @@ export class PrioritiesComponent implements OnInit {
     private _fb: FormBuilder,
     private _prioritySvc: PriorityService,
     private _gnrScv: GeneralFunctionsService,
-    private _toastScv: ToastService
+    private _toastScv: ToastService,
+    private authSvc: AuthService,
   ) {
+    this.userData = this.authSvc.userData;
     this.createForm();
     this.initializeVariables();
   }
@@ -71,13 +77,13 @@ export class PrioritiesComponent implements OnInit {
       priorityCode: ['', [Validators.required]],
       priorityDescription: ['', [Validators.required]],
       state: ['', [Validators.required]],
-      compensatesNode: ['', [Validators.required]],
-      compensatesAccount: ['', [Validators.required]],
-      user: [''],
+      compensatesNode: ['1', [Validators.required]],
+      compensatesAccount: ['1', [Validators.required]],
+      user: [this.userData.usuario.usuario, [Validators.required]],
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   invalidFieldForm(fieldName: string) {
     return (
@@ -173,6 +179,7 @@ export class PrioritiesComponent implements OnInit {
       state: data.state,
       compensatesNode: data.nodecompensates,
       compensatesAccount: data.accountscompensates,
+      user: this.userData.usuario.usuario,
     });
   }
 
