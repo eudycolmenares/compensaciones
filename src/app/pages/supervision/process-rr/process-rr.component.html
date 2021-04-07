@@ -21,7 +21,6 @@
                   <label class="subtitle" *ngSwitchCase="0">No completado</label>
                 </ng-container>
               </ng-container>
-
             </div>
             <ng-container *ngIf="i+1 !== stages.length">
               <div class="step-item-bar" [ngClass]=" {
@@ -34,18 +33,17 @@
       </div>
       <div class="col-sm-8 col-md-9 text-center container-stages">
         <ng-container [ngSwitch]="stageSelected">
-
           <!-- STEP 1 -->
           <ng-container *ngSwitchCase="1">
             <div *ngIf="stages[stageSelected -1].status == 0" class="alert alert-secondary" role="alert">
-              {{ processParams.msgsByStages[1].success }}
+              {{ processParams.msgsByStages[1].failed }}
             </div>
             <div *ngIf="stages[stageSelected -1].status == 1" class="alert alert-success" role="alert">
-              {{ processParams.msgsByStages[1].failed }}
+              {{ processParams.msgsByStages[1].success }}
             </div>
             <div class="row text-light text-center mt-4">
               <div class="col-sm container-buttons">
-                <button type="button" (click)="openModal()" [disabled]="stages[stageSelected -1].status == 1" class="btn btn-primary btn-sm">
+                <button type="button" (click)="openModal()" class="btn btn-primary btn-sm">
                   Ejecutar Reglas
                 </button>
               </div>
@@ -127,9 +125,6 @@
               </div>
             </div>
           </ng-container>
-
-
-
           <!-- STEP 6 -->
           <ng-container *ngSwitchCase="6">
             <div *ngIf="stages[stageSelected - 2].status == 0" class="alert alert-secondary" role="alert">
@@ -171,10 +166,6 @@
         </ng-container>
       </div>
     </div>
-
-
-
-
     <!-- Sino hay procesos en BD -->
     <div class="row" *ngIf="!stages">
       <div class="col-md py-3">
@@ -184,7 +175,6 @@
       </div>
     </div>
   </div>
-
   <hr class="mt-5 mb-5" />
 </section>
 

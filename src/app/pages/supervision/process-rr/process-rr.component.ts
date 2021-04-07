@@ -47,13 +47,14 @@ export class ProcessRRComponent implements OnInit {
     this.stageSelected = stage.stage;
   }
 
-  runRuleNodes() { // process 1
+  runRuleNodes() {
     this.processesSvc.runNodesRules().subscribe(resp => {
       console.log('runNodesRules()', resp);
       if (resp.generalResponse.code === '0') {
         this.toastScv.showSuccess(resp.generalResponse.messageCode, resp.generalResponse.descriptionCode);
         this.sendEmailNotification();
-        this.changeStatusStage(true);
+        // this.changeStatusStage(true);
+        this.getProcesses();
       } else {
         this.toastScv.showError(resp.generalResponse.messageCode, resp.generalResponse.descriptionCode);
       }

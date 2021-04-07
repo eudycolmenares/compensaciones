@@ -223,32 +223,27 @@ export const superProcessParams = {
   confirByStages: {
     1: {
       header: '¿Estás seguro de que deseas ejecutar las Reglas para Nodos?',
-      msg: `Al completarse este proceso el área encargada recibirá un correo de confirmación para realizar la  Validación de Nodos de la etapa 2.`
+      msg: `Al completarse este proceso el área encargada recibirá un correo de confirmación para realizar la validación de nodos de la etapa 2.`
     },
     2: {
-      header: '¿Estás seguro que ha realizado la validación de Nodos?', // acomodar
-      msg: `Al completarse este proceso recibirá un correo de confirmación,
-        y deberá dirigirse al paso 3, que es ejecutar las Reglas de Negocio RR.`
+      header: '¿Estás seguro que ha realizado la validación de Nodos?',
+      msg: `Al completarse este proceso el área encargada recibirá un correo de confirmación para realizar la ejecución de reglas de negocio RR en la etapa 3.`
     },
     3: {
       header: '¿Estás seguro de que deseas ejecutar las Reglas de Negocio RR?',
-      msg: `Al completarse este proceso recibirá un correo de confirmación,
-        y deberá Validar las fallas RR.`
+      msg: `Al completarse este proceso el área encargada recibirá un correo de confirmación para realizar la validación de fallas RR en la etapa 4.`
     },
     4: {
       header: '¿Estás seguro que ha realizado la validación de fallas RR?',
-      msg: `Al completarse este proceso recibirá un correo de confirmación,
-        deberá ir al paso 5 y generar los nodos y cuentas.`
+      msg: `Al completarse este proceso el área encargada recibirá un correo de confirmación para generar los nodos y cuentas en la etapa 5.`
     },
     5: {
       header: '¿Estás seguro que desea generar los nodos y cuentas?',
-      msg: `Al completarse este proceso recibirá un correo de confirmación,
-        deberá proceder al cargue información rentas y confirmar en el paso 6.`
+      msg: `Al completarse este proceso el área encargada recibirá un correo de confirmación para realizar la carga información rentas en la etapa 6.`
     },
     6: {
       header: '¿Estás seguro que ha realizado el cargue información de rentas?',
-      msg: `Al completarse este proceso recibirá un correo de confirmación,
-        deberá ir al paso 7 y generar los archivos facturación.`
+      msg: `Al completarse este proceso el área encargada recibirá un correo de confirmación para generar los archivos facturación en la etapa 7.`
     },
     7: {
       header: '¿Estás seguro que desea generar los archivos de facturación?',
@@ -257,8 +252,8 @@ export const superProcessParams = {
   },
   msgsByStages: {
     1: {
-      success: '¡El proceso ejecución de reglas para Nodos no se ha ejecutado!',
-      failed: '¡El proceso ejecución reglas para Nodos ha sido completado!'
+      success: 'El proceso ejecución de reglas para nodos ha sido completado. ¡Tener en cuenta que al ejecutar las Reglas para Nodos nuevamente cambiara los procesos restantes a "no completado"!',
+      failed: '¡El proceso ejecución reglas para nodos no se ha completado!'
     },
     2: {
       success: '¡El proceso Validación de Nodos ha sido completado!',
