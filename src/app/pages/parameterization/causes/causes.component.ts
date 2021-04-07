@@ -1,25 +1,27 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-import { GeneralFunctionsService } from '../../../services/general-functions.service';
+import { GeneralFunctionsService } from '@services/general-functions.service';
 import {
   ServicesSettings,
   SelectStatus,
-} from '../../../libraries/utilities.library';
+} from '@libraries/utilities.library';
 import {
   CauseModel,
   CausesApiModel,
   RequestModel,
   ResponseModel,
-} from 'src/app/models/cause';
-import { CauseService } from 'src/app/services/cause/cause.service';
-import { OriginTypeService } from 'src/app/services/originType/origin-type.service';
-import { DataList } from '../../../models/general';
-import { ToastService } from '../../../shared/services/toast.service';
+} from '@models/cause';
+import { CauseService } from '@services/cause/cause.service';
+import { OriginTypeService } from '@services/originType/origin-type.service';
+import { DataList } from '@models/general';
+import { ToastService } from '@shared_services/toast.service';
 import {
   originsApiModel,
   originModel as originTypeModel,
-} from 'src/app/models/origin-type';
+} from '@models/origin-type';
+import { ResponseLoginModel as UserModel } from '@models/users';
+import { AuthService } from '@shared_services/auth.service';
 
 interface originModel {
   id: number;
@@ -64,6 +66,7 @@ export class CausesComponent implements OnInit {
   selectState: DataList[] = [];
   selectService: DataList[] = [];
   selectOriginType: originsApiModel[];
+  userData: UserModel = null;
 
   actionForm = 'create'; // create, update
   originTypeList: originTypeModel[];
@@ -142,8 +145,10 @@ export class CausesComponent implements OnInit {
     private _causeSvc: CauseService,
     public _originTypeSvc: OriginTypeService,
     private _gnrScv: GeneralFunctionsService,
-    private _toastScv: ToastService
+    private _toastScv: ToastService,
+    private _authSvc: AuthService,
   ) {
+    this.userData = this._authSvc.userData;
     this.createForm();
     this.initializeVariables();
   }
@@ -161,7 +166,7 @@ export class CausesComponent implements OnInit {
       descriptionCause: ['', [Validators.required]],
       services: ['', [Validators.required]],
       status: ['', [Validators.required]],
-      user: [''],
+      user: [this.userData.usuario.usuario, [Validators.required]],
     });
     this.causeForm.get('origin').valueChanges.subscribe((selectValue) => {
       if (selectValue !== '30') {
@@ -250,13 +255,14 @@ export class CausesComponent implements OnInit {
             ? '1'
             : '0',
           state: this.causeForm.get('status').value,
-          user: 'test', // seteado
+          user: this.userData.usuario.usuario,
         },
       };
       if (this.actionForm === 'create') {
         this.createCauseApi(dataRequest);
       } else {
         dataRequest.Cause.id = this.causeForm.get('idCause').value;
+        dataRequest.Cause.user = this.userData.usuario.usuario;
         this.updateCauseApi(dataRequest);
       }
     }

@@ -1,22 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-import { GeneralFunctionsService } from 'src/app/services/general-functions.service';
+import { GeneralFunctionsService } from '@services/general-functions.service';
 import {
   SelectCompensate,
   SelectStatus,
-} from 'src/app/libraries/utilities.library';
-import { DataList } from 'src/app/models/general';
-import { PriorityService } from '../../../services/priority/priority.service';
+} from '@libraries/utilities.library';
+import { DataList } from '@models/general';
+import { PriorityService } from '@services/priority/priority.service';
 import {
   PrioritiesApiModel,
   PriorityModel,
   RequestModel,
   ResponseModel,
-} from 'src/app/models/priority';
-import { ToastService } from '../../../shared/services/toast.service';
-import { ResponseLoginModel as UserModel } from '@models/users';
-import { AuthService } from 'src/app/shared/services/auth.service';
+} from '@models/priority';
+import { ToastService } from '@shared_services/toast.service';
 
 @Component({
   selector: 'app-priorities',
@@ -27,8 +25,6 @@ export class PrioritiesComponent implements OnInit {
   priorityForm: FormGroup;
   selectState: DataList[] = [];
   selectQuestion: DataList[] = [];
-
-  userData: UserModel = null;
 
   actionForm = 'create'; // create, update
   dataToTable: PriorityModel[];
@@ -64,9 +60,7 @@ export class PrioritiesComponent implements OnInit {
     private _prioritySvc: PriorityService,
     private _gnrScv: GeneralFunctionsService,
     private _toastScv: ToastService,
-    private authSvc: AuthService,
   ) {
-    this.userData = this.authSvc.userData;
     this.createForm();
     this.initializeVariables();
   }
@@ -79,7 +73,6 @@ export class PrioritiesComponent implements OnInit {
       state: ['', [Validators.required]],
       compensatesNode: ['1', [Validators.required]],
       compensatesAccount: ['1', [Validators.required]],
-      user: [this.userData.usuario.usuario, [Validators.required]],
     });
   }
 
@@ -179,7 +172,6 @@ export class PrioritiesComponent implements OnInit {
       state: data.state,
       compensatesNode: data.nodecompensates,
       compensatesAccount: data.accountscompensates,
-      user: this.userData.usuario.usuario,
     });
   }
 
