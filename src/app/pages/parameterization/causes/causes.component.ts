@@ -201,12 +201,13 @@ export class CausesComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log(this.causeForm.value);
+    
     if (this.causeForm.invalid) {
       return Object.values(this.causeForm.controls).forEach((control) => {
         control.markAsTouched();
       });
     } else {
-      var servicesSelected = this.causeForm.get('services').value;
       const dataRequest: RequestModel = {
         Cause: {
           Disruption: {

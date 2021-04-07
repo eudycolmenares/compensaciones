@@ -71,21 +71,6 @@ export class SymptomComponent implements OnInit {
       validation: '',
     },
     {
-      name: 'telephone',
-      description: 'Telefonía',
-      validation: 'service'
-    },
-    {
-      name: 'television',
-      description: 'Televisión',
-      validation: 'service'
-    },
-    {
-      name: 'internet',
-      description: 'Internet',
-      validation: 'service'
-    },
-    {
       name: 'state',
       description: 'Estado',
       validation: 'active-desactive'
@@ -151,6 +136,8 @@ export class SymptomComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log(this.formSymptom.value);
+    
     if(this.formSymptom.invalid) {
       return Object.values(this.formSymptom.controls).forEach(control => {
         control.markAsTouched();
