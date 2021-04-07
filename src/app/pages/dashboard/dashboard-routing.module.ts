@@ -104,6 +104,11 @@ const ROUTES: Routes = [
         path: 'process-rr',
         canActivate: [AuthenticatedGuard],
         loadChildren: () => import('../supervision/process-rr/process-rr.module').then(m => m.ProcessRRModule),
+      },
+      {
+        path: 'email',
+        canActivate: [AuthenticatedGuard],
+        loadChildren: () => import('../parameterization/email/email/email.module').then(m => m.EmailModule),
       }
     ],
   }

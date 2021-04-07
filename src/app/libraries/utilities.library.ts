@@ -78,6 +78,10 @@ export const RoutesData = {
   'process-rr': {
     url: ['dashboard', 'process-rr'],
     breadcrumb: ['Supervisión', 'Proceso RR']
+  },
+  'email': {
+    url: ['dashboard', 'email'],
+    breadcrumb: ['Parametrización', 'Email de Supervisión']
   }
 }
 
