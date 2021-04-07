@@ -113,7 +113,6 @@ export class SymptomComponent implements OnInit {
       description: ['', [Validators.required, Validators.maxLength(40)]],
       state: ['', Validators.required],
       origin: ['', Validators.required],
-      services: ['', Validators.required]
     })
   }
   get invalidCode() {
@@ -158,7 +157,6 @@ export class SymptomComponent implements OnInit {
       })
     }else {
       const originSelected = this.origin.find(item => item['id'] == this.formSymptom.get('origin').value);
-      const servicesSelected = this.formSymptom.get('services').value;
       const dataRequest: requestModel = {
         'symptom': {
           'symptomCode': this.formSymptom.get('code').value,
@@ -166,9 +164,6 @@ export class SymptomComponent implements OnInit {
           'state': this.formSymptom.get('state').value,
           'originId': originSelected['id'],
           'origin': originSelected['name'],
-          'television': (servicesSelected.find((svc: DataList) => svc.key === 'television') ? '1' : '0'),
-          'internet': (servicesSelected.find((svc: DataList) => svc.key === 'internet') ? '1' : '0'),
-          'telephone': (servicesSelected.find((svc: DataList) => svc.key === 'telephone') ? '1' : '0'),
           'user': 'test', // seteado
         }
       }
@@ -212,7 +207,6 @@ export class SymptomComponent implements OnInit {
       description: data.description,
       state: data.state,
       origin: data.originId,
-      services: this.services.filter((item: DataList) => data[item.key] === '1')
     });
   }
 

@@ -11,9 +11,6 @@ export interface CauseModel {
     description: string;
     causes: string;
     user: string;
-    television: string;
-    internet: string;
-    telephone: string;
     Disruption: {
       id?: string;
       description?: string;

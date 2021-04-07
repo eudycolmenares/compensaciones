@@ -165,8 +165,6 @@ export class NodesComponent implements OnInit {
       .subscribe((resp: models.ResponseModel) => {
         this.messageToCustomer(resp);
       });
-
-    this.initialCharge();
   }
 
   rejectedQualityNode(node) {
@@ -175,6 +173,7 @@ export class NodesComponent implements OnInit {
         'Debe ingresar un comentario en el campo de observación'
       );
     } else {
+      
       let data: models.RequestModel = {
         tblMaximum: {
           ...node,
@@ -187,8 +186,6 @@ export class NodesComponent implements OnInit {
         .subscribe((resp: models.ResponseModel) => {
           this.messageToCustomer(resp);
         });
-
-      this.initialCharge();
     }
   }
 
@@ -210,8 +207,6 @@ export class NodesComponent implements OnInit {
         .subscribe((resp: models.ResponseModel) => {
           this.messageToCustomer(resp);
         });
-
-      this.initialCharge();
     }
   }
 
@@ -221,7 +216,7 @@ export class NodesComponent implements OnInit {
         resp.generalResponse.messageCode,
         resp.generalResponse.descriptionCode
       );
-      // this.reloadTableData();
+      this.initialCharge();
     } else {
       this._toastScv.showError(
         resp.generalResponse.messageCode,

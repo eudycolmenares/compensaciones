@@ -65,6 +65,7 @@
           <td *ngSwitchCase="'active-desactive'">{{ (item[opt.name] === '1' || item[opt.name] === 1) ? 'Activo' : 'Inactivo' }}</td>
           <td *ngSwitchCase="'service'">{{ (item[opt.name] === '1' || item[opt.name] === 1) ? 'Aplica' : 'N/A' }}</td>
           <td *ngSwitchCase="'object'">{{ item[opt.name][opt.subname] }}</td>
+          <td *ngSwitchCase="'union-date'">{{ item[opt.name] }} {{ item[opt.name2] }}</td>
           <td *ngSwitchCase="'observation'"><textarea class="form-control form-control-sm" [value]="item[opt.name]" (change)="item[opt.name]=$event.target.value"></textarea></td>
           <td *ngSwitchCase="''">{{ item[opt.name] }}</td>
           <td *ngSwitchCase="'date'">{{ item[opt.name] | date }}</td>

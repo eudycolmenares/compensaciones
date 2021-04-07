@@ -49,7 +49,7 @@ export class RrFailureValidationService {
         {
           name: 'time',
           description: 'Tiempo',
-          validation: '',
+          validation: 'time-min',
         },
         {
           name: 'service',
@@ -200,7 +200,7 @@ export class RrFailureValidationService {
         {
           name: 'time',
           description: 'Tiempo',
-          validation: '',
+          validation: 'time-min',
         },
         {
           name: 'service',
@@ -349,7 +349,7 @@ export class RrFailureValidationService {
         {
           name: 'time',
           description: 'Tiempo',
-          validation: '',
+          validation: 'time-min',
         },
         {
           name: 'service',
