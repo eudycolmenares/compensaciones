@@ -99,12 +99,6 @@ export class NavbarComponent implements OnInit {
                 icon:'bi bi-calendar2-week',
                 routerLink: ['/dashboard/billing-periods']
               },
-              {
-                label: 'Email de Supervisión',
-                title: 'Email de Supervisión',
-                icon:'pi pi-envelope',
-                routerLink: ['/dashboard/email']
-              },
             ]
           },
           {
@@ -164,7 +158,13 @@ export class NavbarComponent implements OnInit {
                 title: 'Procesos',
                 icon:'pi pi-fw pi-chart-line',
                 routerLink: ['/dashboard/process-rr']
-              }
+              },
+              {
+                label: 'Email de Supervisión',
+                title: 'Email de Supervisión',
+                icon:'pi pi-envelope',
+                routerLink: ['/dashboard/email']
+              },
             ]
           }
         ]

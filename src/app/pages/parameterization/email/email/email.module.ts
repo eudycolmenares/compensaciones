@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ComponentsModule } from './../../../../components/components.module';
+import { TableModule } from 'primeng/table';
 
 import { EmailRoutingModule } from './email-routing.module';
 import { EmailComponent } from './email.component';
@@ -13,7 +14,8 @@ import { EmailComponent } from './email.component';
   imports: [
     CommonModule,
     EmailRoutingModule,
-    ComponentsModule
+    ComponentsModule,
+    TableModule
   ],
   exports: [EmailComponent],
   bootstrap: [EmailComponent],

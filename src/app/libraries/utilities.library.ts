@@ -223,11 +223,10 @@ export const superProcessParams = {
   confirByStages: {
     1: {
       header: '¿Estás seguro de que deseas ejecutar las Reglas para Nodos?',
-      msg: `Al completarse este proceso recibirá un correo de confirmación, deberá dirigirse al módulo de Validación de Nodos para validar los datos,
-        y luego volver a Supervisión y en la etapa 2 confirmar la validación de Nodos.`
+      msg: `Al completarse este proceso el área encargada recibirá un correo de confirmación para realizar la  Validación de Nodos de la etapa 2.`
     },
     2: {
-      header: '¿Estás seguro que ha realizado la validación de Nodos?',
+      header: '¿Estás seguro que ha realizado la validación de Nodos?', // acomodar
       msg: `Al completarse este proceso recibirá un correo de confirmación,
         y deberá dirigirse al paso 3, que es ejecutar las Reglas de Negocio RR.`
     },
@@ -253,7 +252,7 @@ export const superProcessParams = {
     },
     7: {
       header: '¿Estás seguro que desea generar los archivos de facturación?',
-      msg: `Al completarse este proceso recibirá un correo de confirmación.`
+      msg: `Al completarse este proceso el área encargada recibirá un correo de confirmación para descargar los archivos de facturación.`
     },
   },
   msgsByStages: {
