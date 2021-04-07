@@ -17,7 +17,7 @@ import { strataApiModel, stratumModel } from "../../../models/stratum";
 })
 
 export class SettingsComponent implements OnInit {
-  strataBase: object[] = [];
+  strataBase: stratumModel[] = [];
   selectStatus: object[] = [];
   servicesBase: DataList[] = [];
   formStgs: FormGroup;
@@ -86,6 +86,7 @@ export class SettingsComponent implements OnInit {
     }
     this.stratumSvc.allStrata().subscribe((resp: strataApiModel) => {
       this.strataBase = resp.socialStatus;
+      this.compareToSort(this.strataBase)
     })
     this.initialCharge(); // table
   }
@@ -211,6 +212,9 @@ export class SettingsComponent implements OnInit {
     })
   }
 
+  compareToSort(items: stratumModel[]) {
+    return items.sort((a, b) => parseInt(a.statusSocial) - parseInt(b.statusSocial));;
+  }
   cleanForm() {
     this.formStgs.reset({'state': ''});
     this.actionForm = 'create';
