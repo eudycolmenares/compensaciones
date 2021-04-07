@@ -66,7 +66,19 @@ export class ProcessRRComponent implements OnInit {
         this.toastScv.showSuccess(resp.GeneralResponse.messageCode, resp.GeneralResponse.descriptionCode);
         this.sendEmailNotification();
         this.changeStatusStage(true);
-        this.changePostStatusStage(true);
+        // this.changePostStatusStage(true); // acomodar - eliminar
+      } else {
+        this.toastScv.showError(resp.GeneralResponse.messageCode, resp.GeneralResponse.descriptionCode);
+      }
+    })
+  }
+  runConsolidateAccNod() {
+    this.processesSvc.ConsolidationAccountsNodes().subscribe(resp => {
+      console.log('runConsolidateAccNod()', resp);
+      if (resp.GeneralResponse.code === '0') {
+        this.toastScv.showSuccess(resp.GeneralResponse.messageCode, resp.GeneralResponse.descriptionCode);
+        this.sendEmailNotification();
+        this.changeStatusStage(true);
       } else {
         this.toastScv.showError(resp.GeneralResponse.messageCode, resp.GeneralResponse.descriptionCode);
       }
@@ -79,7 +91,7 @@ export class ProcessRRComponent implements OnInit {
         this.toastScv.showSuccess(resp.GeneralResponse.messageCode, resp.GeneralResponse.descriptionCode);
         this.sendEmailNotification();
         this.changeStatusStage(true);
-        this.changePostStatusStage(true);
+        // this.changePostStatusStage(true);
       } else {
         this.toastScv.showError(resp.GeneralResponse.messageCode, resp.GeneralResponse.descriptionCode);
       }
@@ -95,19 +107,16 @@ export class ProcessRRComponent implements OnInit {
         stateProcess: 'COMPLETADO'
       }
     }
-    delete body.TblSupervisionProcess.stage
-    delete body.TblSupervisionProcess.status
     this.supervisionSvc.updateProcess(body).subscribe((resp: respUpdateModel) => {
       console.log('updateProcess()', resp);
       if (resp.generalResponse.code != '-1') {
+        this.toastScv.showSuccess(resp.generalResponse.messageCode, resp.generalResponse.descriptionCode);
         this.changeStatusStage(true);
         this.sendEmailNotification();
       } else {
         this.toastScv.showError(resp.generalResponse.messageCode, resp.generalResponse.descriptionCode);
       }
     })
-
-
   }
 
   changeStatusStage(success: boolean) {
@@ -148,14 +157,21 @@ export class ProcessRRComponent implements OnInit {
           case 3:
             this.runRuleBusiness();
             break;
+          case 4:
+            this.changeStatusStageServer();
+            break;
           case 5:
+            this.runConsolidateAccNod();
+            break;
+          case 6:
+            this.changeStatusStageServer();
+            break;
+          case 7:
             this.confirmBillingFiles();
             break;
         }
       },
-      reject: () => {
-        console.log('Rechazaste!!!');
-      },
+      reject: () => { },
       key: this.randomKey
     });
   }

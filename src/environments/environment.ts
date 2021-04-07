@@ -18,6 +18,7 @@ export const environment = {
   urlApi_rules: '/WSCompensaciones-web/webresources/WSNodesRules/',
   urlApi_Businessrules: '/WSCompensacionesBatchRR-web/webresources/WSBusinessRulesRR/',
   urlApi_BillingFiles: '/WSCompensacionesBatchRR-web/webresources/WSBilligRR/',
+  urlApi_ConsolidationAccNod: '/WSCompensacionesBatchRR-web/webresources/WSConsolidationRR/',
   urlApi_notifications: '/Notification/V2.0/Rest/',
   endpoints: {
     // Settings
@@ -144,6 +145,7 @@ export const environment = {
     nodes_rules: 'NodesRulesService/run',
     business_rules: 'BusinessRulesService/run',
     billing_files: 'BillingService/run',
+    consolidate_account_nodes: 'ConsolidationAccountNodesService/run',
     // Notifications Mails
     send_mail: 'PutMessage',
     // Supervicion Process

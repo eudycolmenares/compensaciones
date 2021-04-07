@@ -36,4 +36,10 @@ export class ProcessesService {
       headers: this.headers,
     });
   }
+
+  ConsolidationAccountsNodes(): Observable<any> {
+    return this.http.post<any>(env.urlApi_ConsolidationAccNod + env.endpoints.consolidate_account_nodes, {
+      headers: this.headers,
+    });
+  }
 }

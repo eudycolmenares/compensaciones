@@ -230,12 +230,26 @@ export const superProcessParams = {
     3: {
       header: '¿Estás seguro de que deseas ejecutar las Reglas de Negocio RR?',
       msg: `Al completarse este proceso recibirá un correo de confirmación,
-        y generará automáticamente los Nodos y Cuentas.`
+        y deberá Validar las fallas RR.`
+    },
+    4: {
+      header: '¿Estás seguro que ha realizado la validación de fallas RR?',
+      msg: `Al completarse este proceso recibirá un correo de confirmación,
+        deberá ir al paso 5 y generar los nodos y cuentas.`
     },
     5: {
-      header: '¿Estás seguro que ha realizado el cargue Información de Rentas?',
+      header: '¿Estás seguro que desea generar los nodos y cuentas?',
       msg: `Al completarse este proceso recibirá un correo de confirmación,
-        y generará automáticamente los archivos de facturación.`
+        deberá proceder al cargue información rentas y confirmar en el paso 6.`
+    },
+    6: {
+      header: '¿Estás seguro que ha realizado el cargue información de rentas?',
+      msg: `Al completarse este proceso recibirá un correo de confirmación,
+        deberá ir al paso 7 y generar los archivos facturación.`
+    },
+    7: {
+      header: '¿Estás seguro que desea generar los archivos de facturación?',
+      msg: `Al completarse este proceso recibirá un correo de confirmación.`
     },
   },
   msgsByStages: {
@@ -247,6 +261,31 @@ export const superProcessParams = {
       success: '¡El proceso Validación de Nodos ha sido completado!',
       failed: '¡Aún no ha confirmado la validación de Nodos!',
       disabled: '¡Esta opcíon se encuentra inhabilitada, debe haber ejecutado las Reglas de Nodos para poder continuar!'
+    },
+    3: {
+      success: '¡El proceso ejecución de Reglas de Negocio RR ha sido completado',
+      failed: '¡Aún no ha ejecutado las Reglas de Negocio RR!',
+      disabled: '¡Esta opcíon se encuentra inhabilitada, debe haber confirmado la Validación de Nodos para poder continuar!'
+    },
+    4: {
+      success: '¡El proceso de validación de fallas RR ha sido completado, puede proceder generar Nodos y Cuentas!',
+      failed: '¡Aún no ha ejecutado la validación de fallas RR!',
+      disabled: '¡Esta opcíon se encuentra inhabilitada, debe haber aejecutado las Reglas de Negocio RR para poder continuar!'
+    },
+    5: {
+      success: '¡El proceso generación de Nodos y Cuentas ha sido completado, puede proceder al cargue de información!',
+      failed: '¡Aún no ha generado los nodos y cuentas!',
+      disabled: '¡Esta opcíon se encuentra inhabilitada, debe haber validado las fallas RR para poder continuar!'
+    },
+    6: {
+      success: '¡El proceso confirmación de carga de información de rentas ha sido completado, puede proceder al paso 7!',
+      failed: '¡Aún no ha confirmado la carga de información de rentas!',
+      disabled: '¡Esta opcíon se encuentra inhabilitada, debe haber generado los Nodos y Cuentas para poder continuar!'
+    },
+    7: {
+      success: '¡La generación archivos de facturación ha sido completado!',
+      failed: '¡Aún no ha generado los archivos de facturación!',
+      disabled: '¡Esta opcíon se encuentra inhabilitada, debe haber cargado la información de Rentas para poder continuar!'
     }
   },
   empty: '¡No hay  procesos disponibles, intente más tarde!',
