@@ -120,21 +120,6 @@ export class CausesComponent implements OnInit {
       validation: 'object',
     },
     {
-      name: 'internet',
-      description: 'Internet',
-      validation: 'service',
-    },
-    {
-      name: 'telephone',
-      description: 'Telefonía',
-      validation: 'service',
-    },
-    {
-      name: 'television',
-      description: 'Televisión',
-      validation: 'service',
-    },
-    {
       name: 'state',
       description: 'Estado',
       validation: 'active-desactive',
@@ -164,7 +149,6 @@ export class CausesComponent implements OnInit {
       descriptionProblem: [''],
       causeCode: ['', [Validators.required]],
       descriptionCause: ['', [Validators.required]],
-      services: ['', [Validators.required]],
       status: ['', [Validators.required]],
       user: [this.userData.usuario.usuario],
     });
@@ -201,9 +185,6 @@ export class CausesComponent implements OnInit {
   }
 
   initializeVariables() {
-    for (const i of Object.entries(ServicesSettings)) {
-      this.selectService.push({ key: i[0], value: i[1] });
-    }
     for (const i of Object.entries(SelectStatus)) {
       this.selectState.push({ key: i[1], value: i[0] });
     }
@@ -245,15 +226,6 @@ export class CausesComponent implements OnInit {
           OriginType: {
             id: this.causeForm.get('typeOrigin').value,
           },
-          television: servicesSelected.find((svc) => svc['key'] === 'television')
-            ? '1'
-            : '0',
-          internet: servicesSelected.find((svc) => svc['key'] === 'internet')
-            ? '1'
-            : '0',
-          telephone: servicesSelected.find((svc) => svc['key'] === 'telephone')
-            ? '1'
-            : '0',
           state: this.causeForm.get('status').value,
           user: this.userData.usuario.usuario,
         },
@@ -308,7 +280,6 @@ export class CausesComponent implements OnInit {
       causes: data.description,
       origin: data.Origin.id,
       typeOrigin: data.OriginType.id,
-      services:  this.selectService.filter((item: DataList) => data[item.key] === '1'),
       status: data.state,
       user: data.user,
     });

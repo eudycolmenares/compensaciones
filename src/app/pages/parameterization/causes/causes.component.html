@@ -93,8 +93,6 @@
       <div class="row text-light text-center mt-4 px-sm-0 px-md-5">
         <div class="col-sm bg-primary py-1 mx-1">Código Problema (*)</div>
         <div class="col-sm bg-primary py-1 mx-1">Descripción Problema</div>
-        <div class="col-sm bg-primary py-1 mx-1">Código Causas (*)</div>
-        <div class="col-sm bg-primary py-1 mx-1">Descripción Causa (*)</div>
       </div>
 
       <div class="row px-sm-0 px-md-5">
@@ -132,6 +130,15 @@
             {{ textsFormInvalid("descriptionProblem") }}
           </small>
         </div>
+      </div>
+
+      <div class="row text-light text-center mt-4 px-sm-0 px-md-5">
+        <div class="col-sm bg-primary py-1 mx-1">Código Causas (*)</div>
+        <div class="col-sm bg-primary py-1 mx-1">Descripción Causa (*)</div>
+        <div class="col-sm bg-primary py-1 mx-1">Estado (*)</div>
+      </div>
+
+      <div class="row px-sm-0 px-md-5">
         <div class="col-sm py-1 mx-1 p-0">
           <input
             type="text"
@@ -161,29 +168,6 @@
             *ngIf="this.invalidFieldForm('descriptionCause')"
           >
             {{ textsFormInvalid("descriptionCause") }}
-          </small>
-        </div>
-      </div>
-
-      <div class="row text-light text-center mt-4 px-sm-0 px-md-5">
-        <div class="col-sm bg-primary py-1 mx-1">Servicio (*)</div>
-        <div class="col-sm bg-primary py-1 mx-1">Estado (*)</div>
-      </div>
-
-      <div class="row px-sm-0 px-md-5">
-        <div class="col-sm py-1 mx-1 p-0">
-          <p-multiSelect
-            formControlName="services"
-            [options]="selectService"
-            defaultLabel="- Seleccione -"
-            optionLabel="value"
-            [ngClass]="{
-              'ng-invalid ng-dirty': this.invalidFieldForm('services')
-            }"
-            [filter]="false"
-          ></p-multiSelect>
-          <small class="text-danger" *ngIf="this.invalidFieldForm('services')">
-            {{ textsFormInvalid("services") }}
           </small>
         </div>
         <div class="col-sm py-1 mx-1 p-0 text-left">

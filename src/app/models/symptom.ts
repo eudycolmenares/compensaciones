@@ -5,9 +5,6 @@ export interface symptomModel {
   state: number | string;
   originId: number;
   origin: string;
-  internet?: string;
-  telephone?: string;
-  television?: string;
   createDate?: string;
   user?: string;
 }
