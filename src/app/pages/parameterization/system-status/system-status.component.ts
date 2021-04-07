@@ -65,7 +65,7 @@ export class SystemStatusComponent implements OnInit {
       description: ['', [Validators.required]],
       compensate: ['', [Validators.required]],
       status: ['', [Validators.required]],
-      user: [this.userData.usuario.usuario, [Validators.required]],
+      user: [this.userData.usuario.usuario],
     });
   }
 

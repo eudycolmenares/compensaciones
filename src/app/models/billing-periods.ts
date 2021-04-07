@@ -1,5 +1,5 @@
 export interface BillingPeriodModel {
-  pediodId?: number;
+  periodId?: number;
   startDate: string | Date;
   endDate: string | Date;
   month?: number;

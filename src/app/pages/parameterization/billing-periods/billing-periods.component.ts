@@ -22,7 +22,7 @@ export class BillingPeriodsComponent implements OnInit {
   dataToTable: object[];
   structure: object[] = [
     {
-      name: 'pediodId',
+      name: 'periodId',
       description: 'Periodo de facturación',
       validation: 'period',
     },
@@ -50,7 +50,7 @@ export class BillingPeriodsComponent implements OnInit {
 
   createForm() {
     this.billingPeriodForm = this._fb.group({
-      pediodId: [''],
+      periodId: [''],
       invoiced: [''],
       billingDate: ['', [Validators.required]],
     });
@@ -110,8 +110,10 @@ export class BillingPeriodsComponent implements OnInit {
       if (this.actionForm === 'create') {
         this.createBillingPeriodApi(dataRequest);
       } else {
-        dataRequest.TblBillingPeriods.pediodId = this.billingPeriodForm.get(
-          'pediodId'
+        console.log('data form enviada: ', this.billingPeriodForm.value);
+        
+        dataRequest.TblBillingPeriods.periodId = this.billingPeriodForm.get(
+          'periodId'
         ).value;
         this.updateBillingPeriodApi(dataRequest);
       }
@@ -180,8 +182,10 @@ export class BillingPeriodsComponent implements OnInit {
   }
 
   setForm(data: models.BillingPeriodModel) {
+    console.log('data', data);
+    
     this.billingPeriodForm.reset({
-      pediodId: data.pediodId,
+      periodId: data.periodId,
       billingDate: [data.startDate, data.endDate],
       invoiced: data.invoiced,
     });

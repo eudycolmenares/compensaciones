@@ -61,7 +61,7 @@ export class BillingPeriodsService {
             currentPeriod: this.currentPeriod[DataNumber - 1],
           });
         } else {
-          reject({
+          resol({
             exists: false,
             message: 'No existe un periodo de facturación en curso',
             currentPeriod: this.currentPeriod,
@@ -138,6 +138,8 @@ export class BillingPeriodsService {
     let responseValidation: any = this.validationBillingPeriods();
 
     return responseValidation.then((resp) => {
+      console.log('respuesta de validar si existe: ', resp);
+      
       if (resp['exists']) {
         let responseValidationBetween: any = this.validationBillingPeriodsBetween(
           body.TblBillingPeriods.startDate,
