@@ -75,7 +75,7 @@ export class BulkLoadComponent implements OnInit {
       ],
       // uploadError: [''],
       uploadType: ['', [Validators.required]],
-      user: [this.userData.usuario.usuario, [Validators.required]],
+      user: [this.userData.usuario.usuario],
     });
   }
 
@@ -148,6 +148,7 @@ export class BulkLoadComponent implements OnInit {
         header: '¿Estás seguro que deseas enviar el archivo?',
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
+          this.dataToTable = [];
           this.sendFileToService();
         },
         reject: () => {

@@ -583,6 +583,9 @@ export class RrFailureValidationComponent implements OnInit {
           service: this.returnServiceName(data.service),
         });
 
+        console.log('setform', this.formOption1.value);
+        
+
         break;
 
       case 2:
@@ -617,6 +620,8 @@ export class RrFailureValidationComponent implements OnInit {
   }
 
   returnServiceName(dataServices: string): string[] {
+    console.log('dataServices', dataServices);
+    
     let arrayServices = dataServices.split(',');
     let svcSelected = [];
 

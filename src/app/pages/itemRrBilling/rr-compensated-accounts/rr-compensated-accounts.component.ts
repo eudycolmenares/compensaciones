@@ -52,13 +52,11 @@ export class RrCompensatedAccountsComponent implements OnInit {
 
   createForm() {
     this.rrCompensatedAccountsForm = this._fb.group({
-      tableOptions: ['', [Validators.required]],
+      tableOptions: [
+        { key: 'DetalleCompensacion', value: 'DetalleCompensacion' },
+        [Validators.required],
+      ],
     });
-    this.rrCompensatedAccountsForm
-      .get('tableOptions')
-      .valueChanges.subscribe((selectValue) => {
-        this.selectedTable(selectValue.key);
-      });
 
     this.compensationDetailForm = this._fb.group({
       id: [''],
@@ -89,7 +87,12 @@ export class RrCompensatedAccountsComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.nameSelectedTable_Download();
+    this.selectedTable(
+      this.rrCompensatedAccountsForm.get('tableOptions').value.key
+    );
+  }
 
   invalidFieldForm(fieldName: string) {
     return (
@@ -151,13 +154,14 @@ export class RrCompensatedAccountsComponent implements OnInit {
       { key: 'NotasCompensacion', value: 'Notas_Compensacion' },
     ];
 
-    this._RrCompensatedAccountsScv.allCompensationRun().subscribe((resp: any) => {
-      this.totalCompensationValue = resp.totalCompensationValue;
-    });
+    this._RrCompensatedAccountsScv
+      .allCompensationRun()
+      .subscribe((resp: any) => {
+        this.totalCompensationValue = resp.totalCompensationValue;
+      });
   }
 
   selectedTable(selectedTable: string) {
-    console.log(this.rrCompensatedAccountsForm);
     switch (selectedTable) {
       case 'DetalleCompensacion':
         this.structure = this._RrCompensatedAccountsScv.structureCompensationDetails().structure;
@@ -439,8 +443,11 @@ export class RrCompensatedAccountsComponent implements OnInit {
     }
   }
 
-  nameSelectedTable_Download(selected: string) {
-    this.nameTableSelected_download = selected;
+  nameSelectedTable_Download() {
+    this.nameTableSelected_download =
+      this.rrCompensatedAccountsForm.get('tableOptions').value.key +
+      ' ' +
+      this._gnrScv.toISOLocal(this.currentDate);
   }
 
   downloadDataTable() {

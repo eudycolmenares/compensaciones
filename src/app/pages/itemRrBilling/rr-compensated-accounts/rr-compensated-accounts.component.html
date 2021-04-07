@@ -10,11 +10,10 @@
             class="p-inputtext-sm"
             placeholder="- Seleccione -"
             formControlName="tableOptions"
+            (onChange)="selectedTable($event.value.key);"
           >
             <ng-template let-option pTemplate="item">
-              <div
-                (click)="nameSelectedTable_Download($event.target.innerText)"
-              >
+              <div>
                 {{ option.value }} {{ currentDate | date: "yyyyMMdd HHmmss" }}
               </div>
             </ng-template>
@@ -22,7 +21,7 @@
         </form>
       </div>
 
-      <div class="formSection bg-dark p-3 container-statistic">
+      <div class="formSection bg-primary-light p-3 container-statistic">
         <p class="font-weight-bold mb-0">Valor Total Compensación</p>
         <h4 class="mt-3">{{ totalCompensationValue }}</h4>
         <div class="progress">

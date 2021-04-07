@@ -166,7 +166,7 @@ export class CausesComponent implements OnInit {
       descriptionCause: ['', [Validators.required]],
       services: ['', [Validators.required]],
       status: ['', [Validators.required]],
-      user: [this.userData.usuario.usuario, [Validators.required]],
+      user: [this.userData.usuario.usuario],
     });
     this.causeForm.get('origin').valueChanges.subscribe((selectValue) => {
       if (selectValue !== '30') {
@@ -262,7 +262,6 @@ export class CausesComponent implements OnInit {
         this.createCauseApi(dataRequest);
       } else {
         dataRequest.Cause.id = this.causeForm.get('idCause').value;
-        dataRequest.Cause.user = this.userData.usuario.usuario;
         this.updateCauseApi(dataRequest);
       }
     }
@@ -309,21 +308,10 @@ export class CausesComponent implements OnInit {
       causes: data.description,
       origin: data.Origin.id,
       typeOrigin: data.OriginType.id,
-      services: this.returnServiceName(data),
+      services:  this.selectService.filter((item: DataList) => data[item.key] === '1'),
       status: data.state,
       user: data.user,
     });
-  }
-
-  returnServiceName(data: CauseModel): string[] {
-    const arraySvc = ['television', 'internet', 'telephone'];
-    let svcSelected = [];
-    for (const key in data) {
-      if (arraySvc.indexOf(key) > -1 && data[key] === '1') {
-        svcSelected.push(key);
-      }
-    }
-    return svcSelected;
   }
 
   disableCause(cause: CauseModel) {

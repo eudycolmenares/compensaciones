@@ -63,6 +63,23 @@ export class NodesComponent implements OnInit {
       description: 'Compensa Televisión',
       validation: 'yes-no-x',
     },
+    {
+      name: 'revision',
+      description: 'Revisión',
+      validation: '',
+    },
+    {
+      name: 'dateInNode',
+      name2: 'timeInNode',
+      description: 'Fecha inicio incidente',
+      validation: 'union-date',
+    },
+    {
+      name: 'dateEndNode',
+      name2: 'timeEndNode',
+      description: 'Fecha fin incidente',
+      validation: 'union-date',
+    },
   ];
   changeIconValidation = true;
 
@@ -81,7 +98,7 @@ export class NodesComponent implements OnInit {
   createForm() {
     this.nodeForm = this._fb.group({
       services: [{ key: 'internet', value: 'Internet' }, [Validators.required]],
-      user: [this.userData.usuario.usuario, [Validators.required]],
+      user: [this.userData.usuario.usuario],
     });
   }
 
@@ -119,6 +136,8 @@ export class NodesComponent implements OnInit {
             (data.srVoz === 1 &&
               this.nodeForm.get('services').value.key === 'telephone')
         );
+        console.log('datatotable', this.dataToTable);
+        
       });
   }
 
