@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { GeneralFunctionsService } from '../../../services/general-functions.service';
 import { OriginTypeService } from '../../../services/originType/origin-type.service';
+import { AuthService } from '../../../shared/services/auth.service';
 import { ToastService } from '../../../shared/services/toast.service';
 import { SelectStatus, SelectCompensate } from '../../../libraries/utilities.library';
 import { originModel, requestModel, responseModel, originsApiModel } from '../../../models/origin-type'
@@ -52,14 +53,14 @@ export class OriginTypeComponent implements OnInit {
     private fb: FormBuilder,
     private gnrSvc: GeneralFunctionsService,
     public originSvc: OriginTypeService,
-    private toastScv: ToastService
+    private toastScv: ToastService,
+    private authSvc: AuthService
   ) {
     this.createForm();
     this.initializeVariables();
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
   createForm() {
     this.formOrigin = this.fb.group({
@@ -116,7 +117,7 @@ export class OriginTypeComponent implements OnInit {
           'description': this.formOrigin.get('description').value,
           'compensate': this.formOrigin.get('compensate').value,
           'state': this.formOrigin.get('state').value,
-          'user': 'test', // seteado
+          'user': this.authSvc.userData.usuario.usuario,
         }
       }
       if(this.actionForm === 'create') {

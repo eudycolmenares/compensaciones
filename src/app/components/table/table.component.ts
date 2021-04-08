@@ -79,6 +79,14 @@ export class TableComponent implements OnInit {
         key: this.randomKey
       });
     }
+  }
 
+  yesNoValidation(value): boolean {
+    let result: boolean;
+    (
+      value.toString() === '1' ||
+      ( !(parseInt(value) >= 0) && value.toUpperCase() === 'SI')
+    ) ? result = true : result = false;
+    return result;
   }
 }
