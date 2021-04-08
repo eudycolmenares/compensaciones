@@ -54,8 +54,8 @@ export class StratumComponent implements OnInit {
   createForm() {
     this.formStratum = this.fb.group({
       id: [''],
-      code: ['', [Validators.required, Validators.maxLength(50)]],
-      description: ['', [Validators.required, Validators.maxLength(50)]],
+      code: ['', [Validators.required, Validators.maxLength(100)]],
+      description: ['', [Validators.required, Validators.maxLength(100)]],
       state: ['', Validators.required],
       creationDate: ['']
     })

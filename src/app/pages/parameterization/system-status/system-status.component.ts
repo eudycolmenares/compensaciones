@@ -62,7 +62,7 @@ export class SystemStatusComponent implements OnInit {
   createForm() {
     this.systemStatusForm = this._fb.group({
       id: [],
-      description: ['', [Validators.required]],
+      description: ['', [Validators.required, Validators.maxLength(100)]],
       compensate: ['', [Validators.required]],
       status: ['', [Validators.required]],
       user: [this.userData.usuario.usuario],

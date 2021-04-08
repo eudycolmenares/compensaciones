@@ -7,6 +7,7 @@ import { GeneralFunctionsService } from '../../../services/general-functions.ser
 import { SettingsService } from '../../../services/settings/settings.service';
 import { StratumService } from '../../../services/stratum/stratum.service';
 import { ToastService } from '../../../shared/services/toast.service';
+import { AuthService } from '../../../shared/services/auth.service';
 import { requestSettingsModel as requestModel, settingModel, settingsApiModel } from '../../../models/settings';
 import { strataApiModel, stratumModel } from "../../../models/stratum";
 
@@ -67,7 +68,8 @@ export class SettingsComponent implements OnInit {
     private gnrScv: GeneralFunctionsService,
     private stgsSvc : SettingsService,
     private stratumSvc : StratumService,
-    private toastScv: ToastService
+    private toastScv: ToastService,
+    private authSvc: AuthService
   ) {
     this.createForm();
     this.initializeVariables();
@@ -103,8 +105,8 @@ export class SettingsComponent implements OnInit {
   createForm() {
     this.formStgs = this.fb.group({
       id: [''],
-      code: ['', [Validators.required, Validators.maxLength(20)]],
-      description: ['', [Validators.required, Validators.maxLength(40)]],
+      code: ['', [Validators.required, Validators.maxLength(100)]],
+      description: ['', [Validators.required, Validators.maxLength(100)]],
       state: ['', Validators.required],
       strata: ['', Validators.required],
       services: ['', Validators.required],
@@ -142,7 +144,7 @@ export class SettingsComponent implements OnInit {
           'code': this.formStgs.get('code').value,
           'description': this.formStgs.get('description').value,
           'state': parseInt(this.formStgs.get('state').value),
-          'user': 'test', // seteado
+          'user': this.authSvc.userData.usuario.usuario,
           'socialStratums': {
               socialStratum: this.formStgs.get('strata').value
                 .map((stratum: stratumModel) => ({ idSocialStatus: stratum.idSocialStatus }))

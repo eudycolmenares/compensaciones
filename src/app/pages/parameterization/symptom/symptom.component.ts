@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SymptomService } from '../../../services/symptom/symptom.service';
 import { GeneralFunctionsService } from '../../../services/general-functions.service';
 import { ToastService } from '../../../shared/services/toast.service';
+import { AuthService } from '../../../shared/services/auth.service';
 import { SelectStatus, ServicesSettings as Services } from '../../../libraries/utilities.library';
 import { DataList } from '../../../models/general';
 import { requestModel, responseModel, symptomModel, symptomsApiModel } from '../../../models/symptom';
@@ -47,7 +48,7 @@ export class SymptomComponent implements OnInit {
       description: 'RR',
       state: 1
     }
-  ]; // seteado
+  ];
   formSymptom: FormGroup;
   actionForm = 'create'; // create, update
   selectStatus: object[] = [];
@@ -81,7 +82,8 @@ export class SymptomComponent implements OnInit {
     private fb: FormBuilder,
     private symptomSvc: SymptomService,
     private gnrScv: GeneralFunctionsService,
-    private toastScv: ToastService
+    private toastScv: ToastService,
+    private authSvc: AuthService
   ) {
     this.createForm();
     this.initializeVariables();
@@ -94,8 +96,8 @@ export class SymptomComponent implements OnInit {
   createForm() {
     this.formSymptom = this.fb.group({
       id: [''],
-      code: ['', [Validators.required, Validators.maxLength(20)]],
-      description: ['', [Validators.required, Validators.maxLength(40)]],
+      code: ['', [Validators.required, Validators.maxLength(100)]],
+      description: ['', [Validators.required, Validators.maxLength(100)]],
       state: ['', Validators.required],
       origin: ['', Validators.required],
     })
@@ -137,7 +139,7 @@ export class SymptomComponent implements OnInit {
 
   onSubmit() {
     console.log(this.formSymptom.value);
-    
+
     if(this.formSymptom.invalid) {
       return Object.values(this.formSymptom.controls).forEach(control => {
         control.markAsTouched();
@@ -151,7 +153,7 @@ export class SymptomComponent implements OnInit {
           'state': this.formSymptom.get('state').value,
           'originId': originSelected['id'],
           'origin': originSelected['name'],
-          'user': 'test', // seteado
+          'user': this.authSvc.userData.usuario.usuario,
         }
       }
       if(this.actionForm === 'create') {
