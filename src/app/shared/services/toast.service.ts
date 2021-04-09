@@ -10,21 +10,22 @@ export class ToastService {
 
   constructor(private messageSvc: MessageService) { }
 
-  show(typeSeverity, message, title, time) {
+  show(typeSeverity, message, title, time, sticky) {
     this.messageSvc.add({
       severity: typeSeverity,
       summary: title,
       detail: message,
-      life: time
+      life: time,
+      sticky: sticky,
     });
   }
 
-  showSuccess(message: string, title = '', time = 5000) {
-    this.show('success', message, title, time);
+  showSuccess(message: string, title = '', time = 5000, sticky = false) {
+    this.show('success', message, title, time, sticky);
   }
 
-  showError(message: string, title = '', time = 5000) {
-    this.show('error', message, title, time);
+  showError(message: string, title = '', time = 5000, sticky = false) {
+    this.show('error', message, title, time, sticky);
   }
 
   remove(toast) {

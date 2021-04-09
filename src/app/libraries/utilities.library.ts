@@ -288,4 +288,10 @@ export const superProcessParams = {
   },
   empty: '¡No hay  procesos disponibles, intente más tarde!',
   emptyEmail: '¡No hay correo almacenado para este proceso, no se enviara notificación!'
-}
+};
+
+export const messagesToast = {
+  error_title: 'Error',
+  error_red: 'Se ha presentado un problema red de código: ',
+  time_default: 5000
+};
