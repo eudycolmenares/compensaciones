@@ -9,12 +9,12 @@ import { SelectStatus, ServicesSettings as Services } from '../../../libraries/u
 import { DataList } from '../../../models/general';
 import { requestModel, responseModel, symptomModel, symptomsApiModel } from '../../../models/symptom';
 
-interface originModel {
-  id: number;
-  name: string;
-  description: string;
-  state: number;
-} // acomodar
+// interface originModel {
+//   id: number;
+//   name: string;
+//   description: string;
+//   state: number;
+// }
 
 @Component({
   selector: 'app-symptom',
@@ -23,32 +23,32 @@ interface originModel {
 })
 
 export class SymptomComponent implements OnInit {
-  origin: originModel[] = [
-    {
-      id: 30,
-      name: 'NODOS',
-      description: 'Minimo',
-      state: 1
-    },
-    {
-      id: 31,
-      name: 'CUENTAS',
-      description: 'FullStack',
-      state: 1
-    },
-    {
-      id: 32,
-      name: 'ORDENES',
-      description: 'Ordenes de Mantenimiento',
-      state: 1
-    },
-    {
-      id: 33,
-      name: 'RR',
-      description: 'RR',
-      state: 1
-    }
-  ];
+  // origin: originModel[] = [
+  //   {
+  //     id: 30,
+  //     name: 'NODOS',
+  //     description: 'Minimo',
+  //     state: 1
+  //   },
+  //   {
+  //     id: 31,
+  //     name: 'CUENTAS',
+  //     description: 'FullStack',
+  //     state: 1
+  //   },
+  //   {
+  //     id: 32,
+  //     name: 'ORDENES',
+  //     description: 'Ordenes de Mantenimiento',
+  //     state: 1
+  //   },
+  //   {
+  //     id: 33,
+  //     name: 'RR',
+  //     description: 'RR',
+  //     state: 1
+  //   }
+  // ];
   formSymptom: FormGroup;
   actionForm = 'create'; // create, update
   selectStatus: object[] = [];
@@ -66,11 +66,11 @@ export class SymptomComponent implements OnInit {
       description: 'Descripción',
       validation: '',
     },
-    {
-      name: 'origin',
-      description: 'Origen',
-      validation: '',
-    },
+    // {
+    //   name: 'origin',
+    //   description: 'Origen',
+    //   validation: '',
+    // },
     {
       name: 'state',
       description: 'Estado',
@@ -99,7 +99,7 @@ export class SymptomComponent implements OnInit {
       code: ['', [Validators.required, Validators.maxLength(100)]],
       description: ['', [Validators.required, Validators.maxLength(100)]],
       state: ['', Validators.required],
-      origin: ['', Validators.required],
+      // origin: ['', Validators.required],
     })
   }
   get invalidCode() {
@@ -111,9 +111,9 @@ export class SymptomComponent implements OnInit {
   get invalidState() {
     return this.formSymptom.get('state').touched && this.formSymptom.get('state').invalid;
   }
-  get invalidOrigin() {
-    return this.formSymptom.get('origin').touched && this.formSymptom.get('origin').invalid;
-  }
+  // get invalidOrigin() {
+  //   return this.formSymptom.get('origin').touched && this.formSymptom.get('origin').invalid;
+  // }
   get invalidServices() {
     return this.formSymptom.get('services').touched && this.formSymptom.get('services').invalid;
   }
@@ -138,21 +138,19 @@ export class SymptomComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.formSymptom.value);
-
     if(this.formSymptom.invalid) {
       return Object.values(this.formSymptom.controls).forEach(control => {
         control.markAsTouched();
       })
     }else {
-      const originSelected = this.origin.find(item => item['id'] == this.formSymptom.get('origin').value);
+      // const originSelected = this.origin.find(item => item['id'] == this.formSymptom.get('origin').value);
       const dataRequest: requestModel = {
         'symptom': {
           'symptomCode': this.formSymptom.get('code').value,
           'description': this.formSymptom.get('description').value,
           'state': this.formSymptom.get('state').value,
-          'originId': originSelected['id'],
-          'origin': originSelected['name'],
+          // 'originId': originSelected['id'],
+          // 'origin': originSelected['name'],
           'user': this.authSvc.userData.usuario.usuario,
         }
       }
@@ -195,7 +193,7 @@ export class SymptomComponent implements OnInit {
       code: data.symptomCode,
       description: data.description,
       state: data.state,
-      origin: data.originId,
+      // origin: data.originId,
     });
   }
 
@@ -219,7 +217,7 @@ export class SymptomComponent implements OnInit {
   cleanForm() {
     this.formSymptom.reset({
       state: '',
-      origin: ''
+      // origin: ''
     });
     this.actionForm = 'create';
   }

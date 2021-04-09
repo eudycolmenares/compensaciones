@@ -3,8 +3,8 @@ export interface symptomModel {
   symptomId?: number
   description: string;
   state: number | string;
-  originId: number;
-  origin: string;
+  // originId: number;
+  // origin: string;
   createDate?: string;
   user?: string;
 }
