@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/fo
 import { GeneralFunctionsService } from '../../../services/general-functions.service';
 import { ToastService } from '../../../shared/services/toast.service';
 import { FaultsService } from '../../../services/faults/faults.service';
+import { AuthService } from '../../../shared/services/auth.service';
 import { faultsApiModel } from '../../../models/faults';
 
 // xlsx
@@ -23,7 +24,7 @@ export class LoadFaultsComponent implements OnInit {
   fileBaseData: string;
   fileBaseName = '';
   dataPreview: any = null;
-  templateOptionsList: object[] = [
+  templateOptionsList: object[] = [ // acomodar
     { valueOption: 'RESIDENTIAL', nameOption: 'Residencial' },
     { valueOption: 'BUILDINGS', nameOption: 'Edificios' },
     { valueOption: 'SMES', nameOption: 'Pymes' },
@@ -42,6 +43,7 @@ export class LoadFaultsComponent implements OnInit {
     private toastScv: ToastService,
     private faultsScv: FaultsService,
     private confirmationSvc: ConfirmationService,
+    private authSvc: AuthService
   ) {
     this.createForm();
   }
@@ -72,7 +74,7 @@ export class LoadFaultsComponent implements OnInit {
         control.markAsTouched();
       })
     }else {
-      this.confirmationSvc.confirm({
+      this.confirmationSvc.confirm({ // acomodar
         message: `Toda la información de Carga de Fallas que contiene el archivo quedará
                 registrada en la base de datos.`,
         accept: () => {
@@ -88,7 +90,7 @@ export class LoadFaultsComponent implements OnInit {
       'file': this.fileBaseData,
       'fileName': this.fileBaseName,
       'loadType': this.form.get('type').value,
-      'userName': 'test', // seteado
+      'userName': this.authSvc.userData.usuario.usuario,
     }
     this.faultsScv.loadFaults(dataRequest).subscribe((resp: faultsApiModel) => {
       if(resp.GeneralResponse.code === '0') {
@@ -168,7 +170,7 @@ export class LoadFaultsComponent implements OnInit {
 
     const fileToDownload = `assets/documents/${nameFile}.xlsx`;
     const link = document.createElement('a');
-    if (link.download !== undefined) {
+    if (link.download !== undefined) { // acomodar
       let filename = `${nameFile}.xlsx`;
       link.setAttribute('href', fileToDownload);
       link.setAttribute('download', filename);

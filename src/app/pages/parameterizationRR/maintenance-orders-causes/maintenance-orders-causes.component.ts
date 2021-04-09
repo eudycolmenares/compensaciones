@@ -92,13 +92,13 @@ export class MaintenanceOrdersCausesComponent implements OnInit {
     this.MOCauseForm = this._fb.group({
       idMOcause: [null],
       currentlyUse: ['Si'],
-      causeCode: ['', [Validators.required]],
-      diagnosticDescription: ['', [Validators.required]],
+      causeCode: ['', [Validators.required, Validators.maxLength(100)]],
+      diagnosticDescription: ['', [Validators.required, Validators.maxLength(100)]],
       state: ['', [Validators.required]],
       compensation: ['', [Validators.required]],
       maintenance: ['', [Validators.required]],
       affectedServices: ['', [Validators.required]],
-      detailAffectation: ['', [Validators.required]],
+      detailAffectation: ['', [Validators.required, Validators.maxLength(100)]],
     });
   }
 
@@ -138,7 +138,7 @@ export class MaintenanceOrdersCausesComponent implements OnInit {
 
   onSubmit() {
     console.log(this.MOCauseForm.value);
-    
+
     if (this.MOCauseForm.invalid) {
       return Object.values(this.MOCauseForm.controls).forEach((control) => {
         control.markAsTouched();

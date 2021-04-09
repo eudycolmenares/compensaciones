@@ -65,8 +65,8 @@ export class OriginTypeComponent implements OnInit {
   createForm() {
     this.formOrigin = this.fb.group({
       id: [''],
-      name: ['', [Validators.required, Validators.maxLength(50)]],
-      description: ['', [Validators.required, Validators.maxLength(50)]],
+      name: ['', [Validators.required, Validators.maxLength(100)]],
+      description: ['', [Validators.required, Validators.maxLength(100)]],
       state: ['', Validators.required],
       compensate: ['', Validators.required],
       user: [''],
@@ -167,7 +167,6 @@ export class OriginTypeComponent implements OnInit {
 
   disableOrigin(origin: originModel) {
     const dataRequest: requestModel = { OriginType: {...origin, state: '0'} };
-    // delete dataRequest.OriginType.updateDate;
     this.updateOriginApi(dataRequest);
   }
 

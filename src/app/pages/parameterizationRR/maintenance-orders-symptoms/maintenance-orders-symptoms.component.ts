@@ -84,8 +84,8 @@ export class MaintenanceOrdersSymptomsComponent implements OnInit {
   createForm() {
     this.form = this.fb.group({
       id: [''],
-      code: ['', [Validators.required, Validators.maxLength(20)]],
-      description: ['', [Validators.required, Validators.maxLength(50)]],
+      code: ['', [Validators.required, Validators.maxLength(100)]],
+      description: ['', [Validators.required, Validators.maxLength(100)]],
       maintenance: ['', Validators.required],
       state: ['', Validators.required],
       compensate: ['', Validators.required],

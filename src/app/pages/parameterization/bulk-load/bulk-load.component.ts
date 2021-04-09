@@ -49,7 +49,7 @@ export class BulkLoadComponent implements OnInit {
       validation: '',
     },
   ];
-  templateOptionsList: object[] = [
+  templateOptionsList: object[] = [ // acomodar
     { valueOption: 'CAUSAS', nameOption: 'Causas' },
     { valueOption: 'SINTOMAS', nameOption: 'Síntomas' },
   ];
@@ -109,8 +109,8 @@ export class BulkLoadComponent implements OnInit {
 
   downloadModelDocument(selectedTypeFile: string) {
     if (selectedTypeFile !== null || selectedTypeFile !== undefined) {
-      const symptomsFile = 'assets/documents/SINTOMAS.csv';
-      const causesFile = 'assets/documents/CAUSAS.csv';
+      const symptomsFile = 'assets/documents/SINTOMAS.csv'; // acomodar
+      const causesFile = 'assets/documents/CAUSAS.csv'; // acomodar
       let selectFile = '';
       if (selectedTypeFile === 'SINTOMAS') {
         selectFile = symptomsFile;
@@ -142,7 +142,7 @@ export class BulkLoadComponent implements OnInit {
         control.markAsTouched();
       });
     } else {
-      this._confirmationService.confirm({
+      this._confirmationService.confirm({ // acomodar
         message: `Toda la información de Cargue Masivo que contiene el archivo quedará
                 registrada en la base de datos.`,
         header: '¿Estás seguro que deseas enviar el archivo?',

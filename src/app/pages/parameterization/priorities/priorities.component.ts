@@ -68,8 +68,8 @@ export class PrioritiesComponent implements OnInit {
   createForm() {
     this.priorityForm = this._fb.group({
       priorityId: [],
-      priorityCode: ['', [Validators.required]],
-      priorityDescription: ['', [Validators.required]],
+      priorityCode: ['', [Validators.required, Validators.maxLength(100)]],
+      priorityDescription: ['', [Validators.required, Validators.maxLength(100)]],
       state: ['', [Validators.required]],
       compensatesNode: ['1', [Validators.required]],
       compensatesAccount: ['1', [Validators.required]],
@@ -114,20 +114,16 @@ export class PrioritiesComponent implements OnInit {
       const dataRequest: RequestModel = {
         priority: {
           priorityCode: this.priorityForm.get('priorityCode').value,
-          priorityDescription: this.priorityForm.get('priorityDescription')
-            .value,
+          priorityDescription: this.priorityForm.get('priorityDescription').value,
           state: this.priorityForm.get('state').value,
           nodecompensates: this.priorityForm.get('compensatesNode').value,
-          accountscompensates: this.priorityForm.get('compensatesAccount')
-            .value,
+          accountscompensates: this.priorityForm.get('compensatesAccount').value,
         },
       };
       if (this.actionForm === 'create') {
         this.createPriorityApi(dataRequest);
       } else {
-        dataRequest.priority.priorityId = this.priorityForm.get(
-          'priorityId'
-        ).value;
+        dataRequest.priority.priorityId = this.priorityForm.get('priorityId').value;
         this.updatePriorityApi(dataRequest);
       }
     }
@@ -176,7 +172,7 @@ export class PrioritiesComponent implements OnInit {
   }
 
   returnServiceName(data: PriorityModel): string[] {
-    const arraySvc = ['television', 'internet', 'telephone'];
+    const arraySvc = ['television', 'internet', 'telephone']; // acomodar
     let svcSelected = [];
     for (const key in data) {
       if (arraySvc.indexOf(key) > -1 && data[key] === '1') {
