@@ -36,32 +36,7 @@ interface originModel {
   styleUrls: ['./causes.component.scss'],
 })
 export class CausesComponent implements OnInit {
-  origin: originModel[] = [
-    {
-      id: 30,
-      name: 'NODOS',
-      description: 'Minimo',
-      state: 1,
-    },
-    {
-      id: 31,
-      name: 'CUENTAS',
-      description: 'FullStack',
-      state: 1,
-    },
-    {
-      id: 32,
-      name: 'ORDENES',
-      description: 'Ordenes de Mantenimiento',
-      state: 1,
-    },
-    {
-      id: 33,
-      name: 'RR',
-      description: 'RR',
-      state: 1,
-    },
-  ]; // acomodar
+  
   causeForm: FormGroup;
   selectState: DataList[] = [];
   selectService: DataList[] = [];
@@ -74,28 +49,14 @@ export class CausesComponent implements OnInit {
   dataToTable: CauseModel[];
   structure: object[] = [
     {
-      name: 'Disruption',
-      subname: 'id',
+      name: 'disruptionId',
       description: 'Código Anomalía',
-      validation: 'object',
+      validation: '',
     },
     {
-      name: 'Disruption',
-      subname: 'description',
-      description: 'Descripción Anomalía',
-      validation: 'object',
-    },
-    {
-      name: 'Problem',
-      subname: 'id',
+      name: 'problemId',
       description: 'Código Problema',
-      validation: 'object',
-    },
-    {
-      name: 'Problem',
-      subname: 'description',
-      description: 'Descripción Problema',
-      validation: 'object',
+      validation: '',
     },
     {
       name: 'code',
@@ -103,19 +64,13 @@ export class CausesComponent implements OnInit {
       validation: '',
     },
     {
-      name: 'description',
+      name: 'causes',
       description: 'Descripción Causa',
       validation: '',
     },
     {
-      name: 'Origin',
-      subname: 'id',
-      description: 'Origen',
-      validation: 'object',
-    },
-    {
       name: 'OriginType',
-      subname: 'id',
+      subname: 'name',
       description: 'Tipo Origen',
       validation: 'object',
     },
@@ -140,7 +95,6 @@ export class CausesComponent implements OnInit {
 
   createForm() {
     this.causeForm = this._fb.group({
-      origin: ['', [Validators.required]],
       typeOrigin: ['', [Validators.required]],
       idCause: [''],
       codeAnomaly: ['', [Validators.required]],
@@ -151,23 +105,6 @@ export class CausesComponent implements OnInit {
       descriptionCause: ['', [Validators.required]],
       status: ['', [Validators.required]],
       user: [this.userData.usuario.usuario],
-    });
-    this.causeForm.get('origin').valueChanges.subscribe((selectValue) => {
-      if (selectValue !== '30') {
-        this.causeForm.get('codeAnomaly').setValue('');
-        this.causeForm.get('descriptionAnomaly').setValue('');
-        this.causeForm.get('problemCode').setValue('');
-        this.causeForm.get('descriptionProblem').setValue('');
-        this.causeForm.controls['codeAnomaly'].disable();
-        this.causeForm.controls['descriptionAnomaly'].disable();
-        this.causeForm.controls['problemCode'].disable();
-        this.causeForm.controls['descriptionProblem'].disable();
-      } else {
-        this.causeForm.controls['codeAnomaly'].enable();
-        this.causeForm.controls['descriptionAnomaly'].enable();
-        this.causeForm.controls['problemCode'].enable();
-        this.causeForm.controls['descriptionProblem'].enable();
-      }
     });
   }
 
@@ -210,22 +147,14 @@ export class CausesComponent implements OnInit {
     } else {
       const dataRequest: RequestModel = {
         Cause: {
-          Disruption: {
-            id: this.causeForm.get('codeAnomaly').value,
-            description: this.causeForm.get('descriptionAnomaly').value,
-          },
-          Problem: {
-            id: this.causeForm.get('problemCode').value,
-            description: this.causeForm.get('descriptionProblem').value,
-          },
           code: this.causeForm.get('causeCode').value,
-          description: this.causeForm.get('descriptionCause').value,
           causes: this.causeForm.get('descriptionCause').value,
-          Origin: {
-            id: this.causeForm.get('origin').value,
-          },
+          disruptionId: this.causeForm.get('codeAnomaly').value,
+          disruptionDescription: this.causeForm.get('descriptionAnomaly').value,
+          problemId: this.causeForm.get('problemCode').value,
+          problemDescription: this.causeForm.get('descriptionProblem').value,
           OriginType: {
-            id: this.causeForm.get('typeOrigin').value,
+            id: Number(this.causeForm.get('typeOrigin').value),
           },
           state: this.causeForm.get('status').value,
           user: this.userData.usuario.usuario,
@@ -272,14 +201,12 @@ export class CausesComponent implements OnInit {
   setForm(data: CauseModel) {
     this.causeForm.reset({
       idCause: data.id,
-      codeAnomaly: data.Disruption.id,
-      descriptionAnomaly: data.Disruption.description,
-      problemCode: data.Problem.id,
-      descriptionProblem: data.Problem.description,
+      codeAnomaly: data.disruptionId,
+      problemCode: data.problemId,
+      descriptionProblem: data.problemDescription,
       causeCode: data.code,
-      descriptionCause: data.description,
-      causes: data.description,
-      origin: data.Origin.id,
+      descriptionCause: data.causes,
+      descriptionAnomaly: data.disruptionDescription,
       typeOrigin: data.OriginType.id,
       status: data.state,
       user: data.user,
@@ -306,7 +233,7 @@ export class CausesComponent implements OnInit {
   }
 
   cleanForm() {
-    this.causeForm.reset({ origin: '', typeOrigin: '', status: '' });
+    this.causeForm.reset({ typeOrigin: '', status: '' });
     this.actionForm = 'create';
   }
 }
