@@ -225,7 +225,7 @@ export class RrCompensatedAccountsComponent implements OnInit {
           trfPqrWarning: data.trfPqrWarning,
           ticketNumber: data.ticketNumber,
           date: new Date(data.date + ' 00:00:00'),
-          lastRentDate: data.lastRentDate,
+          lastRentDate: new Date(data.lastRentDate),
           compensationCode: data.compensationCode,
           averangeDefValue: data.averangeDefValue,
           compesationValue: data.compesationValue,
@@ -240,11 +240,7 @@ export class RrCompensatedAccountsComponent implements OnInit {
           compensationValue: data.compensationValue,
           compensationcode: data.compensationcode,
           date: new Date(
-            data.date.slice(0, 4) +
-              '-' +
-              data.date.slice(4, 6) +
-              '-' +
-              data.date.slice(6, 8) +
+            data.date +
               ' 00:00:00'
           ),
         });
@@ -285,7 +281,7 @@ export class RrCompensatedAccountsComponent implements OnInit {
   }
 
   onSubmit_TCAAUF00Form() {
-    console.log(this.TCAAUF00Form.value);
+    console.log(this.TCAAUF00Form.value);debugger
     if (this.TCAAUF00Form.invalid) {
       return Object.values(this.TCAAUF00Form.controls).forEach((control) => {
         control.markAsTouched();

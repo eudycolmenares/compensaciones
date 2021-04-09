@@ -1,25 +1,25 @@
 export interface CauseModel {
-    id?: string;
-    code: string;
-    state: string;
-    Origin: {
-      id: string;
-    };
-    OriginType: {
-      id: string;
-    };
-    description: string;
-    causes: string;
-    user: string;
-    Disruption: {
-      id?: string;
-      description?: string;
-    };
-    Problem: {
-      id?: string;
-      description?: string;
-    };
-    createDate?: string;
+  id?: string;
+  code: string;
+  state: string;
+  OriginType: {
+    id: number;
+    name?: string;
+    description?: string;
+    compensate?: number;
+    state?: string;
+    user?: string;
+    updateDate?: Date;
+  };
+  description?: string;
+  causes?: string;
+  user?: string;
+  createDate?: Date;
+  disruptionId?: string;
+  disruptionDescription?: string;
+  problemId?: string;
+  problemDescription?: string;
+  date?: Date;
 }
 
 interface GeneralResponse {
@@ -38,7 +38,7 @@ export interface ResponseModel {
 
 export interface CausesApiModel {
   GeneralResponse: GeneralResponse;
-  Causes:{
+  Causes: {
     Cause: CauseModel[];
-  }
+  };
 }
