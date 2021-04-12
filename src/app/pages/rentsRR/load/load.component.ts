@@ -20,7 +20,7 @@ export class LoadComponent implements OnInit {
   fileBaseName = '';
   structureToTable: object[] = [];
   dataToTable = [];
-  arrayNodes = [
+  arrayNodes = [ // acomodar
     'DDCRTD',
     'DDACCT',
     'ESTRATO',
@@ -32,7 +32,7 @@ export class LoadComponent implements OnInit {
     'DDAMT$',
     'NODO',
   ];
-  arrayAccounts = [
+  arrayAccounts = [ // acomodar
     'DDCRTD',
     'DDACCT',
     'ESTRATO',
@@ -43,7 +43,7 @@ export class LoadComponent implements OnInit {
     'SUBGRUP',
     'DDAMT$',
   ];
-  selectOptionsList: object[] = [
+  selectOptionsList: object[] = [ // acomodar
     { valueOption: 'NODES_RENT', nameOption: 'Nodos' },
     { valueOption: 'ACCOUNT_RENT', nameOption: 'Cuentas' },
   ];
@@ -143,7 +143,7 @@ export class LoadComponent implements OnInit {
         control.markAsTouched();
       });
     } else {
-      this.confirmationSvc.confirm({
+      this.confirmationSvc.confirm({ // acomodar
         message: `Toda la información de Carga de Fallas que contiene el archivo quedará registrada en la base de datos.`,
         accept: () => {
           this.sendFileToService();

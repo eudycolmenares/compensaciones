@@ -95,7 +95,7 @@ export class ProcessRRComponent implements OnInit {
     const body: reqUpdateModel = {
       'TblSupervisionProcess': {
         ...this.stages[this.stageSelected -1],
-        stateProcess: 'COMPLETADO'
+        stateProcess: 'COMPLETADO' // acomodar
       }
     }
     this.supervisionSvc.updateProcess(body).subscribe((resp: respUpdateModel) => {
@@ -121,7 +121,7 @@ export class ProcessRRComponent implements OnInit {
       this.stages = [...resp.tblProcesoSupervision];
       this.compareToSort(this.stages);
       this.stages.map(item => {
-        item.stateProcess === 'NO COMPLETADO' ? item.status = 0: item.status = 1;
+        item.stateProcess === 'NO COMPLETADO' ? item.status = 0: item.status = 1; // acomodar
         item.stage = parseInt(item.processCode);
       });
     });
@@ -180,7 +180,7 @@ export class ProcessRRComponent implements OnInit {
       console.log(newBodySvc);
       this.mailSvc.sendMail(newBodySvc).subscribe(resp => {
         if (resp?.isValid == 'true') {
-          this.toastScv.showSuccess('Se ha enviado la notificación satisfactoriamente.');
+          this.toastScv.showSuccess('Se ha enviado la notificación satisfactoriamente.'); // acomodar
         }
       });
     } else if (this.stages[this.stageSelected -1].sendEmail === 1 && !this.stages[this.stageSelected -1].email) {

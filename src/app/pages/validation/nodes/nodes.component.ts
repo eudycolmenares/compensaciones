@@ -137,7 +137,7 @@ export class NodesComponent implements OnInit {
               this.nodeForm.get('services').value.key === 'telephone')
         );
         console.log('datatotable', this.dataToTable);
-        
+
       });
   }
 
@@ -171,9 +171,9 @@ export class NodesComponent implements OnInit {
     if (node.userObservation === '' || node.userObservation === undefined) {
       this._toastScv.showError(
         'Debe ingresar un comentario en el campo de observación'
-      );
+      ); // acomodar
     } else {
-      
+
       let data: models.RequestModel = {
         tblMaximum: {
           ...node,
@@ -193,7 +193,7 @@ export class NodesComponent implements OnInit {
     if (node.userObservation === '' || node.userObservation === undefined) {
       this._toastScv.showError(
         'Debe ingresar un comentario en el campo de observación'
-      );
+      ); // acomodar
     } else {
       let data: models.RequestModel = {
         tblMaximum: {

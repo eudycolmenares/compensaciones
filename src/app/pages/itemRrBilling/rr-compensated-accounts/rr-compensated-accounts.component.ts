@@ -148,7 +148,7 @@ export class RrCompensatedAccountsComponent implements OnInit {
   }
 
   initializeVariables() {
-    this.selectTableList = [
+    this.selectTableList = [ // acomodar
       { key: 'DetalleCompensacion', value: 'DetalleCompensacion' },
       { key: 'TCAAUF00', value: 'TCAAUF00' },
       { key: 'NotasCompensacion', value: 'Notas_Compensacion' },

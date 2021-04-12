@@ -90,12 +90,12 @@ export class DownloadComponent implements OnInit {
   createForm() {
     this.formNode = this.fb.group({
       id: [''],
-      node: ['', [Validators.required, Validators.maxLength(20)]],
+      node: ['', [Validators.required, Validators.maxLength(100)]],
       date: [''],
     });
     this.formAccount = this.fb.group({
       id: [''],
-      account: ['', [Validators.required, Validators.maxLength(20)]],
+      account: ['', [Validators.required, Validators.maxLength(100)]],
       date: [''],
     });
   }

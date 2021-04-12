@@ -48,7 +48,7 @@ export class EmailComponent implements OnInit {
         }
       })
     } else {
-      this.toastScv.showError('Debe ingresar un email válido para el proceso que desea actualizar.', '¡Email inválido!');
+      this.toastScv.showError('Debe ingresar un email válido para el proceso que desea actualizar.', '¡Email inválido!'); // acomodar
     }
   }
 
