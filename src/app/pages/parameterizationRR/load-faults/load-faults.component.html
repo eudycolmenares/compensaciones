@@ -70,13 +70,36 @@
 
   <hr class="mt-5 mb-5" />
 
+  <p-divider align="left" type="solid" *ngIf="dataPreview">
+    <div class="p-d-inline-flex p-ai-center">
+        <i class="pi pi-info-circle p-mr-2"></i>
+        <span>A continuación, se muestra información previa del archivo seleccionado para su carga, como a su vez las pestanas que posee y la información en las mismas.</span>
+    </div>
+  </p-divider>
+  <ng-container *ngIf="dataPreview">
+    <div class="row pl-3 pb-3">
+      <div class="col-sm">
+        <p-dropdown [options]="sheetOptionsList" optionLabel="nameOption" [showClear]="true" class="p-inputtext-sm"
+          placeholder="Seleccione Hoja del Libro">
+          <ng-template let-option pTemplate="item">
+            <div (click)="informationToTable(option.valueOption)">{{ option.nameOption }}</div>
+          </ng-template>
+        </p-dropdown>
+      </div>
+    </div>
+    <div class="row" *ngIf="structure.length > 0">
+      <div class="col-sm mb-3">
+        <app-table [dataBase]="dataToTable" [structure]="structure" [buttons]="[]"></app-table>
+      </div>
+    </div>
+  </ng-container>
+
   <p-divider align="left" type="solid">
       <div class="p-d-inline-flex p-ai-center">
           <i class="pi pi-info-circle p-mr-2"></i>
           <span>En la sección archivos procesados, se puede visualizar la información enviada al servidor y el estado del mismo, además de poder refrescar las mismas en el botón actualizar.</span>
       </div>
   </p-divider>
-
   <p-panel header="Archivos Cargados" [toggleable]="true" collapsed="false">
     <ng-template pTemplate="icons">
       <button pButton class="p-panel-header-icon p-link" icon="pi pi-cog" (click)="menu.toggle($event)">
@@ -102,7 +125,7 @@
       </ng-template>
       <ng-template pTemplate="body" let-file>
         <tr>
-          <td>{{ returnTypeReadable(file.loadType) }}</td>
+          <td>{{ gnrSvc.returnTypeFaultsReadable(file.loadType) }}</td>
           <td>{{ file.fileName }}</td>
           <td>{{ file.createDate | date }}</td>
           <td class="text-center">
@@ -115,30 +138,6 @@
       </ng-template>
     </p-table>
   </p-panel>
-
-  <p-divider align="left" type="solid" *ngIf="dataPreview">
-    <div class="p-d-inline-flex p-ai-center">
-        <i class="pi pi-info-circle p-mr-2"></i>
-        <span>A continuación, se muestra información previa del archivo seleccionado para su carga, como a su vez las pestanas que posee y la información en las mismas.</span>
-    </div>
-  </p-divider>
-  <ng-container *ngIf="dataPreview">
-    <div class="row pl-3 pb-3">
-      <div class="col-sm">
-        <p-dropdown [options]="sheetOptionsList" optionLabel="nameOption" [showClear]="true" class="p-inputtext-sm"
-          placeholder="Seleccione Hoja del Libro">
-          <ng-template let-option pTemplate="item">
-            <div (click)="informationToTable(option.valueOption)">{{ option.nameOption }}</div>
-          </ng-template>
-        </p-dropdown>
-      </div>
-    </div>
-    <div class="row" *ngIf="structure.length > 0">
-      <div class="col-sm">
-        <app-table [dataBase]="dataToTable" [structure]="structure" [buttons]="[]"></app-table>
-      </div>
-    </div>
-  </ng-container>
 </section>
 
 <p-confirmDialog header="¿Estás seguro que deseas enviar el archivo?" rejectLabel="Cancelar" acceptLabel="Aceptar"

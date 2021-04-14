@@ -1,14 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService } from 'primeng/api';
+import { MenuItem } from 'primeng/api';
 
 import { GeneralFunctionsService } from '@services/general-functions.service';
 import { FaultsService } from '@services/faults/faults.service';
 import { CustomValidation } from 'src/app/utils/custom-validation';
-import { faultsApiModel } from '@models/faults';
+import {
+  faultsApiModel,
+  loadModel
+} from '@models/faults';
 import { ToastService } from '@shared_services/toast.service';
 import { ResponseLoginModel as UserModel } from '@models/users';
 import { AuthService } from '@shared_services/auth.service';
+
 @Component({
   selector: 'app-load',
   templateUrl: './load.component.html',
@@ -48,17 +53,33 @@ export class LoadComponent implements OnInit {
     { valueOption: 'ACCOUNT_RENT', nameOption: 'Cuentas' },
   ];
   userData: UserModel = null;
+  //
+  items: MenuItem[] = [
+    {
+      label: 'Opciones',
+      items: [{
+        label: 'Actualizar',
+        icon: 'pi pi-refresh',
+        command: () => {
+          this.updateData();
+        }
+      }]
+    }
+  ];
+  uploadedFiles: loadModel[] = null;
+  loadTypeServe = ['ACCOUNT_RENT', 'NODES_RENT'];
 
   constructor(
     private fb: FormBuilder,
     private confirmationSvc: ConfirmationService,
-    private gnrSvc: GeneralFunctionsService,
+    public gnrSvc: GeneralFunctionsService,
     private faultsScv: FaultsService,
     private toastScv: ToastService,
     private _authSvc: AuthService
   ) {
     this.userData = this._authSvc.userData;
     this.createForm();
+    this.updateData();
   }
 
   ngOnInit(): void {}
@@ -67,6 +88,12 @@ export class LoadComponent implements OnInit {
     this.form = this.fb.group({
       type: ['', Validators.required],
       file: ['', [Validators.required, CustomValidation.fileIsAllowed('txt')]],
+    });
+  }
+  updateData() {
+    this.faultsScv.readAllFaults().subscribe((resp: faultsApiModel) => {
+      this.uploadedFiles = resp.Loads.Load.filter(item => this.loadTypeServe.includes(item.loadType));
+      this.compareToSort(this.uploadedFiles);
     });
   }
 
@@ -173,6 +200,10 @@ export class LoadComponent implements OnInit {
       }
       this.cleanForm();
     });
+  }
+
+  compareToSort(items: loadModel[]) {
+    return items.sort((a, b) => new Date(b.createDate).getTime() - new Date(a.createDate).getTime());
   }
 
   cleanForm() {

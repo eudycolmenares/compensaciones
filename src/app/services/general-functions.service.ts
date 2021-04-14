@@ -76,4 +76,25 @@ export class GeneralFunctionsService {
     date = date[2] + '/' + date[1] + '/' + date[0];
     return new Date(date);
   }
+
+  returnTypeFaultsReadable(value: string): string {
+    switch (value) {
+      case 'RESIDENTIAL_BASE':
+        return 'Residencial';
+      case 'BUILDINGS_BASE':
+        return 'Edificios';
+      case 'SME_BASE':
+        return 'Pymes';
+      case 'RESIDENTIAL_SETTING':
+        return 'Ajustes Residencial';
+      case 'SME_SETTING':
+        return 'Ajustes Pymes';
+      case 'MAINTENANCE_ORDER':
+        return 'Órdenes Mantenimiento';
+      case 'ACCOUNT_RENT':
+        return 'Cuentas Rentas';
+      case 'NODES_RENT':
+        return 'Nodos Rentas';
+    }
+  }
 }

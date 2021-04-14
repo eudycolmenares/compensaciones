@@ -1,5 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { PanelModule } from 'primeng/panel';
+import { MenuModule } from 'primeng/menu';
+import { TableModule } from 'primeng/table';
+import { DividerModule } from 'primeng/divider';
 
 import { LoadRoutingModule } from './load-routing.module';
 import { LoadComponent } from './load.component';
@@ -17,6 +21,10 @@ import { DropdownModule } from 'primeng/dropdown';
     ConfirmDialogModule,
     ConfirmDialogModule,
     DropdownModule,
+    PanelModule,
+    MenuModule,
+    TableModule,
+    DividerModule
   ],
   exports: [LoadComponent],
   providers: [ConfirmationService],

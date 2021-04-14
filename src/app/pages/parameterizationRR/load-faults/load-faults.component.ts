@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MenuItem } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
+// xlsx
+import * as XLSX from 'xlsx';
 
 import { GeneralFunctionsService } from '../../../services/general-functions.service';
 import { ToastService } from '../../../shared/services/toast.service';
@@ -10,11 +13,6 @@ import {
   faultsApiModel,
   loadModel
 } from '../../../models/faults';
-
-// xlsx
-import * as XLSX from 'xlsx';
-
-import { ConfirmationService } from 'primeng/api';
 import { CustomValidation } from 'src/app/utils/custom-validation';
 
 @Component({
@@ -36,7 +34,7 @@ export class LoadFaultsComponent implements OnInit {
     { valueOption: 'SME_ADJUSTMENT', nameOption: 'Ajuste Pymes' },
     { valueOption: 'MAINTENANCE_ORDERS', nameOption: 'Órdenes Mantenimiento' },
   ];
-  items: MenuItem[] = [
+  items: MenuItem[] = [ // acomodar
     {
       label: 'Opciones',
       items: [{
@@ -49,7 +47,7 @@ export class LoadFaultsComponent implements OnInit {
     }
   ];
   uploadedFiles: loadModel[] = null;
-  loadTypeServe = ['RESIDENTIAL_BASE', 'BUILDINGS_BASE', 'SME_BASE', 'RESIDENTIAL_SETTING', 'SME_SETTING', 'MAINTENANCE_ORDER'];
+  loadTypeServe = ['RESIDENTIAL_BASE', 'BUILDINGS_BASE', 'SME_BASE', 'RESIDENTIAL_SETTING', 'SME_SETTING', 'MAINTENANCE_ORDER']; // acomodar
   // table
   dataToTable: object[];
   structure: object[] = [];
@@ -57,7 +55,7 @@ export class LoadFaultsComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private gnrSvc: GeneralFunctionsService,
+    public gnrSvc: GeneralFunctionsService,
     private toastScv: ToastService,
     private faultsScv: FaultsService,
     private confirmationSvc: ConfirmationService,
@@ -78,6 +76,7 @@ export class LoadFaultsComponent implements OnInit {
     this.faultsScv.readAllFaults().subscribe((resp: faultsApiModel) => {
       console.log('readAllFaults: ', resp);
       this.uploadedFiles = resp.Loads.Load.filter(item => this.loadTypeServe.includes(item.loadType));
+      this.compareToSort(this.uploadedFiles);
     });
   }
   createForm() {
@@ -225,20 +224,7 @@ export class LoadFaultsComponent implements OnInit {
     this.structure = [];
     this.dataToTable = [];
   }
-  returnTypeReadable(value: string): string {
-    switch (value) {
-      case 'RESIDENTIAL_BASE':
-        return 'Residencial';
-      case 'BUILDINGS_BASE':
-        return 'Edificios';
-      case 'SME_BASE':
-        return 'Pymes';
-      case 'RESIDENTIAL_SETTING':
-        return 'Ajustes Residencial';
-      case 'SME_SETTING':
-        return 'Ajustes Pymes';
-      case 'MAINTENANCE_ORDER':
-        return 'Órdenes Mantenimiento';
-    }
+  compareToSort(items: loadModel[]) {
+    return items.sort((a, b) => new Date(b.createDate).getTime() - new Date(a.createDate).getTime());
   }
 }
