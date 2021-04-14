@@ -155,9 +155,9 @@ export class RrCompensatedAccountsComponent implements OnInit {
     ];
 
     this._RrCompensatedAccountsScv
-      .allCompensationRun()
+      .allCompensationValue()
       .subscribe((resp: any) => {
-        this.totalCompensationValue = resp.totalCompensationValue;
+        this.totalCompensationValue = resp.CompensationValues.CompensationValue[0];
       });
   }
 

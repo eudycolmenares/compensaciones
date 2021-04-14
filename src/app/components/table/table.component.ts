@@ -14,6 +14,7 @@ export class TableComponent implements OnInit {
   @Input() structure: object[];
   @Input() buttons: string[] = [Buttons.edit, Buttons.disable, Buttons.delete];
   @Input() validation: boolean = false;
+  @Input() CurrentPeriodSent: number = null;
   @Output() editRecord: EventEmitter<object> ;
   @Output() disableRecord: EventEmitter<object> ;
   @Output() deleteRecord: EventEmitter<object> ;

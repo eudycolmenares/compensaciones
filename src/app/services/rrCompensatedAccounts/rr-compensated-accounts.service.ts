@@ -331,9 +331,9 @@ export class RrCompensatedAccountsService {
   }
 
 
-  allCompensationRun(): Observable<any> {
-    return this._http.post<any>(
-      env.compensatedAccounts.url + env.compensatedAccounts.endpoints.run,
+  allCompensationValue(): Observable<any> {
+    return this._http.get<any>(
+      env.BillingSupervision.url + env.BillingSupervision.endpoints.compensationValue,
       {
         headers: this.headers,
       }

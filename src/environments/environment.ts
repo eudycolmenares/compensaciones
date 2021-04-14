@@ -169,6 +169,7 @@ export const environment = {
   BillingSupervision: {
     url: Url_WSBilling,
     endpoints: {
+      compensationValue: 'CompensationValueService/read/all',
       readAll: 'SupervisionProcessService/read/all',
       update: 'SupervisionProcessService/update'
     },
