@@ -4,7 +4,7 @@
 
 let Url_WSCompensations = '/WSCompensaciones-web/webresources/WSCompensaciones/';
 let Url_WSBilling = '/WSCompensaciones-web/webresources/WSBilling/';
-let Url_WSCompensationsBatchRR = '/WSCompensacionesBatchRR-web/webresources/WSBilligRR/';
+let Url_WSCompensationsBatchRR = '/WSCompensacionesBatchRR-web/webresources/WSBillingRR/';
 
 export const environment = {
   production: false,
@@ -169,6 +169,7 @@ export const environment = {
   BillingSupervision: {
     url: Url_WSBilling,
     endpoints: {
+      compensationValue: 'CompensationValueService/read/all',
       readAll: 'SupervisionProcessService/read/all',
       update: 'SupervisionProcessService/update'
     },

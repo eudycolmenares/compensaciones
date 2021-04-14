@@ -51,6 +51,8 @@ export interface NodesValidationModel {
   srVoz: number;
   originType: string;
   userObservation: string;
+  customDateInNode?: string;
+  customDateEndNode?: string;
 }
 
 interface GeneralResponse {

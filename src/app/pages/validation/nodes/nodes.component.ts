@@ -66,19 +66,17 @@ export class NodesComponent implements OnInit {
     {
       name: 'revision',
       description: 'Revisión',
+      validation: 'revision',
+    },
+    {
+      name: 'customDateInNode',
+      description: 'Fecha inicio incidente',
       validation: '',
     },
     {
-      name: 'dateInNode',
-      name2: 'timeInNode',
-      description: 'Fecha inicio incidente',
-      validation: 'union-date',
-    },
-    {
-      name: 'dateEndNode',
-      name2: 'timeEndNode',
+      name: 'customDateEndNode',
       description: 'Fecha fin incidente',
-      validation: 'union-date',
+      validation: '',
     },
   ];
   changeIconValidation = true;
@@ -136,7 +134,15 @@ export class NodesComponent implements OnInit {
             (data.srVoz === 1 &&
               this.nodeForm.get('services').value.key === 'telephone')
         );
-        console.log('datatotable', this.dataToTable);
+        this.dataToTable.map((data:models.NodesValidationModel) => {
+          if (data.dateInNode) {
+          data.customDateInNode = this._gnrScv.formatDate('YYYY-MM-DD', data.dateInNode) + ' ' + data.timeInNode;
+          }
+          if (data.dateEndNode) {
+          data.customDateEndNode = this._gnrScv.formatDate('YYYY-MM-DD', data.dateEndNode) + ' ' + data.timeEndNode;
+          }
+          return data;
+        });
 
       });
   }
@@ -171,7 +177,7 @@ export class NodesComponent implements OnInit {
     if (node.userObservation === '' || node.userObservation === undefined) {
       this._toastScv.showError(
         'Debe ingresar un comentario en el campo de observación'
-      ); // acomodar
+      );
     } else {
 
       let data: models.RequestModel = {
@@ -193,7 +199,7 @@ export class NodesComponent implements OnInit {
     if (node.userObservation === '' || node.userObservation === undefined) {
       this._toastScv.showError(
         'Debe ingresar un comentario en el campo de observación'
-      ); // acomodar
+      );
     } else {
       let data: models.RequestModel = {
         tblMaximum: {

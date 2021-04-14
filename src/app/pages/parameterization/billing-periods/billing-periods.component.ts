@@ -20,6 +20,7 @@ export class BillingPeriodsComponent implements OnInit {
 
   // table
   dataToTable: object[];
+  currentPeriod : number = null;
   structure: object[] = [
     {
       name: 'periodId',
@@ -79,6 +80,7 @@ export class BillingPeriodsComponent implements OnInit {
           data.endDate = this._gnrScv.formatDate_billingPeriods(data.endDate);
         });
       });
+      this.currentPeriod = this._billingPeriodSvc.submitCurrentBillingPeriod();
   }
 
   invalidFieldForm(fieldName: string) {
@@ -193,6 +195,8 @@ export class BillingPeriodsComponent implements OnInit {
   }
 
   deleteBillingPeriod(billingPeriod: models.BillingPeriodModel) {
+    console.log('delete data',billingPeriod);
+    
     this._billingPeriodSvc
       .actionsBillingPeriod(
         {
