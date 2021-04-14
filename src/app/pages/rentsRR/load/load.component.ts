@@ -199,6 +199,7 @@ export class LoadComponent implements OnInit {
         );
       }
       this.cleanForm();
+      this.updateData();
     });
   }
 

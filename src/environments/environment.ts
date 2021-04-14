@@ -4,7 +4,7 @@
 
 let Url_WSCompensations = '/WSCompensaciones-web/webresources/WSCompensaciones/';
 let Url_WSBilling = '/WSCompensaciones-web/webresources/WSBilling/';
-let Url_WSCompensationsBatchRR = '/WSCompensacionesBatchRR-web/webresources/WSBilligRR/';
+let Url_WSCompensationsBatchRR = '/WSCompensacionesBatchRR-web/webresources/WSBillingRR/';
 
 export const environment = {
   production: false,
@@ -17,7 +17,7 @@ export const environment = {
   urlApi_users: '/WsPortalUsuariosRest-web/ws/WsPortalUsuariosRest/',
   urlApi_rules: '/WSCompensaciones-web/webresources/WSNodesRules/',
   urlApi_Businessrules: '/WSCompensacionesBatchRR-web/webresources/WSBusinessRulesRR/',
-  urlApi_BillingFiles: '/WSCompensacionesBatchRR-web/webresources/WSBilligRR/',
+  urlApi_BillingFiles: '/WSCompensacionesBatchRR-web/webresources/WSBillingRR/',
   urlApi_ConsolidationAccNod: '/WSCompensacionesBatchRR-web/webresources/WSConsolidationRR/',
   urlApi_notifications: '/Notification/V2.0/Rest/',
   endpoints: {
