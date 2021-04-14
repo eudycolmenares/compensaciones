@@ -1,95 +1,146 @@
-<section class="container py-3">
-    <app-breadcrumb></app-breadcrumb>
+<section class="container container-custom py-3">
+  <app-breadcrumb></app-breadcrumb>
 
-    <div class="container-add px-sm-2 px-md-5">
-      <form autocomplete="off" [formGroup]="form" (ngSubmit)="onSubmit()">
-        <div class="row text-light text-center">
-          <div class="col-sm bg-primary py-1 mx-1">Tipo de Carga(*)</div>
-          <div class="col-sm bg-primary py-1 mx-1">Archivo(*)</div>
+  <div class="container-add px-sm-2 px-md-5">
+    <form autocomplete="off" [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="row text-light text-center">
+        <div class="col-sm bg-primary py-1 mx-1">Tipo de Carga(*)</div>
+        <div class="col-sm bg-primary py-1 mx-1">Archivo(*)</div>
+      </div>
+      <div class="row">
+        <div class="col-sm mx-1 mt-1 p-0">
+          <select class="form-control form-control-sm" formControlName="type" [class.is-invalid]="invalidType" size="3">
+            <option value="">- Seleccione -</option>
+            <option value="RESIDENTIAL_BASE">Residencial</option>
+            <option value="BUILDINGS_BASE">Edificios</option>
+            <option value="SME_BASE">Pymes</option>
+            <option value="RESIDENTIAL_SETTING">Ajuste Residencial</option>
+            <option value="SME_SETTING">Ajustes Pymes</option>
+            <option value="MAINTENANCE_ORDER">Órdenes Mantenimiento</option>
+          </select>
+          <small class="text-danger" *ngIf="invalidType">{{ textsFormInvalid("type") }}</small>
         </div>
-        <div class="row">
-          <div class="col-sm mx-1 mt-1 p-0">
-            <select class="form-control form-control-sm" formControlName="type" [class.is-invalid]="invalidType" size="3">
-              <option value="">- Seleccione -</option>
-              <option value="RESIDENTIAL_BASE">Residencial</option>
-              <option value="BUILDINGS_BASE">Edificios</option>
-              <option value="SME_BASE">Pymes</option>
-              <option value="RESIDENTIAL_SETTING">Ajuste Residencial</option>
-              <option value="SME_SETTING">Ajustes Pymes</option>
-              <option value="MAINTENANCE_ORDER">Órdenes Mantenimiento</option>
-            </select>
-            <small class="text-danger" *ngIf="invalidType">{{ textsFormInvalid("type") }}</small>
-          </div>
-          <div class="col-sm mx-1 mt-1 p-0">
-            <div class="row" style="margin: 0 -3px">
-              <ng-container *ngIf="!fileBaseName; else elseNamefile">
-                <div class="col-sm box-upload py-1 mx-1 p-0">
-                  <input type="file" class="form-control form-control-sm" formControlName="file" (change)="handlePreviewFileInput($event)"/>
-                  <p>Arrastra el archivo aquí ó</p>
-                  <label>Busca el archivo</label>
-                </div>
-              </ng-container>
-              <ng-template #elseNamefile>
-                <div class="d-flex align-content-center flex-wrap col box-upload py-1 mx-1 p-0">
-                  <div class="input-group input-group-sm justify-content-center">
-                    <div class="input-group-prepend">
-                      <p class="input-group-text" id="inputGroup-sizing-sm">{{ fileBaseName }}</p>
-                      <button type="button" class="btn btn-primary btn-sm" (click)="cleanInputFile()">
-                        <img src="assets/img/trash.svg" width="18px" />
-                      </button>
-                    </div>
+        <div class="col-sm mx-1 mt-1 p-0">
+          <div class="row" style="margin: 0 -3px">
+            <ng-container *ngIf="!fileBaseName; else elseNamefile">
+              <div class="col-sm box-upload py-1 mx-1 p-0">
+                <input type="file" class="form-control form-control-sm" formControlName="file"
+                  (change)="handlePreviewFileInput($event)" />
+                <p>Arrastra el archivo aquí ó</p>
+                <label>Busca el archivo</label>
+              </div>
+            </ng-container>
+            <ng-template #elseNamefile>
+              <div class="d-flex align-content-center flex-wrap col box-upload py-1 mx-1 p-0">
+                <div class="input-group input-group-sm justify-content-center">
+                  <div class="input-group-prepend">
+                    <p class="input-group-text" id="inputGroup-sizing-sm">{{ fileBaseName }}</p>
+                    <button type="button" class="btn btn-primary btn-sm" (click)="cleanInputFile()">
+                      <img src="assets/img/trash.svg" width="18px" />
+                    </button>
                   </div>
                 </div>
-              </ng-template>
-            </div>
-            <div class="row">
-              <div class="col py-1 mx-1 pl-3">
-                <small class="text-danger" *ngIf="invalidFile">{{ textsFormInvalid("file") }}</small>
               </div>
+            </ng-template>
+          </div>
+          <div class="row">
+            <div class="col py-1 mx-1 pl-3">
+              <small class="text-danger" *ngIf="invalidFile">{{ textsFormInvalid("file") }}</small>
             </div>
           </div>
         </div>
-        <div class="row text-light text-center mt-4">
-          <div class="col-sm container-buttons">
-            <button type="submit" class="btn btn-primary mr-3 btn-sm">Enviar</button>
-            <button type="button" class="btn btn-secondary btn-sm" (click)="cleanForm()">Limpiar</button>
-          </div>
-        </div>
-      </form>
-    </div>
-
-    <div class="row text-light justify-content-center mt-4">
-      <p-dropdown [options]="templateOptionsList" optionLabel="nameOption" [showClear]="true" class="p-inputtext-sm" placeholder="Descargar Plantillas">
-        <ng-template let-option pTemplate="item">
-          <div (click)="downloadTemplate(option.valueOption)">{{ option.nameOption }}</div>
-        </ng-template>
-      </p-dropdown>
-    </div>
-
-    <hr class="mt-5 mb-5" />
-
-    <ng-container *ngIf="dataPreview">
-      <div class="row pl-3 pb-3">
-        <div class="col-sm">
-          <p-dropdown [options]="sheetOptionsList" optionLabel="nameOption" [showClear]="true" class="p-inputtext-sm" placeholder="Seleccione Hoja del Libro">
-            <ng-template let-option pTemplate="item">
-              <div (click)="informationToTable(option.valueOption)">{{ option.nameOption }}</div>
-            </ng-template>
-          </p-dropdown>
+      </div>
+      <div class="row text-light text-center mt-4">
+        <div class="col-sm container-buttons">
+          <button type="submit" class="btn btn-primary mr-3 btn-sm">Enviar</button>
+          <button type="button" class="btn btn-secondary btn-sm" (click)="cleanForm()">Limpiar</button>
         </div>
       </div>
-      <div class="row" *ngIf="structure.length > 0">
-        <div class="col-sm">
-          <app-table [dataBase]="dataToTable" [structure]="structure" [buttons]="[]"></app-table>
-        </div>
-      </div>
-    </ng-container>
-  </section>
+    </form>
+  </div>
 
-<p-confirmDialog
-  header="¿Estás seguro que deseas enviar el archivo?"
-  rejectLabel="Cancelar"
-  acceptLabel="Aceptar"
-  icon="pi pi-exclamation-triangle"
->
+  <div class="row text-light justify-content-center mt-4">
+    <p-dropdown [options]="templateOptionsList" optionLabel="nameOption" [showClear]="true" class="p-inputtext-sm"
+      placeholder="Descargar Plantillas">
+      <ng-template let-option pTemplate="item">
+        <div (click)="downloadTemplate(option.valueOption)">{{ option.nameOption }}</div>
+      </ng-template>
+    </p-dropdown>
+  </div>
+
+  <hr class="mt-5 mb-5" />
+
+  <p-divider align="left" type="solid">
+      <div class="p-d-inline-flex p-ai-center">
+          <i class="pi pi-info-circle p-mr-2"></i>
+          <span>En la sección archivos procesados, se puede visualizar la información enviada al servidor y el estado del mismo, además de poder refrescar las mismas en el botón actualizar.</span>
+      </div>
+  </p-divider>
+
+  <p-panel header="Archivos Cargados" [toggleable]="true" collapsed="false">
+    <ng-template pTemplate="icons">
+      <button pButton class="p-panel-header-icon p-link" icon="pi pi-cog" (click)="menu.toggle($event)">
+      </button>
+      <p-menu #menu id="config_menu" [model]="items" [popup]="true"></p-menu>
+    </ng-template>
+    <p-table [value]="uploadedFiles" styleClass="p-datatable-sm">
+      <ng-template pTemplate="colgroup">
+        <colgroup>
+            <col style="width: 11rem">
+            <col>
+            <col style="width: 8rem">
+            <col style="width: 11rem">
+        </colgroup>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Tipo carga</th>
+          <th>Nombre archivo</th>
+          <th>Fecha creación</th>
+          <th class="text-center">Estado</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-file>
+        <tr>
+          <td>{{ returnTypeReadable(file.loadType) }}</td>
+          <td>{{ file.fileName }}</td>
+          <td>{{ file.createDate | date }}</td>
+          <td class="text-center">
+            <span *ngIf="file.state == 'FINALIZADO'" class="badge badge-success w-100">{{ file.state }}</span>
+            <span *ngIf="file.state == 'FINALIZADO_CON_ERRORES'" class="badge badge-danger w-100">{{ file.state }}</span>
+            <span *ngIf="file.state == 'PROCESO'" class="badge badge-warning w-100">{{ file.state }}</span>
+            <span *ngIf="file.state == 'INICIADO'" class="badge badge-info w-100">{{ file.state }}</span>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-panel>
+
+  <p-divider align="left" type="solid" *ngIf="dataPreview">
+    <div class="p-d-inline-flex p-ai-center">
+        <i class="pi pi-info-circle p-mr-2"></i>
+        <span>A continuación, se muestra información previa del archivo seleccionado para su carga, como a su vez las pestanas que posee y la información en las mismas.</span>
+    </div>
+  </p-divider>
+  <ng-container *ngIf="dataPreview">
+    <div class="row pl-3 pb-3">
+      <div class="col-sm">
+        <p-dropdown [options]="sheetOptionsList" optionLabel="nameOption" [showClear]="true" class="p-inputtext-sm"
+          placeholder="Seleccione Hoja del Libro">
+          <ng-template let-option pTemplate="item">
+            <div (click)="informationToTable(option.valueOption)">{{ option.nameOption }}</div>
+          </ng-template>
+        </p-dropdown>
+      </div>
+    </div>
+    <div class="row" *ngIf="structure.length > 0">
+      <div class="col-sm">
+        <app-table [dataBase]="dataToTable" [structure]="structure" [buttons]="[]"></app-table>
+      </div>
+    </div>
+  </ng-container>
+</section>
+
+<p-confirmDialog header="¿Estás seguro que deseas enviar el archivo?" rejectLabel="Cancelar" acceptLabel="Aceptar"
+  icon="pi pi-exclamation-triangle">
 </p-confirmDialog>

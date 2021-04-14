@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MenuItem } from 'primeng/api';
 
 import { GeneralFunctionsService } from '../../../services/general-functions.service';
 import { ToastService } from '../../../shared/services/toast.service';
 import { FaultsService } from '../../../services/faults/faults.service';
 import { AuthService } from '../../../shared/services/auth.service';
-import { faultsApiModel } from '../../../models/faults';
+import {
+  faultsApiModel,
+  loadModel
+} from '../../../models/faults';
 
 // xlsx
 import * as XLSX from 'xlsx';
@@ -32,6 +36,20 @@ export class LoadFaultsComponent implements OnInit {
     { valueOption: 'SME_ADJUSTMENT', nameOption: 'Ajuste Pymes' },
     { valueOption: 'MAINTENANCE_ORDERS', nameOption: 'Órdenes Mantenimiento' },
   ];
+  items: MenuItem[] = [
+    {
+      label: 'Opciones',
+      items: [{
+        label: 'Actualizar',
+        icon: 'pi pi-refresh',
+        command: () => {
+          this.updateData();
+        }
+      }]
+    }
+  ];
+  uploadedFiles: loadModel[] = null;
+  loadTypeServe = ['RESIDENTIAL_BASE', 'BUILDINGS_BASE', 'SME_BASE', 'RESIDENTIAL_SETTING', 'SME_SETTING', 'MAINTENANCE_ORDER'];
   // table
   dataToTable: object[];
   structure: object[] = [];
@@ -45,12 +63,23 @@ export class LoadFaultsComponent implements OnInit {
     private confirmationSvc: ConfirmationService,
     private authSvc: AuthService
   ) {
-    this.createForm();
+    this.initialSetup();
   }
 
   ngOnInit(): void {
   }
 
+  initialSetup() {
+    this.createForm();
+    this.updateData();
+  }
+
+  updateData() {
+    this.faultsScv.readAllFaults().subscribe((resp: faultsApiModel) => {
+      console.log('readAllFaults: ', resp);
+      this.uploadedFiles = resp.Loads.Load.filter(item => this.loadTypeServe.includes(item.loadType));
+    });
+  }
   createForm() {
     this.form = this.fb.group({
       type: ['', Validators.required],
@@ -69,11 +98,11 @@ export class LoadFaultsComponent implements OnInit {
   }
 
   onSubmit() {
-    if(this.form.invalid) {
+    if (this.form.invalid) {
       return Object.values(this.form.controls).forEach(control => {
         control.markAsTouched();
       })
-    }else {
+    } else {
       this.confirmationSvc.confirm({ // acomodar
         message: `Toda la información de Carga de Fallas que contiene el archivo quedará
                 registrada en la base de datos.`,
@@ -93,12 +122,13 @@ export class LoadFaultsComponent implements OnInit {
       'userName': this.authSvc.userData.usuario.usuario,
     }
     this.faultsScv.loadFaults(dataRequest).subscribe((resp: faultsApiModel) => {
-      if(resp.GeneralResponse.code === '0') {
+      if (resp.GeneralResponse.code === '0') {
         this.toastScv.showSuccess(resp.GeneralResponse.descriptionCode, resp.GeneralResponse.messageCode);
       } else {
         this.toastScv.showError(resp.GeneralResponse.descriptionCode, resp.GeneralResponse.messageCode);
       }
       this.cleanForm();
+      this.updateData();
     })
   }
 
@@ -109,7 +139,7 @@ export class LoadFaultsComponent implements OnInit {
     reader.onload = () => {
       const data = reader.result;
       const fileString = data.toString().split(';base64,');
-      this.fileBaseData = fileString[fileString.length -1];
+      this.fileBaseData = fileString[fileString.length - 1];
     };
   }
 
@@ -133,14 +163,14 @@ export class LoadFaultsComponent implements OnInit {
   prepareDataToPreview(data: Object) {
     const sheets = Object.keys(data);
     this.dataPreview = (sheets.length > 0) ? data : null;
-    this.sheetOptionsList = sheets.map(sheet => ({valueOption: sheet, nameOption: sheet}))
+    this.sheetOptionsList = sheets.map(sheet => ({ valueOption: sheet, nameOption: sheet }))
   }
 
   informationToTable(option) {
     const data: object[] = this.dataPreview[option];
-    if(data.length > 0) {
+    if (data.length > 0) {
       const items = Object.keys(data[0]);
-      this.structure = items.map(item => ({ name:  item, description: item, validation: ''}));
+      this.structure = items.map(item => ({ name: item, description: item, validation: '' }));
       this.dataToTable = data;
     }
   }
@@ -195,5 +225,20 @@ export class LoadFaultsComponent implements OnInit {
     this.structure = [];
     this.dataToTable = [];
   }
-
+  returnTypeReadable(value: string): string {
+    switch (value) {
+      case 'RESIDENTIAL_BASE':
+        return 'Residencial';
+      case 'BUILDINGS_BASE':
+        return 'Edificios';
+      case 'SME_BASE':
+        return 'Pymes';
+      case 'RESIDENTIAL_SETTING':
+        return 'Ajustes Residencial';
+      case 'SME_SETTING':
+        return 'Ajustes Pymes';
+      case 'MAINTENANCE_ORDER':
+        return 'Órdenes Mantenimiento';
+    }
+  }
 }

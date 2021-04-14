@@ -293,5 +293,6 @@ export const superProcessParams = {
 export const messagesToast = {
   error_title: 'Error',
   error_red: 'Se ha presentado un problema red de código: ',
-  time_default: 5000
+  time_default: 5000,
+  close_sesion: 'Sesión cerrada por inactividad.'
 };

@@ -2,10 +2,12 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 import { StorageService } from '../services/storage.service';
+import { ToastService } from '../services/toast.service';
 import { ResponseLoginModel as LoginModel } from '../../models/users';
 import {
   itemsStorage,
-  timeExpirationMinutes as timeExp
+  timeExpirationMinutes as timeExp,
+  messagesToast as mgsToast
 } from '../../libraries/utilities.library';
 
 @Injectable({
@@ -16,7 +18,10 @@ export class AuthService {
   authState = new BehaviorSubject<LoginModel>(null);
   timeOutSesion = null;
 
-  constructor(private stgSvc : StorageService) { }
+  constructor(
+    private stgSvc : StorageService,
+    private toastScv: ToastService,
+    ) { }
 
   setDataUser(user: LoginModel) {
     this.authState.next(user);
@@ -31,7 +36,8 @@ export class AuthService {
   logout() {
     this.clearMyTimeOut();
     this.setDataUser(<LoginModel>(null));
-    this.stgSvc.removeItem(itemsStorage.user)
+    this.stgSvc.removeItem(itemsStorage.user);
+    this.toastScv.showError(mgsToast.close_sesion, '', 5000, true);
   }
 
   isAuthenticated() {

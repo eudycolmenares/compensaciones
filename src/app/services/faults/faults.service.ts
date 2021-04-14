@@ -29,4 +29,10 @@ export class FaultsService {
       headers: this.headers,
     });
   }
+
+  readAllFaults(): Observable<faultsApiModel> {
+    return this.http.get<faultsApiModel>(env.URL_API_BATCHRR + env.endpoints.faults_read_all, {
+      headers: this.headers,
+    });
+  }
 }
