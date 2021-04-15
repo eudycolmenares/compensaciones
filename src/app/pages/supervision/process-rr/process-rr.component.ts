@@ -11,13 +11,13 @@ import {
   bodyMailService,
   superProcessParams,
   arrayTypesFaults,
-  arrayTypesRents
+  arrayTypesRents,
 } from '../../../libraries/utilities.library';
 import {
   responseProcessModel,
   processModel,
   reqUpdateProcessModel as reqUpdateModel,
-  respUpdateProcessModel as respUpdateModel
+  respUpdateProcessModel as respUpdateModel,
 } from '../../../models/supervisionProcess';
 import {
   faultsApiModel,
@@ -60,7 +60,6 @@ export class ProcessRRComponent implements OnInit {
       if (resp.generalResponse.code === '0') {
         this.toastScv.showSuccess(resp.generalResponse.messageCode, resp.generalResponse.descriptionCode);
         this.sendEmailNotification();
-        // this.changeStatusStage(true);
         this.getProcesses();
       } else {
         this.toastScv.showError(resp.generalResponse.messageCode, resp.generalResponse.descriptionCode);
@@ -72,7 +71,7 @@ export class ProcessRRComponent implements OnInit {
       if (resp.GeneralResponse.code === '0') {
         this.toastScv.showSuccess(resp.GeneralResponse.messageCode, resp.GeneralResponse.descriptionCode);
         this.sendEmailNotification();
-        this.changeStatusStage(true);
+        this.getProcesses();
       } else {
         this.toastScv.showError(resp.GeneralResponse.messageCode, resp.GeneralResponse.descriptionCode);
       }
@@ -83,7 +82,7 @@ export class ProcessRRComponent implements OnInit {
       if (resp.GeneralResponse.code === '0') {
         this.toastScv.showSuccess(resp.GeneralResponse.messageCode, resp.GeneralResponse.descriptionCode);
         this.sendEmailNotification();
-        this.changeStatusStage(true);
+        this.getProcesses();
       } else {
         this.toastScv.showError(resp.GeneralResponse.messageCode, resp.GeneralResponse.descriptionCode);
       }
@@ -94,7 +93,7 @@ export class ProcessRRComponent implements OnInit {
       if (resp.GeneralResponse.code === '0') {
         this.toastScv.showSuccess(resp.GeneralResponse.messageCode, resp.GeneralResponse.descriptionCode);
         this.sendEmailNotification();
-        this.changeStatusStage(true);
+        this.getProcesses();
       } else {
         this.toastScv.showError(resp.GeneralResponse.messageCode, resp.GeneralResponse.descriptionCode);
       }
@@ -110,7 +109,7 @@ export class ProcessRRComponent implements OnInit {
     this.supervisionSvc.updateProcess(body).subscribe((resp: respUpdateModel) => {
       if (resp.generalResponse.code != '-1') {
         this.toastScv.showSuccess(resp.generalResponse.messageCode, resp.generalResponse.descriptionCode);
-        this.changeStatusStage(true);
+        this.getProcesses();
         this.sendEmailNotification();
       } else {
         this.toastScv.showError(resp.generalResponse.messageCode, resp.generalResponse.descriptionCode);
@@ -118,7 +117,7 @@ export class ProcessRRComponent implements OnInit {
     })
   }
 
-  changeStatusStage(success: boolean) {
+  changeStatusStage(success: boolean) { // en deshuso, se consulta y refresca desd el servidor
     (success) ? this.stages[this.stageSelected -1].status = 1 : '';
   }
   changePostStatusStage(success: boolean) {
@@ -140,7 +139,7 @@ export class ProcessRRComponent implements OnInit {
             : this.changeStatusStageServer()
           ;
         } else {
-          this.toastScv.showError('No se encontraron archivos cargadas ó no se encuentra finalizada(s).', 'Información');
+          this.toastScv.showError(superProcessParams.errorLoadedProcesses, 'Información');
         }
       } else {
         this.toastScv.showError(resp.GeneralResponse.messageCode, resp.GeneralResponse.descriptionCode);

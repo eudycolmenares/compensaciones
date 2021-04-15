@@ -287,7 +287,8 @@ export const superProcessParams = {
     }
   },
   empty: '¡No hay  procesos disponibles, intente más tarde!',
-  emptyEmail: '¡No hay correo almacenado para este proceso, no se enviara notificación!'
+  emptyEmail: '¡No hay correo almacenado para este proceso, no se enviara notificación!',
+  errorLoadedProcesses: 'No se encontraron archivos cargadas ó no se encuentra finalizada(s).',
 };
 
 export const messagesToast = {
