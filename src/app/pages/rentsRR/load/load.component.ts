@@ -10,9 +10,10 @@ import {
   faultsApiModel,
   loadModel
 } from '@models/faults';
-import { ToastService } from '@shared_services/toast.service';
+import { ToastService } from '../../../shared/services/toast.service';
 import { ResponseLoginModel as UserModel } from '@models/users';
-import { AuthService } from '@shared_services/auth.service';
+import { AuthService } from '../../../shared/services/auth.service';
+import { arrayTypesRents } from '../../../libraries/utilities.library';
 
 @Component({
   selector: 'app-load',
@@ -67,7 +68,6 @@ export class LoadComponent implements OnInit {
     }
   ];
   uploadedFiles: loadModel[] = null;
-  loadTypeServe = ['ACCOUNT_RENT', 'NODES_RENT'];
 
   constructor(
     private fb: FormBuilder,
@@ -92,7 +92,7 @@ export class LoadComponent implements OnInit {
   }
   updateData() {
     this.faultsScv.readAllFaults().subscribe((resp: faultsApiModel) => {
-      this.uploadedFiles = resp.Loads.Load.filter(item => this.loadTypeServe.includes(item.loadType));
+      this.uploadedFiles = resp.Loads.Load.filter(item => arrayTypesRents.includes(item.loadType));
       this.compareToSort(this.uploadedFiles);
     });
   }

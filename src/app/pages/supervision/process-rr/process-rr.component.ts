@@ -5,10 +5,13 @@ import { ProcessesService } from '../../../services/processes/processes.service'
 import { SupervisionProcessService } from '../../../services/supervision/supervision-process.service';
 import { ToastService } from '../../../shared/services/toast.service';
 import { MailsService } from '../../../shared/services/mails.service';
+import { FaultsService } from '../../../services/faults/faults.service';
 
 import {
   bodyMailService,
-  superProcessParams
+  superProcessParams,
+  arrayTypesFaults,
+  arrayTypesRents
 } from '../../../libraries/utilities.library';
 import {
   responseProcessModel,
@@ -16,6 +19,10 @@ import {
   reqUpdateProcessModel as reqUpdateModel,
   respUpdateProcessModel as respUpdateModel
 } from '../../../models/supervisionProcess';
+import {
+  faultsApiModel,
+  loadModel
+} from '../../../models/faults';
 
 @Component({
   selector: 'app-process-rr',
@@ -27,13 +34,15 @@ export class ProcessRRComponent implements OnInit {
   stages: processModel[]
   randomKey: string;
   processParams = superProcessParams;
+  uploadedFaults: loadModel[] = null;
 
   constructor(
     private processesSvc: ProcessesService,
     private supervisionSvc: SupervisionProcessService,
     private toastScv: ToastService,
     private confirmationSvc: ConfirmationService,
-    private mailSvc: MailsService
+    private mailSvc: MailsService,
+    private faultsScv: FaultsService,
     ) {
       this.randomKey = Math.ceil(Math.random() * 10000).toString();
       this.getProcesses();
@@ -116,6 +125,28 @@ export class ProcessRRComponent implements OnInit {
     (success) ? this.stages[this.stageSelected].status = 1 : '';
   }
 
+  getAllFaults() {
+    this.faultsScv.readAllFaults().subscribe((resp: faultsApiModel) => {
+      if (resp.GeneralResponse.code === '0') {
+        (this.stageSelected == 3)
+          ? this.uploadedFaults = resp.Loads.Load.filter(item => arrayTypesFaults.includes(item.loadType))
+          : this.uploadedFaults = resp.Loads.Load.filter(item => arrayTypesRents.includes(item.loadType))
+        ;
+        if (
+          this.uploadedFaults.length > 0 &&
+          this.uploadedFaults.filter(item => item.state == 'FINALIZADO').length > 0) {
+          (this.stageSelected == 3)
+            ? this.runRuleBusiness()
+            : this.changeStatusStageServer()
+          ;
+        } else {
+          this.toastScv.showError('No se encontraron archivos cargadas ó no se encuentra finalizada(s).', 'Información');
+        }
+      } else {
+        this.toastScv.showError(resp.GeneralResponse.messageCode, resp.GeneralResponse.descriptionCode);
+      }
+    });
+  }
   getProcesses() {
     this.supervisionSvc.allProcess().subscribe((resp: responseProcessModel) => {
       this.stages = [...resp.tblProcesoSupervision];
@@ -144,7 +175,8 @@ export class ProcessRRComponent implements OnInit {
             this.changeStatusStageServer();
             break;
           case 3:
-            this.runRuleBusiness();
+            // this.runRuleBusiness()
+            this.getAllFaults();
             break;
           case 4:
             this.changeStatusStageServer();
@@ -153,7 +185,8 @@ export class ProcessRRComponent implements OnInit {
             this.runConsolidateAccNod();
             break;
           case 6:
-            this.changeStatusStageServer();
+            // this.changeStatusStageServer();
+            this.getAllFaults();
             break;
           case 7:
             this.confirmBillingFiles();

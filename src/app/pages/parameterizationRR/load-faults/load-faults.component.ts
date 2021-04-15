@@ -14,6 +14,7 @@ import {
   loadModel
 } from '../../../models/faults';
 import { CustomValidation } from 'src/app/utils/custom-validation';
+import { arrayTypesFaults } from '../../../libraries/utilities.library';
 
 @Component({
   selector: 'app-load-faults',
@@ -47,7 +48,6 @@ export class LoadFaultsComponent implements OnInit {
     }
   ];
   uploadedFiles: loadModel[] = null;
-  loadTypeServe = ['RESIDENTIAL_BASE', 'BUILDINGS_BASE', 'SME_BASE', 'RESIDENTIAL_SETTING', 'SME_SETTING', 'MAINTENANCE_ORDER']; // acomodar
   // table
   dataToTable: object[];
   structure: object[] = [];
@@ -75,7 +75,7 @@ export class LoadFaultsComponent implements OnInit {
   updateData() {
     this.faultsScv.readAllFaults().subscribe((resp: faultsApiModel) => {
       console.log('readAllFaults: ', resp);
-      this.uploadedFiles = resp.Loads.Load.filter(item => this.loadTypeServe.includes(item.loadType));
+      this.uploadedFiles = resp.Loads.Load.filter(item => arrayTypesFaults.includes(item.loadType));
       this.compareToSort(this.uploadedFiles);
     });
   }
