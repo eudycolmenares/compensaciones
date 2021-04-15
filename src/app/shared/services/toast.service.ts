@@ -1,6 +1,8 @@
 import { Injectable, TemplateRef } from '@angular/core';
 import { MessageService } from 'primeng/api';
 
+import { messagesToast as mgsToast } from '../../libraries/utilities.library';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -20,11 +22,11 @@ export class ToastService {
     });
   }
 
-  showSuccess(message: string, title = '', time = 5000, sticky = false) {
+  showSuccess(message: string, title = '', time = mgsToast.time_default, sticky = false) {
     this.show('success', message, title, time, sticky);
   }
 
-  showError(message: string, title = '', time = 5000, sticky = false) {
+  showError(message: string, title = '', time = mgsToast.time_default, sticky = false) {
     this.show('error', message, title, time, sticky);
   }
 
@@ -32,7 +34,7 @@ export class ToastService {
     // this.toasts = this.toasts.filter(t => t !== toast);
   }
 
-  showStandard(msg: string, time = 5000) {
+  showStandard(msg: string, time = mgsToast.time_default) {
     // this.show(msg, {
     //   delay: time,
     //   autohide: true

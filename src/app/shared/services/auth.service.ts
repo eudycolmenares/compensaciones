@@ -37,7 +37,7 @@ export class AuthService {
     this.clearMyTimeOut();
     this.setDataUser(<LoginModel>(null));
     this.stgSvc.removeItem(itemsStorage.user);
-    this.toastScv.showError(mgsToast.close_sesion, '', 5000, true);
+    this.toastScv.showError(mgsToast.close_sesion, '', mgsToast.time_default, true);
   }
 
   isAuthenticated() {

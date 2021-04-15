@@ -296,3 +296,7 @@ export const messagesToast = {
   time_default: 5000,
   close_sesion: 'Sesión cerrada por inactividad.'
 };
+
+export const arrayTypesFaults = ['RESIDENTIAL_BASE', 'BUILDINGS_BASE', 'SME_BASE', 'RESIDENTIAL_SETTING', 'SME_SETTING', 'MAINTENANCE_ORDER'];
+
+export const arrayTypesRents = ['ACCOUNT_RENT', 'NODES_RENT'];
