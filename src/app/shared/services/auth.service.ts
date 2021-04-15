@@ -33,11 +33,14 @@ export class AuthService {
     this.startMyTimeOut();
   }
 
-  logout() {
+  logout(expired = false) {
     this.clearMyTimeOut();
     this.setDataUser(<LoginModel>(null));
     this.stgSvc.removeItem(itemsStorage.user);
-    this.toastScv.showError(mgsToast.close_sesion, '', mgsToast.time_default, true);
+    (!expired)
+      ? this.toastScv.showError(mgsToast.close_sesion)
+      : this.toastScv.showError(mgsToast.timeout_sesion, '', mgsToast.time_default, true)
+    ;
   }
 
   isAuthenticated() {
@@ -50,7 +53,7 @@ export class AuthService {
 
   startMyTimeOut() {
     this.timeOutSesion = setTimeout(() => {
-      this.logout();
+      this.logout(true);
     }, (timeExp * 60000) )
   }
   clearMyTimeOut() {

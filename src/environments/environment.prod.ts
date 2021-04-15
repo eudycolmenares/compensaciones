@@ -62,9 +62,13 @@ export const environment = {
     // Bulk load
     bulk_load_create: 'sendFile',
     bulk_load_read: 'findTypeProcess',
+
     // Faults
     faults_load: 'LoadService/load',
     faults_read_id: 'LoadService/read/id',
+    faults_read_all: 'LoadService/read/all',
+    // ources/WSCompensacionesBatchRR/LoadService/read/id/{ID}
+
     // Maintenance Orders Causes
     maintenanceOrderCause_create: 'MaintenanceOrderCauseService/create',
     maintenanceOrderCause_delete: 'MaintenanceOrderCauseService/delete',
@@ -165,6 +169,7 @@ export const environment = {
   BillingSupervision: {
     url: Url_WSBilling,
     endpoints: {
+      compensationValue: 'CompensationValueService/read/all',
       readAll: 'SupervisionProcessService/read/all',
       update: 'SupervisionProcessService/update'
     },

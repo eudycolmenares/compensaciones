@@ -295,7 +295,8 @@ export const messagesToast = {
   error_title: 'Error',
   error_red: 'Se ha presentado un problema red de código: ',
   time_default: 5000,
-  close_sesion: 'Sesión cerrada por inactividad.'
+  close_sesion: 'La sesión ha sido cerrada.',
+  timeout_sesion: 'Sesión cerrada por inactividad.'
 };
 
 export const arrayTypesFaults = ['RESIDENTIAL_BASE', 'BUILDINGS_BASE', 'SME_BASE', 'RESIDENTIAL_SETTING', 'SME_SETTING', 'MAINTENANCE_ORDER'];
