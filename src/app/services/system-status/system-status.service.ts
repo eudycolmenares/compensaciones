@@ -23,14 +23,14 @@ export class SystemStatusService {
 
   allSystemStatus() {
     return this._http.get<SystemStatusApiModel>(
-      env.URL_API + env.endpoints.system_status_read,
+      env.endpoints.SystemStatus.url + env.endpoints.SystemStatus.endpoints.readall,
       { headers: this.headers }
     );
   }
 
   createSystemStatus(body: RequestModel): Observable<ResponseModel> {
     return this._http.post<any>(
-      env.URL_API + env.endpoints.system_status_create,
+      env.endpoints.SystemStatus.url + env.endpoints.SystemStatus.endpoints.create,
       body,
       {
         headers: this.headers,
@@ -40,7 +40,7 @@ export class SystemStatusService {
 
   updateSystemStatus(body: RequestModel): Observable<SystemStatusApiModel> {
     return this._http.put<SystemStatusApiModel>(
-      env.URL_API + env.endpoints.system_status_update,
+      env.endpoints.SystemStatus.url + env.endpoints.SystemStatus.endpoints.update,
       body,
       {
         headers: this.headers,
@@ -50,7 +50,7 @@ export class SystemStatusService {
 
   deleteSystemStatus(systemStatusId: string): Observable<ResponseModel> {
     return this._http.delete<ResponseModel>(
-      env.URL_API + env.endpoints.system_status_delete_id + `/${systemStatusId}`
+      env.endpoints.SystemStatus.url + env.endpoints.SystemStatus.endpoints.delete + `/${systemStatusId}`
     );
   }
 }

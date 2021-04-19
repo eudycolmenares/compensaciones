@@ -19,23 +19,23 @@ export class SymptomService {
   constructor(private http: HttpClient) { }
 
   allSymptoms(): Observable<symptomsApiModel> {
-    return this.http.get<symptomsApiModel>(env.URL_API + env.endpoints.symptom_all, { headers: this.headers });
+    return this.http.get<symptomsApiModel>(env.endpoints.Symptom.url + env.endpoints.Symptom.endpoints.readall, { headers: this.headers });
   }
 
   createSymptom(body: requestModel): Observable<responseModel> {
-    return this.http.post<responseModel>(env.URL_API + env.endpoints.symptom_create, body, {
+    return this.http.post<responseModel>(env.endpoints.Symptom.url + env.endpoints.Symptom.endpoints.create, body, {
       headers: this.headers,
     });
   }
 
   updateSymptom(body: requestModel): Observable<responseModel> {
-    return this.http.put<responseModel>(env.URL_API + env.endpoints.symptom_update, body, {
+    return this.http.put<responseModel>(env.endpoints.Symptom.url + env.endpoints.Symptom.endpoints.update, body, {
       headers: this.headers,
     });
   }
 
   deleteSymptom(id: number): Observable<responseModel> {
-    return this.http.delete<responseModel>(env.URL_API + env.endpoints.symptom_delete + `/${id}`, {
+    return this.http.delete<responseModel>(env.endpoints.Symptom.url + env.endpoints.Symptom.endpoints.delete + `/${id}`, {
       headers: this.headers,
     });
   }

@@ -24,23 +24,23 @@ export class MaintenanceOrdersSymptomsService {
   constructor(private http: HttpClient) { }
 
   allOrdersSymptoms(): Observable<symptomsApiModel> {
-    return this.http.get<symptomsApiModel>(env.URL_API + env.endpoints.orders_symptoms_all, { headers: this.headers });
+    return this.http.get<symptomsApiModel>(env.endpoints.OrderSymptoms.url + env.endpoints.OrderSymptoms.endpoints.readall, { headers: this.headers });
   }
 
   createOrderSymptom(body: requestModel): Observable<responseModel> {
-    return this.http.post<responseModel>(env.URL_API + env.endpoints.order_symptom_create, body, {
+    return this.http.post<responseModel>(env.endpoints.OrderSymptoms.url + env.endpoints.OrderSymptoms.endpoints.create, body, {
       headers: this.headers,
     });
   }
 
   updateOrderSymptom(body: requestModel): Observable<responseModel> {
-    return this.http.put<responseModel>(env.URL_API + env.endpoints.order_symptom_update, body, {
+    return this.http.put<responseModel>(env.endpoints.OrderSymptoms.url + env.endpoints.OrderSymptoms.endpoints.update, body, {
       headers: this.headers,
     });
   }
 
   deleteOrderSymptom(id: number): Observable<responseModel> {
-    return this.http.delete<responseModel>(env.URL_API + env.endpoints.order_symptom_delete + `/${id}`, {
+    return this.http.delete<responseModel>(env.endpoints.OrderSymptoms.url + env.endpoints.OrderSymptoms.endpoints.delete + `/${id}`, {
       headers: this.headers
     });
   }

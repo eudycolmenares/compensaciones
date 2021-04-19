@@ -26,23 +26,23 @@ export class SettingsService {
   ) { }
 
   allSettings(): Observable<responseModel> {
-    return this.http.get<settingsApiModel>(env.URL_API + env.endpoints.settings_all, { headers: this.headers });
+    return this.http.get<settingsApiModel>(env.endpoints.Settings.url + env.endpoints.Settings.endpoints.readall, { headers: this.headers });
   }
 
   createSetting(body: requestModel): Observable<responseModel> {
-    return this.http.post<responseModel>(env.URL_API + env.endpoints.settings_create, body, {
+    return this.http.post<responseModel>(env.endpoints.Settings.url + env.endpoints.Settings.endpoints.create, body, {
       headers: this.headers,
     });
   }
 
   updateSetting(body: requestModel): Observable<responseModel> {
-    return this.http.put<responseModel>(env.URL_API + env.endpoints.settings_update, body, {
+    return this.http.put<responseModel>(env.endpoints.Settings.url + env.endpoints.Settings.endpoints.update, body, {
       headers: this.headers,
     });
   }
 
   deleteSetting(id: string): Observable<responseModel> {
-    return this.http.delete<responseModel>(env.URL_API + env.endpoints.settings_delete + `/${id}`, {
+    return this.http.delete<responseModel>(env.endpoints.Settings.url + env.endpoints.Settings.endpoints.delete + `/${id}`, {
       headers: this.headers,
     });
   }

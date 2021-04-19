@@ -21,24 +21,32 @@ export class AccountsRentsRRService {
   constructor(private http: HttpClient) { }
 
   allAccounts(): Observable<responseModel> {
-    return this.http.get<responseModel>(env.urlApi_rentsRR + env.endpoints.accounts_rents_all, { headers: this.headers });
+    return this.http.get<responseModel>(
+      env.endpoints.AccountRent.url + env.endpoints.AccountRent.endpoints.readall,
+      { headers: this.headers }
+    );
   }
 
   createAccountRent(body: requestModel): Observable<responseModel> {
-    return this.http.post<responseModel>(env.urlApi_rentsRR + env.endpoints.account_rent_create, body, {
-      headers: this.headers,
-    });
+    return this.http.post<responseModel>(
+      env.endpoints.AccountRent.url + env.endpoints.AccountRent.endpoints.create,
+      body,
+      { headers: this.headers }
+    );
   }
 
   updateAccount(body: requestModel): Observable<responseModel> {
-    return this.http.put<responseModel>(env.urlApi_rentsRR + env.endpoints.account_rent_update, body, {
-      headers: this.headers,
-    });
+    return this.http.put<responseModel>(
+      env.endpoints.AccountRent.url + env.endpoints.AccountRent.endpoints.update,
+      body,
+      { headers: this.headers }
+    );
   }
 
   deleteAccount(id): Observable<responseModel> {
-    return this.http.delete<responseModel>(env.urlApi_rentsRR + env.endpoints.account_rent_delete + `/${id}`, {
-      headers: this.headers,
-    });
+    return this.http.delete<responseModel>(
+      env.endpoints.AccountRent.url + env.endpoints.AccountRent.endpoints.delete + `/${id}`,
+      { headers: this.headers }
+    );
   }
 }

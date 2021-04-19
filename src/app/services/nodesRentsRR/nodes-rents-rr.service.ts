@@ -23,24 +23,32 @@ export class NodesRentsRRService {
   constructor(private http: HttpClient) { }
 
   allNodesRents(): Observable<responseModel> {
-    return this.http.get<responseModel>(env.urlApi_rentsRR + env.endpoints.nodes_rents_all, { headers: this.headers });
+    return this.http.get<responseModel>(
+      env.endpoints.NodeRent.url + env.endpoints.NodeRent.endpoints.readall,
+      { headers: this.headers }
+    );
   }
 
   createNodeRent(body: requestModel): Observable<responseNode> {
-    return this.http.post<responseNode>(env.urlApi_rentsRR + env.endpoints.node_rent_create, body, {
-      headers: this.headers,
-    });
+    return this.http.post<responseNode>(
+      env.endpoints.NodeRent.url + env.endpoints.NodeRent.endpoints.create,
+      body,
+      { headers: this.headers }
+    );
   }
 
   updateNode(body: requestModel): Observable<responseModel> {
-    return this.http.put<responseModel>(env.urlApi_rentsRR + env.endpoints.node_rent_update, body, {
-      headers: this.headers,
-    });
+    return this.http.put<responseModel>(
+      env.endpoints.NodeRent.url + env.endpoints.NodeRent.endpoints.update,
+      body,
+      { headers: this.headers }
+    );
   }
 
   deleteNode(id): Observable<responseModel> {
-    return this.http.delete<responseModel>(env.urlApi_rentsRR + env.endpoints.node_rent_delete + `/${id}`, {
-      headers: this.headers,
-    });
+    return this.http.delete<responseModel>(
+      env.endpoints.NodeRent.url + env.endpoints.NodeRent.endpoints.delete + `/${id}`,
+      { headers: this.headers }
+    );
   }
 }

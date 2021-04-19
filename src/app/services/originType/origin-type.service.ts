@@ -22,23 +22,23 @@ export class OriginTypeService {
   }
 
   allOrigins() {
-    return this.http.get<originsApiModel>(env.URL_API + env.endpoints.origin_all, { headers: this.headers });
+    return this.http.get<originsApiModel>(env.endpoints.Origin.url + env.endpoints.Origin.endpoints.readall, { headers: this.headers });
   }
 
   createOrigin(body: requestModel): Observable<responseModel> {
-    return this.http.post<any>(env.URL_API + env.endpoints.origin_create, body, {
+    return this.http.post<any>(env.endpoints.Origin.url + env.endpoints.Origin.endpoints.create, body, {
       headers: this.headers,
     });
   }
 
   updateOrigin(body: requestModel): Observable<responseModel> {
-    return this.http.put<responseModel>(env.URL_API + env.endpoints.origin_update, body, {
+    return this.http.put<responseModel>(env.endpoints.Origin.url + env.endpoints.Origin.endpoints.update, body, {
       headers: this.headers,
     });
   }
 
   deleteOrigin(id: string): Observable<responseModel> {
-    return this.http.delete<responseModel>(env.URL_API + env.endpoints.origin_delete + `/${id}`, {
+    return this.http.delete<responseModel>(env.endpoints.Origin.url + env.endpoints.Origin.endpoints.delete + `/${id}`, {
       headers: this.headers,
     });
   }

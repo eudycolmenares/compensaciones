@@ -23,8 +23,8 @@ export class BulkLoadService {
 
   allBulkLoad(selectType: string) {
     return this._http.get<BulkLoadApiModel>(
-      env.urlApi_bulkLoad +
-        env.endpoints.bulk_load_read +
+      env.endpoints.BulkLoad.url +
+      env.endpoints.BulkLoad.endpoints.readall +
         `/${selectType.toLowerCase()}`,
       {
         headers: this.headers,
@@ -34,7 +34,7 @@ export class BulkLoadService {
 
   createBulkLoad(body: BulkLoadRequestModel): Observable<GeneralResponse> {
     return this._http.post<GeneralResponse>(
-      env.urlApi_bulkLoad + env.endpoints.bulk_load_create,
+      env.endpoints.BulkLoad.url + env.endpoints.BulkLoad.endpoints.create,
       body,
       {
         headers: this.headers,

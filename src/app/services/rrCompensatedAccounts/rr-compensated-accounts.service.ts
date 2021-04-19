@@ -114,10 +114,8 @@ export class RrCompensatedAccountsService {
 
   allCompensationDetails(): Observable<models.CompensationDetailsApiModel> {
     return this._http.get<models.CompensationDetailsApiModel>(
-      env.urlApi_billingRR + env.endpoints.CompensationDetails_read,
-      {
-        headers: this.headers,
-      }
+      env.endpoints.CompensationDetail.url + env.endpoints.CompensationDetail.endpoints.readall,
+      { headers: this.headers }
     );
   }
 
@@ -125,11 +123,9 @@ export class RrCompensatedAccountsService {
     body: models.CompensationDetailModel
   ): Observable<models.ResponseModel> {
     return this._http.post<models.ResponseModel>(
-      env.urlApi_billingRR + env.endpoints.CompensationDetail_create,
+      env.endpoints.CompensationDetail.url + env.endpoints.CompensationDetail.endpoints.create,
       body,
-      {
-        headers: this.headers,
-      }
+      { headers: this.headers }
     );
   }
 
@@ -137,11 +133,9 @@ export class RrCompensatedAccountsService {
     body: models.CompensationDetailModel
   ): Observable<models.ResponseModel> {
     return this._http.put<models.ResponseModel>(
-      env.urlApi_billingRR + env.endpoints.CompensationDetail_update,
+      env.endpoints.CompensationDetail.url + env.endpoints.CompensationDetail.endpoints.update,
       body,
-      {
-        headers: this.headers,
-      }
+      { headers: this.headers }
     );
   }
 
@@ -149,12 +143,9 @@ export class RrCompensatedAccountsService {
     id: string
   ): Observable<models.ResponseModel> {
     return this._http.delete<models.ResponseModel>(
-      env.urlApi_billingRR +
-        env.endpoints.CompensationDetail_delete_id +
-        `/${id}`,
-      {
-        headers: this.headers,
-      }
+      env.endpoints.CompensationDetail.url +
+      env.endpoints.CompensationDetail.endpoints.delete + `/${id}`,
+      { headers: this.headers }
     );
   }
 
@@ -208,22 +199,16 @@ export class RrCompensatedAccountsService {
 
   allTotalCompensation(): Observable<models.TotalCompensationApiModel> {
     return this._http.get<models.TotalCompensationApiModel>(
-      env.URL_API_BATCHRR + env.endpoints.TotalCompensation_read,
-      {
-        headers: this.headers,
-      }
+      env.endpoints.TotalCompensation.url + env.endpoints.TotalCompensation.endpoints.readall,
+      { headers: this.headers }
     );
   }
 
-  createRequest_TotalCompensation(
-    body: models.TotalCompensationModel
-  ): Observable<models.ResponseModel> {
+  createRequest_TotalCompensation(body: models.TotalCompensationModel): Observable<models.ResponseModel> {
     return this._http.post<models.ResponseModel>(
-      env.URL_API_BATCHRR + env.endpoints.TotalCompensation_create,
+      env.endpoints.TotalCompensation.url + env.endpoints.TotalCompensation.endpoints.create,
       body,
-      {
-        headers: this.headers,
-      }
+      { headers: this.headers }
     );
   }
 
@@ -231,24 +216,16 @@ export class RrCompensatedAccountsService {
     body: models.TotalCompensationModel
   ): Observable<models.ResponseModel> {
     return this._http.put<models.ResponseModel>(
-      env.URL_API_BATCHRR + env.endpoints.TotalCompensation_update,
+      env.endpoints.TotalCompensation.url + env.endpoints.TotalCompensation.endpoints.update,
       body,
-      {
-        headers: this.headers,
-      }
+      { headers: this.headers }
     );
   }
 
-  deleteRequest_TotalCompensation(
-    id: string
-  ): Observable<models.ResponseModel> {
+  deleteRequest_TotalCompensation(id: string): Observable<models.ResponseModel> {
     return this._http.delete<models.ResponseModel>(
-      env.URL_API_BATCHRR +
-        env.endpoints.TotalCompensation_delete_id +
-        `/${id}`,
-      {
-        headers: this.headers,
-      }
+      env.endpoints.TotalCompensation.url + env.endpoints.TotalCompensation.endpoints.delete + `/${id}`,
+      { headers: this.headers }
     );
   }
 
@@ -290,7 +267,7 @@ export class RrCompensatedAccountsService {
 
   allCompensationNotes(): Observable<models.CompensationNotesApiModel> {
     return this._http.get<models.CompensationNotesApiModel>(
-      env.URL_API_BATCHRR + env.endpoints.CompensationNotes_read,
+      env.endpoints.CompensationNote.url + env.endpoints.CompensationNote.endpoints.readall,
       {
         headers: this.headers,
       }
@@ -301,11 +278,9 @@ export class RrCompensatedAccountsService {
     body: models.CompensationNoteModel
   ): Observable<models.ResponseModel> {
     return this._http.post<models.ResponseModel>(
-      env.URL_API_BATCHRR + env.endpoints.CompensationNote_create,
+      env.endpoints.CompensationNote.url + env.endpoints.CompensationNote.endpoints.create,
       body,
-      {
-        headers: this.headers,
-      }
+      { headers: this.headers }
     );
   }
 
@@ -313,23 +288,18 @@ export class RrCompensatedAccountsService {
     body: models.CompensationNoteModel
   ): Observable<models.ResponseModel> {
     return this._http.put<models.ResponseModel>(
-      env.URL_API_BATCHRR + env.endpoints.CompensationNote_update,
+      env.endpoints.CompensationNote.url + env.endpoints.CompensationNote.endpoints.update,
       body,
-      {
-        headers: this.headers,
-      }
+      { headers: this.headers }
     );
   }
 
   deleteRequest_CompensationNote(id: string): Observable<models.ResponseModel> {
     return this._http.delete<models.ResponseModel>(
-      env.URL_API_BATCHRR + env.endpoints.CompensationNote_delete_id + `/${id}`,
-      {
-        headers: this.headers,
-      }
+      env.endpoints.CompensationNote.url + env.endpoints.CompensationNote.endpoints.delete + `/${id}`,
+      { headers: this.headers }
     );
   }
-
 
   allCompensationValue(): Observable<any> {
     return this._http.get<any>(

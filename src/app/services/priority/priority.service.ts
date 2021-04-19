@@ -23,14 +23,14 @@ export class PriorityService {
 
   allPriorities() {
     return this._http.get<PrioritiesApiModel>(
-      env.URL_API + env.endpoints.priorities_read,
+      env.endpoints.Priority.url + env.endpoints.Priority.endpoints.readall,
       { headers: this.headers }
     );
   }
 
   createPriority(body: RequestModel): Observable<ResponseModel> {
     return this._http.post<any>(
-      env.URL_API + env.endpoints.priority_create,
+      env.endpoints.Priority.url + env.endpoints.Priority.endpoints.create,
       body,
       {
         headers: this.headers,
@@ -40,7 +40,7 @@ export class PriorityService {
 
   updatePriority(body: RequestModel): Observable<PrioritiesApiModel> {
     return this._http.put<PrioritiesApiModel>(
-      env.URL_API + env.endpoints.priority_update,
+      env.endpoints.Priority.url + env.endpoints.Priority.endpoints.update,
       body,
       {
         headers: this.headers,
@@ -50,7 +50,7 @@ export class PriorityService {
 
   deletePriority(priorityId: number): Observable<ResponseModel> {
     return this._http.delete<ResponseModel>(
-      env.URL_API + env.endpoints.priority_delete_id + `/${priorityId}`
+      env.endpoints.Priority.url + env.endpoints.Priority.endpoints.delete + `/${priorityId}`
     );
   }
 }

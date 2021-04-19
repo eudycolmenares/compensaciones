@@ -19,23 +19,23 @@ export class StratumService {
   constructor(private http: HttpClient) { }
 
   allStrata(): Observable<strataApiModel> {
-    return this.http.get<strataApiModel>(env.URL_API + env.endpoints.stratum_all, { headers: this.headers });
+    return this.http.get<strataApiModel>(env.endpoints.Stratum.url + env.endpoints.Stratum.endpoints.readall, { headers: this.headers });
   }
 
   createStratum(body: requestModel): Observable<responseModel> {
-    return this.http.post<responseModel>(env.URL_API + env.endpoints.stratum_create, body, {
+    return this.http.post<responseModel>(env.endpoints.Stratum.url + env.endpoints.Stratum.endpoints.create, body, {
       headers: this.headers,
     });
   }
 
   updateStratum(body: requestModel): Observable<responseModel> {
-    return this.http.put<responseModel>(env.URL_API + env.endpoints.stratum_update, body, {
+    return this.http.put<responseModel>(env.endpoints.Stratum.url + env.endpoints.Stratum.endpoints.update, body, {
       headers: this.headers,
     });
   }
 
   deleteStratum(id: string): Observable<responseModel> {
-    return this.http.delete<responseModel>(env.URL_API + env.endpoints.stratum_delete + `/${id}`, {
+    return this.http.delete<responseModel>(env.endpoints.Stratum.url + env.endpoints.Stratum.endpoints.delete + `/${id}`, {
       headers: this.headers,
     });
   }

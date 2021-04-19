@@ -19,19 +19,19 @@ export class FaultsService {
   constructor(private http: HttpClient) { }
 
   loadFaults(body): Observable<faultsApiModel> {
-    return this.http.post<faultsApiModel>(env.URL_API_BATCHRR + env.endpoints.faults_load, body, {
+    return this.http.post<faultsApiModel>(env.endpoints.Faults.url + env.endpoints.Faults.endpoints.load, body, {
       headers: this.headers,
     });
   }
 
   readByIdFaults(id): Observable<faultsApiModel> {
-    return this.http.get<faultsApiModel>(env.URL_API_BATCHRR + env.endpoints.faults_read_id + `/${id}`, {
+    return this.http.get<faultsApiModel>(env.endpoints.Faults.url + env.endpoints.Faults.endpoints.readid + `/${id}`, {
       headers: this.headers,
     });
   }
 
   readAllFaults(): Observable<faultsApiModel> {
-    return this.http.get<faultsApiModel>(env.URL_API_BATCHRR + env.endpoints.faults_read_all, {
+    return this.http.get<faultsApiModel>(env.endpoints.Faults.url + env.endpoints.Faults.endpoints.readall, {
       headers: this.headers,
     });
   }

@@ -17,6 +17,9 @@ export class ValidationAccountsService {
   constructor(private http: HttpClient) { }
 
   allValidationAccounts(): Observable<any> {
-    return this.http.get<any>(env.URL_API + env.endpoints.validation_accounts_all, { headers: this.headers });
+    return this.http.get<any>(
+      env.endpoints.ValidationAccounts.url + env.endpoints.ValidationAccounts.endpoints.readall,
+      { headers: this.headers }
+    );
   }
 }

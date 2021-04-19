@@ -20,8 +20,10 @@ export class MailsService {
   ) { }
 
   sendMail(body: any): Observable<any> {
-    return this.http.put<any>(env.urlApi_notifications + env.endpoints.send_mail, body, {
-      headers: this.headers,
-    });
+    return this.http.put<any>(
+      env.endpoints.NotificationsEmail.url + env.endpoints.NotificationsEmail.endpoints.sendMail,
+      body,
+      { headers: this.headers }
+    );
   }
 }

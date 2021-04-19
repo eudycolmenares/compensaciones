@@ -20,7 +20,7 @@ export class UsersService {
 
   login(body): Observable<ResponseLoginModel> {
     return this.http.put<ResponseLoginModel>(
-      env.urlApi_users + env.endpoints.user_login,
+      env.endpoints.User.url + env.endpoints.User.endpoints.login,
       body,
       { headers: this.headers }
     );

@@ -24,7 +24,7 @@ export class MaintenanceOrdersCausesService {
 
   allMaintenanceOrdersCauses() {
     return this._http.get<any>(
-      env.URL_API + env.endpoints.maintenanceOrdersCauses_read,
+      env.endpoints.OrderCause.url + env.endpoints.OrderCause.endpoints.readall,
       {
         headers: this.headers,
       }
@@ -32,10 +32,8 @@ export class MaintenanceOrdersCausesService {
   }
 
   createMaintenanceOrderCause(body: RequestModel): Observable<ResponseModel> {
-    console.log('body', body);
-
     return this._http.post<ResponseModel>(
-      env.URL_API + env.endpoints.maintenanceOrderCause_create,
+      env.endpoints.OrderCause.url + env.endpoints.OrderCause.endpoints.create,
       body,
       {
         headers: this.headers,
@@ -44,10 +42,8 @@ export class MaintenanceOrdersCausesService {
   }
 
   updateMaintenanceOrderCause(body: RequestModel): Observable<ResponseModel> {
-    console.log('body', body);
-
     return this._http.put<ResponseModel>(
-      env.URL_API + env.endpoints.maintenanceOrderCause_update,
+      env.endpoints.OrderCause.url + env.endpoints.OrderCause.endpoints.update,
       body,
       {
         headers: this.headers,
@@ -55,11 +51,9 @@ export class MaintenanceOrdersCausesService {
     );
   }
 
-  deleteMaintenanceOrderCause(
-    id: number
-  ): Observable<MaintenanceOrdersCausesApiModel> {
+  deleteMaintenanceOrderCause(id: number): Observable<MaintenanceOrdersCausesApiModel> {
     return this._http.delete<MaintenanceOrdersCausesApiModel>(
-      env.URL_API + env.endpoints.maintenanceOrderCause_delete + `/${id}`
+      env.endpoints.OrderCause.url + env.endpoints.OrderCause.endpoints.delete + `/${id}`
     );
   }
 }

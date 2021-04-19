@@ -23,7 +23,7 @@ export class CauseService {
 
   allCauses() {
     return this._http.get<CausesApiModel>(
-      env.URL_API + env.endpoints.causes_read,
+      env.endpoints.Cause.url + env.endpoints.Cause.endpoints.readall,
       {
         headers: this.headers,
       }
@@ -32,7 +32,7 @@ export class CauseService {
 
   createCause(body: RequestModel): Observable<ResponseModel> {
     return this._http.post<any>(
-      env.URL_API + env.endpoints.cause_create,
+      env.endpoints.Cause.url + env.endpoints.Cause.endpoints.create,
       body,
       {
         headers: this.headers,
@@ -42,7 +42,7 @@ export class CauseService {
 
   updateCause(body: RequestModel): Observable<CausesApiModel> {
     return this._http.put<CausesApiModel>(
-      env.URL_API + env.endpoints.cause_update,
+      env.endpoints.Cause.url + env.endpoints.Cause.endpoints.update,
       body,
       {
         headers: this.headers,
@@ -52,7 +52,7 @@ export class CauseService {
 
   deleteCause(causeId: string): Observable<ResponseModel> {
     return this._http.delete<ResponseModel>(
-      env.URL_API + env.endpoints.cause_delete_id + `/${causeId}`
+      env.endpoints.Cause.url + env.endpoints.Cause.endpoints.delete + `/${causeId}`
     );
   }
 }

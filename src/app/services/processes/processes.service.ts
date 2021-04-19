@@ -20,25 +20,25 @@ export class ProcessesService {
   ) { }
 
   runNodesRules(): Observable<any> {
-    return this.http.post<any>(env.urlApi_rules + env.endpoints.nodes_rules, {
+    return this.http.post<any>(env.endpoints.SupervisionProcess.endpoints.nodesRules, {
       headers: this.headers,
     });
   }
 
   runBusinessRules(): Observable<any> {
-    return this.http.post<any>(env.urlApi_Businessrules + env.endpoints.business_rules, {
+    return this.http.post<any>(env.endpoints.SupervisionProcess.endpoints.businessRule, {
       headers: this.headers,
     });
   }
 
   confirmBillingFiles(): Observable<any> {
-    return this.http.post<any>(env.urlApi_BillingFiles + env.endpoints.billing_files, {
+    return this.http.post<any>(env.endpoints.SupervisionProcess.endpoints.billingFiles, {
       headers: this.headers,
     });
   }
 
   ConsolidationAccountsNodes(): Observable<any> {
-    return this.http.post<any>(env.urlApi_ConsolidationAccNod + env.endpoints.consolidate_account_nodes, {
+    return this.http.post<any>(env.endpoints.SupervisionProcess.endpoints.consolidateNodes, {
       headers: this.headers,
     });
   }
