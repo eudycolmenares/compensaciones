@@ -3,7 +3,7 @@ export interface originModel {
   name: string;
   description: string;
   state: string;
-  compensate: string;
+  // compensate: string;
   user?: string;
   updateDate?: string
 }

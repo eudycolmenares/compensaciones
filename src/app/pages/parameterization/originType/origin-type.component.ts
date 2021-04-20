@@ -32,11 +32,11 @@ export class OriginTypeComponent implements OnInit {
       description: 'Descripción',
       validation: '',
     },
-    {
-      name: 'compensate',
-      description: 'Compensa',
-      validation: 'yes-no',
-    },
+    // {
+    //   name: 'compensate',
+    //   description: 'Compensa',
+    //   validation: 'yes-no',
+    // },
     {
       name: 'user',
       description: 'Usuario',
@@ -68,7 +68,7 @@ export class OriginTypeComponent implements OnInit {
       name: ['', [Validators.required, Validators.maxLength(100)]],
       description: ['', [Validators.required, Validators.maxLength(100)]],
       state: ['', Validators.required],
-      compensate: ['', Validators.required],
+      // compensate: ['', Validators.required],
       user: [''],
       updateDate: ['']
     })
@@ -79,9 +79,9 @@ export class OriginTypeComponent implements OnInit {
   get invalidDescription() {
     return this.formOrigin.get('description').touched && this.formOrigin.get('description').invalid;
   }
-  get invalidCompensate() {
-    return this.formOrigin.get('compensate').touched && this.formOrigin.get('compensate').invalid;
-  }
+  // get invalidCompensate() {
+  //   return this.formOrigin.get('compensate').touched && this.formOrigin.get('compensate').invalid;
+  // }
   get invalidState() {
     return this.formOrigin.get('state').touched && this.formOrigin.get('state').invalid;
   }
@@ -93,9 +93,9 @@ export class OriginTypeComponent implements OnInit {
     for (const i of Object.entries(SelectStatus)) {
       this.selectStatus.push({key: i[1], value: i[0]})
     }
-    for (const i of Object.entries(SelectCompensate)) {
-      this.selectCompensate.push({key: i[1], value: i[0]})
-    }
+    // for (const i of Object.entries(SelectCompensate)) {
+    //   this.selectCompensate.push({key: i[1], value: i[0]})
+    // }
     this.initialCharge(); // table
   }
   initialCharge() {
@@ -117,7 +117,7 @@ export class OriginTypeComponent implements OnInit {
         'OriginType': {
           'name': this.formOrigin.get('name').value,
           'description': this.formOrigin.get('description').value,
-          'compensate': this.formOrigin.get('compensate').value,
+          // 'compensate': this.formOrigin.get('compensate').value,
           'state': this.formOrigin.get('state').value,
           'user': this.authSvc.userData.usuario.usuario,
         }
@@ -161,7 +161,7 @@ export class OriginTypeComponent implements OnInit {
       name: data.name,
       description: data.description,
       state: data.state,
-      compensate: data.compensate,
+      // compensate: data.compensate,
       user: data.user,
       updateDate: data.updateDate
     });
@@ -190,7 +190,7 @@ export class OriginTypeComponent implements OnInit {
 
   cleanForm() {
     this.formOrigin.reset({
-      compensate: '',
+      // compensate: '',
       state: ''
     });
     this.actionForm = 'create';
