@@ -94,7 +94,11 @@
             <button type="button" class="btn btn-primary btn-sm mr-1" (click)="sendDataToEdit(item)" *ngIf="(buttons.indexOf('edit') > -1)" data-toggle="tooltip" data-placement="top" [title]="validation? 'Aprobado' : ''">
               <i [class]="validation? 'pi pi-check' : 'bi bi-pencil-fill' "></i>
             </button>
-            <button type="button" class="btn btn-secondary btn-sm mr-1" (click)="sendDataToDisable(item)" *ngIf="(buttons.indexOf('disable') > -1)" data-toggle="tooltip" data-placement="top" [title]="validation? 'Rechazado por calidad' : ''">
+            <button type="button" (click)="sendDataToDisable(item)" data-toggle="tooltip" data-placement="top"
+              [class]="(!validation && item.state?.toString() === '0') ? 'btn btn-primary btn-sm mr-1' : 'btn btn-secondary btn-sm mr-1' "
+              *ngIf="(buttons.indexOf('disable') > -1)"
+              [title]="validation? 'Rechazado por calidad' : ''"
+            >
               <ng-container *ngIf="validation">
                 <i class="bi bi-file-earmark-break"></i>
               </ng-container>
