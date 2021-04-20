@@ -154,7 +154,12 @@ export class SymptomComponent implements OnInit {
   }
 
   disableSymptom(symptom: symptomModel) {
-    const dataRequest: requestModel = { symptom: {...symptom, state: '0'} };
+    const dataRequest: requestModel = {
+      symptom: {
+        ...symptom,
+        state: (symptom.state.toString() === '0') ? '1' : '0'
+      }
+    };
     this.updateSymptomApi(dataRequest);
   }
 

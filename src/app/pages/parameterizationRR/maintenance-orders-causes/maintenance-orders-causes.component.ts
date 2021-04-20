@@ -42,11 +42,6 @@ export class MaintenanceOrdersCausesComponent implements OnInit {
       validation: '',
     },
     {
-      name: 'state',
-      description: 'Estado',
-      validation: 'active-desactive',
-    },
-    {
       name: 'compensation',
       description: 'Compensa',
       validation: '',
@@ -75,6 +70,11 @@ export class MaintenanceOrdersCausesComponent implements OnInit {
       name: 'television',
       description: 'Telvisión',
       validation: 'service',
+    },
+    {
+      name: 'state',
+      description: 'Estado',
+      validation: 'active-desactive',
     },
   ];
 
@@ -261,7 +261,10 @@ export class MaintenanceOrdersCausesComponent implements OnInit {
 
   disableMaintenanceOrderCause(MOcause: MaintenanceOrderCauseModel) {
     const dataRequest: RequestModel = {
-      maintenanceOrderCause: { ...MOcause, state: 0 },
+      maintenanceOrderCause: {
+        ...MOcause,
+        state: (MOcause.state.toString() === '0') ? 1 : 0
+      },
     };
     this.updateMaintenanceOrderCauseApi(dataRequest);
   }

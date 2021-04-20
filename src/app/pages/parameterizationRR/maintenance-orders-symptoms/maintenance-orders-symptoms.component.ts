@@ -199,7 +199,12 @@ export class MaintenanceOrdersSymptomsComponent implements OnInit {
   }
 
   disableOrderSymptom(orderSymptom: orderSymptomModel) {
-    const dataRequest: requestModel = { maintenanceOrderDiagnostic: {...orderSymptom, state: 0} };
+    const dataRequest: requestModel = {
+      maintenanceOrderDiagnostic: {
+        ...orderSymptom,
+        state: (orderSymptom.state.toString() === '0') ? 1 : 0
+      }
+    };
     this.updateOrderSymptomApi(dataRequest);
   }
 

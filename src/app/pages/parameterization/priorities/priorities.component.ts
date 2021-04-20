@@ -40,11 +40,6 @@ export class PrioritiesComponent implements OnInit {
       validation: '',
     },
     {
-      name: 'state',
-      description: 'Estado',
-      validation: 'active-desactive',
-    },
-    {
       name: 'nodecompensates',
       description: 'Compensa Nodo',
       validation: 'yes-no',
@@ -53,6 +48,11 @@ export class PrioritiesComponent implements OnInit {
       name: 'accountscompensates',
       description: 'Compensa Cuenta',
       validation: 'yes-no',
+    },
+    {
+      name: 'state',
+      description: 'Estado',
+      validation: 'active-desactive',
     },
   ];
   constructor(
@@ -185,7 +185,12 @@ export class PrioritiesComponent implements OnInit {
   }
 
   disablePriority(priority: PriorityModel) {
-    const dataRequest: RequestModel = { priority: { ...priority, state: 0 } };
+    const dataRequest: RequestModel = {
+      priority: {
+        ...priority,
+        state: (priority.state.toString() === '0') ? 1 : 0
+      }
+    };
     this.updatePriorityApi(dataRequest);
   }
 

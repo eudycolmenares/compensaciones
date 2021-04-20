@@ -37,11 +37,6 @@ export class SettingsComponent implements OnInit {
       validation: '',
     },
     {
-      name: 'state',
-      description: 'Estado',
-      validation: 'active-desactive'
-    },
-    {
       name: 'socialStratum',
       description: 'Estrato',
       validation: '',
@@ -60,7 +55,12 @@ export class SettingsComponent implements OnInit {
       name: 'internet',
       description: 'Internet',
       validation: 'service'
-    }
+    },
+    {
+      name: 'state',
+      description: 'Estado',
+      validation: 'active-desactive'
+    },
   ];
 
   constructor(
@@ -199,7 +199,13 @@ export class SettingsComponent implements OnInit {
   }
 
   disableSetting(setting: settingModel) {
-    const dataRequest: requestModel = { Setting: {...setting, state: 0} };
+    const dataRequest: requestModel = {
+      Setting:
+      {
+        ...setting,
+        state: (setting.state.toString() === '0') ? 1 : 0
+      }
+    };
     this.updateSettingApi(dataRequest);
   }
 

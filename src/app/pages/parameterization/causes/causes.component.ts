@@ -205,7 +205,9 @@ export class CausesComponent implements OnInit {
 
   disableCause(cause: CauseModel) {
     const dataRequest: RequestModel = {
-      Cause: { ...cause, state: '0' },
+      Cause: { ...cause,
+        state: (cause.state.toString() === '0') ? '1' : '0'
+      },
     };
     this.updateCauseApi(dataRequest);
   }

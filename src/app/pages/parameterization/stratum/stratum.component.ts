@@ -146,7 +146,12 @@ export class StratumComponent implements OnInit {
   }
 
   disableStratum(stratum: stratumModel) {
-    const dataRequest: requestModel = { SocialStatus: {...stratum, state: '0'} };
+    const dataRequest: requestModel = {
+      SocialStatus: {
+        ...stratum,
+        state: (stratum.state.toString() === '0') ? '1' : '0'
+      }
+    };
     this.updateStratumApi(dataRequest);
   }
 

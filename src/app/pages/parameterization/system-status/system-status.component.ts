@@ -179,7 +179,10 @@ export class SystemStatusComponent implements OnInit {
 
   disableSystemStatus(systemStatus: SystemStatusModel) {
     const dataRequest: RequestModel = {
-      SystemStatus: { ...systemStatus, state: '0' },
+      SystemStatus: {
+        ...systemStatus,
+        state: (systemStatus.state.toString() === '0') ? '1' : '0'
+      },
     };
     this.updateSystemStatusApi(dataRequest);
   }

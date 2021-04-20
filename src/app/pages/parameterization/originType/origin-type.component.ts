@@ -168,7 +168,12 @@ export class OriginTypeComponent implements OnInit {
   }
 
   disableOrigin(origin: originModel) {
-    const dataRequest: requestModel = { OriginType: {...origin, state: '0'} };
+    const dataRequest: requestModel = {
+      OriginType: {
+        ...origin,
+        state: (origin.state.toString() === '0') ? '1' : '0'
+      }
+    };
     this.updateOriginApi(dataRequest);
   }
 
