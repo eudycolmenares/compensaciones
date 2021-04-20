@@ -87,18 +87,22 @@ export class SettingsComponent implements OnInit {
       this.servicesBase.push({key: i[0], value: i[1]})
     }
     this.stratumSvc.allStrata().subscribe((resp: strataApiModel) => {
-      this.strataBase = resp.socialStatus;
-      this.compareToSort(this.strataBase)
+      if (resp.generalResponse.code == '0') {
+        this.strataBase = resp.socialStatus;
+        this.compareToSort(this.strataBase)
+      } else { this.toastScv.showError(resp.generalResponse.messageCode, resp.generalResponse.descriptionCode); }
     })
     this.initialCharge(); // table
   }
   initialCharge() {
     this.cleanForm();
     this.stgsSvc.allSettings().subscribe((resp: settingsApiModel) => {
-      this.dataToTable = resp.Settings.Setting.map(setting => ({
+      if (resp.GeneralResponse.code == '0') {
+        this.dataToTable = resp.Settings.Setting.map(setting => ({
           ...setting,
           socialStratum: setting.socialStratums?.socialStratum.map(stratum => stratum['statusSocial'])
-      }));
+        }));
+      } else { this.toastScv.showError(resp.GeneralResponse.messageCode, resp.GeneralResponse.descriptionCode); }
     });
   }
 
@@ -164,22 +168,18 @@ export class SettingsComponent implements OnInit {
   }
   createSettingApi(dataRequest: requestModel) {
     this.stgsSvc.createSetting(dataRequest).subscribe(resp => {
-      if(resp.GeneralResponse.code === '0') {
+      if (resp.GeneralResponse.code === '0') {
         this.toastScv.showSuccess(resp.GeneralResponse.messageCode, resp.GeneralResponse.descriptionCode);
         this.initialCharge();
-      }else{
-        this.toastScv.showError(resp.GeneralResponse.messageCode, resp.GeneralResponse.descriptionCode);
-      }
+      } else { this.toastScv.showError(resp.GeneralResponse.messageCode, resp.GeneralResponse.descriptionCode); }
     })
   }
   updateSettingApi(dataRequest: requestModel) {
     this.stgsSvc.updateSetting(dataRequest).subscribe(resp => {
-      if(resp.GeneralResponse.code === '0') {
+      if (resp.GeneralResponse.code === '0') {
         this.toastScv.showSuccess(resp.GeneralResponse.messageCode, resp.GeneralResponse.descriptionCode);
         this.initialCharge();
-      }else{
-        this.toastScv.showError(resp.GeneralResponse.messageCode, resp.GeneralResponse.descriptionCode);
-      }
+      } else { this.toastScv.showError(resp.GeneralResponse.messageCode, resp.GeneralResponse.descriptionCode); }
     })
   }
 
@@ -205,12 +205,10 @@ export class SettingsComponent implements OnInit {
 
   deleteSetting(setting: settingModel) {
     this.stgsSvc.deleteSetting(setting.id).subscribe(resp => {
-      if(resp.GeneralResponse.code === '0') {
+      if (resp.GeneralResponse.code === '0') {
         this.toastScv.showSuccess(resp.GeneralResponse.messageCode, resp.GeneralResponse.descriptionCode);
         this.initialCharge();
-      }else{
-        this.toastScv.showError(resp.GeneralResponse.messageCode, resp.GeneralResponse.descriptionCode);
-      }
+      } else { this.toastScv.showError(resp.GeneralResponse.messageCode, resp.GeneralResponse.descriptionCode); }
     })
   }
 

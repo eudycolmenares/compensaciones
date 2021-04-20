@@ -101,7 +101,9 @@ export class OriginTypeComponent implements OnInit {
   initialCharge() {
     this.cleanForm();
     this.originSvc.allOrigins().subscribe((resp: originsApiModel) => {
-      this.dataToTable = resp.OriginTypes.OriginType;
+      if (resp.GeneralResponse.code == '0') {
+        this.dataToTable = resp.OriginTypes.OriginType;
+      } else { this.toastScv.showError(resp.GeneralResponse.messageCode); }
     });
   }
 

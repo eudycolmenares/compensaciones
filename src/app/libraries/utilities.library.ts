@@ -299,6 +299,60 @@ export const messagesToast = {
   timeout_sesion: 'Sesión cerrada por inactividad.'
 };
 
-export const arrayTypesFaults = ['RESIDENTIAL_BASE', 'BUILDINGS_BASE', 'SME_BASE', 'RESIDENTIAL_SETTING', 'SME_SETTING', 'MAINTENANCE_ORDER'];
-
 export const arrayTypesRents = ['ACCOUNT_RENT', 'NODES_RENT'];
+
+export const bulkLoadParams = {
+  filesAllowed: ['txt', 'csv'],
+  optionList: [
+    { valueOption: 'CAUSAS', nameOption: 'Causas' },
+    { valueOption: 'SINTOMAS', nameOption: 'Síntomas' },
+  ],
+  pathTemplates: {
+    symptoms: 'assets/documents/SINTOMAS.csv',
+    causes: 'assets/documents/CAUSAS.csv'
+  },
+  confirmLoad: {
+    header: '¿Estás seguro que deseas enviar el archivo?',
+    msg: 'Toda la información de Cargue Masivo que contiene el archivo quedará registrada en la base de datos.'
+  }
+};
+
+export const loadFaultsParams = {
+  optionsList: [
+    {
+      valueOption: 'RESIDENTIAL_BASE',
+      nameOption: 'Residencial',
+      path: 'assets/documents/Template-BaseResidencial-FallasRR.xlsx'
+    },
+    {
+      valueOption: 'BUILDINGS_BASE',
+      nameOption: 'Edificios',
+      path: 'assets/documents/Template-Edificios-FallasRR.xlsx'
+    },
+    {
+      valueOption: 'SME_BASE',
+      nameOption: 'Pymes',
+      path: 'assets/documents/Template-BasePymes-FallasRR.xlsx'
+    },
+    {
+      valueOption: 'RESIDENTIAL_SETTING',
+      nameOption: 'Ajuste Residencial',
+      path: 'assets/documents/Template-AjusteResidencial-FallasRR.xlsx'
+    },
+    {
+      valueOption: 'SME_SETTING',
+      nameOption: 'Ajuste Pymes',
+      path: 'assets/documents/Template-AjustesPymes-FallasRR.xlsx'
+    },
+    {
+      valueOption: 'MAINTENANCE_ORDER',
+      nameOption: 'Órdenes Mantenimiento',
+      path: 'assets/documents/Template-OrdenesMantenimiento-FallasRR.xlsx'
+    },
+  ],
+  msgs: {
+    confirmService: 'Toda la información de Carga de Fallas que contiene el archivo quedará registrada en la base de datos.',
+    processedFiles: 'En la sección archivos procesados, se puede visualizar la información enviada al servidor y el estado del mismo, además de poder refrescar las mismas en el botón actualizar.',
+    previousInformation: 'A continuación, se muestra información previa del archivo seleccionado para su carga, como a su vez las pestanas que posee y la información en las mismas.'
+  }
+}

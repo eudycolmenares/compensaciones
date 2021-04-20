@@ -36,7 +36,7 @@ interface originModel {
   styleUrls: ['./causes.component.scss'],
 })
 export class CausesComponent implements OnInit {
-  
+
   causeForm: FormGroup;
   selectState: DataList[] = [];
   selectService: DataList[] = [];
@@ -126,20 +126,24 @@ export class CausesComponent implements OnInit {
       this.selectState.push({ key: i[1], value: i[0] });
     }
     this._originTypeSvc.allOrigins().subscribe((resp: originsApiModel) => {
-      this.originTypeList = resp.OriginTypes.OriginType;
+      if (resp.GeneralResponse.code == '0') {
+        this.originTypeList = resp.OriginTypes.OriginType;
+      } else { this._toastScv.showError(resp.GeneralResponse.messageCode); }
     });
     this.initialCharge(); // table
   }
 
   initialCharge() {
     this._causeSvc.allCauses().subscribe((resp: CausesApiModel) => {
-      this.dataToTable = resp.Causes.Cause;
+      if (resp.GeneralResponse.code == '0') {
+        this.dataToTable = resp.Causes.Cause;
+      } else { this._toastScv.showError(resp.GeneralResponse.messageCode); }
     });
   }
 
   onSubmit() {
     console.log(this.causeForm.value);
-    
+
     if (this.causeForm.invalid) {
       return Object.values(this.causeForm.controls).forEach((control) => {
         control.markAsTouched();
@@ -221,8 +225,7 @@ export class CausesComponent implements OnInit {
   }
 
   deleteCause(cause: CauseModel) {
-    this._causeSvc.deleteCause(cause.id).subscribe((resp) => {console.log(resp);
-
+    this._causeSvc.deleteCause(cause.id).subscribe((resp) => {
       if (resp.GeneralResponse.code === '0') {
         this._toastScv.showSuccess(resp.GeneralResponse.messageCode);
         this.initialCharge(); // table

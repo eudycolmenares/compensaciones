@@ -87,7 +87,7 @@ export class LoadComponent implements OnInit {
   createForm() {
     this.form = this.fb.group({
       type: ['', Validators.required],
-      file: ['', [Validators.required, CustomValidation.fileIsAllowed('txt')]],
+      file: ['', [Validators.required, CustomValidation.fileIsAllowed(['txt'])]],
     });
   }
   updateData() {

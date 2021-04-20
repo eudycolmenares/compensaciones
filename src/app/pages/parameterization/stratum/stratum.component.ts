@@ -82,7 +82,10 @@ export class StratumComponent implements OnInit {
   initialCharge() {
     this.cleanForm();
     this.stratumSvc.allStrata().subscribe((resp: strataApiModel) => {
-      this.dataToTable = resp.socialStatus;
+      if (resp.generalResponse.code == '0') {
+        this.dataToTable = resp.socialStatus;
+      } else { this.toastScv.showError(resp.generalResponse.messageCode, resp.generalResponse.descriptionCode); }
+
     });
   }
 

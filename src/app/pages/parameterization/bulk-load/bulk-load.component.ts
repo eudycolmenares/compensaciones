@@ -10,13 +10,13 @@ import {
   errorResponse,
   GeneralResponse,
 } from '@models/bulk-load';
+import { bulkLoadParams } from '../../../libraries/utilities.library';
 import { BulkLoadService } from '@services/bulkLoad/bulk-load.service';
 import { GeneralFunctionsService } from '@services/general-functions.service';
 import { CustomValidation } from '../../../utils/custom-validation';
 import { ToastService } from '@shared_services/toast.service';
 import { ResponseLoginModel as UserModel } from '@models/users';
 import { AuthService } from '@shared_services/auth.service';
-
 import { ConfirmationService } from 'primeng/api';
 
 @Component({
@@ -49,10 +49,7 @@ export class BulkLoadComponent implements OnInit {
       validation: '',
     },
   ];
-  templateOptionsList: object[] = [ // acomodar
-    { valueOption: 'CAUSAS', nameOption: 'Causas' },
-    { valueOption: 'SINTOMAS', nameOption: 'Síntomas' },
-  ];
+  templateOptionsList: object[] = bulkLoadParams.optionList;
   constructor(
     private _fb: FormBuilder,
     private _bulkLoadSvc: BulkLoadService,
@@ -71,7 +68,7 @@ export class BulkLoadComponent implements OnInit {
       // state: [''],
       uploadFile: [
         '',
-        [Validators.required, CustomValidation.fileIsAllowed('csv')],
+        [Validators.required, CustomValidation.fileIsAllowed(bulkLoadParams.filesAllowed)],
       ],
       // uploadError: [''],
       uploadType: ['', [Validators.required]],
@@ -97,8 +94,8 @@ export class BulkLoadComponent implements OnInit {
   }
 
   fileChange(documentUpload) {
+    this.dataToTable = [];
     this.dataUploaded = documentUpload.target.files[0];
-    console.log(this.dataUploaded, documentUpload);
     this.bulkLoadForm
       .get('fileName')
       .setValue(Date.now() + '_' + this.dataUploaded['name']);
@@ -109,8 +106,8 @@ export class BulkLoadComponent implements OnInit {
 
   downloadModelDocument(selectedTypeFile: string) {
     if (selectedTypeFile !== null || selectedTypeFile !== undefined) {
-      const symptomsFile = 'assets/documents/SINTOMAS.csv'; // acomodar
-      const causesFile = 'assets/documents/CAUSAS.csv'; // acomodar
+      const symptomsFile = bulkLoadParams.pathTemplates.symptoms;
+      const causesFile = bulkLoadParams.pathTemplates.causes;
       let selectFile = '';
       if (selectedTypeFile === 'SINTOMAS') {
         selectFile = symptomsFile;
@@ -142,10 +139,9 @@ export class BulkLoadComponent implements OnInit {
         control.markAsTouched();
       });
     } else {
-      this._confirmationService.confirm({ // acomodar
-        message: `Toda la información de Cargue Masivo que contiene el archivo quedará
-                registrada en la base de datos.`,
-        header: '¿Estás seguro que deseas enviar el archivo?',
+      this._confirmationService.confirm({
+        message: bulkLoadParams.confirmLoad.msg,
+        header: bulkLoadParams.confirmLoad.header,
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
           this.dataToTable = [];
@@ -178,10 +174,8 @@ export class BulkLoadComponent implements OnInit {
   }
 
   createCauseApi(dataRequest: BulkLoadRequestModel) {
-    this._bulkLoadSvc
-      .createBulkLoad(dataRequest)
-      .subscribe((resp: GeneralResponse) => {console.log(resp);
-
+    this._bulkLoadSvc.createBulkLoad(dataRequest)
+      .subscribe((resp: GeneralResponse) => {
         if (resp.code === 'SEND-FILE-VALRES-1' || resp.code === '0') {
           this._toastScv.showSuccess(resp.messageCode);
           // this.fileSent();
@@ -195,6 +189,5 @@ export class BulkLoadComponent implements OnInit {
 
   cleanForm() {
     this.bulkLoadForm.reset({ uploadType: '' });
-    console.log(this.bulkLoadForm.value);
   }
 }

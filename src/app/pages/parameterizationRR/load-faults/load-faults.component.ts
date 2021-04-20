@@ -14,7 +14,7 @@ import {
   loadModel
 } from '../../../models/faults';
 import { CustomValidation } from 'src/app/utils/custom-validation';
-import { arrayTypesFaults } from '../../../libraries/utilities.library';
+import { loadFaultsParams } from '../../../libraries/utilities.library';
 
 @Component({
   selector: 'app-load-faults',
@@ -27,15 +27,10 @@ export class LoadFaultsComponent implements OnInit {
   fileBaseData: string;
   fileBaseName = '';
   dataPreview: any = null;
-  templateOptionsList: object[] = [ // acomodar
-    { valueOption: 'RESIDENTIAL', nameOption: 'Residencial' },
-    { valueOption: 'BUILDINGS', nameOption: 'Edificios' },
-    { valueOption: 'SMES', nameOption: 'Pymes' },
-    { valueOption: 'RESIDENTIAL_SETTING', nameOption: 'Ajuste Residencial' },
-    { valueOption: 'SME_ADJUSTMENT', nameOption: 'Ajuste Pymes' },
-    { valueOption: 'MAINTENANCE_ORDERS', nameOption: 'Órdenes Mantenimiento' },
-  ];
-  items: MenuItem[] = [ // acomodar
+  optListFaults = loadFaultsParams.optionsList;
+  msgProcessedFiles = loadFaultsParams.msgs.processedFiles;
+  msgPrevious = loadFaultsParams.msgs.previousInformation;
+  items: MenuItem[] = [
     {
       label: 'Opciones',
       items: [{
@@ -73,16 +68,18 @@ export class LoadFaultsComponent implements OnInit {
   }
 
   updateData() {
+    const arrayTypesFaults = loadFaultsParams.optionsList.reduce((pre, current) => [...pre, current.valueOption], []);
     this.faultsScv.readAllFaults().subscribe((resp: faultsApiModel) => {
-      console.log('readAllFaults: ', resp);
-      this.uploadedFiles = resp.Loads.Load.filter(item => arrayTypesFaults.includes(item.loadType));
-      this.compareToSort(this.uploadedFiles);
+      if (resp.GeneralResponse.code == '0') {
+        this.uploadedFiles = resp.Loads.Load.filter(item => arrayTypesFaults.includes(item.loadType));
+        this.compareToSort(this.uploadedFiles);
+      } else { this.toastScv.showError(resp.GeneralResponse.descriptionCode, resp.GeneralResponse.messageCode); }
     });
   }
   createForm() {
     this.form = this.fb.group({
       type: ['', Validators.required],
-      file: ['', [Validators.required, CustomValidation.fileIsAllowed('xlsx')],],
+      file: ['', [Validators.required, CustomValidation.fileIsAllowed(['xlsx'])],],
     })
   }
 
@@ -102,9 +99,8 @@ export class LoadFaultsComponent implements OnInit {
         control.markAsTouched();
       })
     } else {
-      this.confirmationSvc.confirm({ // acomodar
-        message: `Toda la información de Carga de Fallas que contiene el archivo quedará
-                registrada en la base de datos.`,
+      this.confirmationSvc.confirm({
+        message: loadFaultsParams.msgs.confirmService,
         accept: () => {
           this.sendFileToService();
         },
@@ -175,34 +171,11 @@ export class LoadFaultsComponent implements OnInit {
   }
 
   downloadTemplate(option) {
-    let nameFile = '';
-    switch (option) {
-      case 'RESIDENTIAL':
-        nameFile = 'Template-BaseResidencial-FallasRR';
-        break;
-      case 'BUILDINGS':
-        nameFile = 'Template-Edificios-FallasRR';
-        break;
-      case 'SMES':
-        nameFile = 'Template-BasePymes-FallasRR';
-        break;
-      case 'RESIDENTIAL_SETTING':
-        nameFile = 'Template-AjusteResidencial-FallasRR';
-        break;
-      case 'SME_ADJUSTMENT':
-        nameFile = 'Template-AjustesPymes-FallasRR';
-        break;
-      case 'MAINTENANCE_ORDERS':
-        nameFile = 'Template-OrdenesMantenimiento-FallasRR';
-        break;
-    }
-
-    const fileToDownload = `assets/documents/${nameFile}.xlsx`;
+    const { path } = this.optListFaults.find(item => item.valueOption == option)
     const link = document.createElement('a');
-    if (link.download !== undefined) { // acomodar
-      let filename = `${nameFile}.xlsx`;
-      link.setAttribute('href', fileToDownload);
-      link.setAttribute('download', filename);
+    if (link.download !== undefined) {
+      link.setAttribute('href', path);
+      link.setAttribute('download', `${option}.xlsx`);
       link.style.visibility = 'hidden';
       document.body.appendChild(link);
       link.click();

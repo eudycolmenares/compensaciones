@@ -102,7 +102,11 @@ export class SystemStatusComponent implements OnInit {
     this._systemStatusSvc
       .allSystemStatus()
       .subscribe((resp: SystemStatusApiModel) => {
-        this.dataToTable = resp.SystemsStatus.SystemStatus;
+        if (resp.GeneralResponse.code == '0') {
+          this.dataToTable = resp.SystemsStatus.SystemStatus;
+        } else {
+          this._toastScv.showError(resp.GeneralResponse.messageCode);
+        }
       });
   }
 

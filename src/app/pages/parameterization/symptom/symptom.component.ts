@@ -91,7 +91,9 @@ export class SymptomComponent implements OnInit {
   initialCharge() {
     this.cleanForm();
     this.symptomSvc.allSymptoms().subscribe((resp: symptomsApiModel) => {
-      this.dataToTable = resp.symptom;
+      if (resp.generalResponse.code == '0') {
+        this.dataToTable = resp.symptom;
+      } else { this.toastScv.showError(resp.generalResponse.messageCode); }
     });
   }
 

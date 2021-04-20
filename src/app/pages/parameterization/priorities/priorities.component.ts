@@ -101,7 +101,9 @@ export class PrioritiesComponent implements OnInit {
 
   initialCharge() {
     this._prioritySvc.allPriorities().subscribe((resp: PrioritiesApiModel) => {
-      this.dataToTable = resp.priority;
+      if (resp.generalResponse.code == '0') {
+        this.dataToTable = resp.priority;
+      } else { this._toastScv.showError(resp.generalResponse.messageCode); }
     });
   }
 

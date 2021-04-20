@@ -10,7 +10,7 @@ import { FaultsService } from '../../../services/faults/faults.service';
 import {
   bodyMailService,
   superProcessParams,
-  arrayTypesFaults,
+  loadFaultsParams,
   arrayTypesRents,
 } from '../../../libraries/utilities.library';
 import {
@@ -127,6 +127,7 @@ export class ProcessRRComponent implements OnInit {
   getAllFaults() {
     this.faultsScv.readAllFaults().subscribe((resp: faultsApiModel) => {
       if (resp.GeneralResponse.code === '0') {
+        const arrayTypesFaults = loadFaultsParams.optionsList.reduce((pre, current) => [...pre, current.valueOption], []);
         (this.stageSelected == 3)
           ? this.uploadedFaults = resp.Loads.Load.filter(item => arrayTypesFaults.includes(item.loadType))
           : this.uploadedFaults = resp.Loads.Load.filter(item => arrayTypesRents.includes(item.loadType))
