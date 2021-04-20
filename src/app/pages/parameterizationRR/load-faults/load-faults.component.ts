@@ -63,7 +63,7 @@ export class LoadFaultsComponent implements OnInit {
   }
 
   initialSetup() {
-    this.createForm();
+     this.createForm();
     this.updateData();
   }
 

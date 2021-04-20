@@ -33,14 +33,14 @@ export class SystemStatusComponent implements OnInit {
   structure: object[] = [
     {
       name: 'description',
-      description: 'Descripción',
+      description: 'Estado Sistema',
       validation: '',
     },
-    {
-      name: 'compensate',
-      description: 'Compensa',
-      validation: 'yes-no',
-    },
+    // {
+    //   name: 'compensate',
+    //   description: 'Compensa',
+    //   validation: 'yes-no',
+    // },
     {
       name: 'state',
       description: 'Estado',
@@ -63,7 +63,7 @@ export class SystemStatusComponent implements OnInit {
     this.systemStatusForm = this._fb.group({
       id: [],
       description: ['', [Validators.required, Validators.maxLength(100)]],
-      compensate: ['', [Validators.required]],
+      // compensate: ['', [Validators.required]],
       status: ['', [Validators.required]],
       user: [this.userData.usuario.usuario],
     });
@@ -121,7 +121,7 @@ export class SystemStatusComponent implements OnInit {
       const dataRequest: RequestModel = {
         SystemStatus: {
           description: this.systemStatusForm.get('description').value,
-          compensate: this.systemStatusForm.get('compensate').value,
+          // compensate: this.systemStatusForm.get('compensate').value,
           state: this.systemStatusForm.get('status').value,
           user: this.userData.usuario.usuario,
         },
@@ -171,7 +171,7 @@ export class SystemStatusComponent implements OnInit {
     this.systemStatusForm.reset({
       id: data.id,
       description: data.description,
-      compensate: data.compensate,
+      // compensate: data.compensate,
       status: data.state,
       user: data.user,
     });

@@ -1,7 +1,7 @@
 export interface SystemStatusModel {
   id?: string;
   description: string;
-  compensate: string;
+  // compensate: string;
   state: string;
   user: string;
   createDate?: string;
