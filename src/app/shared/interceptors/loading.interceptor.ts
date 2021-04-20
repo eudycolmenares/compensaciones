@@ -5,6 +5,7 @@ import { catchError, map } from 'rxjs/operators'
 
 import { LoadingService } from '../../services/loading/loading.service';
 import { ToastService } from '../services/toast.service';
+import { AuthService } from '../services/auth.service';
 import {
   messagesToast as msgsToast
 } from '../../libraries/utilities.library';
@@ -14,10 +15,13 @@ export class LoadingInterceptor implements HttpInterceptor {
 
   constructor(
     private loadingSvc: LoadingService,
-    private toastScv: ToastService
+    private toastScv: ToastService,
+    private authSvc: AuthService
   ) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    // Refresh sesion
+    this.authSvc.isAuthenticated() && this.authSvc.resetMyTimeOut();
     this.loadingSvc.setLoading(true, request.url);
     return next.handle(request)
       .pipe(catchError((err) => {
