@@ -40,16 +40,6 @@ export class PrioritiesComponent implements OnInit {
       validation: '',
     },
     {
-      name: 'nodecompensates',
-      description: 'Compensa Nodo',
-      validation: 'yes-no',
-    },
-    {
-      name: 'accountscompensates',
-      description: 'Compensa Cuenta',
-      validation: 'yes-no',
-    },
-    {
       name: 'state',
       description: 'Estado',
       validation: 'active-desactive',
@@ -71,8 +61,6 @@ export class PrioritiesComponent implements OnInit {
       priorityCode: ['', [Validators.required, Validators.maxLength(100)]],
       priorityDescription: ['', [Validators.required, Validators.maxLength(100)]],
       state: ['', [Validators.required]],
-      compensatesNode: ['1', [Validators.required]],
-      compensatesAccount: ['1', [Validators.required]],
     });
   }
 
@@ -118,8 +106,6 @@ export class PrioritiesComponent implements OnInit {
           priorityCode: this.priorityForm.get('priorityCode').value,
           priorityDescription: this.priorityForm.get('priorityDescription').value,
           state: this.priorityForm.get('state').value,
-          nodecompensates: this.priorityForm.get('compensatesNode').value,
-          accountscompensates: this.priorityForm.get('compensatesAccount').value,
         },
       };
       if (this.actionForm === 'create') {
@@ -168,8 +154,6 @@ export class PrioritiesComponent implements OnInit {
       priorityCode: data.priorityCode,
       priorityDescription: data.priorityDescription,
       state: data.state,
-      compensatesNode: data.nodecompensates,
-      compensatesAccount: data.accountscompensates,
     });
   }
 

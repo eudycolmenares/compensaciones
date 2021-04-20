@@ -3,8 +3,6 @@ export interface PriorityModel {
     priorityCode: number
     priorityDescription: string;
     state: number;
-    nodecompensates: number;
-    accountscompensates: number;
     createDate?: string;
   }
   
