@@ -9,17 +9,11 @@ export interface CauseModel {
     compensate?: number;
     state?: string;
     user?: string;
-    updateDate?: Date;
   };
-  description?: string;
-  causes?: string;
   user?: string;
   createDate?: Date;
-  disruptionId?: string;
-  disruptionDescription?: string;
-  problemId?: string;
-  problemDescription?: string;
-  date?: Date;
+  failureCode: string;
+  problemCode: string;
 }
 
 interface GeneralResponse {

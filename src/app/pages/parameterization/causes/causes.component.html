@@ -3,171 +3,119 @@
 
   <div class="container-add px-sm-2 px-md-5">
     <form autocomplete="off" [formGroup]="causeForm" (ngSubmit)="onSubmit()">
-      <div class="row text-light text-center px-sm-0 px-md-5">
-        <div class="col-sm bg-primary py-1 mx-1">Tipo de Origen (*)</div>
-        <div class="col-sm bg-primary py-1 mx-1">Código Anomalía (*)</div>
-        <div class="col-sm bg-primary py-1 mx-1">Descripción Anomalía</div>
-      </div>
-
-      <div class="row px-sm-0 px-md-5">
-        <div class="col-sm py-1 mx-1 p-0 text-left">
-          <select
-            formControlName="typeOrigin"
-            class="form-control form-control-sm"
-            [ngClass]="{
-              'is-invalid': this.invalidFieldForm('typeOrigin')
-            }"
-          >
-            <option value="" selected>- Seleccione -</option>
-            <option
-              *ngFor="let listTypeOrigin of originTypeList"
-              [value]="listTypeOrigin.id"
+      <div class="formLayout">
+        <div class="formSection">
+          <div class="formLabel">Código Causa (*)</div>
+          <div class="formField">
+            <input
+              type="text"
+              formControlName="causeCode"
+              class="form-control form-control-sm"
+              [ngClass]="{
+                'is-invalid': this.invalidFieldForm('causeCode')
+              }"
+              placeholder="Código Causa"
+            />
+            <small
+              class="text-danger"
+              *ngIf="this.invalidFieldForm('causeCode')"
             >
-              {{ listTypeOrigin.name }}
-            </option>
-          </select>
-          <small
-            class="text-danger"
-            *ngIf="this.invalidFieldForm('typeOrigin')"
-          >
-            {{ textsFormInvalid("typeOrigin") }}
-          </small>
+              {{ textsFormInvalid("causeCode") }}
+            </small>
+          </div>
         </div>
-        <div class="col-sm py-1 mx-1 p-0">
-          <input
-            type="text"
-            formControlName="codeAnomaly"
-            class="form-control form-control-sm"
-            [ngClass]="{
-              'is-invalid': this.invalidFieldForm('codeAnomaly')
-            }"
-            placeholder="Cód Anomalía"
-          />
-          <small
-            class="text-danger"
-            *ngIf="this.invalidFieldForm('codeAnomaly')"
-          >
-            {{ textsFormInvalid("codeAnomaly") }}
-          </small>
+        <div class="formSection">
+          <div class="formLabel">Código Problema (*)</div>
+          <div class="formField">
+            <input
+              type="text"
+              formControlName="problemCode"
+              class="form-control form-control-sm"
+              [ngClass]="{
+                'is-invalid': this.invalidFieldForm('problemCode')
+              }"
+              placeholder="Código Problema"
+            />
+            <small
+              class="text-danger"
+              *ngIf="this.invalidFieldForm('problemCode')"
+            >
+              {{ textsFormInvalid("problemCode") }}
+            </small>
+          </div>
         </div>
-        <div class="col-sm mx-1 mt-1 p-0">
-          <input
-            type="text"
-            formControlName="descriptionAnomaly"
-            class="form-control form-control-sm"
-            [ngClass]="{
-              'is-invalid': this.invalidFieldForm('descriptionAnomaly')
-            }"
-            placeholder="Descripción Anomalía"
-          />
-          <small
-            class="text-danger"
-            *ngIf="this.invalidFieldForm('descriptionAnomaly')"
-          >
-            {{ textsFormInvalid("descriptionAnomaly") }}
-          </small>
-        </div>
-      </div>
-
-      <div class="row text-light text-center mt-4 px-sm-0 px-md-5">
-        <div class="col-sm bg-primary py-1 mx-1">Código Problema (*)</div>
-        <div class="col-sm bg-primary py-1 mx-1">Descripción Problema</div>
-      </div>
-
-      <div class="row px-sm-0 px-md-5">
-        <div class="col-sm mx-1 mt-1 p-0">
-          <input
-            type="text"
-            formControlName="problemCode"
-            class="form-control form-control-sm"
-            [ngClass]="{
-              'is-invalid': this.invalidFieldForm('problemCode')
-            }"
-            placeholder="Código Problema"
-          />
-          <small
-            class="text-danger"
-            *ngIf="this.invalidFieldForm('problemCode')"
-          >
-            {{ textsFormInvalid("problemCode") }}
-          </small>
-        </div>
-        <div class="col-sm mx-1 mt-1 p-0">
-          <input
-            type="text"
-            formControlName="descriptionProblem"
-            class="form-control form-control-sm"
-            [ngClass]="{
-              'is-invalid': this.invalidFieldForm('descriptionProblem')
-            }"
-            placeholder="Descripción Problema"
-          />
-          <small
-            class="text-danger"
-            *ngIf="this.invalidFieldForm('descriptionProblem')"
-          >
-            {{ textsFormInvalid("descriptionProblem") }}
-          </small>
+        <div class="formSection">
+          <div class="formLabel">Código Falla (*)</div>
+          <div class="formField">
+            <input
+              type="text"
+              formControlName="failureCode"
+              class="form-control form-control-sm"
+              [ngClass]="{
+                'is-invalid': this.invalidFieldForm('failureCode')
+              }"
+              placeholder="Cód Anomalía"
+            />
+            <small
+              class="text-danger"
+              *ngIf="this.invalidFieldForm('failureCode')"
+            >
+              {{ textsFormInvalid("failureCode") }}
+            </small>
+          </div>
         </div>
       </div>
 
-      <div class="row text-light text-center mt-4 px-sm-0 px-md-5">
-        <div class="col-sm bg-primary py-1 mx-1">Código Causa (*)</div>
-        <div class="col-sm bg-primary py-1 mx-1">Descripción Causa (*)</div>
-        <div class="col-sm bg-primary py-1 mx-1">Estado (*)</div>
+      <div class="formLayout">
+        <div class="formSection">
+          <div class="formLabel">Tipo de Origen (*)</div>
+          <div class="formField">
+            <select
+              formControlName="typeOrigin"
+              class="form-control form-control-sm"
+              [ngClass]="{
+                'is-invalid': this.invalidFieldForm('typeOrigin')
+              }"
+            >
+              <option value="" selected>- Seleccione -</option>
+              <option
+                *ngFor="let listTypeOrigin of originTypeList"
+                [value]="listTypeOrigin.id"
+              >
+                {{ listTypeOrigin.name }}
+              </option>
+            </select>
+            <small
+              class="text-danger"
+              *ngIf="this.invalidFieldForm('typeOrigin')"
+            >
+              {{ textsFormInvalid("typeOrigin") }}
+            </small>
+          </div>
+        </div>
+        <div class="formSection">
+          <div class="formLabel">Estado (*)</div>
+          <div class="formField">
+            <select
+              formControlName="status"
+              class="form-control form-control-sm"
+              [ngClass]="{
+                'is-invalid': this.invalidFieldForm('status')
+              }"
+            >
+              <option *ngFor="let stateOp of selectState" [value]="stateOp.key">
+                {{ stateOp.value }}
+              </option>
+            </select>
+            <small class="text-danger" *ngIf="this.invalidFieldForm('status')">
+              {{ textsFormInvalid("status") }}
+            </small>
+          </div>
+        </div>
       </div>
 
-      <div class="row px-sm-0 px-md-5">
-        <div class="col-sm py-1 mx-1 p-0">
-          <input
-            type="text"
-            formControlName="causeCode"
-            class="form-control form-control-sm"
-            [ngClass]="{
-              'is-invalid': this.invalidFieldForm('causeCode')
-            }"
-            placeholder="Código Causa"
-          />
-          <small class="text-danger" *ngIf="this.invalidFieldForm('causeCode')">
-            {{ textsFormInvalid("causeCode") }}
-          </small>
-        </div>
-        <div class="col-sm py-1 mx-1 p-0 text-left">
-          <input
-            type="text"
-            formControlName="descriptionCause"
-            class="form-control form-control-sm"
-            [ngClass]="{
-              'is-invalid': this.invalidFieldForm('descriptionCause')
-            }"
-            placeholder="Descripción Causa"
-          />
-          <small
-            class="text-danger"
-            *ngIf="this.invalidFieldForm('descriptionCause')"
-          >
-            {{ textsFormInvalid("descriptionCause") }}
-          </small>
-        </div>
-        <div class="col-sm py-1 mx-1 p-0 text-left">
-          <select
-            formControlName="status"
-            class="form-control form-control-sm"
-            [ngClass]="{
-              'is-invalid': this.invalidFieldForm('status')
-            }"
-          >
-            <option *ngFor="let stateOp of selectState" [value]="stateOp.key">
-              {{ stateOp.value }}
-            </option>
-          </select>
-          <small class="text-danger" *ngIf="this.invalidFieldForm('status')">
-            {{ textsFormInvalid("status") }}
-          </small>
-        </div>
-      </div>
-      <div class="row text-light text-center mt-4">
-        <div class="col-sm container-buttons">
+      <div class="formLayout">
+        <div class="actionsButtons">
           <button type="submit" class="btn btn-primary mr-3 btn-sm">
             {{ actionForm === "create" ? "Crear" : "Actualizar" }}
           </button>

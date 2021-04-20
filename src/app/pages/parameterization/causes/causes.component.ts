@@ -49,23 +49,18 @@ export class CausesComponent implements OnInit {
   dataToTable: CauseModel[];
   structure: object[] = [
     {
-      name: 'disruptionId',
-      description: 'Código Anomalía',
-      validation: '',
-    },
-    {
-      name: 'problemId',
-      description: 'Código Problema',
-      validation: '',
-    },
-    {
       name: 'code',
       description: 'Código Causa',
       validation: '',
     },
     {
-      name: 'causes',
-      description: 'Descripción Causa',
+      name: 'problemCode',
+      description: 'Código Problema',
+      validation: '',
+    },
+    {
+      name: 'failureCode',
+      description: 'Código Falla',
       validation: '',
     },
     {
@@ -95,14 +90,11 @@ export class CausesComponent implements OnInit {
 
   createForm() {
     this.causeForm = this._fb.group({
-      typeOrigin: ['', [Validators.required]],
       idCause: [''],
-      codeAnomaly: ['', [Validators.required]],
-      descriptionAnomaly: [''],
-      problemCode: ['', [Validators.required]],
-      descriptionProblem: [''],
       causeCode: ['', [Validators.required]],
-      descriptionCause: ['', [Validators.required]],
+      problemCode: ['', [Validators.required]],
+      failureCode: ['', [Validators.required]],
+      typeOrigin: ['', [Validators.required]],
       status: ['', [Validators.required]],
       user: [this.userData.usuario.usuario],
     });
@@ -152,11 +144,8 @@ export class CausesComponent implements OnInit {
       const dataRequest: RequestModel = {
         Cause: {
           code: this.causeForm.get('causeCode').value,
-          causes: this.causeForm.get('descriptionCause').value,
-          disruptionId: this.causeForm.get('codeAnomaly').value,
-          disruptionDescription: this.causeForm.get('descriptionAnomaly').value,
-          problemId: this.causeForm.get('problemCode').value,
-          problemDescription: this.causeForm.get('descriptionProblem').value,
+          failureCode: this.causeForm.get('failureCode').value,
+          problemCode: this.causeForm.get('problemCode').value,
           OriginType: {
             id: Number(this.causeForm.get('typeOrigin').value),
           },
@@ -205,12 +194,9 @@ export class CausesComponent implements OnInit {
   setForm(data: CauseModel) {
     this.causeForm.reset({
       idCause: data.id,
-      codeAnomaly: data.disruptionId,
-      problemCode: data.problemId,
-      descriptionProblem: data.problemDescription,
+      failureCode: data.failureCode,
+      problemCode: data.problemCode,
       causeCode: data.code,
-      descriptionCause: data.causes,
-      descriptionAnomaly: data.disruptionDescription,
       typeOrigin: data.OriginType.id,
       status: data.state,
       user: data.user,
