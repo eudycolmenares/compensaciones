@@ -28,6 +28,7 @@ export interface NodesValidationModel {
   timeInNode: string;
   timeEndNode: string;
   nodeDuration: number;
+  durationFormat?: string;
   Department: string;
   municipality: string;
   responsibleAreaCode: string;

@@ -7,10 +7,10 @@
       <div class="col-sm-4">
         <form autocomplete="off" [formGroup]="nodeForm">
           <p-dropdown
-            [options]="selectService"
+            [options]="selectService_Node"
             optionLabel="value"
             class="p-inputtext-sm"
-            formControlName="services"
+            formControlName="listNodes_Revision"
             (onChange)="initialCharge()"
           >
             <ng-template let-options pTemplate="item">
@@ -35,4 +35,14 @@
     (disableRecord)="rejectedQualityNode($event)"
     (deleteRecord)="rejectedNode($event)"
   ></app-table>
+
+  <div *ngIf="dataToTable" class="text-center justify-content-center">
+    <button
+      type="button"
+      class="btn btn-primary mr-3 btn-sm"
+      (click)="downloadDataTable()"
+    >
+      Descargar CSV
+    </button>
+  </div>
 </section>

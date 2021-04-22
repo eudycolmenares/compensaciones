@@ -39,6 +39,15 @@ export class NodesValidationService {
     );
   }
 
+  allRejectedNodes(): Observable<NodesValidationApiModel> {
+    return this._http.get<NodesValidationApiModel>(
+      env.NodesValidation.url + env.NodesValidation.endpoints.readAllRejected,
+      {
+        headers: this.headers,
+      }
+    );
+  }
+
   updateNodeValidation(body: RequestModel): Observable<ResponseModel> {
     return this._http.put<ResponseModel>(
       env.NodesValidation.url + env.NodesValidation.endpoints.update,

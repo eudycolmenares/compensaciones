@@ -2,13 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { GeneralFunctionsService } from '@services/general-functions.service';
-import { ServicesSettings } from '@libraries/utilities.library';
 import { NodesValidationService } from '@services/nodes-validation/nodes-validation.service';
-import { DataList } from '@models/general';
 import * as models from '@models/nodes-validation';
+import { DataList } from '@models/general';
 import { ToastService } from '@shared_services/toast.service';
-import { ResponseLoginModel as UserModel } from '@models/users';
-import { AuthService } from '@shared_services/auth.service';
 
 @Component({
   selector: 'app-nodes',
@@ -17,8 +14,8 @@ import { AuthService } from '@shared_services/auth.service';
 })
 export class NodesComponent implements OnInit {
   nodeForm: FormGroup;
-  selectService: DataList[] = [];
-  userData: UserModel = null;
+  selectService_Node: DataList[];
+  nameTableSelected_download: string = '';
 
   // table
   dataToTable: object[];
@@ -34,9 +31,9 @@ export class NodesComponent implements OnInit {
       validation: '',
     },
     {
-      name: 'nodeDuration',
+      name: 'durationFormat',
       description: 'Duración',
-      validation: 'time-min',
+      validation: '',
     },
     {
       name: 'state',
@@ -64,6 +61,11 @@ export class NodesComponent implements OnInit {
       validation: 'yes-no-x',
     },
     {
+      name: 'originType',
+      description: 'Tipo origen',
+      validation: '',
+    },
+    {
       name: 'revision',
       description: 'Revisión',
       validation: 'revision',
@@ -85,18 +87,18 @@ export class NodesComponent implements OnInit {
     private _fb: FormBuilder,
     private _nodesSvc: NodesValidationService,
     private _gnrScv: GeneralFunctionsService,
-    private _toastScv: ToastService,
-    private _authSvc: AuthService
+    private _toastScv: ToastService
   ) {
-    this.userData = this._authSvc.userData;
     this.createForm();
     this.initializeVariables();
   }
 
   createForm() {
     this.nodeForm = this._fb.group({
-      services: [{ key: 'internet', value: 'Internet' }, [Validators.required]],
-      user: [this.userData.usuario.usuario],
+      listNodes_Revision: [
+        { key: 'approved', value: 'Aprobados' },
+        [Validators.required],
+      ],
     });
   }
 
@@ -114,48 +116,50 @@ export class NodesComponent implements OnInit {
   }
 
   initializeVariables() {
-    for (const i of Object.entries(ServicesSettings)) {
-      this.selectService.push({ key: i[0], value: i[1] });
-    }
+    this.selectService_Node = [
+      { key: 'approved', value: 'Aprobados' },
+      { key: 'rejected', value: 'Rechazados' },
+    ];
 
     this.initialCharge();
   }
 
   initialCharge() {
-    this._nodesSvc
-      .allApprovedNodes()
-      .subscribe(async (resp: models.NodesValidationApiModel) => {
-        this.dataToTable = await resp.tblMaximum.filter(
-          (data) =>
-            (data.srInternet === 1 &&
-              this.nodeForm.get('services').value.key === 'internet') ||
-            (data.srTv === 1 &&
-              this.nodeForm.get('services').value.key === 'television') ||
-            (data.srVoz === 1 &&
-              this.nodeForm.get('services').value.key === 'telephone')
-        );
-        this.dataToTable.map((data:models.NodesValidationModel) => {
-          if (data.dateInNode) {
-          data.customDateInNode = this._gnrScv.formatDate('YYYY-MM-DD', data.dateInNode) + ' ' + data.timeInNode;
-          }
-          if (data.dateEndNode) {
-          data.customDateEndNode = this._gnrScv.formatDate('YYYY-MM-DD', data.dateEndNode) + ' ' + data.timeEndNode;
-          }
-          return data;
+    if (this.nodeForm.get('listNodes_Revision').value.key === 'approved') {
+      this._nodesSvc
+        .allApprovedNodes()
+        .subscribe((resp: models.NodesValidationApiModel) => {
+          this.dataToTable = this.parseDateDataToTable(resp.tblMaximum);
         });
+        this.nameTableSelected_download = 'nodos_aprovados';
+    }
 
-      });
+    if (this.nodeForm.get('listNodes_Revision').value.key === 'rejected') {
+      this._nodesSvc
+        .allRejectedNodes()
+        .subscribe((resp: models.NodesValidationApiModel) => {
+          this.dataToTable = this.parseDateDataToTable(resp.tblMaximum);
+        });
+      this.nameTableSelected_download = 'nodos_rechazados';
+    }
   }
 
-  onSubmit() {
-    console.log(this.nodeForm.value);
-
-    if (this.nodeForm.invalid) {
-      return Object.values(this.nodeForm.controls).forEach((control) => {
-        control.markAsTouched();
-      });
-    } else {
-    }
+  parseDateDataToTable(dataReceived) {
+    return dataReceived.map((data: models.NodesValidationModel) => {
+      if (data.dateInNode) {
+        data.customDateInNode =
+          this._gnrScv.formatDate('YYYY-MM-DD', data.dateInNode) +
+          ' ' +
+          data.timeInNode;
+      }
+      if (data.dateEndNode) {
+        data.customDateEndNode =
+          this._gnrScv.formatDate('YYYY-MM-DD', data.dateEndNode) +
+          ' ' +
+          data.timeEndNode;
+      }
+      return data;
+    });
   }
 
   approvedNode(node) {
@@ -179,7 +183,6 @@ export class NodesComponent implements OnInit {
         'Debe ingresar un comentario en el campo de observación'
       );
     } else {
-
       let data: models.RequestModel = {
         tblMaximum: {
           ...node,
@@ -228,6 +231,58 @@ export class NodesComponent implements OnInit {
         resp.generalResponse.messageCode,
         resp.generalResponse.descriptionCode
       );
+    }
+  }
+
+  downloadDataTable() {
+    if (this.dataToTable.length > 0) {
+      this.exportToCsv(this.dataToTable);
+    }
+  }
+
+  exportToCsv(rows: object[]) {
+    if (!rows || !rows.length) {
+      return;
+    }
+
+    const separator = '|';
+    const keys = ['incidence', 'ciPpal', 'durationFormat', 'state', 'userObservation', 'compensatesInt', 'compensatesTel', 'compensatesTv', 'originType', 'revision', 'customDateInNode', 'customDateEndNode'];
+    const keysSpanish = ['Incidente', 'CI', 'Duración', 'Estado', 'Observación', 'Compensa Internet', 'Compensa TelefonÍa', 'Compensa Televisión', 'Tipo origen', 'Revisión', 'Fecha inicio incidente', 'Fecha fin incidente'];
+    const csvContent =
+      keysSpanish.join(separator) +
+      '\n' +
+      rows
+        .map((row) => {
+          return keys
+            .map((k) => {
+              let cell = row[k] === null || row[k] === undefined ? '' : row[k];
+              cell = cell.toLocaleString();
+              if (cell.search(/("|,|\n)/g) >= 0) {
+                cell = `"${cell}"`;
+              }
+              return cell;
+            })
+            .join(separator);
+        })
+        .join('\n');
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    if (navigator.msSaveBlob) {
+      // IE 10+
+      navigator.msSaveBlob(blob, this.nameTableSelected_download + '.csv');
+    } else {
+      const link = document.createElement('a');
+      if (link.download !== undefined) {
+        // Browsers that support HTML5 download attribute
+        const url = URL.createObjectURL(blob);
+        link.setAttribute('href', url);
+        link.setAttribute('download', this.nameTableSelected_download + '.csv');
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        this._toastScv.showSuccess('Archivo descargado correctamente');
+      }
     }
   }
 }

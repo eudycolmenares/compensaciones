@@ -7,6 +7,10 @@ import { DashboardModule } from '../../dashboard/dashboard.module';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
 import { DropdownModule } from 'primeng/dropdown';
+import { PanelModule } from 'primeng/panel';
+import { MenuModule } from 'primeng/menu';
+import { TableModule } from 'primeng/table';
+import { DividerModule } from 'primeng/divider';
 
 @NgModule({
   declarations: [BulkLoadComponent],
@@ -16,7 +20,12 @@ import { DropdownModule } from 'primeng/dropdown';
     DashboardModule,
     ConfirmDialogModule,
     DropdownModule,
+    PanelModule,
+    MenuModule,
+    TableModule,
+    DividerModule
   ],
+  exports: [BulkLoadComponent],
   providers: [ConfirmationService],
 })
 export class BulkLoadModule {}

@@ -302,18 +302,18 @@ export const messagesToast = {
 export const arrayTypesRents = ['ACCOUNT_RENT', 'NODES_RENT'];
 
 export const bulkLoadParams = {
-  filesAllowed: ['txt', 'csv'],
+  filesAllowed: ['xlsx'],
   optionList: [
-    { valueOption: 'CAUSAS', nameOption: 'Causas' },
-    { valueOption: 'SINTOMAS', nameOption: 'Síntomas' },
+    { valueOption: 'CAUSAS', nameOption: 'Causas', path: 'assets/documents/CAUSAS.xlsx'},
+    { valueOption: 'SINTOMAS', nameOption: 'Síntomas', path: 'assets/documents/SINTOMAS.xlsx'},
   ],
-  pathTemplates: {
-    symptoms: 'assets/documents/SINTOMAS.csv',
-    causes: 'assets/documents/CAUSAS.csv'
-  },
   confirmLoad: {
     header: '¿Estás seguro que deseas enviar el archivo?',
     msg: 'Toda la información de Cargue Masivo que contiene el archivo quedará registrada en la base de datos.'
+  },
+  msgs: {
+    processedFiles: 'En la sección archivos procesados, se puede visualizar la información enviada al servidor y el estado del mismo, además de poder refrescar las mismas en el botón actualizar.',
+    previousInformation: 'A continuación, se muestra información previa del archivo seleccionado para su carga, como a su vez las pestanas que posee y la información en las mismas.'
   }
 };
 

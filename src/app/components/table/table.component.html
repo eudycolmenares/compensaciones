@@ -70,7 +70,7 @@
           <td *ngSwitchCase="''">{{ item[opt.name] }}</td>
           <td *ngSwitchCase="'date'">{{ item[opt.name] | date }}</td>
           <td *ngSwitchCase="'revision'">
-            <div *ngIf="item[opt.name] === 'APROBADO' else notApproved" class="badge badge-success"> {{ item[opt.name] }} </div>
+            <div *ngIf="item[opt.name] === 'APROBADO' else notApproved" class="badge badge-success px-2"> {{ item[opt.name] }} </div>
             <ng-template #notApproved >
               <div class="badge badge-danger px-2">{{ item[opt.name] }}</div>
             </ng-template>

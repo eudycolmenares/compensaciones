@@ -300,6 +300,7 @@ export const environment = {
     endpoints: {
       readAll:  + 'readAll',
       readAllApproved: 'readAllApproved',
+      readAllRejected: 'readAllReject',
       update: 'update',
     },
   },

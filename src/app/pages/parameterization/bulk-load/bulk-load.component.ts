@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  FormGroup,
-  FormBuilder,
-  Validators,
-} from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { MenuItem } from 'primeng/api';
 
+import * as XLSX from 'xlsx';
 import {
   BulkLoadRequestModel,
   errorResponse,
@@ -18,6 +16,7 @@ import { ToastService } from '@shared_services/toast.service';
 import { ResponseLoginModel as UserModel } from '@models/users';
 import { AuthService } from '@shared_services/auth.service';
 import { ConfirmationService } from 'primeng/api';
+import { BulkLoadModule } from './bulk-load.module';
 
 @Component({
   selector: 'app-bulk-load',
@@ -30,8 +29,30 @@ export class BulkLoadComponent implements OnInit {
   dataArraySent: string[];
   fileEncode: string;
   userData: UserModel = null;
+
+  fileBaseData: string;
+  fileBaseName = '';
+  dataPreview: any = null;
+  optListFaults = bulkLoadParams.optionList;
+  msgProcessedFiles: string = bulkLoadParams.msgs.processedFiles;
+  msgPrevious: string = bulkLoadParams.msgs.previousInformation;
+  items: MenuItem[] = [
+    {
+      label: 'Opciones',
+      items: [
+        {
+          label: 'Actualizar',
+          icon: 'pi pi-refresh',
+          command: () => {
+            // this.updateData();
+          },
+        },
+      ],
+    },
+  ];
+  uploadedFiles: BulkLoadRequestModel[] = null;
   // table
-  dataToTable: errorResponse[];
+  dataToTable: object[];
   structure: object[] = [
     {
       name: 'lineNumber',
@@ -49,14 +70,15 @@ export class BulkLoadComponent implements OnInit {
       validation: '',
     },
   ];
+  sheetOptionsList: object[] = [];
   templateOptionsList: object[] = bulkLoadParams.optionList;
   constructor(
     private _fb: FormBuilder,
     private _bulkLoadSvc: BulkLoadService,
     private _gnrScv: GeneralFunctionsService,
     private _toastScv: ToastService,
-    private _confirmationService: ConfirmationService,
-    private _authSvc: AuthService,
+    private _confirmationScv: ConfirmationService,
+    private _authSvc: AuthService
   ) {
     this.userData = this._authSvc.userData;
     this.createForm();
@@ -64,13 +86,13 @@ export class BulkLoadComponent implements OnInit {
 
   createForm() {
     this.bulkLoadForm = this._fb.group({
-      fileName: ['', [Validators.required]],
-      // state: [''],
       uploadFile: [
         '',
-        [Validators.required, CustomValidation.fileIsAllowed(bulkLoadParams.filesAllowed)],
+        [
+          Validators.required,
+          CustomValidation.fileIsAllowed(bulkLoadParams.filesAllowed),
+        ],
       ],
-      // uploadError: [''],
       uploadType: ['', [Validators.required]],
       user: [this.userData.usuario.usuario],
     });
@@ -89,47 +111,76 @@ export class BulkLoadComponent implements OnInit {
     return this._gnrScv.validationFormTextRequired(this.bulkLoadForm, field);
   }
 
-  fileSent(responseDataErrors: errorResponse[]) {
-    this.dataToTable = responseDataErrors;
+  sendFileToService() {
+    const dataRequest = {
+      file: this.fileBaseData,
+      fileName: this.fileBaseName,
+      uploadType: this.bulkLoadForm.get('uploadType').value,
+      userName: this._authSvc.userData.usuario.usuario,
+    }
+    this.createCauseApi(dataRequest);
   }
 
-  fileChange(documentUpload) {
-    this.dataToTable = [];
-    this.dataUploaded = documentUpload.target.files[0];
-    this.bulkLoadForm
-      .get('fileName')
-      .setValue(Date.now() + '_' + this.dataUploaded['name']);
-    if (this.bulkLoadForm.get('uploadType').value) {
-      this.onSubmit();
+  handleFileInput(e: Event) {
+    this.fileBaseName = e.target['files'][0]['name'];
+    let reader = new FileReader();
+    reader.readAsDataURL(e.target['files'][0]);
+    reader.onload = () => {
+      const data = reader.result;
+      const fileString = data.toString().split(';base64,');
+      this.fileBaseData = fileString[fileString.length - 1];
+    };
+  }
+
+  handlePreviewFileInput(e: Event) {
+    const file = e.target['files'][0];
+    let reader = new FileReader();
+    reader.onload = () => {
+      const data = reader.result;
+      const workBook = XLSX.read(data, { type: 'binary' });
+      const jsonData = workBook.SheetNames.reduce((initial, name) => {
+        const sheet = workBook.Sheets[name];
+        initial[name] = XLSX.utils.sheet_to_json(sheet);
+        return initial;
+      }, {});
+      this.prepareDataToPreview(jsonData);
+    };
+    reader.readAsBinaryString(file); // binary read for table
+    this.handleFileInput(e); // read as url for base 64
+  }
+
+  prepareDataToPreview(data: Object) {
+    const sheets = Object.keys(data);
+    this.dataPreview = sheets.length > 0 ? data : null;
+    this.sheetOptionsList = sheets.map((sheet) => ({
+      valueOption: sheet,
+      nameOption: sheet,
+    }));
+  }
+
+  informationToTable(option) {
+    const data: object[] = this.dataPreview[option];
+    if (data.length > 0) {
+      const items = Object.keys(data[0]);
+      this.structure = items.map((item) => ({
+        name: item,
+        description: item,
+        validation: '',
+      }));
+      this.dataToTable = data;
     }
   }
 
-  downloadModelDocument(selectedTypeFile: string) {
-    if (selectedTypeFile !== null || selectedTypeFile !== undefined) {
-      const symptomsFile = bulkLoadParams.pathTemplates.symptoms;
-      const causesFile = bulkLoadParams.pathTemplates.causes;
-      let selectFile = '';
-      if (selectedTypeFile === 'SINTOMAS') {
-        selectFile = symptomsFile;
-      }
-      if (selectedTypeFile === 'CAUSAS') {
-        selectFile = causesFile;
-      }
-
-      const link = document.createElement('a');
-      let filename = selectedTypeFile + '.csv';
-      if (link.download !== undefined) {
-        // Browsers that support HTML5 download attribute
-        setTimeout(function () {
-          // <- fix error with dropdown list when click
-          link.setAttribute('href', selectFile);
-          link.setAttribute('download', filename);
-          link.style.visibility = 'hidden';
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-        }, 10);
-      }
+  downloadTemplate(option) {
+    const { path } = this.optListFaults.find(item => item.valueOption == option)
+    const link = document.createElement('a');
+    if (link.download !== undefined) {
+      link.setAttribute('href', path);
+      link.setAttribute('download', `${option}.xlsx`);
+      link.style.visibility = 'hidden';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     }
   }
 
@@ -139,39 +190,34 @@ export class BulkLoadComponent implements OnInit {
         control.markAsTouched();
       });
     } else {
-      this._confirmationService.confirm({
+      console.log(this.bulkLoadForm.value);
+      this._confirmationScv.confirm({
         message: bulkLoadParams.confirmLoad.msg,
-        header: bulkLoadParams.confirmLoad.header,
-        icon: 'pi pi-exclamation-triangle',
         accept: () => {
-          this.dataToTable = [];
           this.sendFileToService();
         },
-        reject: () => {
-          this.bulkLoadForm.get('uploadType').setValue('');
-        },
-        key: "confirmBulkLoad"
+        reject: () => {},
       });
     }
   }
 
-  sendFileToService() {
-    let fileReader = new FileReader();
-    fileReader.readAsText(this.dataUploaded);
-    fileReader.onload = (e) => {
-      let text = fileReader.result.toString();
-      this.dataArraySent = text.split('\n');
-      let textEncode = btoa(text);
-      const dataRequest: BulkLoadRequestModel = {
-        fileName: this.bulkLoadForm.get('fileName').value,
-        file: textEncode,
-        uploadType: this.bulkLoadForm.get('uploadType').value,
-        userName: this.userData.usuario.usuario,
+  // sendFileToService() {
+  //   let fileReader = new FileReader();
+  //   fileReader.readAsText(this.dataUploaded);
+  //   fileReader.onload = (e) => {
+  //     let text = fileReader.result.toString();
+  //     this.dataArraySent = text.split('\n');
+  //     let textEncode = btoa(text);
+  //     const dataRequest: BulkLoadRequestModel = {
+  //       fileName: this.bulkLoadForm.get('fileName').value,
+  //       file: textEncode,
+  //       uploadType: this.bulkLoadForm.get('uploadType').value,
+  //       userName: this.userData.usuario.usuario,
 
-      };
-      this.createCauseApi(dataRequest);
-    };
-  }
+  //     };
+  //     this.createCauseApi(dataRequest);
+  //   };
+  // }
 
   createCauseApi(dataRequest: BulkLoadRequestModel) {
     this._bulkLoadSvc.createBulkLoad(dataRequest)
@@ -180,7 +226,7 @@ export class BulkLoadComponent implements OnInit {
           this._toastScv.showSuccess(resp.messageCode);
           // this.fileSent();
         } else {
-          this.fileSent(resp.Errors.Error);
+          // this.fileSent(resp.Errors.Error);
           this._toastScv.showError(resp.descriptionCode);
         }
         this.cleanForm();
@@ -189,5 +235,14 @@ export class BulkLoadComponent implements OnInit {
 
   cleanForm() {
     this.bulkLoadForm.reset({ uploadType: '' });
+    this.fileBaseName = '';
+    this.cleanInputFile();
+  }
+  cleanInputFile() {
+    this.bulkLoadForm.controls.uploadFile.setValue('');
+    this.fileBaseName = '';
+    this.dataPreview = null;
+    this.structure = [];
+    this.dataToTable = [];
   }
 }

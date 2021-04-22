@@ -1,96 +1,105 @@
 <section class="container py-3">
   <app-breadcrumb></app-breadcrumb>
 
-  <div class="container-add px-sm-2 px-md-5">
-    <form autocomplete="off" [formGroup]="bulkLoadForm">
-      <div class="row text-light text-center mt-4 px-sm-0 px-md-5">
-        <div class="col-sm bg-primary py-1 mx-1">
-          Carga aquí la plantilla (*)
-        </div>
-        <div class="col-sm bg-primary py-1 mx-1">Tipo de lista (*)</div>
-      </div>
-
-      <div class="row px-sm-0 px-md-5">
-        <div class="col-sm-6 py-1">
-          <div class="row">
-            <ng-container
-              *ngIf="
-                !this.bulkLoadForm.get('fileName').value;
-                else elseNamefile
-              "
-            >
-              <div class="col box-upload py-1 mx-1 p-0">
-                <input
-                  type="file"
-                  class="form-control form-control-sm"
-                  formControlName="uploadFile"
-                  (change)="fileChange($event)"
-                />
-                <p>Arrastra y suelta el archivo aquí</p>
-                <p>o</p>
-                <label>Busca el archivo</label>
-              </div>
-            </ng-container>
-            <ng-template #elseNamefile>
-              <div
-                class="d-flex align-content-center flex-wrap col box-upload py-1 mx-1 p-0"
+  <div class="container-add">
+    <form autocomplete="off" [formGroup]="bulkLoadForm" (ngSubmit)="onSubmit()">
+      <div class="formLayout">
+        <div class="formSection">
+          <div class="formLabel">Carga aquí la plantilla (*)</div>
+          <div class="formField px-3">
+            <div class="row">
+              <ng-container
+                *ngIf="
+                  !fileBaseName;
+                  else elseNamefile
+                "
               >
-                <div class="input-group input-group-sm justify-content-center">
-                  <div class="input-group-prepend">
-                    <p class="input-group-text" id="inputGroup-sizing-sm">
-                      {{ bulkLoadForm.get("fileName").value }}
-                    </p>
-                    <button
-                      type="button"
-                      class="btn btn-primary btn-sm"
-                      (click)="cleanForm()"
-                    >
-                      <img src="assets/img/trash.svg" width="18px" />
-                    </button>
+                <div class="col box-upload">
+                  <input
+                    type="file"
+                    class="form-control form-control-sm"
+                    formControlName="uploadFile"
+                    (change)="handlePreviewFileInput($event)"
+                  />
+                  <p>Arrastra y suelta el archivo aquí o</p>
+                  <label>Busca el archivo</label>
+                </div>
+              </ng-container>
+              <ng-template #elseNamefile>
+                <div
+                  class="d-flex align-content-center col box-upload"
+                >
+                  <div
+                    class="input-group input-group-sm justify-content-center"
+                  >
+                    <div class="input-group-prepend">
+                      <p class="input-group-text" id="inputGroup-sizing-sm">
+                        {{ fileBaseName }}
+                      </p>
+                      <button
+                        type="button"
+                        class="btn btn-primary btn-sm"
+                        (click)="cleanInputFile()"
+                      >
+                        <img src="assets/img/trash.svg" width="18px" />
+                      </button>
+                    </div>
                   </div>
                 </div>
+              </ng-template>
+            </div>
+            <div class="row">
+              <div class="col py-1 mx-1 p-0">
+                <small
+                  class="text-danger"
+                  *ngIf="this.invalidFieldForm('uploadFile')"
+                >
+                  {{ textsFormInvalid("uploadFile") }}
+                </small>
               </div>
-            </ng-template>
-          </div>
-          <div class="row">
-            <div class="col py-1 mx-1 p-0">
-              <small
-                class="text-danger"
-                *ngIf="this.invalidFieldForm('uploadFile')"
-              >
-                {{ textsFormInvalid("uploadFile") }}
-              </small>
             </div>
           </div>
         </div>
-        <div class="col-sm-6">
-          <div class="row">
-            <div class="col py-1 mx-1 p-0">
-              <select
-                formControlName="uploadType"
-                class="form-control form-control-sm"
-                [ngClass]="{
-                  'is-invalid': this.invalidFieldForm('uploadType')
-                }"
-                (change)="onSubmit()"
-              >
-                <option value="" [selected]="true">- Seleccione -</option>
-                <option value="SINTOMAS">Sintomas</option>
-                <option value="CAUSAS">Causas</option>
-              </select>
-              <small
-                class="text-danger"
-                *ngIf="this.invalidFieldForm('uploadType')"
-              >
-                {{ textsFormInvalid("uploadType") }}
-              </small>
-            </div>
+        <div class="formSection">
+          <div class="formLabel">Tipo de lista (*)</div>
+          <div class="formField">
+            <select
+              formControlName="uploadType"
+              class="form-control form-control-sm"
+              [ngClass]="{
+                'is-invalid': this.invalidFieldForm('uploadType')
+              }"
+            >
+              <option value="" [selected]="true">- Seleccione -</option>
+              <option value="SINTOMAS">Sintomas</option>
+              <option value="CAUSAS">Causas</option>
+            </select>
+            <small
+              class="text-danger"
+              *ngIf="this.invalidFieldForm('uploadType')"
+            >
+              {{ textsFormInvalid("uploadType") }}
+            </small>
           </div>
+        </div>
+      </div>
+      <div class="formLayout">
+        <div class="actionsButtons">
+          <button type="submit" class="btn btn-primary mr-3 btn-sm">
+            Enviar
+          </button>
+          <button
+            type="button"
+            class="btn btn-secondary btn-sm"
+            (click)="cleanForm()"
+          >
+            Limpiar
+          </button>
         </div>
       </div>
     </form>
 
-    <div class="row text-light text-center justify-content-center mt-4">
+    <div class="row text-light text-center justify-content-center">
       <p-dropdown
         [options]="templateOptionsList"
         optionLabel="nameOption"
@@ -99,7 +108,7 @@
         placeholder="Descargar Plantilla"
       >
         <ng-template let-option pTemplate="item">
-          <div (click)="downloadModelDocument(option.valueOption)">
+          <div (click)="downloadTemplate(option.valueOption)">
             {{ option.nameOption }}
           </div>
         </ng-template>
@@ -107,14 +116,34 @@
     </div>
   </div>
 
-  <hr />
+  <hr class="mt-5 mb-5" />
 
-  <app-table
-    [dataBase]="dataToTable"
-    [structure]="structure"
-    buttons=""
-  ></app-table>
+  <p-divider align="left" type="solid" *ngIf="dataPreview">
+    <div class="p-d-inline-flex p-ai-center">
+        <i class="pi pi-info-circle p-mr-2"></i>
+        <span>{{ msgPrevious }}</span>
+    </div>
+  </p-divider>
+  <ng-container *ngIf="dataPreview">
+    <div class="row pl-3 pb-3">
+      <div class="col-sm">
+        <p-dropdown [options]="sheetOptionsList" optionLabel="nameOption" [showClear]="true" class="p-inputtext-sm"
+          placeholder="Seleccione Hoja del Libro">
+          <ng-template let-option pTemplate="item">
+            <div (click)="informationToTable(option.valueOption)">{{ option.nameOption }}</div>
+          </ng-template>
+        </p-dropdown>
+      </div>
+    </div>
+    <div class="row" *ngIf="structure.length > 0">
+      <div class="col-sm mb-3">
+        <app-table [dataBase]="dataToTable" [structure]="structure" [buttons]="[]"></app-table>
+      </div>
+    </div>
+  </ng-container>
+
 </section>
 
-<p-confirmDialog key="confirmBulkLoad" rejectLabel="Cancelar" acceptLabel="Aceptar">
+<p-confirmDialog header="¿Estás seguro que deseas enviar el archivo?" rejectLabel="Cancelar" acceptLabel="Aceptar"
+  icon="pi pi-exclamation-triangle">
 </p-confirmDialog>
