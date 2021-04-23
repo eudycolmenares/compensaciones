@@ -1,4 +1,4 @@
-<section class="container py-3">
+<section class="container container-custom py-3">
   <app-breadcrumb></app-breadcrumb>
 
   <div class="container-add">
@@ -8,12 +8,7 @@
           <div class="formLabel">Carga aquí la plantilla (*)</div>
           <div class="formField px-3">
             <div class="row">
-              <ng-container
-                *ngIf="
-                  !fileBaseName;
-                  else elseNamefile
-                "
-              >
+              <ng-container *ngIf="!fileBaseName; else elseNamefile">
                 <div class="col box-upload">
                   <input
                     type="file"
@@ -26,9 +21,7 @@
                 </div>
               </ng-container>
               <ng-template #elseNamefile>
-                <div
-                  class="d-flex align-content-center col box-upload"
-                >
+                <div class="d-flex align-content-center col box-upload">
                   <div
                     class="input-group input-group-sm justify-content-center"
                   >
@@ -116,34 +109,65 @@
     </div>
   </div>
 
-  <hr class="mt-5 mb-5" />
-
-  <p-divider align="left" type="solid" *ngIf="dataPreview">
-    <div class="p-d-inline-flex p-ai-center">
+  <hr />
+  <p-panel header="Registros del archivo seleccionado" [toggleable]="true" [collapsed]="collapsedOptions[0]">
+    <p-divider align="left" type="solid" *ngIf="dataPreview">
+      <div class="p-d-inline-flex p-ai-center">
         <i class="pi pi-info-circle p-mr-2"></i>
         <span>{{ msgPrevious }}</span>
-    </div>
-  </p-divider>
-  <ng-container *ngIf="dataPreview">
-    <div class="row pl-3 pb-3">
-      <div class="col-sm">
-        <p-dropdown [options]="sheetOptionsList" optionLabel="nameOption" [showClear]="true" class="p-inputtext-sm"
-          placeholder="Seleccione Hoja del Libro">
-          <ng-template let-option pTemplate="item">
-            <div (click)="informationToTable(option.valueOption)">{{ option.nameOption }}</div>
-          </ng-template>
-        </p-dropdown>
       </div>
-    </div>
-    <div class="row" *ngIf="structure.length > 0">
-      <div class="col-sm mb-3">
-        <app-table [dataBase]="dataToTable" [structure]="structure" [buttons]="[]"></app-table>
+    </p-divider>
+    <ng-container *ngIf="dataPreview">
+      <div class="row pl-3 pb-3">
+        <div class="col-sm">
+          <p-dropdown
+            [options]="sheetOptionsList"
+            optionLabel="nameOption"
+            class="p-inputtext-sm"
+            placeholder="Seleccione Hoja del Libro"
+            (onChange)="informationToTable($event.value.valueOption)"
+          >
+            <ng-template let-option pTemplate="item">
+              <div>{{ option.nameOption }}</div>
+            </ng-template>
+          </p-dropdown>
+        </div>
       </div>
-    </div>
-  </ng-container>
+      <div class="row">
+        <div class="col-sm mb-3">
+          <app-table
+            [dataBase]="dataToTable"
+            [structure]="structure"
+            [buttons]="[]"
+          ></app-table>
+        </div>
+      </div>
+    </ng-container>
+  </p-panel>
 
+  <p-panel header="Errores en el archivo enviado" [toggleable]="true" [collapsed]="collapsedOptions[1]" id="sentScroll">
+    <p-divider align="left" type="solid" *ngIf="dataPreview">
+      <div class="p-d-inline-flex p-ai-center">
+        <i class="pi pi-info-circle p-mr-2"></i>
+        <span>{{ msgPrevious }}</span>
+      </div>
+    </p-divider>
+    <div class="row">
+      <div class="col-sm mb-3">
+        <app-table
+          [dataBase]="dataToTableErrors"
+          [structure]="structureErrors"
+          [buttons]="[]"
+        ></app-table>
+      </div>
+    </div>
+  </p-panel>
 </section>
 
-<p-confirmDialog header="¿Estás seguro que deseas enviar el archivo?" rejectLabel="Cancelar" acceptLabel="Aceptar"
-  icon="pi pi-exclamation-triangle">
+<p-confirmDialog
+  header="¿Estás seguro que deseas enviar el archivo?"
+  rejectLabel="Cancelar"
+  acceptLabel="Aceptar"
+  icon="pi pi-exclamation-triangle"
+>
 </p-confirmDialog>

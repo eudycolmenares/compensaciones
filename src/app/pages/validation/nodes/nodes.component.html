@@ -3,7 +3,6 @@
 
   <div class="container-add px-sm-2 px-md-5 d-flex justify-content-center">
 
-
       <div class="col-sm-4">
         <form autocomplete="off" [formGroup]="nodeForm">
           <p-dropdown
@@ -11,6 +10,25 @@
             optionLabel="value"
             class="p-inputtext-sm"
             formControlName="listNodes_Revision"
+            (onChange)="initialCharge()"
+          >
+            <ng-template let-options pTemplate="item">
+              <div
+              >
+                {{ options.value }}
+              </div>
+            </ng-template>
+          </p-dropdown>
+        </form>
+      </div>
+
+      <div class="col-sm-4">
+        <form autocomplete="off" [formGroup]="nodeRevisionForm">
+          <p-dropdown
+            [options]="selectRevision_Node"
+            optionLabel="value"
+            class="p-inputtext-sm"
+            formControlName="nodeRevisionForm"
             (onChange)="initialCharge()"
           >
             <ng-template let-options pTemplate="item">
@@ -31,6 +49,7 @@
     [dataBase]="dataToTable"
     [structure]="structure"
     [validation]="changeIconValidation"
+    [buttons]="selectedRevisionButtons"
     (editRecord)="approvedNode($event)"
     (disableRecord)="rejectedQualityNode($event)"
     (deleteRecord)="rejectedNode($event)"

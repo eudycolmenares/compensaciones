@@ -53,7 +53,10 @@ export class BulkLoadComponent implements OnInit {
   uploadedFiles: BulkLoadRequestModel[] = null;
   // table
   dataToTable: object[];
-  structure: object[] = [
+  structure: object[];
+  dataToTableErrors: object[];
+  collapsedOptions: boolean[] = [true, true];
+  structureErrors: object[] = [
     {
       name: 'lineNumber',
       description: 'N° de línea',
@@ -156,9 +159,13 @@ export class BulkLoadComponent implements OnInit {
       valueOption: sheet,
       nameOption: sheet,
     }));
+    console.log('sheetOptionsList: ', this.sheetOptionsList);
+    
   }
 
   informationToTable(option) {
+    console.log('option: ', option);
+    
     const data: object[] = this.dataPreview[option];
     if (data.length > 0) {
       const items = Object.keys(data[0]);
@@ -194,6 +201,7 @@ export class BulkLoadComponent implements OnInit {
       this._confirmationScv.confirm({
         message: bulkLoadParams.confirmLoad.msg,
         accept: () => {
+          // this.dataToTable = [];
           this.sendFileToService();
         },
         reject: () => {},
@@ -201,35 +209,31 @@ export class BulkLoadComponent implements OnInit {
     }
   }
 
-  // sendFileToService() {
-  //   let fileReader = new FileReader();
-  //   fileReader.readAsText(this.dataUploaded);
-  //   fileReader.onload = (e) => {
-  //     let text = fileReader.result.toString();
-  //     this.dataArraySent = text.split('\n');
-  //     let textEncode = btoa(text);
-  //     const dataRequest: BulkLoadRequestModel = {
-  //       fileName: this.bulkLoadForm.get('fileName').value,
-  //       file: textEncode,
-  //       uploadType: this.bulkLoadForm.get('uploadType').value,
-  //       userName: this.userData.usuario.usuario,
+  fileSent(responseDataErrors: errorResponse[]) {
+    this.dataToTableErrors = responseDataErrors;
+    console.log(this.dataToTable);
+    this.scrollDown();
+  }
 
-  //     };
-  //     this.createCauseApi(dataRequest);
-  //   };
-  // }
+  scrollDown() {
+    document
+      .getElementById('sentScroll')
+      .scrollIntoView({ behavior: 'smooth' });
+  }
 
   createCauseApi(dataRequest: BulkLoadRequestModel) {
+    this.collapsedOptions = [true, false];
+
     this._bulkLoadSvc.createBulkLoad(dataRequest)
       .subscribe((resp: GeneralResponse) => {
         if (resp.code === 'SEND-FILE-VALRES-1' || resp.code === '0') {
           this._toastScv.showSuccess(resp.messageCode);
           // this.fileSent();
         } else {
-          // this.fileSent(resp.Errors.Error);
+          console.log('Respuesta: ', resp);
+          this.fileSent(resp.Errors.Error);
           this._toastScv.showError(resp.descriptionCode);
         }
-        this.cleanForm();
       });
   }
 

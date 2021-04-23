@@ -69,7 +69,12 @@
           <td *ngSwitchCase="'observation'" style="min-width: 9rem"><textarea class="form-control form-control-sm" [value]="item[opt.name]" (change)="item[opt.name]=$event.target.value"></textarea></td>
           <td *ngSwitchCase="''">{{ item[opt.name] }}</td>
           <td *ngSwitchCase="'date'">{{ item[opt.name] | date }}</td>
-          <td *ngSwitchCase="'revision'">
+          <td *ngSwitchCase="'revision-approved'">
+            <div *ngIf="item[opt.name] === 'APROBADO'" class="badge badge-success px-2"> {{ item[opt.name] }} </div>
+            <div *ngIf="item[opt.name] === '' || item[opt.name] === undefined " class="badge badge-warning px-2"> CANDIDATO </div>
+            <div *ngIf="item[opt.name] === 'RECHAZADO' || item[opt.name] === 'RECHAZADO CALIDAD'" class="badge badge-danger px-2"> {{ item[opt.name] }} </div>
+          </td>
+          <td *ngSwitchCase="'revision-rejected'">
             <div *ngIf="item[opt.name] === 'APROBADO' else notApproved" class="badge badge-success px-2"> {{ item[opt.name] }} </div>
             <ng-template #notApproved >
               <div class="badge badge-danger px-2">{{ item[opt.name] }}</div>

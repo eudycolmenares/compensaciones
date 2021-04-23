@@ -14,12 +14,19 @@ import { ToastService } from '@shared_services/toast.service';
 })
 export class NodesComponent implements OnInit {
   nodeForm: FormGroup;
+  nodeRevisionForm: FormGroup;
   selectService_Node: DataList[];
+  selectRevision_Node: DataList[];
   nameTableSelected_download: string = '';
+  selectedRevisionButtons:string[] = [];
 
   // table
   dataToTable: object[];
-  structure: object[] = [
+  structure: {
+    name: string;
+    description: string;
+    validation: string;
+}[] = [
     {
       name: 'incidence',
       description: 'Incidente',
@@ -27,7 +34,12 @@ export class NodesComponent implements OnInit {
     },
     {
       name: 'ciPpal',
-      description: 'CI',
+      description: 'CI Principal',
+      validation: '',
+    },
+    {
+      name: 'nodeAdic',
+      description: 'CI Adicional',
       validation: '',
     },
     {
@@ -68,7 +80,7 @@ export class NodesComponent implements OnInit {
     {
       name: 'revision',
       description: 'Revisión',
-      validation: 'revision',
+      validation: '',
     },
     {
       name: 'customDateInNode',
@@ -96,7 +108,14 @@ export class NodesComponent implements OnInit {
   createForm() {
     this.nodeForm = this._fb.group({
       listNodes_Revision: [
-        { key: 'approved', value: 'Aprobados' },
+        { key: 'approved'},
+        [Validators.required],
+      ],
+    });
+
+    this.nodeRevisionForm = this._fb.group({
+      filterRevision: [
+        { key: 'all'},
         [Validators.required],
       ],
     });
@@ -117,31 +136,53 @@ export class NodesComponent implements OnInit {
 
   initializeVariables() {
     this.selectService_Node = [
-      { key: 'approved', value: 'Aprobados' },
-      { key: 'rejected', value: 'Rechazados' },
+      { key: 'approved', value: 'Candidatos' },
+      { key: 'rejected', value: 'Rechazado - data invalida' },
     ];
+
+    this.selectRevision_Node = [
+      { key: 'all', value: 'Todos los registros' },
+      { key: 'APROBADO', value: 'Revisión - Aprobado' },
+      { key: 'RECHAZADO', value: 'Revisión - Rechazado' },
+      { key: 'RECHAZADO CALIDAD', value: 'Revisión - Rechazado Calidad' },
+    ]
 
     this.initialCharge();
   }
 
   initialCharge() {
     if (this.nodeForm.get('listNodes_Revision').value.key === 'approved') {
+      this.structure[10].validation = 'revision-approved';
       this._nodesSvc
         .allApprovedNodes()
         .subscribe((resp: models.NodesValidationApiModel) => {
           this.dataToTable = this.parseDateDataToTable(resp.tblMaximum);
         });
         this.nameTableSelected_download = 'nodos_aprovados';
+        this.selectedRevisionButtons = ['edit', 'disable', 'delete'];
     }
 
     if (this.nodeForm.get('listNodes_Revision').value.key === 'rejected') {
+      this.structure[10].validation = 'revision-rejected';
       this._nodesSvc
-        .allRejectedNodes()
+        .allrejectedForQualityNodes()
         .subscribe((resp: models.NodesValidationApiModel) => {
           this.dataToTable = this.parseDateDataToTable(resp.tblMaximum);
         });
       this.nameTableSelected_download = 'nodos_rechazados';
+      this.selectedRevisionButtons = ['', 'disable', 'delete'];
     }
+  }
+
+  filterRevisionData () {
+    // if (this.nodeRevisionForm.get('filterRevision').value.key === 'all') {
+    //   this.dataToTableFilter = this.dataToTable;
+    // }else {
+
+    // }
+    // this.dataToTable = this.dataToTable.filter( (data: models.NodesValidationModel) => {
+    //   data.revision === this.nodeRevisionForm.get('filterRevision').value.key
+    // } )
   }
 
   parseDateDataToTable(dataReceived) {

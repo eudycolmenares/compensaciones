@@ -39,9 +39,9 @@ export class NodesValidationService {
     );
   }
 
-  allRejectedNodes(): Observable<NodesValidationApiModel> {
+  allrejectedForQualityNodes(): Observable<NodesValidationApiModel> {
     return this._http.get<NodesValidationApiModel>(
-      env.NodesValidation.url + env.NodesValidation.endpoints.readAllRejected,
+      env.NodesValidation.url + env.NodesValidation.endpoints.readAllRejectedForQuality,
       {
         headers: this.headers,
       }
