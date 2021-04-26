@@ -45,7 +45,6 @@ export class GeneralFunctionsService {
   formatDate(template, customDate) {
     var specs = 'YYYY:MM:DD:HH:mm:ss'.split(':');
     var date = new Date(customDate);
-    console.log('date', date);
 
     return date
       .toISOString()

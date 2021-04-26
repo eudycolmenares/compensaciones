@@ -20,7 +20,7 @@ export class BillingPeriodsComponent implements OnInit {
 
   // table
   dataToTable: object[];
-  currentPeriod : number = null;
+  currentPeriod: number = null;
   structure: object[] = [
     {
       name: 'periodId',
@@ -80,7 +80,7 @@ export class BillingPeriodsComponent implements OnInit {
           data.endDate = this._gnrScv.formatDate_billingPeriods(data.endDate);
         });
       });
-      this.currentPeriod = this._billingPeriodSvc.submitCurrentBillingPeriod();
+    this.currentPeriod = this._billingPeriodSvc.submitCurrentBillingPeriod();
   }
 
   invalidFieldForm(fieldName: string) {
@@ -98,8 +98,6 @@ export class BillingPeriodsComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.billingPeriodForm.value);
-
     if (this.billingPeriodForm.invalid) {
       return Object.values(this.billingPeriodForm.controls).forEach(
         (control) => {
@@ -112,8 +110,6 @@ export class BillingPeriodsComponent implements OnInit {
       if (this.actionForm === 'create') {
         this.createBillingPeriodApi(dataRequest);
       } else {
-        console.log('data form enviada: ', this.billingPeriodForm.value);
-        
         dataRequest.TblBillingPeriods.periodId = this.billingPeriodForm.get(
           'periodId'
         ).value;
@@ -184,19 +180,14 @@ export class BillingPeriodsComponent implements OnInit {
   }
 
   setForm(data: models.BillingPeriodModel) {
-    console.log('data', data);
-    
     this.billingPeriodForm.reset({
       periodId: data.periodId,
       billingDate: [data.startDate, data.endDate],
       invoiced: data.invoiced,
     });
-    console.log(this.billingPeriodForm.value);
   }
 
   deleteBillingPeriod(billingPeriod: models.BillingPeriodModel) {
-    console.log('delete data',billingPeriod);
-    
     this._billingPeriodSvc
       .actionsBillingPeriod(
         {

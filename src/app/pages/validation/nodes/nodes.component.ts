@@ -18,81 +18,16 @@ export class NodesComponent implements OnInit {
   selectService_Node: DataList[];
   selectRevision_Node: DataList[];
   nameTableSelected_download: string = '';
-  selectedRevisionButtons:string[] = [];
+  selectedRevisionButtons: string[] = [];
 
   // table
   dataToTable: object[];
+  dataToTableFilter: object[];
   structure: {
     name: string;
     description: string;
     validation: string;
-}[] = [
-    {
-      name: 'incidence',
-      description: 'Incidente',
-      validation: '',
-    },
-    {
-      name: 'ciPpal',
-      description: 'CI Principal',
-      validation: '',
-    },
-    {
-      name: 'nodeAdic',
-      description: 'CI Adicional',
-      validation: '',
-    },
-    {
-      name: 'durationFormat',
-      description: 'Duración',
-      validation: '',
-    },
-    {
-      name: 'state',
-      description: 'Estado',
-      validation: '',
-    },
-    {
-      name: 'userObservation',
-      description: 'Observación',
-      validation: 'observation',
-    },
-    {
-      name: 'compensatesInt',
-      description: 'Compensa Internet',
-      validation: 'yes-no-x',
-    },
-    {
-      name: 'compensatesTel',
-      description: 'Compensa TelefonÍa',
-      validation: 'yes-no-x',
-    },
-    {
-      name: 'compensatesTv',
-      description: 'Compensa Televisión',
-      validation: 'yes-no-x',
-    },
-    {
-      name: 'originType',
-      description: 'Tipo origen',
-      validation: '',
-    },
-    {
-      name: 'revision',
-      description: 'Revisión',
-      validation: '',
-    },
-    {
-      name: 'customDateInNode',
-      description: 'Fecha inicio incidente',
-      validation: '',
-    },
-    {
-      name: 'customDateEndNode',
-      description: 'Fecha fin incidente',
-      validation: '',
-    },
-  ];
+  }[] = [];
   changeIconValidation = true;
 
   constructor(
@@ -107,17 +42,11 @@ export class NodesComponent implements OnInit {
 
   createForm() {
     this.nodeForm = this._fb.group({
-      listNodes_Revision: [
-        { key: 'approved'},
-        [Validators.required],
-      ],
+      listNodes_Revision: [{ key: 'approved' }, [Validators.required]],
     });
 
     this.nodeRevisionForm = this._fb.group({
-      filterRevision: [
-        { key: 'all'},
-        [Validators.required],
-      ],
+      filterRevision: [{ key: 'all' }, [Validators.required]],
     });
   }
 
@@ -141,48 +70,173 @@ export class NodesComponent implements OnInit {
     ];
 
     this.selectRevision_Node = [
-      { key: 'all', value: 'Todos los registros' },
+      { key: 'ALL', value: 'Todos los registros' },
       { key: 'APROBADO', value: 'Revisión - Aprobado' },
       { key: 'RECHAZADO', value: 'Revisión - Rechazado' },
-      { key: 'RECHAZADO CALIDAD', value: 'Revisión - Rechazado Calidad' },
-    ]
+      { key: '', value: 'Revisión - Candidato' },
+    ];
 
     this.initialCharge();
   }
 
   initialCharge() {
     if (this.nodeForm.get('listNodes_Revision').value.key === 'approved') {
-      this.structure[10].validation = 'revision-approved';
+      this.structure = [
+        {
+          name: 'incidence',
+          description: 'Incidente',
+          validation: '',
+        },
+        {
+          name: 'ciPpal',
+          description: 'CI Principal',
+          validation: '',
+        },
+        {
+          name: 'nodeAdic',
+          description: 'CI Adicional',
+          validation: '',
+        },
+        {
+          name: 'durationFormat',
+          description: 'Duración',
+          validation: '',
+        },
+        {
+          name: 'state',
+          description: 'Estado',
+          validation: '',
+        },
+        {
+          name: 'userObservation',
+          description: 'Observación',
+          validation: 'observation',
+        },
+        {
+          name: 'compensatesInt',
+          description: 'Compensa Internet',
+          validation: 'yes-no-x',
+        },
+        {
+          name: 'compensatesTel',
+          description: 'Compensa TelefonÍa',
+          validation: 'yes-no-x',
+        },
+        {
+          name: 'compensatesTv',
+          description: 'Compensa Televisión',
+          validation: 'yes-no-x',
+        },
+        {
+          name: 'originType',
+          description: 'Tipo origen',
+          validation: '',
+        },
+        {
+          name: 'revision',
+          description: 'Revisión',
+          validation: 'revision-approved',
+        },
+        {
+          name: 'customDateInNode',
+          description: 'Fecha inicio incidente',
+          validation: '',
+        },
+        {
+          name: 'customDateEndNode',
+          description: 'Fecha fin incidente',
+          validation: '',
+        },
+      ];
       this._nodesSvc
         .allApprovedNodes()
         .subscribe((resp: models.NodesValidationApiModel) => {
           this.dataToTable = this.parseDateDataToTable(resp.tblMaximum);
         });
-        this.nameTableSelected_download = 'nodos_aprovados';
-        this.selectedRevisionButtons = ['edit', 'disable', 'delete'];
+      this.nameTableSelected_download = 'nodos_aprovados';
+      this.selectedRevisionButtons = ['edit', 'disable', 'delete'];
     }
 
     if (this.nodeForm.get('listNodes_Revision').value.key === 'rejected') {
-      this.structure[10].validation = 'revision-rejected';
+      this.dataToTableFilter = [];
+      this.structure = this.structure = [
+        {
+          name: 'incidence',
+          description: 'Incidente',
+          validation: '',
+        },
+        {
+          name: 'ciPpal',
+          description: 'CI Principal',
+          validation: '',
+        },
+        {
+          name: 'nodeAdic',
+          description: 'CI Adicional',
+          validation: '',
+        },
+        {
+          name: 'durationFormat',
+          description: 'Duración',
+          validation: '',
+        },
+        {
+          name: 'state',
+          description: 'Estado',
+          validation: '',
+        },
+        {
+          name: 'userObservation',
+          description: 'Observación',
+          validation: 'observation',
+        },
+        {
+          name: 'revision',
+          description: 'Revisión',
+          validation: 'revision-rejected',
+        },
+        {
+          name: 'customDateInNode',
+          description: 'Fecha inicio incidente',
+          validation: '',
+        },
+        {
+          name: 'customDateEndNode',
+          description: 'Fecha fin incidente',
+          validation: '',
+        },
+      ];
       this._nodesSvc
         .allrejectedForQualityNodes()
         .subscribe((resp: models.NodesValidationApiModel) => {
           this.dataToTable = this.parseDateDataToTable(resp.tblMaximum);
         });
       this.nameTableSelected_download = 'nodos_rechazados';
-      this.selectedRevisionButtons = ['', 'disable', 'delete'];
+      this.selectedRevisionButtons = [];
     }
   }
 
-  filterRevisionData () {
-    // if (this.nodeRevisionForm.get('filterRevision').value.key === 'all') {
-    //   this.dataToTableFilter = this.dataToTable;
-    // }else {
+  filterRevisionData(dataFilterOption) {
+    console.log(dataFilterOption);
+    if (dataFilterOption === 'ALL') {
+      this.dataToTableFilter = this.dataToTable;
+    } else if (dataFilterOption === 'APROBADO') {
+      this.dataToTableFilter = this.dataToTable.filter(
+        (data) => data['revision'] === dataFilterOption
+      );
+    } else if (dataFilterOption === 'RECHAZADO') {
+      this.dataToTableFilter = this.dataToTable.filter(
+        (data) => data['revision'] === dataFilterOption
+      );
+    } else {
+      this.dataToTableFilter = this.dataToTable.filter(
+        (data) =>
+          data['revision'] === dataFilterOption ||
+          data['revision'] === undefined
+      );
+    }
 
-    // }
-    // this.dataToTable = this.dataToTable.filter( (data: models.NodesValidationModel) => {
-    //   data.revision === this.nodeRevisionForm.get('filterRevision').value.key
-    // } )
+    console.log(this.dataToTable);
   }
 
   parseDateDataToTable(dataReceived) {
@@ -287,8 +341,34 @@ export class NodesComponent implements OnInit {
     }
 
     const separator = '|';
-    const keys = ['incidence', 'ciPpal', 'durationFormat', 'state', 'userObservation', 'compensatesInt', 'compensatesTel', 'compensatesTv', 'originType', 'revision', 'customDateInNode', 'customDateEndNode'];
-    const keysSpanish = ['Incidente', 'CI', 'Duración', 'Estado', 'Observación', 'Compensa Internet', 'Compensa TelefonÍa', 'Compensa Televisión', 'Tipo origen', 'Revisión', 'Fecha inicio incidente', 'Fecha fin incidente'];
+    const keys = [
+      'incidence',
+      'ciPpal',
+      'durationFormat',
+      'state',
+      'userObservation',
+      'compensatesInt',
+      'compensatesTel',
+      'compensatesTv',
+      'originType',
+      'revision',
+      'customDateInNode',
+      'customDateEndNode',
+    ];
+    const keysSpanish = [
+      'Incidente',
+      'CI',
+      'Duración',
+      'Estado',
+      'Observación',
+      'Compensa Internet',
+      'Compensa TelefonÍa',
+      'Compensa Televisión',
+      'Tipo origen',
+      'Revisión',
+      'Fecha inicio incidente',
+      'Fecha fin incidente',
+    ];
     const csvContent =
       keysSpanish.join(separator) +
       '\n' +

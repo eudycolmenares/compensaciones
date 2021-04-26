@@ -1,8 +1,8 @@
 <section class="container py-3">
   <app-breadcrumb></app-breadcrumb>
 
-  <div class="container-add px-sm-2 px-md-5 d-flex justify-content-center">
-
+  <div class="container-add px-sm-2 px-md-5">
+    <div class="row justify-content-md-center">
       <div class="col-sm-4">
         <form autocomplete="off" [formGroup]="nodeForm">
           <p-dropdown
@@ -13,40 +13,44 @@
             (onChange)="initialCharge()"
           >
             <ng-template let-options pTemplate="item">
-              <div
-              >
+              <div>
                 {{ options.value }}
               </div>
             </ng-template>
           </p-dropdown>
         </form>
       </div>
+    </div>
 
-      <div class="col-sm-4">
+    <div class="row mt-4 justify-content-md-center">
+      <div
+        class="col-sm-4"
+        *ngIf="this.nodeForm.get('listNodes_Revision').value.key === 'approved'"
+      >
         <form autocomplete="off" [formGroup]="nodeRevisionForm">
           <p-dropdown
             [options]="selectRevision_Node"
             optionLabel="value"
             class="p-inputtext-sm"
-            formControlName="nodeRevisionForm"
-            (onChange)="initialCharge()"
+            formControlName="filterRevision"
+            (onChange)="filterRevisionData($event.value.key)"
           >
             <ng-template let-options pTemplate="item">
-              <div
-              >
+              <div>
                 {{ options.value }}
               </div>
             </ng-template>
           </p-dropdown>
         </form>
       </div>
-    
+    </div>
   </div>
+
 
   <hr />
 
   <app-table
-    [dataBase]="dataToTable"
+    [dataBase]="dataToTableFilter || dataToTable"
     [structure]="structure"
     [validation]="changeIconValidation"
     [buttons]="selectedRevisionButtons"
