@@ -9,7 +9,7 @@ const ROUTES: Routes = [
     path: '',
     component: DashboardComponent,
     children: [
-      { path: '', pathMatch: 'full', redirectTo: 'process-rr' },
+      { path: '', pathMatch: 'full', redirectTo: 'observation' }, // process-rr
       {
         path: 'settings',
         canActivate: [AuthenticatedGuard],
@@ -109,7 +109,12 @@ const ROUTES: Routes = [
         path: 'email',
         canActivate: [AuthenticatedGuard],
         loadChildren: () => import('../parameterization/email/email/email.module').then(m => m.EmailModule),
-      }
+      },
+      {
+        path: 'observation',
+        canActivate: [AuthenticatedGuard],
+        loadChildren: () => import('../validation/observation/observation.module').then(m => m.ObservationModule),
+      },
     ],
   }
 ];

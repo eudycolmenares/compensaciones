@@ -82,7 +82,11 @@ export const RoutesData = {
   'email': {
     url: ['dashboard', 'email'],
     breadcrumb: ['Parametrización', 'Email de Supervisión']
-  }
+  },
+  'observation': {
+    url: ['dashboard', 'observation'],
+    breadcrumb: ['Validación', 'Observación']
+  },
 }
 
 export enum ServicesSettings {

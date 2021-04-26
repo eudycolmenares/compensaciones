@@ -274,8 +274,19 @@ export const environment = {
         sendMail: 'PutMessage'
       },
     },
+    // WSCompensaciones-web/webresources/WSCompensaciones/ObservationToValidateService/read/all
+    // Observacion Nodos
+    Observation: {
+      url: API_COMPENSACIONES_WEB + 'WSCompensaciones/ObservationToValidateService/',
+      endpoints: {
+        readall: 'read/all',
+        create: 'create',
+        update: 'update',
+        delete: 'delete',
+      },
+    },
   },
-  // RR - parameterization - billing periods
+  // RR - parameterization - billing periods // acomodar
   BillingPeriods: {
     url: API_COMPENSACIONES_WEB + 'WSBilling/BillingPeriodsService/',
     endpoints: {
@@ -285,7 +296,7 @@ export const environment = {
       delete: 'delete',
     },
   },
-  // Billing - Supervision Process
+  // Billing - Supervision Process // acomodar
   BillingSupervision: {
     url: API_COMPENSACIONES_WEB + 'WSBilling/',
     endpoints: {
@@ -294,7 +305,7 @@ export const environment = {
       update: 'SupervisionProcessService/update'
     },
   },
-  // RR - validation - node
+  // RR - validation - node // acomodar
   NodesValidation: {
     url: API_COMPENSACIONES_WEB + 'WSCompensaciones/MaximoService/',
     endpoints: {
@@ -304,7 +315,7 @@ export const environment = {
       update: 'update',
     },
   },
-  // RR - Billing - RR Compensated Accounts
+  // RR - Billing - RR Compensated Accounts // acomodar
   compensatedAccounts: {
     url: API_COMPENSACIONES_BATCHRR + 'WSBillingRR/',
     endpoints: {

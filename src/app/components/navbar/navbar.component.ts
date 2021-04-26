@@ -134,7 +134,13 @@ export class NavbarComponent implements OnInit {
                 title: 'Validación Fallas',
                 icon:'pi pi-fw pi-check-square',
                 routerLink: ['/dashboard/rr-failure-validation']
-              }
+              },
+              {
+                label: 'Observación',
+                title: 'Observación',
+                icon:'pi pi-fw pi-search',
+                routerLink: ['/dashboard/observation']
+              },
             ]
           },
           {
