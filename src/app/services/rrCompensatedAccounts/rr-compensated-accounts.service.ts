@@ -303,7 +303,7 @@ export class RrCompensatedAccountsService {
 
   allCompensationValue(): Observable<any> {
     return this._http.get<any>(
-      env.BillingSupervision.url + env.BillingSupervision.endpoints.compensationValue,
+      env.endpoints.BillingSupervision.url + env.endpoints.BillingSupervision.endpoints.compensationValue,
       {
         headers: this.headers,
       }

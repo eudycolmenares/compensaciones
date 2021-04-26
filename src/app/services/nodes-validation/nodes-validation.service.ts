@@ -23,7 +23,7 @@ export class NodesValidationService {
 
   allNodesValidation(): Observable<NodesValidationApiModel> {
     return this._http.get<NodesValidationApiModel>(
-      env.NodesValidation.url + env.NodesValidation.endpoints.readAll,
+      env.endpoints.NodesValidation.url + env.endpoints.NodesValidation.endpoints.readAll,
       {
         headers: this.headers,
       }
@@ -32,7 +32,7 @@ export class NodesValidationService {
 
   allApprovedNodes(): Observable<NodesValidationApiModel> {
     return this._http.get<NodesValidationApiModel>(
-      env.NodesValidation.url + env.NodesValidation.endpoints.readAllApproved,
+      env.endpoints.NodesValidation.url + env.endpoints.NodesValidation.endpoints.readAllApproved,
       {
         headers: this.headers,
       }
@@ -41,7 +41,7 @@ export class NodesValidationService {
 
   allrejectedForQualityNodes(): Observable<NodesValidationApiModel> {
     return this._http.get<NodesValidationApiModel>(
-      env.NodesValidation.url + env.NodesValidation.endpoints.readAllRejectedForQuality,
+      env.endpoints.NodesValidation.url + env.endpoints.NodesValidation.endpoints.readAllRejectedForQuality,
       {
         headers: this.headers,
       }
@@ -50,7 +50,7 @@ export class NodesValidationService {
 
   updateNodeValidation(body: RequestModel): Observable<ResponseModel> {
     return this._http.put<ResponseModel>(
-      env.NodesValidation.url + env.NodesValidation.endpoints.update,
+      env.endpoints.NodesValidation.url + env.endpoints.NodesValidation.endpoints.update,
       body,
       {
         headers: this.headers,

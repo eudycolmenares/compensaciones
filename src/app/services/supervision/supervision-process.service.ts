@@ -22,12 +22,15 @@ export class SupervisionProcessService {
   constructor(private http: HttpClient) { }
 
   allProcess(): Observable<any> {
-    return this.http.get<any>(env.BillingSupervision.url + env.BillingSupervision.endpoints.readAll, { headers: this.headers });
+    return this.http.get<any>(
+      env.endpoints.BillingSupervision.url + env.endpoints.BillingSupervision.endpoints.readAll,
+      { headers: this.headers }
+    );
   }
 
   updateProcess(body: reqUpdateModel): Observable<respUpdateModel> {
     return this.http.put<respUpdateModel>(
-      env.BillingSupervision.url + env.BillingSupervision.endpoints.update,
+      env.endpoints.BillingSupervision.url + env.endpoints.BillingSupervision.endpoints.update,
       body,
       { headers: this.headers }
     );

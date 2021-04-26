@@ -31,7 +31,7 @@ export class BillingPeriodsService {
 
   allBillingPeriods(): Observable<BillingPeriodsApiModel> {
     return this._http.get<BillingPeriodsApiModel>(
-      env.BillingPeriods.url + env.BillingPeriods.endpoints.readAll,
+      env.endpoints.BillingPeriods.url + env.endpoints.BillingPeriods.endpoints.readAll,
       {
         headers: this.headers,
       }
@@ -183,7 +183,7 @@ export class BillingPeriodsService {
 
       if (DataNumber > 0) {
         console.log('data filter 2: ', dataFilter);
-        
+
         resol({
           exists: true,
           generalResponse: {
@@ -279,7 +279,7 @@ export class BillingPeriodsService {
       } else {
         return this._http
           .post<ResponseModel>(
-            env.BillingPeriods.url + env.BillingPeriods.endpoints.create,
+            env.endpoints.BillingPeriods.url + env.endpoints.BillingPeriods.endpoints.create,
             body,
             {
               headers: this.headers,
@@ -303,15 +303,15 @@ export class BillingPeriodsService {
       console.log((body.TblBillingPeriods.periodId !== response.currentPeriod.periodId));
       console.log((body.TblBillingPeriods.periodId === response.currentPeriod.periodId));
       console.log(response['exists'] && (body.TblBillingPeriods.periodId !== response.currentPeriod.periodId) );
-      
-      
+
+
       if (response['exists'] ) {
         return response;
-        
+
       } else {
         return this._http
           .put<ResponseModel>(
-            env.BillingPeriods.url + env.BillingPeriods.endpoints.update,
+            env.endpoints.BillingPeriods.url + env.endpoints.BillingPeriods.endpoints.update,
             body,
             {
               headers: this.headers,
@@ -327,8 +327,8 @@ export class BillingPeriodsService {
 
     return this._http
       .delete<ResponseModel>(
-        env.BillingPeriods.url +
-          env.BillingPeriods.endpoints.delete +
+        env.endpoints.BillingPeriods.url +
+          env.endpoints.BillingPeriods.endpoints.delete +
           `/${periodId}`,
         {
           headers: this.headers,

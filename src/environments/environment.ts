@@ -122,6 +122,16 @@ export const environment = {
         delete: 'delete',
       },
     },
+    // RR - parameterization - billing periods // acomodar
+    BillingPeriods: {
+      url: API_COMPENSACIONES_WEB + 'WSBilling/BillingPeriodsService/',
+      endpoints: {
+        readAll: 'read/all',
+        create: 'create',
+        update: 'update',
+        delete: 'delete',
+      },
+    },
     // Validation Accounts
     ValidationAccounts: {
       url: API_COMPENSACIONES_WEB + 'WSCompensaciones/CrcCompensationService/',
@@ -189,6 +199,16 @@ export const environment = {
         create: 'create',
         update: 'update',
         delete: 'delete',
+      },
+    },
+    // RR - validation - node // acomodar
+    NodesValidation: {
+      url: API_COMPENSACIONES_WEB + 'WSCompensaciones/MaximoService/',
+      endpoints: {
+        readAll:  + 'readAll',
+        readAllApproved: 'readAllApproved',
+        readAllRejectedForQuality: 'readAllQualityReject',
+        update: 'update',
       },
     },
     // failure validation - TBL_COMPES_IMPROCEDENCIA - Improcedencia_falla_masiva
@@ -274,6 +294,15 @@ export const environment = {
         sendMail: 'PutMessage'
       },
     },
+    // Billing - Supervision Process // acomodar
+    BillingSupervision: {
+      url: API_COMPENSACIONES_WEB + 'WSBilling/',
+      endpoints: {
+        compensationValue: 'CompensationValueService/read/all',
+        readAll: 'SupervisionProcessService/read/all',
+        update: 'SupervisionProcessService/update'
+      },
+    },
     // WSCompensaciones-web/webresources/WSCompensaciones/ObservationToValidateService/read/all
     // Observacion Nodos
     Observation: {
@@ -284,42 +313,6 @@ export const environment = {
         update: 'update',
         delete: 'delete',
       },
-    },
-  },
-  // RR - parameterization - billing periods // acomodar
-  BillingPeriods: {
-    url: API_COMPENSACIONES_WEB + 'WSBilling/BillingPeriodsService/',
-    endpoints: {
-      readAll: 'read/all',
-      create: 'create',
-      update: 'update',
-      delete: 'delete',
-    },
-  },
-  // Billing - Supervision Process // acomodar
-  BillingSupervision: {
-    url: API_COMPENSACIONES_WEB + 'WSBilling/',
-    endpoints: {
-      compensationValue: 'CompensationValueService/read/all',
-      readAll: 'SupervisionProcessService/read/all',
-      update: 'SupervisionProcessService/update'
-    },
-  },
-  // RR - validation - node // acomodar
-  NodesValidation: {
-    url: API_COMPENSACIONES_WEB + 'WSCompensaciones/MaximoService/',
-    endpoints: {
-      readAll:  + 'readAll',
-      readAllApproved: 'readAllApproved',
-      readAllRejectedForQuality: 'readAllQualityReject',
-      update: 'update',
-    },
-  },
-  // RR - Billing - RR Compensated Accounts // acomodar
-  compensatedAccounts: {
-    url: API_COMPENSACIONES_BATCHRR + 'WSBillingRR/',
-    endpoints: {
-      run: 'BillingService/run',
     },
   },
 };
