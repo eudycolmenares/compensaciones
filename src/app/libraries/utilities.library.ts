@@ -176,6 +176,10 @@ export const languagePrimeNG = {
 
 export const timeExpirationMinutes = 15;
 
+export const timeRefreshMinutes = 0.16;
+
+export const statusInProgress = ['INICIADO', 'PROCESO'];
+
 export const bodyMailService = {
   "headerRequest" : {
     "transactionId" : "transactionId431",
@@ -360,3 +364,7 @@ export const loadFaultsParams = {
     previousInformation: 'A continuación, se muestra información previa del archivo seleccionado para su carga, como a su vez las pestanas que posee y la información en las mismas.'
   }
 }
+
+export const wsWithOutLoader = [
+  '/WSCompensacionesBatchRR-web/webresources/WSCompensacionesBatchRR/LoadService/read/all'
+];

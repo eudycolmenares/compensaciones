@@ -9,7 +9,7 @@ const ROUTES: Routes = [
     path: '',
     component: DashboardComponent,
     children: [
-      { path: '', pathMatch: 'full', redirectTo: 'process-rr' },
+      { path: '', pathMatch: 'full', redirectTo: 'process-rr' }, // load-faults
       {
         path: 'settings',
         canActivate: [AuthenticatedGuard],

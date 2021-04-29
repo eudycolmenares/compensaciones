@@ -95,7 +95,14 @@
           <span>{{ msgProcessedFiles }}</span>
       </div>
   </p-divider>
-  <p-panel header="Archivos Cargados" [toggleable]="true" collapsed="false">
+  <p-panel [toggleable]="true" [collapsed]="false">
+    <ng-template pTemplate="header">
+      <div>
+        Archivos Cargados
+        <div *ngIf="loaderCustom" class="spinner-grow spinner-grow-sm ml-2" role="status">
+        </div>
+      </div>
+    </ng-template>
     <ng-template pTemplate="icons">
       <button pButton class="p-panel-header-icon p-link" icon="pi pi-cog" (click)="menu.toggle($event)">
       </button>

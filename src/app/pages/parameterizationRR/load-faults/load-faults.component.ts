@@ -14,7 +14,11 @@ import {
   loadModel
 } from '../../../models/faults';
 import { CustomValidation } from 'src/app/utils/custom-validation';
-import { loadFaultsParams } from '../../../libraries/utilities.library';
+import {
+  loadFaultsParams,
+  timeRefreshMinutes as timeExp,
+  statusInProgress
+} from '../../../libraries/utilities.library';
 
 @Component({
   selector: 'app-load-faults',
@@ -43,6 +47,8 @@ export class LoadFaultsComponent implements OnInit {
     }
   ];
   uploadedFiles: loadModel[] = null;
+  loaderCustom = false;
+  timeOutSesion = null;
   // table
   dataToTable: object[];
   structure: object[] = [];
@@ -63,18 +69,23 @@ export class LoadFaultsComponent implements OnInit {
   }
 
   initialSetup() {
-     this.createForm();
+    this.createForm();
     this.updateData();
   }
 
   updateData() {
     const arrayTypesFaults = loadFaultsParams.optionsList.reduce((pre, current) => [...pre, current.valueOption], []);
+    this.loaderCustom = true;
     this.faultsScv.readAllFaults().subscribe((resp: faultsApiModel) => {
+      this.loaderCustom = false;
       if (resp.GeneralResponse.code == '0') {
         this.uploadedFiles = resp.Loads.Load.filter(item => arrayTypesFaults.includes(item.loadType));
         this.compareToSort(this.uploadedFiles);
+        if (!!this.uploadedFiles.find(item => statusInProgress.includes(item.state))) {
+          this.startMyTimeOut();
+        }
       } else { this.toastScv.showError(resp.GeneralResponse.descriptionCode, resp.GeneralResponse.messageCode); }
-    });
+    }, () => this.loaderCustom = false);
   }
   createForm() {
     this.form = this.fb.group({
@@ -199,5 +210,10 @@ export class LoadFaultsComponent implements OnInit {
   }
   compareToSort(items: loadModel[]) {
     return items.sort((a, b) => new Date(b.createDate).getTime() - new Date(a.createDate).getTime());
+  }
+  startMyTimeOut() {
+    this.timeOutSesion = setTimeout(() => {
+      this.updateData();
+    }, (timeExp * 60000))
   }
 }

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
+import { wsWithOutLoader } from '../../libraries/utilities.library';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -15,14 +17,16 @@ export class LoadingService {
     if (!url) {
       throw new Error('The request URL must be provided to the LoadingService.setLoading function');
     }
-    if (loading === true) {
-      this.loadingMap.set(url, loading);
-      this.loading$.next(true);
-    }else if (loading === false && this.loadingMap.has(url)) {
-      this.loadingMap.delete(url);
-    }
-    if (this.loadingMap.size === 0) {
-      this.loading$.next(false);
+    if (!wsWithOutLoader.includes(url)) {
+      if (loading === true) {
+        this.loadingMap.set(url, loading);
+        this.loading$.next(true);
+      }else if (loading === false && this.loadingMap.has(url)) {
+        this.loadingMap.delete(url);
+      }
+      if (this.loadingMap.size === 0) {
+        this.loading$.next(false);
+      }
     }
   }
 }
