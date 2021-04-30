@@ -99,7 +99,6 @@ export class ProcessRRComponent implements OnInit {
     this.processesSvc.runNodesRules().subscribe(resp => {
       if (resp.generalResponse.code === '0') {
         this.toastScv.showSuccess(resp.generalResponse.messageCode, resp.generalResponse.descriptionCode);
-        this.sendEmailNotification();
         this.getProcesses();
       } else {
         this.toastScv.showError(resp.generalResponse.messageCode, resp.generalResponse.descriptionCode);
@@ -110,7 +109,6 @@ export class ProcessRRComponent implements OnInit {
     this.processesSvc.runBusinessRules().subscribe(resp => {
       if (resp.GeneralResponse.code === '0') {
         this.toastScv.showSuccess(resp.GeneralResponse.messageCode, resp.GeneralResponse.descriptionCode);
-        this.sendEmailNotification();
         this.getProcesses();
       } else {
         this.toastScv.showError(resp.GeneralResponse.messageCode, resp.GeneralResponse.descriptionCode);
@@ -121,7 +119,6 @@ export class ProcessRRComponent implements OnInit {
     this.processesSvc.ConsolidationAccountsNodes().subscribe(resp => {
       if (resp.GeneralResponse.code === '0') {
         this.toastScv.showSuccess(resp.GeneralResponse.messageCode, resp.GeneralResponse.descriptionCode);
-        this.sendEmailNotification();
         this.getProcesses();
       } else {
         this.toastScv.showError(resp.GeneralResponse.messageCode, resp.GeneralResponse.descriptionCode);
@@ -132,7 +129,6 @@ export class ProcessRRComponent implements OnInit {
     this.processesSvc.confirmBillingFiles().subscribe(resp => {
       if (resp.GeneralResponse.code === '0') {
         this.toastScv.showSuccess(resp.GeneralResponse.messageCode, resp.GeneralResponse.descriptionCode);
-        this.sendEmailNotification();
         this.getProcesses();
       } else {
         this.toastScv.showError(resp.GeneralResponse.messageCode, resp.GeneralResponse.descriptionCode);
@@ -150,7 +146,6 @@ export class ProcessRRComponent implements OnInit {
       if (resp.generalResponse.code != '-1') {
         this.toastScv.showSuccess(resp.generalResponse.messageCode, resp.generalResponse.descriptionCode);
         this.getProcesses();
-        this.sendEmailNotification();
       } else {
         this.toastScv.showError(resp.generalResponse.messageCode, resp.generalResponse.descriptionCode);
       }
@@ -219,7 +214,6 @@ export class ProcessRRComponent implements OnInit {
             this.changeStatusStageServer();
             break;
           case 3:
-            // this.runRuleBusiness()
             this.getAllFaults();
             break;
           case 4:
@@ -229,7 +223,6 @@ export class ProcessRRComponent implements OnInit {
             this.runConsolidateAccNod();
             break;
           case 6:
-            // this.changeStatusStageServer();
             this.getAllFaults();
             break;
           case 7:
