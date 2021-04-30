@@ -2,13 +2,32 @@
   <app-breadcrumb></app-breadcrumb>
 
   <div class="container-add px-sm-2 px-md-5">
+    <div class="formLayout justify-content-center">
+      <ng-container *ngFor="let info of dataCount">
+        <div
+          class="col-sm-3 text-light text-center px-sm-1 mb-4 p-3 container-statistic"
+          [ngClass]="info.activeField ? 'bg-primary' : 'bg-dark'"
+        >
+          <p class="font-weight-bold mb-0">{{ info.nameTable }}</p>
+          <h4>{{ info.amountData }}</h4>
+          <ng-container
+            *ngIf="
+              this.nodeForm.get('listNodes_Revision').value.key === 'approved'
+            "
+          >
+            <p-progressBar [value]="info.percentage"></p-progressBar>
+          </ng-container>
+          <!-- <span class="mt-3">Lorem ipsum dolor sit amet</span> -->
+        </div>
+      </ng-container>
+    </div>
     <div class="row justify-content-md-center">
-      <div class="col-sm-4">
+      <div class="col-sm-4 text-center">
         <form autocomplete="off" [formGroup]="nodeForm">
           <p-dropdown
             [options]="selectService_Node"
             optionLabel="value"
-            class="p-inputtext-sm"
+            class="p-inputtext-sm text-left"
             formControlName="listNodes_Revision"
             (onChange)="initialCharge()"
           >
@@ -22,16 +41,16 @@
       </div>
     </div>
 
-    <div class="row mt-4 justify-content-md-center">
+    <div class="row mt-4 justify-content-center">
       <div
-        class="col-sm-4"
+        class="col-sm-4 text-center"
         *ngIf="this.nodeForm.get('listNodes_Revision').value.key === 'approved'"
       >
         <form autocomplete="off" [formGroup]="nodeRevisionForm">
           <p-dropdown
             [options]="selectRevision_Node"
             optionLabel="value"
-            class="p-inputtext-sm"
+            class="p-inputtext-sm text-left"
             formControlName="filterRevision"
             (onChange)="filterRevisionData($event.value.key)"
           >
@@ -46,18 +65,37 @@
     </div>
   </div>
 
-
   <hr />
 
-  <app-table
-    [dataBase]="dataToTableFilter || dataToTable"
-    [structure]="structure"
-    [validation]="changeIconValidation"
-    [buttons]="selectedRevisionButtons"
-    (editRecord)="approvedNode($event)"
-    (disableRecord)="rejectedQualityNode($event)"
-    (deleteRecord)="rejectedNode($event)"
-  ></app-table>
+  <ng-container
+    *ngIf="
+      this.nodeForm.get('listNodes_Revision').value.key === 'approved';
+      else notApproved
+    "
+  >
+    <app-table
+      [dataBase]="dataToTableFilter"
+      [structure]="structure"
+      [validation]="changeIconValidation"
+      [listObservation]="listObservation"
+      [buttons]="selectedRevisionButtons"
+      (editRecord)="approvedNode($event)"
+      (disableRecord)="rejectedQualityNode($event)"
+      (deleteRecord)="rejectedNode($event)"
+    ></app-table>
+  </ng-container>
+
+  <ng-template #notApproved>
+    <app-table
+      [dataBase]="dataToTable"
+      [structure]="structure"
+      [validation]="changeIconValidation"
+      [buttons]="selectedRevisionButtons"
+      (editRecord)="approvedNode($event)"
+      (disableRecord)="rejectedQualityNode($event)"
+      (deleteRecord)="rejectedNode($event)"
+    ></app-table>
+  </ng-template>
 
   <div *ngIf="dataToTable" class="text-center justify-content-center">
     <button
@@ -65,7 +103,7 @@
       class="btn btn-primary mr-3 btn-sm"
       (click)="downloadDataTable()"
     >
-      Descargar CSV
+      Descargar Excel
     </button>
   </div>
 </section>

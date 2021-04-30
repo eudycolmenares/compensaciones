@@ -14,10 +14,13 @@ export class TableComponent implements OnInit {
   @Input() structure: object[];
   @Input() buttons: string[] = [Buttons.edit, Buttons.disable, Buttons.delete];
   @Input() validation: boolean = false;
+  @Input() listObservation: object[];
   @Input() CurrentPeriodSent: number = null;
   @Output() editRecord: EventEmitter<object> ;
   @Output() disableRecord: EventEmitter<object> ;
   @Output() deleteRecord: EventEmitter<object> ;
+
+  statusObservationItem: boolean = false;
   // Filter colums to view
   cols: any[];
   _selectedColumns: any[];
@@ -27,6 +30,7 @@ export class TableComponent implements OnInit {
     { label: 'Monto Bajo', value: '0' },
   ];
   randomKey: string;
+  cloneItem: { [s: string]: any } = {};
 
   constructor(
     private confirmationSvc: ConfirmationService,
@@ -44,6 +48,12 @@ export class TableComponent implements OnInit {
 
   ngOnChanges() {
     this.ngOnInit();
+  }
+
+  editObservation(item) {
+    console.log(item);
+    this.statusObservationItem = true;
+
   }
 
   sendDataToEdit(item) {
@@ -89,5 +99,16 @@ export class TableComponent implements OnInit {
       ( !(parseInt(value) >= 0) && value.toUpperCase() === 'SI')
     ) ? result = true : result = false;
     return result;
+  }
+
+  onRowEditInit(item, index, field){
+    console.log('data received: ',item[field]);
+    this.cloneItem[index] = {...item};
+  }
+
+  onRowEditCancel(item, index, field){
+    if (item[field] !== this.cloneItem[index][field]) {
+      this.dataBase[index][field] = this.cloneItem[index][field];
+    }
   }
 }

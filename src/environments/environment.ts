@@ -205,10 +205,18 @@ export const environment = {
     NodesValidation: {
       url: API_COMPENSACIONES_WEB + 'WSCompensaciones/MaximoService/',
       endpoints: {
-        readAll:  + 'readAll',
+        readAll: 'readAll',
         readAllApproved: 'readAllApproved',
         readAllRejectedForQuality: 'readAllQualityReject',
         update: 'update',
+      },
+    },
+    // RR - validation - node (new causes)// acomodar
+    NewCauses: {
+      url: API_COMPENSACIONES_WEB + 'WSCompensaciones/NewCausesService/',
+      endpoints: {
+        run:  'run',
+        readAll:  'read/all',
       },
     },
     // failure validation - TBL_COMPES_IMPROCEDENCIA - Improcedencia_falla_masiva

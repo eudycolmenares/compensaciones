@@ -1,10 +1,12 @@
 <div class="container-table px-sm-0 px-md-3">
 
-  <p-table #dt1 dataKey="id" styleClass="p-datatable-sm" selectionMode="single"
+  <p-table #dt1 styleClass="p-datatable-sm" selectionMode="single"
     [value]="dataBase" [columns]="selectedColumns"
     [paginator]="true" [rows]="5" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,20]"
     [globalFilterFields]="selectedColumns" [globalFilterFields]="['amount']"
     [autoLayout]="true"
+    dataKey="incidence"
+    editMode="row"
   >
 
     <ng-template pTemplate="caption">
@@ -55,8 +57,8 @@
       </tr>
     </ng-template>
 
-    <ng-template pTemplate="body" let-item let-i="rowIndex" let-columns="columns">
-      <tr>
+    <ng-template pTemplate="body" let-item let-editing="editing" let-i="rowIndex" let-columns="columns">
+      <tr [pEditableRow]="item">
         <td style="width: 1rem">{{ i + 1}}</td>
         <ng-container *ngFor="let opt of columns" [ngSwitch]="opt.validation" >
           <td *ngSwitchCase="'yes-no'">{{ (yesNoValidation(item[opt.name])) ? 'Si' : 'No' }}</td>
@@ -66,7 +68,38 @@
           <td *ngSwitchCase="'service'">{{ (item[opt.name] === '1' || item[opt.name] === 1) ? 'Aplica' : 'N/A' }}</td>
           <td *ngSwitchCase="'object'">{{ item[opt.name][opt.subname] }}</td>
           <td *ngSwitchCase="'union-date'">{{ item[opt.name] }} {{ item[opt.name2] }}</td>
-          <td *ngSwitchCase="'observation'" style="min-width: 9rem"><textarea class="form-control form-control-sm" [value]="item[opt.name]" (change)="item[opt.name]=$event.target.value"></textarea></td>
+          <td *ngSwitchCase="'observation'" style="min-width: 14rem">
+            <div *ngIf="buttons.length !== 0 else optionReject" class="row">
+            <p-cellEditor class="col-sm-9 pl-3 pr-1">
+                <ng-template pTemplate="input">
+                  <select
+                  class="form-control form-control-sm"
+                  [(ngModel)]="item[opt.name]"
+                  
+                >
+                  <option [value]=" '' || undefined">- Seleccione -</option>
+                  <option
+                    *ngFor="let observationOption of listObservation"
+                    [value]="observationOption.description"
+                  >
+                    {{ observationOption.description }}
+                  </option>
+                </select>
+                </ng-template>
+                <ng-template pTemplate="output">
+                    {{item[opt.name]}}
+                </ng-template>
+            </p-cellEditor>
+            <div class="col-sm-3 btn-group px-0">
+              <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="bi bi-pencil-fill" (click)="onRowEditInit(item, i, 'userObservation')" class="p-button-rounded p-button-text"></button>
+              <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check" class="p-button-rounded p-button-text p-button-success p-mr-2"></button>
+              <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times" (click)="onRowEditCancel(item, i, 'userObservation')" class="p-button-rounded p-button-text p-button-danger"></button>
+            </div>
+          </div>
+            <ng-template #optionReject >
+              <div>{{ item[opt.name] }}</div>
+            </ng-template>
+          </td>
           <td *ngSwitchCase="''">{{ item[opt.name] }}</td>
           <td *ngSwitchCase="'date'">{{ item[opt.name] | date }}</td>
           <td *ngSwitchCase="'revision-approved'">

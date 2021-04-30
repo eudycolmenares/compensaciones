@@ -5,6 +5,7 @@ import { NodesRoutingModule } from './nodes-routing.module';
 import { NodesComponent } from './nodes.component';
 import { DashboardModule } from '../../dashboard/dashboard.module';
 import { DropdownModule } from 'primeng/dropdown';
+import { ProgressBarModule } from 'primeng/progressbar';
 
 @NgModule({
   declarations: [NodesComponent],
@@ -12,7 +13,8 @@ import { DropdownModule } from 'primeng/dropdown';
     CommonModule,
     NodesRoutingModule,
     DashboardModule,
-    DropdownModule
+    DropdownModule,
+    ProgressBarModule
   ]
 })
 export class NodesModule { }

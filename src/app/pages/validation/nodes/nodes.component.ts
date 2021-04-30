@@ -3,9 +3,18 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { GeneralFunctionsService } from '@services/general-functions.service';
 import { NodesValidationService } from '@services/nodes-validation/nodes-validation.service';
+import { NewCauseService } from '@services/newCause/new-cause.service';
 import * as models from '@models/nodes-validation';
+import { NewCausesApiModel, ResponseModel } from '@models/new-cause';
 import { DataList } from '@models/general';
 import { ToastService } from '@shared_services/toast.service';
+import { ObservationService } from '@services/observation/observation.service';
+import { ObservationModel } from '@models/observation';
+
+import * as XLSX from 'xlsx';
+const EXCEL_TYPE =
+  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+const EXCEL_EXTENSION = '.xlsx';
 
 @Component({
   selector: 'app-nodes',
@@ -29,12 +38,90 @@ export class NodesComponent implements OnInit {
     validation: string;
   }[] = [];
   changeIconValidation = true;
+  listObservation: ObservationModel[];
+  nameRowsExcelEnglish: string[] = [];
+  nameRowsExcelSpanish: string[] = [];
+  dataCount_aprroved: {
+    nameTable: string;
+    amountData: number;
+    maximumAmountData: number;
+    percentage: number;
+    activeField: boolean;
+  }[] = [
+    {
+      nameTable: 'Cantidad total de candidatos',
+      amountData: 0,
+      maximumAmountData: 500,
+      percentage: 0,
+      activeField: true,
+    },
+    {
+      nameTable: 'Aprobados (Revisión)',
+      amountData: 0,
+      maximumAmountData: 100,
+      percentage: 0,
+      activeField: false,
+    },
+    {
+      nameTable: 'Rechazados (Revisión)',
+      amountData: 0,
+      maximumAmountData: 200,
+      percentage: 0,
+      activeField: false,
+    },
+    {
+      nameTable: 'Candidatos (A Revisión)',
+      amountData: 0,
+      maximumAmountData: 400,
+      percentage: 0,
+      activeField: false,
+    },
+  ];
+
+  dataCount_invalidData: {
+    nameTable: string;
+    amountData: number;
+    maximumAmountData: number;
+    percentage: number;
+    activeField: boolean;
+  }[] = [
+    {
+      nameTable: 'Cantidad total de datos invalidos',
+      amountData: 0,
+      maximumAmountData: 500,
+      percentage: 0,
+      activeField: true,
+    }];
+
+  dataCount_newCauses: {
+    nameTable: string;
+    amountData: number;
+    maximumAmountData: number;
+    percentage: number;
+    activeField: boolean;
+  }[] = [
+    {
+      nameTable: 'Cantidad total de causas nuevas',
+      amountData: 0,
+      maximumAmountData: 500,
+      percentage: 0,
+      activeField: true,
+    }];
+    dataCount: {
+      nameTable: string;
+      amountData: number;
+      maximumAmountData: number;
+      percentage: number;
+      activeField: boolean;
+    }[] = this.dataCount_aprroved;
 
   constructor(
     private _fb: FormBuilder,
     private _nodesSvc: NodesValidationService,
     private _gnrScv: GeneralFunctionsService,
-    private _toastScv: ToastService
+    private _toastScv: ToastService,
+    private _ObservationSvc: ObservationService,
+    private _newCauseSvc: NewCauseService
   ) {
     this.createForm();
     this.initializeVariables();
@@ -46,7 +133,7 @@ export class NodesComponent implements OnInit {
     });
 
     this.nodeRevisionForm = this._fb.group({
-      filterRevision: [{ key: 'all' }, [Validators.required]],
+      filterRevision: [{ key: 'ALL' }, [Validators.required]],
     });
   }
 
@@ -64,9 +151,20 @@ export class NodesComponent implements OnInit {
   }
 
   initializeVariables() {
+    this._ObservationSvc.allObservation().subscribe((resp) => {
+      if (resp.GeneralResponse.code == '0') {
+        this.listObservation = resp.ObservationsToValidate.ObservationToValidate.filter(
+          (data) => data.state === 1
+        );
+        // this.listObservation =
+        //   resp.ObservationsToValidate.ObservationToValidate;
+      }
+    });
+
     this.selectService_Node = [
       { key: 'approved', value: 'Candidatos' },
-      { key: 'rejected', value: 'Rechazado - data invalida' },
+      { key: 'rejected', value: 'Data invalida' },
+      { key: 'newCause', value: 'Causas nuevas' },
     ];
 
     this.selectRevision_Node = [
@@ -80,6 +178,10 @@ export class NodesComponent implements OnInit {
   }
 
   initialCharge() {
+    this.structure = [];
+    this.nameRowsExcelSpanish = [];
+    this.nameRowsExcelEnglish = [];
+
     if (this.nodeForm.get('listNodes_Revision').value.key === 'approved') {
       this.structure = [
         {
@@ -152,13 +254,34 @@ export class NodesComponent implements OnInit {
         .allApprovedNodes()
         .subscribe((resp: models.NodesValidationApiModel) => {
           this.dataToTable = this.parseDateDataToTable(resp.tblMaximum);
+          
+          this.filterRevisionData(this.nodeRevisionForm.get('filterRevision').value.key);
+          this.dataCount_aprroved[0].amountData = this.dataToTable.length;
+          this.dataCount_aprroved[1].amountData = this.dataToTable.filter(
+            (data: models.NodesValidationModel) => data.revision === 'APROBADO'
+          ).length;
+          this.dataCount_aprroved[2].amountData = this.dataToTable.filter(
+            (data: models.NodesValidationModel) => data.revision === 'RECHAZADO'
+          ).length;
+          this.dataCount_aprroved[3].amountData = this.dataToTable.filter(
+            (data: models.NodesValidationModel) =>
+              data.revision === '' ||
+              data.revision === undefined ||
+              data.revision === null
+          ).length;
+          this.dataCount_aprroved.map((data) => {
+            data.percentage = this.formatDecimal(
+              (data.amountData * 100) / this.dataCount_aprroved[0].amountData,
+              3
+            );
+          });
+          this.dataCount = [...this.dataCount_aprroved];
         });
-      this.nameTableSelected_download = 'nodos_aprovados';
-      this.selectedRevisionButtons = ['edit', 'disable', 'delete'];
+      this.nameTableSelected_download = 'nodos_candidatos_';
+      this.selectedRevisionButtons = ['edit', '', 'delete'];
     }
 
     if (this.nodeForm.get('listNodes_Revision').value.key === 'rejected') {
-      this.dataToTableFilter = [];
       this.structure = this.structure = [
         {
           name: 'incidence',
@@ -210,33 +333,120 @@ export class NodesComponent implements OnInit {
         .allrejectedForQualityNodes()
         .subscribe((resp: models.NodesValidationApiModel) => {
           this.dataToTable = this.parseDateDataToTable(resp.tblMaximum);
+          this.dataCount_invalidData.map((data) => {
+            data.amountData = this.dataToTable.length;
+            data.percentage = this.formatDecimal(
+              (data.amountData * 100) / data.amountData,
+              3
+            );
+          });
+          this.dataCount = this.dataCount_invalidData;
         });
-      this.nameTableSelected_download = 'nodos_rechazados';
+      this.nameTableSelected_download = 'nodos_data_invalida_';
       this.selectedRevisionButtons = [];
     }
+
+    if (this.nodeForm.get('listNodes_Revision').value.key === 'newCause') {
+      this._newCauseSvc.runNewCauses().subscribe((resp: ResponseModel) => {
+        if (resp.GeneralResponse.code == '0') {
+          this.structure = [
+            {
+              name: 'causeCode',
+              description: 'Código Causa',
+              validation: '',
+            },
+            {
+              name: 'failureCode',
+              description: 'Código Falla',
+              validation: '',
+            },
+            {
+              name: 'problemCode',
+              description: 'Código Problema',
+              validation: '',
+            },
+            {
+              name: 'state',
+              description: 'Estado',
+              validation: 'active-desactive',
+            },
+          ];
+          this._newCauseSvc
+            .allNewCauses()
+            .subscribe((resp: NewCausesApiModel) => {
+              this.dataToTable = resp.NewCauses.NewCause;
+              this.dataCount_newCauses.map((data) => {
+                data.amountData = this.dataToTable.length;
+                data.percentage = this.formatDecimal(
+                  (data.amountData * 100) / data.amountData,
+                  3
+                );
+              });
+              this.dataCount = this.dataCount_newCauses;
+            });
+          this.nameTableSelected_download = 'causas_nuevas_';
+          this.selectedRevisionButtons = [];
+          this.structure.forEach((data) => {
+            this.nameRowsExcelSpanish.push(data.description);
+            this.nameRowsExcelEnglish.push(data.name);
+          });
+        } else {
+          this._toastScv.showError(
+            resp.GeneralResponse.messageCode,
+            resp.GeneralResponse.descriptionCode
+          );
+        }
+      });
+    }
+
+    this.structure.forEach((data) => {
+      this.nameRowsExcelSpanish.push(data.description);
+      this.nameRowsExcelEnglish.push(data.name);
+    });
+  }
+
+  formatDecimal(x, posiciones = 0) {
+    var isNeg = x < 0;
+    var decimal = x % 1;
+    var entera = isNeg ? Math.ceil(x) : Math.floor(x);
+    var decimalFormated = Math.floor(
+      Math.abs(decimal) * Math.pow(10, posiciones)
+    );
+    var finalNum =
+      entera + (decimalFormated / Math.pow(10, posiciones)) * (isNeg ? -1 : 1);
+
+    return finalNum;
   }
 
   filterRevisionData(dataFilterOption) {
-    console.log(dataFilterOption);
     if (dataFilterOption === 'ALL') {
       this.dataToTableFilter = this.dataToTable;
+      this.selectColorCard(0);
     } else if (dataFilterOption === 'APROBADO') {
       this.dataToTableFilter = this.dataToTable.filter(
         (data) => data['revision'] === dataFilterOption
       );
+      this.selectColorCard(1);
     } else if (dataFilterOption === 'RECHAZADO') {
       this.dataToTableFilter = this.dataToTable.filter(
         (data) => data['revision'] === dataFilterOption
       );
+      this.selectColorCard(2);
     } else {
       this.dataToTableFilter = this.dataToTable.filter(
         (data) =>
           data['revision'] === dataFilterOption ||
           data['revision'] === undefined
       );
+      this.selectColorCard(3);
     }
+  }
 
-    console.log(this.dataToTable);
+  selectColorCard(index: number) {
+    this.dataCount.map((data) => {
+      data.activeField = false;
+    });
+    this.dataCount[index].activeField = true;
   }
 
   parseDateDataToTable(dataReceived) {
@@ -331,73 +541,60 @@ export class NodesComponent implements OnInit {
 
   downloadDataTable() {
     if (this.dataToTable.length > 0) {
-      this.exportToCsv(this.dataToTable);
+      this.exportAsExcelFile(this.dataToTable);
     }
   }
 
-  exportToCsv(rows: object[]) {
-    if (!rows || !rows.length) {
-      return;
-    }
+  exportAsExcelFile(json: object[]): void {
+    console.log('exportando data en excel');
 
-    const separator = '|';
-    const keys = [
-      'incidence',
-      'ciPpal',
-      'durationFormat',
-      'state',
-      'userObservation',
-      'compensatesInt',
-      'compensatesTel',
-      'compensatesTv',
-      'originType',
-      'revision',
-      'customDateInNode',
-      'customDateEndNode',
-    ];
-    const keysSpanish = [
-      'Incidente',
-      'CI',
-      'Duración',
-      'Estado',
-      'Observación',
-      'Compensa Internet',
-      'Compensa TelefonÍa',
-      'Compensa Televisión',
-      'Tipo origen',
-      'Revisión',
-      'Fecha inicio incidente',
-      'Fecha fin incidente',
-    ];
-    const csvContent =
-      keysSpanish.join(separator) +
-      '\n' +
-      rows
-        .map((row) => {
-          return keys
-            .map((k) => {
-              let cell = row[k] === null || row[k] === undefined ? '' : row[k];
-              cell = cell.toLocaleString();
-              if (cell.search(/("|,|\n)/g) >= 0) {
-                cell = `"${cell}"`;
-              }
-              return cell;
-            })
-            .join(separator);
-        })
-        .join('\n');
+    console.log(json);
+    console.log(this.nameRowsExcelEnglish);
+    const csvContent = json.map((row) => {
+      return this.nameRowsExcelEnglish.map((k) => {
+        let cell = row[k] === null || row[k] === undefined ? '' : row[k];
+        return cell;
+      });
+    });
 
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    var worksheet = XLSX.utils.json_to_sheet([], {
+      header: this.nameRowsExcelSpanish,
+    });
+    worksheet = XLSX.utils.sheet_add_json(worksheet, csvContent, {
+      skipHeader: true,
+      origin: 'A2',
+    });
+    const workbook: XLSX.WorkBook = {
+      Sheets: { Datos: worksheet },
+      SheetNames: ['Datos'],
+    };
+    const excelBuffer: any = XLSX.write(workbook, {
+      bookType: 'xlsx',
+      type: 'array',
+    });
+    this.saveAsExcelFile(excelBuffer);
+  }
+
+  saveAsExcelFile(buffer: any): void {
+    const blob: Blob = new Blob([buffer], { type: EXCEL_TYPE });
     if (navigator.msSaveBlob) {
       // IE 10+
-      navigator.msSaveBlob(blob, this.nameTableSelected_download + '.csv');
+      navigator.msSaveBlob(
+        blob,
+        this.nameTableSelected_download + new Date().getTime() + EXCEL_EXTENSION
+      );
     } else {
       const link = document.createElement('a');
       if (link.download !== undefined) {
         // Browsers that support HTML5 download attribute
         const url = URL.createObjectURL(blob);
         link.setAttribute('href', url);
-        link.setAttribute('download', this.nameTableSelected_download + '.csv');
+        link.setAttribute(
+          'download',
+          this.nameTableSelected_download +
+            new Date().getTime() +
+            EXCEL_EXTENSION
+        );
         link.style.visibility = 'hidden';
         document.body.appendChild(link);
         link.click();
