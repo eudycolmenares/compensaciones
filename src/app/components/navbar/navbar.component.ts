@@ -70,14 +70,14 @@ export class NavbarComponent implements OnInit {
                 routerLink: ['/dashboard/origintype']
               },
               {
-                label: 'Cargue Masivo',
-                title: 'Cargue Masivo',
+                label: 'Cargue Masivo Causas y Síntomas',
+                title: 'Cargue Masivo Causas y Síntomas',
                 icon:'pi pi-fw pi-file-excel',
                 routerLink: ['/dashboard/bulk-load']
               },
               {
-                label: 'Cargar Fallas',
-                title: 'Cargar Fallas',
+                label: 'Cargar Fallas RR',
+                title: 'Cargar Fallas RR',
                 icon:'pi pi-fw pi-cloud-upload',
                 routerLink: ['/dashboard/load-faults']
               },

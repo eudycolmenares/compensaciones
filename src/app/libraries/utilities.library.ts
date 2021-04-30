@@ -260,7 +260,7 @@ export const superProcessParams = {
   },
   msgsByStages: {
     1: {
-      success: 'El proceso ejecución de reglas para nodos ha sido completado. ¡Tener en cuenta que al ejecutar las Reglas para Nodos nuevamente cambiara los procesos restantes a "no completado"!',
+      success: 'El proceso ejecución de reglas para nodos ha comenzado a procesarse, terminará en minutos. ¡Tener en cuenta que al ejecutar las Reglas para Nodos nuevamente cambiara los procesos restantes a "no completado"!',
       failed: '¡El proceso ejecución reglas para nodos no se ha completado!'
     },
     2: {
@@ -289,7 +289,7 @@ export const superProcessParams = {
       disabled: '¡Esta opcíon se encuentra inhabilitada, debe haber generado los Nodos y Cuentas para poder continuar!'
     },
     7: {
-      success: '¡La generación archivos de facturación ha sido completado!',
+      success: '¡La generación archivos de facturación ha comenzado a procesarse, terminará en minutos!',
       failed: '¡Aún no ha generado los archivos de facturación!',
       disabled: '¡Esta opcíon se encuentra inhabilitada, debe haber cargado la información de Rentas para poder continuar!'
     }
@@ -366,5 +366,6 @@ export const loadFaultsParams = {
 }
 
 export const wsWithOutLoader = [
-  '/WSCompensacionesBatchRR-web/webresources/WSCompensacionesBatchRR/LoadService/read/all'
+  '/WSCompensacionesBatchRR-web/webresources/WSCompensacionesBatchRR/LoadService/read/all',
+  '/WSCompensaciones-web/webresources/WSBilling/SupervisionProcessService/read/all'
 ];

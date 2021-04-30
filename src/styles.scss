@@ -155,14 +155,14 @@ input[type="number"] {
   border-color: var(--secondary);
 }
 .p-confirm-dialog-accept {
-  background-color: var(--success);
+  background-color: var(--primary);
 }
 .p-confirm-dialog-reject,
 .p-confirm-dialog-accept {
   &:enabled {
     &:hover {
-      background-color: var(--confirm-hover);
-      border-color: var(--confirm-hover);
+      background-color: var(--primary-hover);
+      border-color: var(--primary-hover);
     }
   }
   &:focus {
@@ -218,7 +218,7 @@ input[type="number"] {
     @extend .row, .px-md-5;
     .formSection {@extend .col-sm, .text-light, .text-center, .px-sm-1, .mb-4;}
     .formSection2 {@extend .col-sm-6, .text-light, .text-center, .px-sm-1, .mb-4;}
-    
+
     .formSection, .formSection2 {
       .formLabel {
         @extend .bg-primary, .py-1, .mb-1;
@@ -236,5 +236,18 @@ input[type="number"] {
         min-width: 6rem;
       }
     }
+  }
+}
+
+// Stepper PrimeNG
+
+.step-item-fail {
+  .p-menuitem-link .p-steps-number {
+    background: var(--secondary) !important;
+  }
+}
+.step-item-success {
+  .p-menuitem-link .p-steps-number {
+    background: var(--primary-hover) !important;
   }
 }

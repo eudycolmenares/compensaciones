@@ -14,12 +14,21 @@
               }"
             >{{ i + 1 }}</div>
             <div class="step-item-content" [ngClass]="{'selected-item': stage.stage == stageSelected}">
-              <label class="title">{{ stage.processName }}</label>
+              <div>
+                <label class="title">{{ stage.processName }}
+                  <div class="spinner-border spinner-border-sm ml-1" role="status"
+                    *ngIf="['INICIADO', 'EN PROGRESO'].includes(stage.stateProcess)"
+                  ></div>
+                  <i class="bi bi-check2" *ngIf="stage.stateProcess == 'COMPLETADO'"></i>
+                  <i class="bi bi-x" *ngIf="stage.stateProcess == 'ERROR'"></i>
+                </label>
+              </div>
               <ng-container ng-switch="myVar">
-                <ng-container [ngSwitch]="stage.status">
+                <label class="subtitle">{{ stage.stateProcess }}</label>
+                <!-- <ng-container [ngSwitch]="stage.status">
                   <label class="subtitle" *ngSwitchCase="1">Completado</label>
                   <label class="subtitle" *ngSwitchCase="0">No completado</label>
-                </ng-container>
+                </ng-container> -->
               </ng-container>
             </div>
             <ng-container *ngIf="i+1 !== stages.length">
@@ -35,6 +44,9 @@
         <ng-container [ngSwitch]="stageSelected">
           <!-- STEP 1 -->
           <ng-container *ngSwitchCase="1">
+            <div>
+              <p-steps [model]="itemsSteps" [(activeIndex)]="activeStep" [readonly]="true"></p-steps>
+            </div>
             <div *ngIf="stages[stageSelected -1].status == 0" class="alert alert-secondary" role="alert">
               {{ processParams.msgsByStages[1].failed }}
             </div>
@@ -51,6 +63,9 @@
           </ng-container>
           <!-- STEP 2 -->
           <ng-container *ngSwitchCase="2">
+            <div>
+              <p-steps [model]="itemsSteps" [(activeIndex)]="activeStep" [readonly]="true"></p-steps>
+            </div>
             <div *ngIf="stages[stageSelected - 2].status == 0" class="alert alert-secondary" role="alert">
               {{ processParams.msgsByStages[2].disabled }}
             </div>
@@ -70,6 +85,9 @@
           </ng-container>
           <!-- STEP 3 -->
           <ng-container *ngSwitchCase="3">
+            <div>
+              <p-steps [model]="itemsSteps" [(activeIndex)]="activeStep" [readonly]="true"></p-steps>
+            </div>
             <div *ngIf="stages[stageSelected - 2].status == 0" class="alert alert-secondary" role="alert">
               {{ processParams.msgsByStages[3].disabled }}
             </div>
@@ -89,6 +107,9 @@
           </ng-container>
           <!-- STEP 4 -->
           <ng-container *ngSwitchCase="4">
+            <div>
+              <p-steps [model]="itemsSteps" [(activeIndex)]="activeStep" [readonly]="true"></p-steps>
+            </div>
             <div *ngIf="stages[stageSelected - 2].status == 0" class="alert alert-secondary" role="alert">
               {{ processParams.msgsByStages[4].disabled }}
             </div>
@@ -108,6 +129,9 @@
           </ng-container>
           <!-- STEP 5 -->
           <ng-container *ngSwitchCase="5">
+            <div>
+              <p-steps [model]="itemsSteps" [(activeIndex)]="activeStep" [readonly]="true"></p-steps>
+            </div>
             <div *ngIf="stages[stageSelected - 2].status == 0" class="alert alert-secondary" role="alert">
               {{ processParams.msgsByStages[5].disabled }}
             </div>
@@ -127,6 +151,9 @@
           </ng-container>
           <!-- STEP 6 -->
           <ng-container *ngSwitchCase="6">
+            <div>
+              <p-steps [model]="itemsSteps" [(activeIndex)]="activeStep" [readonly]="true"></p-steps>
+            </div>
             <div *ngIf="stages[stageSelected - 2].status == 0" class="alert alert-secondary" role="alert">
               {{ processParams.msgsByStages[6].disabled }}
             </div>
@@ -146,6 +173,9 @@
           </ng-container>
           <!-- STEP 7 -->
           <ng-container *ngSwitchCase="7">
+            <div>
+              <p-steps [model]="itemsSteps" [(activeIndex)]="activeStep" [readonly]="true"></p-steps>
+            </div>
             <div *ngIf="stages[stageSelected - 2].status == 0" class="alert alert-secondary" role="alert">
               {{ processParams.msgsByStages[7].disabled }}
             </div>

@@ -4383,13 +4383,14 @@ p-togglebutton.ng-dirty.ng-invalid > .p-togglebutton.p-button {
   background: transparent;
 }
 .p-steps .p-steps-item .p-menuitem-link .p-steps-number {
-  color: #212529;
-  border: 1px solid #dee2e6;
-  background: transparent;
+  color: var(--light);
+  border: 1px solid var(--gray);
+  border-radius: 50% !important;
+  background: var(--gray);
   min-width: 2rem;
   height: 2rem;
   line-height: 2rem;
-  font-size: 1.143rem;
+  font-size: 1rem;
   z-index: 1;
   border-radius: 4px;
 }
@@ -4400,11 +4401,12 @@ p-togglebutton.ng-dirty.ng-invalid > .p-togglebutton.p-button {
 .p-steps .p-steps-item .p-menuitem-link:not(.p-disabled):focus {
   outline: 0 none;
   outline-offset: 0;
-  box-shadow: 0 0 0 0.2rem rgba(235, 136, 129, 0.5);
+  // box-shadow: 0 0 0 0.2rem rgba(235, 136, 129, 0.5);
 }
 .p-steps .p-steps-item.p-highlight .p-steps-number {
   background: var(--primary);
   color: #ffffff;
+  border: 1px solid var(--light);
 }
 .p-steps .p-steps-item.p-highlight .p-steps-title {
   font-weight: 600;
