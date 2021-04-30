@@ -6,21 +6,21 @@
       <div class="col-sm-4 col-md-3 py-3 step-vertical">
         <ng-container *ngFor="let stage of stages; let i = index">
           <div class="step-item" (click)="changeStage(stage)">
-            <div class="step-item-icon step-item-icon-process"
-              [ngClass]=" {
+            <div class="step-item-icon step-item-icon-process" [ngClass]=" {
                 'step-item-icon-process':stage.status == 1 && stage.stage == stageSelected,
                 'step-item-icon-notcompleted':stage.status == 0,
                 'step-item-icon-completed':stage.status == 1 && stage.stage != stageSelected
-              }"
-            >{{ i + 1 }}</div>
+              }">{{ i + 1 }}</div>
             <div class="step-item-content" [ngClass]="{'selected-item': stage.stage == stageSelected}">
               <div>
                 <label class="title">{{ stage.processName }}
                   <div class="spinner-border spinner-border-sm ml-1" role="status"
-                    *ngIf="['INICIADO', 'EN PROGRESO'].includes(stage.stateProcess)"
-                  ></div>
-                  <i class="bi bi-check2" *ngIf="stage.stateProcess == 'COMPLETADO'"></i>
-                  <i class="bi bi-x" *ngIf="stage.stateProcess == 'ERROR'"></i>
+                    *ngIf="['INICIADO', 'EN PROGRESO'].includes(stage.stateProcess)"></div>
+                  <div class="d-flex flex-column">
+                    <i class="bi bi-check2" *ngIf="stage.stateProcess == 'COMPLETADO'"></i>
+                    <i class="bi bi-x" *ngIf="stage.stateProcess == 'ERROR'"></i>
+                    <i class="bi bi-envelope" *ngIf="stage.sendEmail == '1' && stage.stateSendEmail == '1'"></i>
+                  </div>
                 </label>
               </div>
               <ng-container ng-switch="myVar">
@@ -47,11 +47,23 @@
             <div>
               <p-steps [model]="itemsSteps" [(activeIndex)]="activeStep" [readonly]="true"></p-steps>
             </div>
-            <div *ngIf="stages[stageSelected -1].status == 0" class="alert alert-secondary" role="alert">
-              {{ processParams.msgsByStages[1].failed }}
-            </div>
-            <div *ngIf="stages[stageSelected -1].status == 1" class="alert alert-success" role="alert">
-              {{ processParams.msgsByStages[1].success }}
+            <div>
+              <div *ngIf="stages[stageSelected -1].status == 0" class="alert alert-secondary" role="alert">
+                {{ processParams.msgsByStages[1].failed }}
+              </div>
+              <div *ngIf="stages[stageSelected -1].status == 1" class="alert alert-success" role="alert">
+                {{ processParams.msgsByStages[1].success }}
+              </div>
+              <ng-container *ngIf="stages[stageSelected -1].sendEmail == '1' && stages[stageSelected -1].stateProcess == 'COMPLETADO'">
+                <div
+                  [class]="(stages[stageSelected -1].stateSendEmail == '1') ? 'alert alert-success' : 'alert alert-warning'"
+                  role="alert">
+                  {{ (stages[stageSelected -1].stateSendEmail == '1')
+                  ? '¡Se ha enviado la notificación!'
+                  : '¡Ha ocurrido un problema al enviar la notificación!'
+                  }}
+                </div>
+              </ng-container>
             </div>
             <div class="row text-light text-center mt-4">
               <div class="col-sm container-buttons">
@@ -66,18 +78,33 @@
             <div>
               <p-steps [model]="itemsSteps" [(activeIndex)]="activeStep" [readonly]="true"></p-steps>
             </div>
-            <div *ngIf="stages[stageSelected - 2].status == 0" class="alert alert-secondary" role="alert">
-              {{ processParams.msgsByStages[2].disabled }}
-            </div>
-            <div *ngIf="stages[stageSelected -2].status == 1 && stages[stageSelected - 1].status == 0" class="alert alert-secondary" role="alert">
-              {{ processParams.msgsByStages[2].failed }}
-            </div>
-            <div *ngIf="stages[stageSelected - 1].status == 1" class="alert alert-success" role="alert">
-              {{ processParams.msgsByStages[2].success }}
+            <div>
+              <div *ngIf="stages[stageSelected - 2].status == 0" class="alert alert-secondary" role="alert">
+                {{ processParams.msgsByStages[2].disabled }}
+              </div>
+              <div *ngIf="stages[stageSelected -2].status == 1 && stages[stageSelected - 1].status == 0"
+                class="alert alert-secondary" role="alert">
+                {{ processParams.msgsByStages[2].failed }}
+              </div>
+              <div *ngIf="stages[stageSelected - 1].status == 1" class="alert alert-success" role="alert">
+                {{ processParams.msgsByStages[2].success }}
+              </div>
+              <ng-container *ngIf="stages[stageSelected -1].sendEmail == '1' && stages[stageSelected -1].stateProcess == 'COMPLETADO'">
+                <div
+                  [class]="(stages[stageSelected -1].stateSendEmail == '1') ? 'alert alert-success' : 'alert alert-warning'"
+                  role="alert">
+                  {{ (stages[stageSelected -1].stateSendEmail == '1')
+                  ? '¡Se ha enviado la notificación!'
+                  : '¡Ha ocurrido un problema al enviar la notificación!'
+                  }}
+                </div>
+              </ng-container>
             </div>
             <div class="row text-light text-center mt-4">
               <div class="col-sm container-buttons">
-                <button type="button" (click)="openModal()" [disabled]="stages[stageSelected -2].status == 0 || stages[stageSelected -1].status == 1" class="btn btn-primary btn-sm">
+                <button type="button" (click)="openModal()"
+                  [disabled]="stages[stageSelected -2].status == 0 || stages[stageSelected -1].status == 1"
+                  class="btn btn-primary btn-sm">
                   Validar Nodos
                 </button>
               </div>
@@ -88,18 +115,33 @@
             <div>
               <p-steps [model]="itemsSteps" [(activeIndex)]="activeStep" [readonly]="true"></p-steps>
             </div>
-            <div *ngIf="stages[stageSelected - 2].status == 0" class="alert alert-secondary" role="alert">
-              {{ processParams.msgsByStages[3].disabled }}
-            </div>
-            <div *ngIf="stages[stageSelected -2].status == 1 && stages[stageSelected - 1].status == 0" class="alert alert-secondary" role="alert">
-              {{ processParams.msgsByStages[3].failed }}
-            </div>
-            <div *ngIf="stages[stageSelected - 1].status == 1" class="alert alert-success" role="alert">
-              {{ processParams.msgsByStages[3].success }}
+            <div>
+              <div *ngIf="stages[stageSelected - 2].status == 0" class="alert alert-secondary" role="alert">
+                {{ processParams.msgsByStages[3].disabled }}
+              </div>
+              <div *ngIf="stages[stageSelected -2].status == 1 && stages[stageSelected - 1].status == 0"
+                class="alert alert-secondary" role="alert">
+                {{ processParams.msgsByStages[3].failed }}
+              </div>
+              <div *ngIf="stages[stageSelected - 1].status == 1" class="alert alert-success" role="alert">
+                {{ processParams.msgsByStages[3].success }}
+              </div>
+              <ng-container *ngIf="stages[stageSelected -1].sendEmail == '1' && stages[stageSelected -1].stateProcess == 'COMPLETADO'">
+                <div
+                  [class]="(stages[stageSelected -1].stateSendEmail == '1') ? 'alert alert-success' : 'alert alert-warning'"
+                  role="alert">
+                  {{ (stages[stageSelected -1].stateSendEmail == '1')
+                  ? '¡Se ha enviado la notificación!'
+                  : '¡Ha ocurrido un problema al enviar la notificación!'
+                  }}
+                </div>
+              </ng-container>
             </div>
             <div class="row text-light text-center mt-4">
               <div class="col-sm container-buttons">
-                <button type="button" (click)="openModal()" [disabled]="stages[stageSelected -2].status == 0 || stages[stageSelected -1].status == 1" class="btn btn-primary btn-sm">
+                <button type="button" (click)="openModal()"
+                  [disabled]="stages[stageSelected -2].status == 0 || stages[stageSelected -1].status == 1"
+                  class="btn btn-primary btn-sm">
                   Ejecutar Reglas Negocio RR
                 </button>
               </div>
@@ -110,18 +152,33 @@
             <div>
               <p-steps [model]="itemsSteps" [(activeIndex)]="activeStep" [readonly]="true"></p-steps>
             </div>
-            <div *ngIf="stages[stageSelected - 2].status == 0" class="alert alert-secondary" role="alert">
-              {{ processParams.msgsByStages[4].disabled }}
-            </div>
-            <div *ngIf="stages[stageSelected -2].status == 1 && stages[stageSelected - 1].status == 0" class="alert alert-secondary" role="alert">
-              {{ processParams.msgsByStages[4].failed }}
-            </div>
-            <div *ngIf="stages[stageSelected - 1].status == 1" class="alert alert-success" role="alert">
-              {{ processParams.msgsByStages[4].success }}
+            <div>
+              <div *ngIf="stages[stageSelected - 2].status == 0" class="alert alert-secondary" role="alert">
+                {{ processParams.msgsByStages[4].disabled }}
+              </div>
+              <div *ngIf="stages[stageSelected -2].status == 1 && stages[stageSelected - 1].status == 0"
+                class="alert alert-secondary" role="alert">
+                {{ processParams.msgsByStages[4].failed }}
+              </div>
+              <div *ngIf="stages[stageSelected - 1].status == 1" class="alert alert-success" role="alert">
+                {{ processParams.msgsByStages[4].success }}
+              </div>
+              <ng-container *ngIf="stages[stageSelected -1].sendEmail == '1' && stages[stageSelected -1].stateProcess == 'COMPLETADO'">
+                <div
+                  [class]="(stages[stageSelected -1].stateSendEmail == '1') ? 'alert alert-success' : 'alert alert-warning'"
+                  role="alert">
+                  {{ (stages[stageSelected -1].stateSendEmail == '1')
+                  ? '¡Se ha enviado la notificación!'
+                  : '¡Ha ocurrido un problema al enviar la notificación!'
+                  }}
+                </div>
+              </ng-container>
             </div>
             <div class="row text-light text-center mt-4">
               <div class="col-sm container-buttons">
-                <button type="button" (click)="openModal()" [disabled]="stages[stageSelected -2].status == 0 || stages[stageSelected -1].status == 1" class="btn btn-primary btn-sm">
+                <button type="button" (click)="openModal()"
+                  [disabled]="stages[stageSelected -2].status == 0 || stages[stageSelected -1].status == 1"
+                  class="btn btn-primary btn-sm">
                   Validar fallas RR
                 </button>
               </div>
@@ -132,18 +189,33 @@
             <div>
               <p-steps [model]="itemsSteps" [(activeIndex)]="activeStep" [readonly]="true"></p-steps>
             </div>
-            <div *ngIf="stages[stageSelected - 2].status == 0" class="alert alert-secondary" role="alert">
-              {{ processParams.msgsByStages[5].disabled }}
-            </div>
-            <div *ngIf="stages[stageSelected -2].status == 1 && stages[stageSelected - 1].status == 0" class="alert alert-secondary" role="alert">
-              {{ processParams.msgsByStages[5].failed }}
-            </div>
-            <div *ngIf="stages[stageSelected - 1].status == 1" class="alert alert-success" role="alert">
-              {{ processParams.msgsByStages[5].success }}
+            <div>
+              <div *ngIf="stages[stageSelected - 2].status == 0" class="alert alert-secondary" role="alert">
+                {{ processParams.msgsByStages[5].disabled }}
+              </div>
+              <div *ngIf="stages[stageSelected -2].status == 1 && stages[stageSelected - 1].status == 0"
+                class="alert alert-secondary" role="alert">
+                {{ processParams.msgsByStages[5].failed }}
+              </div>
+              <div *ngIf="stages[stageSelected - 1].status == 1" class="alert alert-success" role="alert">
+                {{ processParams.msgsByStages[5].success }}
+              </div>
+              <ng-container *ngIf="stages[stageSelected -1].sendEmail == '1' && stages[stageSelected -1].stateProcess == 'COMPLETADO'">
+                <div
+                  [class]="(stages[stageSelected -1].stateSendEmail == '1') ? 'alert alert-success' : 'alert alert-warning'"
+                  role="alert">
+                  {{ (stages[stageSelected -1].stateSendEmail == '1')
+                  ? '¡Se ha enviado la notificación!'
+                  : '¡Ha ocurrido un problema al enviar la notificación!'
+                  }}
+                </div>
+              </ng-container>
             </div>
             <div class="row text-light text-center mt-4">
               <div class="col-sm container-buttons">
-                <button type="button" (click)="openModal()" [disabled]="stages[stageSelected -2].status == 0 || stages[stageSelected -1].status == 1" class="btn btn-primary btn-sm">
+                <button type="button" (click)="openModal()"
+                  [disabled]="stages[stageSelected -2].status == 0 || stages[stageSelected -1].status == 1"
+                  class="btn btn-primary btn-sm">
                   Generar nodos y cuentas
                 </button>
               </div>
@@ -154,18 +226,33 @@
             <div>
               <p-steps [model]="itemsSteps" [(activeIndex)]="activeStep" [readonly]="true"></p-steps>
             </div>
-            <div *ngIf="stages[stageSelected - 2].status == 0" class="alert alert-secondary" role="alert">
-              {{ processParams.msgsByStages[6].disabled }}
-            </div>
-            <div *ngIf="stages[stageSelected -2].status == 1 && stages[stageSelected - 1].status == 0" class="alert alert-secondary" role="alert">
-              {{ processParams.msgsByStages[6].failed }}
-            </div>
-            <div *ngIf="stages[stageSelected - 1].status == 1" class="alert alert-success" role="alert">
-              {{ processParams.msgsByStages[6].success }}
+            <div>
+              <div *ngIf="stages[stageSelected - 2].status == 0" class="alert alert-secondary" role="alert">
+                {{ processParams.msgsByStages[6].disabled }}
+              </div>
+              <div *ngIf="stages[stageSelected -2].status == 1 && stages[stageSelected - 1].status == 0"
+                class="alert alert-secondary" role="alert">
+                {{ processParams.msgsByStages[6].failed }}
+              </div>
+              <div *ngIf="stages[stageSelected - 1].status == 1" class="alert alert-success" role="alert">
+                {{ processParams.msgsByStages[6].success }}
+              </div>
+              <ng-container *ngIf="stages[stageSelected -1].sendEmail == '1' && stages[stageSelected -1].stateProcess == 'COMPLETADO'">
+                <div
+                  [class]="(stages[stageSelected -1].stateSendEmail == '1') ? 'alert alert-success' : 'alert alert-warning'"
+                  role="alert">
+                  {{ (stages[stageSelected -1].stateSendEmail == '1')
+                  ? '¡Se ha enviado la notificación!'
+                  : '¡Ha ocurrido un problema al enviar la notificación!'
+                  }}
+                </div>
+              </ng-container>
             </div>
             <div class="row text-light text-center mt-4">
               <div class="col-sm container-buttons">
-                <button type="button" (click)="openModal()" [disabled]="stages[stageSelected -2].status == 0 || stages[stageSelected -1].status == 1" class="btn btn-primary btn-sm">
+                <button type="button" (click)="openModal()"
+                  [disabled]="stages[stageSelected -2].status == 0 || stages[stageSelected -1].status == 1"
+                  class="btn btn-primary btn-sm">
                   Confirmar información rentas
                 </button>
               </div>
@@ -176,18 +263,33 @@
             <div>
               <p-steps [model]="itemsSteps" [(activeIndex)]="activeStep" [readonly]="true"></p-steps>
             </div>
-            <div *ngIf="stages[stageSelected - 2].status == 0" class="alert alert-secondary" role="alert">
-              {{ processParams.msgsByStages[7].disabled }}
-            </div>
-            <div *ngIf="stages[stageSelected -2].status == 1 && stages[stageSelected - 1].status == 0" class="alert alert-secondary" role="alert">
-              {{ processParams.msgsByStages[7].failed }}
-            </div>
-            <div *ngIf="stages[stageSelected - 1].status == 1" class="alert alert-success" role="alert">
-              {{ processParams.msgsByStages[7].success }}
+            <div>
+              <div *ngIf="stages[stageSelected - 2].status == 0" class="alert alert-secondary" role="alert">
+                {{ processParams.msgsByStages[7].disabled }}
+              </div>
+              <div *ngIf="stages[stageSelected -2].status == 1 && stages[stageSelected - 1].status == 0"
+                class="alert alert-secondary" role="alert">
+                {{ processParams.msgsByStages[7].failed }}
+              </div>
+              <div *ngIf="stages[stageSelected - 1].status == 1" class="alert alert-success" role="alert">
+                {{ processParams.msgsByStages[7].success }}
+              </div>
+              <ng-container *ngIf="stages[stageSelected -1].sendEmail == '1' && stages[stageSelected -1].stateProcess == 'COMPLETADO'">
+                <div
+                  [class]="(stages[stageSelected -1].stateSendEmail == '1') ? 'alert alert-success' : 'alert alert-warning'"
+                  role="alert">
+                  {{ (stages[stageSelected -1].stateSendEmail == '1')
+                  ? '¡Se ha enviado la notificación!'
+                  : '¡Ha ocurrido un problema al enviar la notificación!'
+                  }}
+                </div>
+              </ng-container>
             </div>
             <div class="row text-light text-center mt-4">
               <div class="col-sm container-buttons">
-                <button type="button" (click)="openModal()" [disabled]="stages[stageSelected -2].status == 0 || stages[stageSelected -1].status == 1" class="btn btn-primary btn-sm">
+                <button type="button" (click)="openModal()"
+                  [disabled]="stages[stageSelected -2].status == 0 || stages[stageSelected -1].status == 1"
+                  class="btn btn-primary btn-sm">
                   Generar archivos facturación
                 </button>
               </div>

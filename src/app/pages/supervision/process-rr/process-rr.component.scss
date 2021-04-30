@@ -58,7 +58,10 @@
   margin: 0 0 0 .5rem;
   color: var(--gray);
   .title {
-
+    i {
+      color: var(--success);
+      font-size: 1rem;
+    }
   }
   .subtitle {
     // color: var(--gray);
@@ -99,11 +102,11 @@
 .container-stages {
 	background: whitesmoke;
 	min-height: 10rem;
-  padding: 12% 3rem;
+  padding: 7% 3rem;
   margin: 5rem 0;
 	display: flex;
 	flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
   border-radius: 8px;
 }
 

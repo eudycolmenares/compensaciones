@@ -244,7 +244,7 @@ export class ProcessRRComponent implements OnInit {
 
   // Notificacion - email
   sendEmailNotification() {
-    if (this.stages[this.stageSelected - 1].sendEmail == 1 && this.stages[this.stageSelected - 1].email) {
+    if (this.stages[this.stageSelected - 1].sendEmail == '1' && this.stages[this.stageSelected - 1].email) {
       const arrayExps = superProcessParams['email']['exps'];
       let msg = bodyMailService['message'];
       arrayExps.map(exp => { // evaluar si hay cambios
@@ -259,7 +259,7 @@ export class ProcessRRComponent implements OnInit {
           this.toastScv.showSuccess('Se ha enviado la notificación satisfactoriamente.'); // acomodar
         }
       });
-    } else if (this.stages[this.stageSelected - 1].sendEmail === 1 && !this.stages[this.stageSelected - 1].email) {
+    } else if (this.stages[this.stageSelected - 1].sendEmail === '1' && !this.stages[this.stageSelected - 1].email) {
       this.toastScv.showError(superProcessParams.emptyEmail);
     }
   }

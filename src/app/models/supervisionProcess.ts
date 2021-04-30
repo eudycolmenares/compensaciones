@@ -17,7 +17,8 @@ export interface processModel {
   processName: string;
   stateProcess: string;
   supervisionProcessId: number;
-  sendEmail: number;
+  sendEmail: string;
+  stateSendEmail: string;
   status?: number;
   stage?: number;
 }
