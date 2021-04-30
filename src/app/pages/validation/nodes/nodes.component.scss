@@ -1,0 +1,14 @@
+.container-statistic {
+    
+    &:hover{
+      background: var(--primary) !important;
+      transform: scale(1.1);
+      transition-property: transform, background;
+      transition-duration: .3s;
+      position: relative;
+      z-index: 1;
+    }
+    &:hover .progress-bar {
+      background-color: var(--light) !important;
+    }
+}

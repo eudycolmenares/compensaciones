@@ -90,7 +90,7 @@ export class NodesComponent implements OnInit {
       amountData: 0,
       maximumAmountData: 500,
       percentage: 0,
-      activeField: true,
+      activeField: false,
     }];
 
   dataCount_newCauses: {
@@ -105,15 +105,16 @@ export class NodesComponent implements OnInit {
       amountData: 0,
       maximumAmountData: 500,
       percentage: 0,
-      activeField: true,
+      activeField: false,
     }];
+
     dataCount: {
       nameTable: string;
       amountData: number;
       maximumAmountData: number;
       percentage: number;
       activeField: boolean;
-    }[] = this.dataCount_aprroved;
+    }[] = [];
 
   constructor(
     private _fb: FormBuilder,
@@ -178,6 +179,7 @@ export class NodesComponent implements OnInit {
   }
 
   initialCharge() {
+    this.dataCount = [...this.dataCount_aprroved];
     this.structure = [];
     this.nameRowsExcelSpanish = [];
     this.nameRowsExcelEnglish = [];
@@ -340,7 +342,7 @@ export class NodesComponent implements OnInit {
               3
             );
           });
-          this.dataCount = this.dataCount_invalidData;
+          this.dataCount = [...this.dataCount_invalidData];
         });
       this.nameTableSelected_download = 'nodos_data_invalida_';
       this.selectedRevisionButtons = [];
@@ -382,7 +384,7 @@ export class NodesComponent implements OnInit {
                   3
                 );
               });
-              this.dataCount = this.dataCount_newCauses;
+              this.dataCount = [...this.dataCount_newCauses];
             });
           this.nameTableSelected_download = 'causas_nuevas_';
           this.selectedRevisionButtons = [];
