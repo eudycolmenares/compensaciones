@@ -260,7 +260,7 @@ export const superProcessParams = {
   },
   msgsByStages: {
     1: {
-      success: 'El proceso ejecución de reglas para nodos ha comenzado a procesarse, terminará en minutos. ¡Tener en cuenta que al ejecutar las Reglas para Nodos nuevamente cambiara los procesos restantes a "No completado"!',
+      success: 'El proceso ejecución de reglas para nodos se ha ejecutado, tendrá una duración de pocos minutos. ¡Tener en cuenta que al ejecutar las Reglas para Nodos nuevamente cambiara los procesos restantes a "No completado"!',
       failed: '¡El proceso ejecución reglas para nodos no se ha completado!'
     },
     2: {
@@ -279,7 +279,7 @@ export const superProcessParams = {
       disabled: '¡Esta opcíon se encuentra inhabilitada, debe haber aejecutado las Reglas de Negocio RR para poder continuar!'
     },
     5: {
-      success: '¡El proceso generación de Nodos y Cuentas ha sido completado, puede proceder al cargue de información!',
+      success: '¡El proceso generación de Nodos y Cuentas ha sido ejecutado, al completarse puede proceder al cargue de información!',
       failed: '¡Aún no ha generado los nodos y cuentas!',
       disabled: '¡Esta opcíon se encuentra inhabilitada, debe haber validado las fallas RR para poder continuar!'
     },
@@ -289,7 +289,7 @@ export const superProcessParams = {
       disabled: '¡Esta opcíon se encuentra inhabilitada, debe haber generado los Nodos y Cuentas para poder continuar!'
     },
     7: {
-      success: '¡La generación archivos de facturación ha comenzado a procesarse, terminará en minutos!',
+      success: '¡La generación archivos de facturación se ha ejecutado, tendrá una duración de pocos minutos!',
       failed: '¡Aún no ha generado los archivos de facturación!',
       disabled: '¡Esta opcíon se encuentra inhabilitada, debe haber cargado la información de Rentas para poder continuar!'
     }
