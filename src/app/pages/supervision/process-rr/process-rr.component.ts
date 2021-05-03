@@ -20,6 +20,7 @@ import {
   processModel,
   reqUpdateProcessModel as reqUpdateModel,
   respUpdateProcessModel as respUpdateModel,
+  sendMailModel
 } from '../../../models/supervisionProcess';
 import {
   faultsApiModel,
@@ -58,7 +59,7 @@ export class ProcessRRComponent implements OnInit {
 
   setItemsSteps(first: boolean, stg = null) {
     let stage: processModel = null;
-    (first) ? stage = this.stages[this.stageSelected -1] : stage = stg;
+    (first) ? stage = this.stages[this.stageSelected - 1] : stage = stg;
     switch (stage.stateProcess) {
       case 'INICIADO':
         this.activeStep = 0;
@@ -96,17 +97,19 @@ export class ProcessRRComponent implements OnInit {
   }
 
   runRuleNodes() {
-    this.processesSvc.runNodesRules().subscribe(resp => {
-      if (resp.generalResponse.code === '0') {
-        this.toastScv.showSuccess(resp.generalResponse.messageCode, resp.generalResponse.descriptionCode);
+    const body = this.bodyEmailFromServices();
+    this.processesSvc.runNodesRules(body).subscribe(resp => {
+      if (resp.GeneralResponse.code === '0') {
+        this.toastScv.showSuccess(resp.GeneralResponse.messageCode, resp.GeneralResponse.descriptionCode);
         this.getProcesses();
       } else {
-        this.toastScv.showError(resp.generalResponse.messageCode, resp.generalResponse.descriptionCode);
+        this.toastScv.showError(resp.GeneralResponse.messageCode, resp.GeneralResponse.descriptionCode);
       }
     })
   }
   runRuleBusiness() {
-    this.processesSvc.runBusinessRules().subscribe(resp => {
+    const body = this.bodyEmailFromServices();
+    this.processesSvc.runBusinessRules(body).subscribe(resp => {
       if (resp.GeneralResponse.code === '0') {
         this.toastScv.showSuccess(resp.GeneralResponse.messageCode, resp.GeneralResponse.descriptionCode);
         this.getProcesses();
@@ -116,7 +119,8 @@ export class ProcessRRComponent implements OnInit {
     })
   }
   runConsolidateAccNod() {
-    this.processesSvc.ConsolidationAccountsNodes().subscribe(resp => {
+    const body = this.bodyEmailFromServices();
+    this.processesSvc.ConsolidationAccountsNodes(body).subscribe(resp => {
       if (resp.GeneralResponse.code === '0') {
         this.toastScv.showSuccess(resp.GeneralResponse.messageCode, resp.GeneralResponse.descriptionCode);
         this.getProcesses();
@@ -126,7 +130,8 @@ export class ProcessRRComponent implements OnInit {
     })
   }
   confirmBillingFiles() {
-    this.processesSvc.confirmBillingFiles().subscribe(resp => {
+    const body = this.bodyEmailFromServices();
+    this.processesSvc.confirmBillingFiles(body).subscribe(resp => {
       if (resp.GeneralResponse.code === '0') {
         this.toastScv.showSuccess(resp.GeneralResponse.messageCode, resp.GeneralResponse.descriptionCode);
         this.getProcesses();
@@ -135,17 +140,23 @@ export class ProcessRRComponent implements OnInit {
       }
     })
   }
-  changeStatusStageServer() {
+  changeStatusStageServer(changePostEmail = false) {
     const body: reqUpdateModel = {
       'TblSupervisionProcess': {
         ...this.stages[this.stageSelected - 1],
         stateProcess: 'COMPLETADO'
       }
-    }
+    };
+    (changePostEmail) ? body.TblSupervisionProcess.stateSendEmail = '1' : '' ;
     this.supervisionSvc.updateProcess(body).subscribe((resp: respUpdateModel) => {
       if (resp.generalResponse.code != '-1') {
-        this.toastScv.showSuccess(resp.generalResponse.messageCode, resp.generalResponse.descriptionCode);
-        this.getProcesses();
+        if (!changePostEmail) {
+          this.toastScv.showSuccess(resp.generalResponse.messageCode, resp.generalResponse.descriptionCode);
+          this.sendEmailNotification();
+          // consult updated processes in sendEmailNotification()
+        } else {
+          this.getProcesses();
+        }
       } else {
         this.toastScv.showError(resp.generalResponse.messageCode, resp.generalResponse.descriptionCode);
       }
@@ -250,7 +261,10 @@ export class ProcessRRComponent implements OnInit {
       this.mailSvc.sendMail(newBodySvc).subscribe(resp => {
         if (resp?.isValid == 'true') {
           this.toastScv.showSuccess('Se ha enviado la notificación satisfactoriamente.'); // acomodar
+          this.changeStatusStageServer(true);
         }
+      }, () => {
+        this.getProcesses();
       });
     } else if (this.stages[this.stageSelected - 1].sendEmail === '1' && !this.stages[this.stageSelected - 1].email) {
       this.toastScv.showError(superProcessParams.emptyEmail);
@@ -265,5 +279,14 @@ export class ProcessRRComponent implements OnInit {
     this.timeOutSesion = setTimeout(() => {
       this.getProcesses();
     }, (timeExp * 60000))
+  }
+
+  bodyEmailFromServices(): sendMailModel {
+    return {
+      "SendEmail": {
+        "email": this.stages[this.stageSelected - 1].email,
+        "state": this.stages[this.stageSelected - 1].sendEmail
+      }
+    }
   }
 }

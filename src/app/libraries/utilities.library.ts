@@ -260,7 +260,7 @@ export const superProcessParams = {
   },
   msgsByStages: {
     1: {
-      success: 'El proceso ejecución de reglas para nodos ha comenzado a procesarse, terminará en minutos. ¡Tener en cuenta que al ejecutar las Reglas para Nodos nuevamente cambiara los procesos restantes a "no completado"!',
+      success: 'El proceso ejecución de reglas para nodos ha comenzado a procesarse, terminará en minutos. ¡Tener en cuenta que al ejecutar las Reglas para Nodos nuevamente cambiara los procesos restantes a "No completado"!',
       failed: '¡El proceso ejecución reglas para nodos no se ha completado!'
     },
     2: {

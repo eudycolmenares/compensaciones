@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit {
       const dataRequest: loginModel  = {
         usuario: this.form.get('usuario').value,
         password: this.form.get('password').value,
-        idApp : "AT" // SETEADO
+        idApp : "AT" // SETEADO ACOMODAR
       }
       this.usersSvc.login(dataRequest).subscribe(resp => {
         if(resp.token_session !== '') {
@@ -75,7 +75,7 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  changeStylePass() {    
+  changeStylePass() {
     (this.iconShowHidePass === 'bi bi-eye-fill')
       ? this.iconShowHidePass = 'bi bi-eye-slash-fill'
       : this.iconShowHidePass = 'bi bi-eye-fill';

@@ -30,3 +30,10 @@ export interface respUpdateProcessModel {
 export interface reqUpdateProcessModel {
   TblSupervisionProcess: processModel
 }
+
+export interface sendMailModel {
+  "SendEmail": {
+    "email": string;
+    "state": string;
+  }
+}

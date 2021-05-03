@@ -19,27 +19,31 @@ export class ProcessesService {
     private http: HttpClient,
   ) { }
 
-  runNodesRules(): Observable<any> {
-    return this.http.post<any>(env.endpoints.SupervisionProcess.endpoints.nodesRules, {
-      headers: this.headers,
-    });
+  runNodesRules(body): Observable<any> {
+    return this.http.post<any>(env.endpoints.SupervisionProcess.endpoints.nodesRules,
+      body,
+      { headers: this.headers }
+    );
   }
 
-  runBusinessRules(): Observable<any> {
-    return this.http.post<any>(env.endpoints.SupervisionProcess.endpoints.businessRule, {
-      headers: this.headers,
-    });
+  runBusinessRules(body): Observable<any> {
+    return this.http.post<any>(env.endpoints.SupervisionProcess.endpoints.businessRule,
+      body,
+      { headers: this.headers }
+    );
   }
 
-  confirmBillingFiles(): Observable<any> {
-    return this.http.post<any>(env.endpoints.SupervisionProcess.endpoints.billingFiles, {
-      headers: this.headers,
-    });
+  confirmBillingFiles(body): Observable<any> {
+    return this.http.post<any>(env.endpoints.SupervisionProcess.endpoints.billingFiles,
+      body,
+      { headers: this.headers }
+    );
   }
 
-  ConsolidationAccountsNodes(): Observable<any> {
-    return this.http.post<any>(env.endpoints.SupervisionProcess.endpoints.consolidateNodes, {
-      headers: this.headers,
-    });
+  ConsolidationAccountsNodes(body): Observable<any> {
+    return this.http.post<any>(env.endpoints.SupervisionProcess.endpoints.consolidateNodes,
+      body,
+      { headers: this.headers }
+    );
   }
 }
