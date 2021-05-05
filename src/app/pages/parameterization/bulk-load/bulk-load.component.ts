@@ -211,8 +211,9 @@ export class BulkLoadComponent implements OnInit {
 
   fileSent(responseDataErrors: errorResponse[]) {
     this.dataToTableErrors = responseDataErrors;
-    console.log(this.dataToTable);
-    this.scrollDown();
+    if (responseDataErrors.length > 0) {
+      this.scrollDown();
+    }
   }
 
   scrollDown() {
