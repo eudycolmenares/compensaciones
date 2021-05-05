@@ -18,7 +18,7 @@
                     *ngIf="['INICIADO', 'EN PROGRESO'].includes(stage.stateProcess)"></div>
                   <div class="d-flex flex-column">
                     <i class="bi bi-check2" *ngIf="stage.stateProcess == 'COMPLETADO'"></i>
-                    <i class="bi bi-x" *ngIf="stage.stateProcess == 'ERROR'"></i>
+                    <i class="bi bi-x text-danger" *ngIf="stage.stateProcess == 'ERROR'"></i>
                     <i class="bi bi-envelope" *ngIf="stage.sendEmail == '1' && stage.stateSendEmail == '1'"></i>
                   </div>
                 </label>
