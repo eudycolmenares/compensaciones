@@ -217,6 +217,14 @@ export const environment = {
         readAll: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/NewCausesService/read/all',
       },
     },
+    // RR - validation - node (new causes)// acomodar
+    NewSymptoms: {
+      url: API_COMPENSACIONES_WEB + 'WSCompensaciones/NewSymptomService/',
+      endpoints: {
+        run:  'run',
+        readAll:  'read/all',
+      },
+    },
     // failure validation - TBL_COMPES_IMPROCEDENCIA - Improcedencia_falla_masiva
     ValidationMassImproperFailure: {
       url: '',
