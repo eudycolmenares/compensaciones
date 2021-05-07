@@ -53,7 +53,7 @@ export class MaintenanceOrdersCausesService {
 
   deleteMaintenanceOrderCause(id: number): Observable<MaintenanceOrdersCausesApiModel> {
     return this._http.delete<MaintenanceOrdersCausesApiModel>(
-      env.endpoints.OrderCause.url + env.endpoints.OrderCause.endpoints.delete + `/${id}`
+      env.endpoints.OrderCause.url + env.endpoints.OrderCause.endpoints.delete + `${id}`
     );
   }
 }

@@ -47,7 +47,7 @@ export class NodesRentsRRService {
 
   // deleteNode(id): Observable<responseModel> {
   //   return this.http.delete<responseModel>(
-  //     env.endpoints.NodeRent.url + env.endpoints.NodeRent.endpoints.delete + `/${id}`,
+  //     env.endpoints.NodeRent.url + env.endpoints.NodeRent.endpoints.delete + `${id}`,
   //     { headers: this.headers }
   //   );
   // }

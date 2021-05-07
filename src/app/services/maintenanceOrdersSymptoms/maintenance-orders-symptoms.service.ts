@@ -40,7 +40,7 @@ export class MaintenanceOrdersSymptomsService {
   }
 
   deleteOrderSymptom(id: number): Observable<responseModel> {
-    return this.http.delete<responseModel>(env.endpoints.OrderSymptoms.url + env.endpoints.OrderSymptoms.endpoints.delete + `/${id}`, {
+    return this.http.delete<responseModel>(env.endpoints.OrderSymptoms.url + env.endpoints.OrderSymptoms.endpoints.delete + `${id}`, {
       headers: this.headers
     });
   }

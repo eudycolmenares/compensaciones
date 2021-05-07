@@ -46,7 +46,7 @@ export class ObservationService {
 
   deleteObservation(id: number): Observable<responseModel> {
     return this.http.delete<responseModel>(
-      env.endpoints.Observation.url + env.endpoints.Observation.endpoints.delete + `/${id}`,
+      env.endpoints.Observation.url + env.endpoints.Observation.endpoints.delete + `${id}`,
       { headers: this.headers }
     );
   }

@@ -38,7 +38,7 @@ export class OriginTypeService {
   }
 
   deleteOrigin(id: string): Observable<responseModel> {
-    return this.http.delete<responseModel>(env.endpoints.Origin.url + env.endpoints.Origin.endpoints.delete + `/${id}`, {
+    return this.http.delete<responseModel>(env.endpoints.Origin.url + env.endpoints.Origin.endpoints.delete + `${id}`, {
       headers: this.headers,
     });
   }

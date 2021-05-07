@@ -42,7 +42,7 @@ export class SettingsService {
   }
 
   deleteSetting(id: string): Observable<responseModel> {
-    return this.http.delete<responseModel>(env.endpoints.Settings.url + env.endpoints.Settings.endpoints.delete + `/${id}`, {
+    return this.http.delete<responseModel>(env.endpoints.Settings.url + env.endpoints.Settings.endpoints.delete + `${id}`, {
       headers: this.headers,
     });
   }

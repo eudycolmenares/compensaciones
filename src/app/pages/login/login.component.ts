@@ -6,6 +6,7 @@ import { ToastService } from '../../shared/services/toast.service';
 import { StorageService } from '../../shared/services/storage.service';
 import { UsersService } from '../../services/users/users.service';
 import { AuthService } from '../../shared/services/auth.service';
+import { ParametersService } from '../../shared/services/parameters.service';
 import { RequestLoginModel as loginModel } from '../../models/users';
 import { itemsStorage } from '../../libraries/utilities.library';
 
@@ -18,6 +19,7 @@ import { itemsStorage } from '../../libraries/utilities.library';
 export class LoginComponent implements OnInit {
   form: FormGroup;
   iconShowHidePass = 'bi bi-eye-fill';
+  disabledBtn = true;
 
   constructor(
     private fb: FormBuilder,
@@ -25,9 +27,20 @@ export class LoginComponent implements OnInit {
     private usersSvc: UsersService,
     private toastScv: ToastService,
     private authSvc: AuthService,
-    private storageSvc: StorageService
+    private storageSvc: StorageService,
+    private paramsSvc: ParametersService
   ) {
     this.createForm();
+    // check server services
+    if (!this.paramsSvc.processedParams) {
+      this.paramsSvc.allParameters().subscribe(resp => {
+        if (resp.GeneralResponse.code == '0') {
+          this.paramsSvc.updateDataServers(resp.WebServiceParameters.WebServiceParameter).then(() => {
+            this.disabledBtn = false;
+          }).catch(() => this.disabledBtn = false );
+        }
+      }, () => this.disabledBtn = false );
+    } else { this.disabledBtn = false }
   }
 
   ngOnInit(): void {

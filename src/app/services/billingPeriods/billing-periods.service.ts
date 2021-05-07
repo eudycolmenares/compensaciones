@@ -329,7 +329,7 @@ export class BillingPeriodsService {
       .delete<ResponseModel>(
         env.endpoints.BillingPeriods.url +
           env.endpoints.BillingPeriods.endpoints.delete +
-          `/${periodId}`,
+          `${periodId}`,
         {
           headers: this.headers,
         }

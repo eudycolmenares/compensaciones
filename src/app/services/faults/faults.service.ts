@@ -25,7 +25,7 @@ export class FaultsService {
   }
 
   readByIdFaults(id): Observable<faultsApiModel> {
-    return this.http.get<faultsApiModel>(env.endpoints.Faults.url + env.endpoints.Faults.endpoints.readid + `/${id}`, {
+    return this.http.get<faultsApiModel>(env.endpoints.Faults.url + env.endpoints.Faults.endpoints.readid + `${id}`, {
       headers: this.headers,
     });
   }

@@ -35,7 +35,7 @@ export class SymptomService {
   }
 
   deleteSymptom(id: number): Observable<responseModel> {
-    return this.http.delete<responseModel>(env.endpoints.Symptom.url + env.endpoints.Symptom.endpoints.delete + `/${id}`, {
+    return this.http.delete<responseModel>(env.endpoints.Symptom.url + env.endpoints.Symptom.endpoints.delete + `${id}`, {
       headers: this.headers,
     });
   }

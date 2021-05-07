@@ -7,6 +7,7 @@ import {
   responseSettingsModel as respondeModel,
   WSparameter as paramModel
 } from '../../shared/models/parameters';
+import { wsWithOutLoader } from '../../libraries/utilities.library';
 
 @Injectable({
   providedIn: 'root'
@@ -45,14 +46,13 @@ export class ParametersService {
   }
 
   deleteParameter(id: string): Observable<any> {
-    return this.http.delete<any>(env.endpoints.Parameters.url + env.endpoints.Parameters.endpoints.delete + `/${id}`,
+    return this.http.delete<any>(env.endpoints.Parameters.url + env.endpoints.Parameters.endpoints.delete + `${id}`,
       { headers: this.headers }
     );
   }
 
   updateDataServers(list: paramModel[]): Promise<boolean> {
     var promise: Promise<boolean> = new Promise((resolve, reject) => {
-      console.log('updateDataServers: ', list);
       try {
         list.map(item => {
           switch (item.code) {
@@ -163,6 +163,7 @@ export class ParametersService {
             // Faults
             case 'RR002':
               env.endpoints.Faults.endpoints.readall = item.endpoint;
+              wsWithOutLoader.push(item.endpoint);
               break;
             case 'RR004':
               env.endpoints.Faults.endpoints.readid = item.endpoint;
@@ -311,6 +312,13 @@ export class ParametersService {
             case 'CP057':
               env.endpoints.NewCauses.endpoints.readAll = item.endpoint;
               break;
+            // RR - validation - node (new symptoms)
+            case 'CP087':
+              env.endpoints.NewSymptoms.endpoints.run = item.endpoint;
+              break;
+            case 'CP088':
+              env.endpoints.NewSymptoms.endpoints.readAll = item.endpoint;
+              break;
             // failure validation - TBL_COMPES_IMPROCEDENCIA - Improcedencia_falla_masiva
             case 'RR040':
               env.endpoints.ValidationMassImproperFailure.endpoints.readall = item.endpoint;
@@ -398,6 +406,7 @@ export class ParametersService {
               break;
             case 'CP044':
               env.endpoints.BillingSupervision.endpoints.readAll = item.endpoint;
+              wsWithOutLoader.push(item.endpoint);
               break;
             case 'CP041':
               env.endpoints.BillingSupervision.endpoints.update = item.endpoint;

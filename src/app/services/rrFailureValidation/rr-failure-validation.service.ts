@@ -107,7 +107,7 @@ export class RrFailureValidationService {
 
   deleteRequest_IntTelNode48H(id: string): Observable<models.ResponseModel> {
     return this.http.delete<models.ResponseModel>(
-      env.endpoints.ValidationIntTelNode48H.url + env.endpoints.ValidationIntTelNode48H.endpoints.delete + `/${id}`,
+      env.endpoints.ValidationIntTelNode48H.url + env.endpoints.ValidationIntTelNode48H.endpoints.delete + `${id}`,
       { headers: this.headers }
     );
   }
@@ -161,7 +161,7 @@ export class RrFailureValidationService {
 
   deleteRequest_TvNode16H(id: string): Observable<models.ResponseModel> {
     return this.http.delete<models.ResponseModel>(
-      env.endpoints.ValidationTvNode16H.url + env.endpoints.ValidationTvNode16H.endpoints.delete + `/${id}`,
+      env.endpoints.ValidationTvNode16H.url + env.endpoints.ValidationTvNode16H.endpoints.delete + `${id}`,
       { headers: this.headers }
     );
   }
@@ -241,7 +241,7 @@ export class RrFailureValidationService {
 
   deleteRequest_TvSetting16H(id: string): Observable<models.ResponseModel> {
     return this.http.delete<models.ResponseModel>(
-      env.endpoints.ValidationTvSetting16H.url + env.endpoints.ValidationTvSetting16H.endpoints.delete + `/${id}`,
+      env.endpoints.ValidationTvSetting16H.url + env.endpoints.ValidationTvSetting16H.endpoints.delete + `${id}`,
       { headers: this.headers }
     );
   }
@@ -294,7 +294,7 @@ export class RrFailureValidationService {
 
   deleteRequest_TelepSettlemCompensa(id: string): Observable<models.ResponseModel> {
     return this.http.delete<models.ResponseModel>(
-      env.endpoints.ValidationTelepSettlemCompensas.url + env.endpoints.ValidationTelepSettlemCompensas.endpoints.delete + `/${id}`,
+      env.endpoints.ValidationTelepSettlemCompensas.url + env.endpoints.ValidationTelepSettlemCompensas.endpoints.delete + `${id}`,
       { headers: this.headers }
     );
   }
@@ -374,7 +374,7 @@ export class RrFailureValidationService {
 
   deleteRequest_TelepCompensa(id: string): Observable<models.ResponseModel> {
     return this.http.delete<models.ResponseModel>(
-      env.endpoints.ValidationTelepCompensa.url + env.endpoints.ValidationTelepCompensa.endpoints.delete + `/${id}`,
+      env.endpoints.ValidationTelepCompensa.url + env.endpoints.ValidationTelepCompensa.endpoints.delete + `${id}`,
       { headers: this.headers }
     );
   }
@@ -427,7 +427,7 @@ export class RrFailureValidationService {
 
   deleteRequest_TelevCompensa(id: string): Observable<models.ResponseModel> {
     return this.http.delete<models.ResponseModel>(
-      env.endpoints.ValidationTelevCompensa.url + env.endpoints.ValidationTelevCompensa.endpoints.delete + `/${id}`,
+      env.endpoints.ValidationTelevCompensa.url + env.endpoints.ValidationTelevCompensa.endpoints.delete + `${id}`,
       { headers: this.headers }
     );
   }
@@ -482,7 +482,7 @@ export class RrFailureValidationService {
 
   deleteRequest_MassImproperFailure(id: string): Observable<models.ResponseModel> {
     return this.http.delete<models.ResponseModel>(
-      env.endpoints.ValidationMassImproperFailure.url + env.endpoints.ValidationMassImproperFailure.endpoints.delete + `/${id}`,
+      env.endpoints.ValidationMassImproperFailure.url + env.endpoints.ValidationMassImproperFailure.endpoints.delete + `${id}`,
       { headers: this.headers }
     );
   }

@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { environment as env } from 'src/environments/environment';
-import { NewSymptomsApiModel } from '../../models/new-Symptom';
+import { NewSymptomsApiModel } from '../../models/new-symptom';
 
 @Injectable({
   providedIn: 'root'

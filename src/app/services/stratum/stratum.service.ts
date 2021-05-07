@@ -35,7 +35,7 @@ export class StratumService {
   }
 
   deleteStratum(id: string): Observable<responseModel> {
-    return this.http.delete<responseModel>(env.endpoints.Stratum.url + env.endpoints.Stratum.endpoints.delete + `/${id}`, {
+    return this.http.delete<responseModel>(env.endpoints.Stratum.url + env.endpoints.Stratum.endpoints.delete + `${id}`, {
       headers: this.headers,
     });
   }

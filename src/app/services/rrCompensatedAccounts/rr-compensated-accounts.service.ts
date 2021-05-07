@@ -144,7 +144,7 @@ export class RrCompensatedAccountsService {
   ): Observable<models.ResponseModel> {
     return this._http.delete<models.ResponseModel>(
       env.endpoints.CompensationDetail.url +
-      env.endpoints.CompensationDetail.endpoints.delete + `/${id}`,
+      env.endpoints.CompensationDetail.endpoints.delete + `${id}`,
       { headers: this.headers }
     );
   }
@@ -224,7 +224,7 @@ export class RrCompensatedAccountsService {
 
   deleteRequest_TotalCompensation(id: string): Observable<models.ResponseModel> {
     return this._http.delete<models.ResponseModel>(
-      env.endpoints.TotalCompensation.url + env.endpoints.TotalCompensation.endpoints.delete + `/${id}`,
+      env.endpoints.TotalCompensation.url + env.endpoints.TotalCompensation.endpoints.delete + `${id}`,
       { headers: this.headers }
     );
   }
@@ -296,7 +296,7 @@ export class RrCompensatedAccountsService {
 
   deleteRequest_CompensationNote(id: string): Observable<models.ResponseModel> {
     return this._http.delete<models.ResponseModel>(
-      env.endpoints.CompensationNote.url + env.endpoints.CompensationNote.endpoints.delete + `/${id}`,
+      env.endpoints.CompensationNote.url + env.endpoints.CompensationNote.endpoints.delete + `${id}`,
       { headers: this.headers }
     );
   }

@@ -52,7 +52,7 @@ export class CauseService {
 
   deleteCause(causeId: string): Observable<ResponseModel> {
     return this._http.delete<ResponseModel>(
-      env.endpoints.Cause.url + env.endpoints.Cause.endpoints.delete + `/${causeId}`
+      env.endpoints.Cause.url + env.endpoints.Cause.endpoints.delete + `${causeId}`
     );
   }
 }

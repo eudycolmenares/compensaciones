@@ -50,7 +50,7 @@ export class PriorityService {
 
   deletePriority(priorityId: number): Observable<ResponseModel> {
     return this._http.delete<ResponseModel>(
-      env.endpoints.Priority.url + env.endpoints.Priority.endpoints.delete + `/${priorityId}`
+      env.endpoints.Priority.url + env.endpoints.Priority.endpoints.delete + `${priorityId}`
     );
   }
 }

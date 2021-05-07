@@ -50,7 +50,7 @@ export class SystemStatusService {
 
   deleteSystemStatus(systemStatusId: string): Observable<ResponseModel> {
     return this._http.delete<ResponseModel>(
-      env.endpoints.SystemStatus.url + env.endpoints.SystemStatus.endpoints.delete + `/${systemStatusId}`
+      env.endpoints.SystemStatus.url + env.endpoints.SystemStatus.endpoints.delete + `${systemStatusId}`
     );
   }
 }
