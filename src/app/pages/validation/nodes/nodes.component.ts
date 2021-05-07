@@ -43,6 +43,7 @@ export class NodesComponent implements OnInit {
   listObservation: ObservationModel[];
   nameRowsExcelEnglish: string[] = [];
   nameRowsExcelSpanish: string[] = [];
+  SheetNameInExcel: string = '';
   dataCount_aprroved: {
     nameTable: string;
     amountData: number;
@@ -289,6 +290,7 @@ export class NodesComponent implements OnInit {
           });
           this.dataCount = [...this.dataCount_aprroved];
         });
+      this.SheetNameInExcel = 'NODOS CANDIDATOS';
       this.nameTableSelected_download = 'nodos_candidatos_';
       this.selectedRevisionButtons = ['edit', '', 'delete'];
     }
@@ -354,6 +356,7 @@ export class NodesComponent implements OnInit {
           });
           this.dataCount = [...this.dataCount_invalidData];
         });
+        this.SheetNameInExcel = 'DATA INVALIDA';
       this.nameTableSelected_download = 'nodos_data_invalida_';
       this.selectedRevisionButtons = [];
     }
@@ -398,6 +401,7 @@ export class NodesComponent implements OnInit {
                 });
                 this.dataCount = [...this.dataCount_newCauses];
               });
+            this.SheetNameInExcel = 'CAUSAS';
             this.nameTableSelected_download = 'causas_nuevas_';
             this.selectedRevisionButtons = [];
             this.structure.forEach((data) => {
@@ -466,11 +470,12 @@ export class NodesComponent implements OnInit {
                 });
                 this.dataCount = [...this.dataCount_newSymptoms];
               });
+              this.SheetNameInExcel = 'SINTOMAS';
             this.nameTableSelected_download = 'sintomas_nuevos_';
             this.selectedRevisionButtons = [];
             this.structure.forEach((data) => {
               this.nameRowsExcelSpanish.push(
-                data.description.toLocaleUpperCase()
+                this.removeAccents(data.description.toLocaleUpperCase())
               );
               this.nameRowsExcelEnglish.push(data.name);
             });
@@ -650,8 +655,8 @@ export class NodesComponent implements OnInit {
       origin: 'A2',
     });
     const workbook: XLSX.WorkBook = {
-      Sheets: { Datos: worksheet },
-      SheetNames: ['Datos'],
+      Sheets: { [this.SheetNameInExcel]: worksheet },
+      SheetNames: [this.SheetNameInExcel],
     };
     const excelBuffer: any = XLSX.write(workbook, {
       bookType: 'xlsx',

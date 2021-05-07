@@ -120,7 +120,7 @@ export class BulkLoadComponent implements OnInit {
       fileName: this.fileBaseName,
       uploadType: this.bulkLoadForm.get('uploadType').value,
       userName: this._authSvc.userData.usuario.usuario,
-    }
+    };
     this.createCauseApi(dataRequest);
   }
 
@@ -146,6 +146,8 @@ export class BulkLoadComponent implements OnInit {
         initial[name] = XLSX.utils.sheet_to_json(sheet);
         return initial;
       }, {});
+      console.log('jsonData', jsonData);
+
       this.prepareDataToPreview(jsonData);
     };
     reader.readAsBinaryString(file); // binary read for table
@@ -160,12 +162,11 @@ export class BulkLoadComponent implements OnInit {
       nameOption: sheet,
     }));
     console.log('sheetOptionsList: ', this.sheetOptionsList);
-    
   }
 
   informationToTable(option) {
     console.log('option: ', option);
-    
+
     const data: object[] = this.dataPreview[option];
     if (data.length > 0) {
       const items = Object.keys(data[0]);
@@ -179,7 +180,9 @@ export class BulkLoadComponent implements OnInit {
   }
 
   downloadTemplate(option) {
-    const { path } = this.optListFaults.find(item => item.valueOption == option)
+    const { path } = this.optListFaults.find(
+      (item) => item.valueOption == option
+    );
     const link = document.createElement('a');
     if (link.download !== undefined) {
       link.setAttribute('href', path);
@@ -225,7 +228,8 @@ export class BulkLoadComponent implements OnInit {
   createCauseApi(dataRequest: BulkLoadRequestModel) {
     this.collapsedOptions = [true, false];
 
-    this._bulkLoadSvc.createBulkLoad(dataRequest)
+    this._bulkLoadSvc
+      .createBulkLoad(dataRequest)
       .subscribe((resp: GeneralResponse) => {
         if (resp.code === 'SEND-FILE-VALRES-1' || resp.code === '0') {
           this._toastScv.showSuccess(resp.messageCode);
