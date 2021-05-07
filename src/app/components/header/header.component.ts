@@ -3,6 +3,7 @@ import { MenuItem } from 'primeng/api';
 
 import { BillingPeriodsService } from '../../services/billingPeriods/billing-periods.service';
 import { AuthService } from '../../shared/services/auth.service';
+import { ParametersService } from '../../shared/services/parameters.service';
 import { ResponseLoginModel as UserModel } from '../../models/users';
 
 @Component({
@@ -21,10 +22,24 @@ export class HeaderComponent implements OnInit {
   constructor(
     private authSvc: AuthService,
     private periods: BillingPeriodsService,
+    private paramsSvc: ParametersService
   ) { }
 
   ngOnInit(): void {
-    this.currentPeriod();
+    // check server services
+    if (!this.paramsSvc.processedParams) {
+      this.paramsSvc.allParameters().subscribe(resp => {
+        if (resp.GeneralResponse.code == '0') {
+          this.paramsSvc.updateDataServers(resp.WebServiceParameters.WebServiceParameter).then(() => {
+            this.currentPeriod();
+          }).catch(() => this.currentPeriod());
+        }
+      }, () => this.currentPeriod());
+    } else { this.currentPeriod() }
+    this.initializeVariables();
+  }
+
+  initializeVariables() {
     this.userData = this.authSvc.userData;
     this.items = [
       {
@@ -51,7 +66,7 @@ export class HeaderComponent implements OnInit {
           this.closeSession();
         }
       }
-    ]
+    ];
   }
 
   currentPeriod() {

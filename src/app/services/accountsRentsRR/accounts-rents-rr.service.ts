@@ -26,27 +26,4 @@ export class AccountsRentsRRService {
       { headers: this.headers }
     );
   }
-
-  createAccountRent(body: requestModel): Observable<responseModel> {
-    return this.http.post<responseModel>(
-      env.endpoints.AccountRent.url + env.endpoints.AccountRent.endpoints.create,
-      body,
-      { headers: this.headers }
-    );
-  }
-
-  updateAccount(body: requestModel): Observable<responseModel> {
-    return this.http.put<responseModel>(
-      env.endpoints.AccountRent.url + env.endpoints.AccountRent.endpoints.update,
-      body,
-      { headers: this.headers }
-    );
-  }
-
-  deleteAccount(id): Observable<responseModel> {
-    return this.http.delete<responseModel>(
-      env.endpoints.AccountRent.url + env.endpoints.AccountRent.endpoints.delete + `/${id}`,
-      { headers: this.headers }
-    );
-  }
 }

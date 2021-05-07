@@ -3,323 +3,324 @@
 // The list of file replacements can be found in `angular.json`.
 
 
-const API_COMPENSACIONES_WEB = '/WSCompensaciones-web/webresources/';
-const API_COMPENSACIONES_BATCHRR = '/WSCompensacionesBatchRR-web/webresources/';
-const API_COMPENSACIONES_BATCH_WEB = '/CompensacionesBatch-web/webresources/';
-const API_PORTAL_USUARIOS = '/WsPortalUsuariosRest-web/ws/';
-const API_NOTIFICATIONS = '/Notification/V2.0/Rest/' ;
+// const API_COMPENSACIONES_WEB = '/WSCompensaciones-web/webresources/';
+// const API_COMPENSACIONES_BATCHRR = '/WSCompensacionesBatchRR-web/webresources/';
+// const API_COMPENSACIONES_BATCH_WEB = '/CompensacionesBatch-web/webresources/';
+// const API_PORTAL_USUARIOS = '/WsPortalUsuariosRest-web/ws/';
+// const API_NOTIFICATIONS = '/Notification/V2.0/Rest/' ;
 
 export const environment = {
   production: false,
   endpoints: {
     // Settings
     Settings: {
-      url: API_COMPENSACIONES_WEB + 'WSCompensaciones/SettingsService/',
+      url: '',
       endpoints: {
-        readall: 'read/all',
-        create: 'create',
-        update: 'update',
-        delete: 'delete',
+        readall: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/SettingsService/read/all',
+        create: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/SettingsService/create',
+        update: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/SettingsService/update',
+        delete: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/SettingsService/delete/',
       },
     },
     // Symptom
     Symptom: {
-      url: API_COMPENSACIONES_WEB + 'WSCompensaciones/SymptomService/',
+      url: '',
       endpoints: {
-        readall: 'readAll',
-        create: 'create',
-        update: 'update',
-        delete: 'delete',
+        readall: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/SymptomService/readAll',
+        create: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/SymptomService/create',
+        update: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/SymptomService/update',
+        delete: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/SymptomService/delete/',
       },
     },
     // Origin
     Origin: {
-      url: API_COMPENSACIONES_WEB + 'WSCompensaciones/OriginTypeService/',
+      url: '',
       endpoints: {
-        readall: 'read/all',
-        create: 'create',
-        update: 'update',
-        delete: 'delete',
+        readall: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/OriginTypeService/read/all',
+        create: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/OriginTypeService/create',
+        update: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/OriginTypeService/update',
+        delete: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/OriginTypeService/delete/',
       },
     },
     // Stratum
     Stratum: {
-      url: API_COMPENSACIONES_WEB + 'WSCompensaciones/SocialStratumService/',
+      url: '',
       endpoints: {
-        readall: 'readAll',
-        create: 'create',
-        update: 'update',
-        delete: 'delete',
+        readall: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/SocialStratumService/readAll',
+        create: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/SocialStratumService/create',
+        update: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/SocialStratumService/update',
+        delete: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/SocialStratumService/delete/',
       },
     },
     // Cause
     Cause: {
-      url: API_COMPENSACIONES_WEB + 'WSCompensaciones/CausesService/',
+      url: '',
       endpoints: {
-        readall: 'read/all',
-        readid: 'read/id',
-        create: 'create',
-        update: 'update',
-        delete: 'delete',
+        readall: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/CausesService/read/all',
+        readid: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/CausesService/read/id/',
+        create: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/CausesService/create',
+        update: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/CausesService/update',
+        delete: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/CausesService/delete/',
       },
     },
     // System status
     SystemStatus: {
-      url: API_COMPENSACIONES_WEB + 'WSCompensaciones/SystemStatusService/',
+      url: '',
       endpoints: {
-        readall: 'read/all',
-        readid: 'read/id',
-        create: 'create',
-        update: 'update',
-        delete: 'delete',
+        readall: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/SystemStatusService/read/all',
+        readid: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/SystemStatusService/read/id/',
+        create: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/SystemStatusService/create',
+        update: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/SystemStatusService/update',
+        delete: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/SystemStatusService/delete/',
       },
     },
     // Priorities
     Priority: {
-      url: API_COMPENSACIONES_WEB + 'WSCompensaciones/PriorityService/',
+      url: '',
       endpoints: {
-        readall: 'readAll',
-        readid: 'read/id',
-        create: 'create',
-        update: 'update',
-        delete: 'delete',
+        readall: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/PriorityService/readAll',
+        readid: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/PriorityService/read/id/',
+        create: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/PriorityService/create',
+        update: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/PriorityService/update',
+        delete: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/PriorityService/delete/',
       },
     },
     // Bulk load
     BulkLoad: {
-      url: API_COMPENSACIONES_BATCH_WEB + 'CompensacionesBatch/',
+      url: '',
       endpoints: {
-        readall: 'findTypeProcess',
-        create: 'sendFile',
+        create: 'http://100.126.19.74:7669/CompensacionesBatch-web/webresources/CompensacionesBatch/sendFile',
       },
     },
     // Faults
     Faults: {
-      url: API_COMPENSACIONES_BATCHRR + 'WSCompensacionesBatchRR/LoadService/',
+      url: '',
       endpoints: {
-        readall: 'read/all',
-        readid: 'read/id',
-        load: 'load',
+        readall: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSCompensacionesBatchRR/LoadService/read/all',
+        readid: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSCompensacionesBatchRR/LoadService/read/id/',
+        load: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSCompensacionesBatchRR/LoadService/load',
       },
     },
     // Maintenance Orders Causes
     OrderCause: {
-      url: API_COMPENSACIONES_WEB + 'WSCompensaciones/MaintenanceOrderCauseService/',
+      url: '',
       endpoints: {
-        readall: 'list',
-        create: 'create',
-        update: 'update',
-        delete: 'delete',
+        readall: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/MaintenanceOrderCauseService/list',
+        create: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/MaintenanceOrderCauseService/create',
+        update: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/MaintenanceOrderCauseService/update',
+        delete: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/MaintenanceOrderCauseService/delete/',
       },
     },
     // Maintenance Orders Symptoms
     OrderSymptoms: {
-      url: API_COMPENSACIONES_WEB + 'WSCompensaciones/MaintenanceOrderDiagnosticService/',
+      url: '',
       endpoints: {
-        readall: 'list',
-        create: 'create',
-        update: 'update',
-        delete: 'delete',
+        readall: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/MaintenanceOrderDiagnosticService/list',
+        create: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/MaintenanceOrderDiagnosticService/create',
+        update: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/MaintenanceOrderDiagnosticService/update',
+        delete: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/MaintenanceOrderDiagnosticService/delete/',
       },
     },
-    // RR - parameterization - billing periods // acomodar
+    // RR - parameterization - billing periods
     BillingPeriods: {
-      url: API_COMPENSACIONES_WEB + 'WSBilling/BillingPeriodsService/',
+      url: '',
       endpoints: {
-        readAll: 'read/all',
-        create: 'create',
-        update: 'update',
-        delete: 'delete',
+        readAll: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSBilling/BillingPeriodsService/read/all',
+        create: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSBilling/BillingPeriodsService/create',
+        update: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSBilling/BillingPeriodsService/update',
+        delete: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSBilling/BillingPeriodsService/delete/',
       },
     },
     // Validation Accounts
     ValidationAccounts: {
-      url: API_COMPENSACIONES_WEB + 'WSCompensaciones/CrcCompensationService/',
+      url: '',
       endpoints: {
-        readall: 'list',
+        readall: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/CrcCompensationService/list',
       },
     },
-    // Validation Nodes
-    // validationNodes_read: 'MaximoService/readAll',
+    // Validation Nodes: 'MaximoService/readAll',
     // failure validation - TBL_NODO_TEL_INT_48H - By_nodo_4296_Tel_Int_48h
     ValidationIntTelNode48H: {
-      url: API_COMPENSACIONES_BATCHRR + 'WSValidacionFallasRR/IntTelNode48HService/',
+      url: '',
       endpoints: {
-        readall: 'read/all',
-        create: 'create',
-        update: 'update',
-        delete: 'delete',
+        readall: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSValidacionFallasRR/IntTelNode48HService/read/all',
+        create: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSValidacionFallasRR/IntTelNode48HService/create',
+        update: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSValidacionFallasRR/IntTelNode48HService/update',
+        delete: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSValidacionFallasRR/IntTelNode48HService/delete/',
       },
     },
     // failure validation - TBL_NODO_TV_16H - By_nodo_acuer11_2006_TV16H
     ValidationTvNode16H: {
-      url: API_COMPENSACIONES_BATCHRR + 'WSValidacionFallasRR/TvNode16HService/',
+      url: '',
       endpoints: {
-        readall: 'read/all',
-        create: 'create',
-        update: 'update',
-        delete: 'delete',
+        readall: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSValidacionFallasRR/TvNode16HService/read/all',
+        create: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSValidacionFallasRR/TvNode16HService/create',
+        update: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSValidacionFallasRR/TvNode16HService/update',
+        delete: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSValidacionFallasRR/TvNode16HService/delete/',
       },
     },
     // failure validation - TBL_ARREGLO_TV_16H - Compens_arreglo_TV16H
     ValidationTvSetting16H: {
-      url: API_COMPENSACIONES_BATCHRR + 'WSValidacionFallasRR/TvSetting16HService/',
+      url: '',
       endpoints: {
-        readall: 'read/all',
-        create: 'create',
-        update: 'update',
-        delete: 'delete',
+        readall: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSValidacionFallasRR/TvSetting16HService/read/all',
+        create: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSValidacionFallasRR/TvSetting16HService/create',
+        update: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSValidacionFallasRR/TvSetting16HService/update',
+        delete: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSValidacionFallasRR/TvSetting16HService/delete/',
       },
     },
     // failure validation - TBL_ARREGLO_TEL_INT_48H - Compens_arreglos_telef_48H
     ValidationTelepSettlemCompensas: {
-      url: API_COMPENSACIONES_BATCHRR + 'WSCompensacionesBatchRR/TelepSettlemCompensaService/',
+      url: '',
       endpoints: {
-        readall: 'readAll',
-        create: 'create',
-        update: 'update',
-        delete: 'delete',
+        readall: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSCompensacionesBatchRR/TelepSettlemCompensaService/readAll',
+        create: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSCompensacionesBatchRR/TelepSettlemCompensaService/create',
+        update: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSCompensacionesBatchRR/TelepSettlemCompensaService/update',
+        delete: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSCompensacionesBatchRR/TelepSettlemCompensaService/delete/',
       },
     },
     // failure validation - TBL_COMPES_TEL_INT_48H - Compes_telef_48H
     ValidationTelepCompensa: {
-      url: API_COMPENSACIONES_BATCHRR + 'WSCompensacionesBatchRR/TelepCompensaService/',
+      url: '',
       endpoints: {
-        readall: 'readAll',
-        create: 'create',
-        update: 'update',
-        delete: 'delete',
+        readall: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSCompensacionesBatchRR/TelepCompensaService/readAll',
+        create: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSCompensacionesBatchRR/TelepCompensaService/create',
+        update: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSCompensacionesBatchRR/TelepCompensaService/update',
+        delete: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSCompensacionesBatchRR/TelepCompensaService/delete/',
       },
     },
     // failure validation - TBL_COMPES_TV_16H - Compes_TV_16H
     ValidationTelevCompensa: {
-      url: API_COMPENSACIONES_BATCHRR + 'WSCompensacionesBatchRR/TelevCompensaService/',
+      url: '',
       endpoints: {
-        readall: 'readAll',
-        create: 'create',
-        update: 'update',
-        delete: 'delete',
+        readall: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSCompensacionesBatchRR/TelevCompensaService/readAll',
+        create: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSCompensacionesBatchRR/TelevCompensaService/create',
+        update: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSCompensacionesBatchRR/TelevCompensaService/update',
+        delete: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSCompensacionesBatchRR/TelevCompensaService/delete/',
       },
     },
-    // RR - validation - node // acomodar
+    // RR - validation - node
     NodesValidation: {
-      url: API_COMPENSACIONES_WEB + 'WSCompensaciones/MaximoService/',
+      url: '',
       endpoints: {
-        readAll: 'readAll',
-        readAllApproved: 'readAllApproved',
-        readAllRejectedForQuality: 'readAllQualityReject',
-        update: 'update',
+        readAll: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/MaximoService/readAll',
+        readAllApproved: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/MaximoService/readAllApproved',
+        readAllRejectedForQuality: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/MaximoService/readAllQualityReject',
+        update: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/MaximoService/update',
       },
     },
-    // RR - validation - node (new causes)// acomodar
+    // RR - validation - node (new causes)
     NewCauses: {
-      url: API_COMPENSACIONES_WEB + 'WSCompensaciones/NewCausesService/',
+      url: '',
       endpoints: {
-        run:  'run',
-        readAll:  'read/all',
+        run: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/NewCausesService/run',
+        readAll: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/NewCausesService/read/all',
       },
     },
     // failure validation - TBL_COMPES_IMPROCEDENCIA - Improcedencia_falla_masiva
     ValidationMassImproperFailure: {
-      url: API_COMPENSACIONES_BATCHRR + 'WSCompensacionesBatchRR/MassImproperFailureService/',
+      url: '',
       endpoints: {
-        readall: 'readAll',
-        create: 'create',
-        update: 'update',
-        delete: 'delete',
+        readall: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSCompensacionesBatchRR/MassImproperFailureService/readAll',
+        create: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSCompensacionesBatchRR/MassImproperFailureService/create',
+        update: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSCompensacionesBatchRR/MassImproperFailureService/update',
+        delete: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSCompensacionesBatchRR/MassImproperFailureService/delete/',
       },
     },
     // detalle compensación (ITEM FACTURACIÓN RR / CUENTAS COMPENSADAS RR)
     CompensationDetail: {
-      url: API_COMPENSACIONES_BATCHRR + 'WSFacturacionRR/CompensationDetailService/',
+      url: '',
       endpoints: {
-        readall: 'read/all',
-        create: 'create',
-        update: 'update',
-        delete: 'delete',
+        readall: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSFacturacionRR/CompensationDetailService/read/all',
+        create: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSFacturacionRR/CompensationDetailService/create',
+        update: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSFacturacionRR/CompensationDetailService/update',
+        delete: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSFacturacionRR/CompensationDetailService/delete/',
       },
     },
     // total compensación (ITEM FACTURACIÓN RR / CUENTAS COMPENSADAS RR)
     TotalCompensation: {
-      url: API_COMPENSACIONES_BATCHRR + 'WSCompensacionesBatchRR/TotalCompensationService/',
+      url: '',
       endpoints: {
-        readall: 'readAll',
-        create: 'create',
-        update: 'update',
-        delete: 'delete',
+        readall: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSCompensacionesBatchRR/TotalCompensationService/readAll',
+        create: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSCompensacionesBatchRR/TotalCompensationService/create',
+        update: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSCompensacionesBatchRR/TotalCompensationService/update',
+        delete: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSCompensacionesBatchRR/TotalCompensationService/delete/',
       },
     },
     // nota compensación (ITEM FACTURACIÓN RR / CUENTAS COMPENSADAS RR)
     CompensationNote: {
-      url: API_COMPENSACIONES_BATCHRR + 'WSCompensacionesBatchRR/CompensationNoteService/',
+      url: '',
       endpoints: {
-        readall: 'readAll',
-        create: 'create',
-        update: 'update',
-        delete: 'delete',
+        readall: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSCompensacionesBatchRR/CompensationNoteService/readAll',
+        create: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSCompensacionesBatchRR/CompensationNoteService/create',
+        update: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSCompensacionesBatchRR/CompensationNoteService/update',
+        delete: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSCompensacionesBatchRR/CompensationNoteService/delete/',
       },
     },
     // Nodes Rents RR
     NodeRent: {
-      url: API_COMPENSACIONES_BATCHRR + 'WSRentasRR/NodeRentService/',
+      url: '',
       endpoints: {
-        readall: 'read/all',
-        create: 'create',
-        update: 'update',
-        delete: 'delete',
+        readall: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSRentasRR/NodeRentService/read/all',
       },
     },
     // Accounts Rents RR
     AccountRent: {
-      url: API_COMPENSACIONES_BATCHRR + 'WSRentasRR/AccountRentService/',
+      url: '',
       endpoints: {
-        readall: 'read/all',
-        create: 'create',
-        update: 'update',
-        delete: 'delete',
+        readall: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSRentasRR/AccountRentService/read/all'
       },
     },
     // Users
     User: {
-      url: API_PORTAL_USUARIOS + 'WsPortalUsuariosRest/',
+      url: '',
       endpoints: {
-        login: 'autentica'
+        login: 'http://100.126.0.150:11051/WsPortalUsuariosRest-web/ws/WsPortalUsuariosRest/autentica'
       },
     },
     // Supervision Process
     SupervisionProcess: {
       endpoints: {
-        nodesRules: API_COMPENSACIONES_WEB + 'WSNodesRules/NodesRulesService/run',
-        businessRule: API_COMPENSACIONES_BATCHRR + 'WSBusinessRulesRR/BusinessRulesService/run',
-        billingFiles: API_COMPENSACIONES_BATCHRR + 'WSBillingRR/BillingService/run',
-        consolidateNodes: API_COMPENSACIONES_BATCHRR + 'WSConsolidationRR/ConsolidationAccountNodesService/run'
+        nodesRules: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSNodesRules/NodesRulesService/run',
+        businessRule: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSBusinessRulesRR/BusinessRulesService/run',
+        billingFiles: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSBillingRR/BillingService/run',
+        consolidateNodes: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSConsolidationRR/ConsolidationAccountNodesService/run'
       },
     },
     // Notifications Mails
     NotificationsEmail: {
-      url: API_NOTIFICATIONS,
+      url: '',
       endpoints: {
-        sendMail: 'PutMessage'
+        sendMail: 'http://172.24.232.150:8010/Notification/V2.0/Rest/PutMessage'
       },
     },
-    // Billing - Supervision Process // acomodar
+    // Billing - Supervision Process
     BillingSupervision: {
-      url: API_COMPENSACIONES_WEB + 'WSBilling/',
+      url: '',
       endpoints: {
-        compensationValue: 'CompensationValueService/read/all',
-        readAll: 'SupervisionProcessService/read/all',
-        update: 'SupervisionProcessService/update'
+        compensationValue: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSBilling/CompensationValueService/read/all',
+        readAll: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSBilling/SupervisionProcessService/read/all',
+        update: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSBilling/SupervisionProcessService/update'
       },
     },
-    // WSCompensaciones-web/webresources/WSCompensaciones/ObservationToValidateService/read/all
     // Observacion Nodos
     Observation: {
-      url: API_COMPENSACIONES_WEB + 'WSCompensaciones/ObservationToValidateService/',
+      url: '',
       endpoints: {
-        readall: 'read/all',
-        create: 'create',
-        update: 'update',
-        delete: 'delete',
+        readall: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/ObservationToValidateService/read/all',
+        create: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/ObservationToValidateService/create',
+        update: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/ObservationToValidateService/update',
+        delete: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/ObservationToValidateService/delete/',
+      },
+    },
+    // Parametros Servicios
+    Parameters: {
+      url: '',
+      endpoints: {
+        readall: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/WebServiceParameterService/read/all',
+        create: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/WebServiceParameterService/create',
+        update: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/WebServiceParameterService/update',
+        delete: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/WebServiceParameterService/delete/',
       },
     },
   },

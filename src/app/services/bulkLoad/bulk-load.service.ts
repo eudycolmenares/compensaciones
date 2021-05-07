@@ -21,16 +21,16 @@ export class BulkLoadService {
 
   constructor(private _http: HttpClient) {}
 
-  allBulkLoad(selectType: string) {
-    return this._http.get<BulkLoadApiModel>(
-      env.endpoints.BulkLoad.url +
-      env.endpoints.BulkLoad.endpoints.readall +
-        `/${selectType.toLowerCase()}`,
-      {
-        headers: this.headers,
-      }
-    );
-  }
+  // allBulkLoad(selectType: string) {
+  //   return this._http.get<BulkLoadApiModel>(
+  //     env.endpoints.BulkLoad.url +
+  //     env.endpoints.BulkLoad.endpoints.readall +
+  //       `/${selectType.toLowerCase()}`,
+  //     {
+  //       headers: this.headers,
+  //     }
+  //   );
+  // }
 
   createBulkLoad(body: BulkLoadRequestModel): Observable<GeneralResponse> {
     return this._http.post<GeneralResponse>(

@@ -29,26 +29,26 @@ export class NodesRentsRRService {
     );
   }
 
-  createNodeRent(body: requestModel): Observable<responseNode> {
-    return this.http.post<responseNode>(
-      env.endpoints.NodeRent.url + env.endpoints.NodeRent.endpoints.create,
-      body,
-      { headers: this.headers }
-    );
-  }
+  // createNodeRent(body: requestModel): Observable<responseNode> {
+  //   return this.http.post<responseNode>(
+  //     env.endpoints.NodeRent.url + env.endpoints.NodeRent.endpoints.create,
+  //     body,
+  //     { headers: this.headers }
+  //   );
+  // }
 
-  updateNode(body: requestModel): Observable<responseModel> {
-    return this.http.put<responseModel>(
-      env.endpoints.NodeRent.url + env.endpoints.NodeRent.endpoints.update,
-      body,
-      { headers: this.headers }
-    );
-  }
+  // updateNode(body: requestModel): Observable<responseModel> {
+  //   return this.http.put<responseModel>(
+  //     env.endpoints.NodeRent.url + env.endpoints.NodeRent.endpoints.update,
+  //     body,
+  //     { headers: this.headers }
+  //   );
+  // }
 
-  deleteNode(id): Observable<responseModel> {
-    return this.http.delete<responseModel>(
-      env.endpoints.NodeRent.url + env.endpoints.NodeRent.endpoints.delete + `/${id}`,
-      { headers: this.headers }
-    );
-  }
+  // deleteNode(id): Observable<responseModel> {
+  //   return this.http.delete<responseModel>(
+  //     env.endpoints.NodeRent.url + env.endpoints.NodeRent.endpoints.delete + `/${id}`,
+  //     { headers: this.headers }
+  //   );
+  // }
 }

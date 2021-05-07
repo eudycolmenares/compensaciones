@@ -7,6 +7,7 @@ import { SupervisionProcessService } from '../../../services/supervision/supervi
 import { ToastService } from '../../../shared/services/toast.service';
 import { MailsService } from '../../../shared/services/mails.service';
 import { FaultsService } from '../../../services/faults/faults.service';
+import { ParametersService } from '../../../shared/services/parameters.service';
 
 import {
   bodyMailService,
@@ -49,9 +50,19 @@ export class ProcessRRComponent implements OnInit {
     private confirmationSvc: ConfirmationService,
     private mailSvc: MailsService,
     private faultsScv: FaultsService,
+    private paramsSvc: ParametersService
   ) {
     this.randomKey = Math.ceil(Math.random() * 10000).toString();
-    this.getProcesses();
+    // check server services
+    if (!this.paramsSvc.processedParams) {
+      this.paramsSvc.allParameters().subscribe(resp => {
+        if (resp.GeneralResponse.code == '0') {
+          this.paramsSvc.updateDataServers(resp.WebServiceParameters.WebServiceParameter).then(() => {
+            this.getProcesses();
+          }).catch(() => this.getProcesses() );
+        }
+      }, () => this.getProcesses() );
+    } else { this.getProcesses() }
   }
   stageSelected = 1;
 
@@ -162,13 +173,6 @@ export class ProcessRRComponent implements OnInit {
       }
     })
   }
-
-  // changeStatusStage(success: boolean) { // en deshuso, se consulta y refresca desd el servidor
-  //   (success) ? this.stages[this.stageSelected - 1].status = 1 : '';
-  // }
-  // changePostStatusStage(success: boolean) {
-  //   (success) ? this.stages[this.stageSelected].status = 1 : '';
-  // }
 
   getAllFaults() {
     this.faultsScv.readAllFaults().subscribe((resp: faultsApiModel) => {
