@@ -219,6 +219,14 @@ export const environment = {
         readAll:  'read/all',
       },
     },
+    // RR - validation - node (new causes)// acomodar
+    NewSymptoms: {
+      url: API_COMPENSACIONES_WEB + 'WSCompensaciones/NewSymptomService/',
+      endpoints: {
+        run:  'run',
+        readAll:  'read/all',
+      },
+    },
     // failure validation - TBL_COMPES_IMPROCEDENCIA - Improcedencia_falla_masiva
     ValidationMassImproperFailure: {
       url: API_COMPENSACIONES_BATCHRR + 'WSCompensacionesBatchRR/MassImproperFailureService/',

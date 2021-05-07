@@ -14,6 +14,7 @@ export interface CauseModel {
   createDate?: Date;
   failureCode: string;
   problemCode: string;
+  CloneOriginType?: string;
 }
 
 interface GeneralResponse {

@@ -4,8 +4,10 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { GeneralFunctionsService } from '@services/general-functions.service';
 import { NodesValidationService } from '@services/nodes-validation/nodes-validation.service';
 import { NewCauseService } from '@services/newCause/new-cause.service';
+import { NewSymptomService } from '@services/newSymptom/new-symptom.service';
 import * as models from '@models/nodes-validation';
-import { NewCausesApiModel, ResponseModel } from '@models/new-cause';
+import * as modelsNewCauses from '@models/new-cause';
+import * as modelsNewSymtoms from '@models/new-symptom';
 import { DataList } from '@models/general';
 import { ToastService } from '@shared_services/toast.service';
 import { ObservationService } from '@services/observation/observation.service';
@@ -44,35 +46,30 @@ export class NodesComponent implements OnInit {
   dataCount_aprroved: {
     nameTable: string;
     amountData: number;
-    maximumAmountData: number;
     percentage: number;
     activeField: boolean;
   }[] = [
     {
       nameTable: 'Cantidad total de candidatos',
       amountData: 0,
-      maximumAmountData: 500,
       percentage: 0,
       activeField: true,
     },
     {
       nameTable: 'Aprobados (Revisión)',
       amountData: 0,
-      maximumAmountData: 100,
       percentage: 0,
       activeField: false,
     },
     {
       nameTable: 'Rechazados (Revisión)',
       amountData: 0,
-      maximumAmountData: 200,
       percentage: 0,
       activeField: false,
     },
     {
       nameTable: 'Candidatos (A Revisión)',
       amountData: 0,
-      maximumAmountData: 400,
       percentage: 0,
       activeField: false,
     },
@@ -81,40 +78,51 @@ export class NodesComponent implements OnInit {
   dataCount_invalidData: {
     nameTable: string;
     amountData: number;
-    maximumAmountData: number;
     percentage: number;
     activeField: boolean;
   }[] = [
     {
       nameTable: 'Cantidad total de datos invalidos',
       amountData: 0,
-      maximumAmountData: 500,
       percentage: 0,
       activeField: false,
-    }];
+    },
+  ];
 
   dataCount_newCauses: {
     nameTable: string;
     amountData: number;
-    maximumAmountData: number;
     percentage: number;
     activeField: boolean;
   }[] = [
     {
       nameTable: 'Cantidad total de causas nuevas',
       amountData: 0,
-      maximumAmountData: 500,
       percentage: 0,
       activeField: false,
-    }];
+    },
+  ];
 
-    dataCount: {
-      nameTable: string;
-      amountData: number;
-      maximumAmountData: number;
-      percentage: number;
-      activeField: boolean;
-    }[] = [];
+  dataCount_newSymptoms: {
+    nameTable: string;
+    amountData: number;
+    percentage: number;
+    activeField: boolean;
+  }[] = [
+    {
+      nameTable: 'Cantidad total de sintomas nuevos',
+      amountData: 0,
+      percentage: 0,
+      activeField: false,
+    },
+  ];
+
+  dataCount: {
+    nameTable: string;
+    amountData: number;
+    percentage: number;
+    activeField: boolean;
+  }[] = [];
 
   constructor(
     private _fb: FormBuilder,
@@ -122,7 +130,8 @@ export class NodesComponent implements OnInit {
     private _gnrScv: GeneralFunctionsService,
     private _toastScv: ToastService,
     private _ObservationSvc: ObservationService,
-    private _newCauseSvc: NewCauseService
+    private _newCauseSvc: NewCauseService,
+    private _newSymptomSvc: NewSymptomService
   ) {
     this.createForm();
     this.initializeVariables();
@@ -157,8 +166,6 @@ export class NodesComponent implements OnInit {
         this.listObservation = resp.ObservationsToValidate.ObservationToValidate.filter(
           (data) => data.state === 1
         );
-        // this.listObservation =
-        //   resp.ObservationsToValidate.ObservationToValidate;
       }
     });
 
@@ -166,6 +173,7 @@ export class NodesComponent implements OnInit {
       { key: 'approved', value: 'Candidatos' },
       { key: 'rejected', value: 'Data invalida' },
       { key: 'newCause', value: 'Causas nuevas' },
+      { key: 'newSymptom', value: 'Síntomas nuevos' },
     ];
 
     this.selectRevision_Node = [
@@ -256,8 +264,10 @@ export class NodesComponent implements OnInit {
         .allApprovedNodes()
         .subscribe((resp: models.NodesValidationApiModel) => {
           this.dataToTable = this.parseDateDataToTable(resp.tblMaximum);
-          
-          this.filterRevisionData(this.nodeRevisionForm.get('filterRevision').value.key);
+
+          this.filterRevisionData(
+            this.nodeRevisionForm.get('filterRevision').value.key
+          );
           this.dataCount_aprroved[0].amountData = this.dataToTable.length;
           this.dataCount_aprroved[1].amountData = this.dataToTable.filter(
             (data: models.NodesValidationModel) => data.revision === 'APROBADO'
@@ -349,63 +359,139 @@ export class NodesComponent implements OnInit {
     }
 
     if (this.nodeForm.get('listNodes_Revision').value.key === 'newCause') {
-      this._newCauseSvc.runNewCauses().subscribe((resp: ResponseModel) => {
-        if (resp.GeneralResponse.code == '0') {
-          this.structure = [
-            {
-              name: 'causeCode',
-              description: 'Código Causa',
-              validation: '',
-            },
-            {
-              name: 'failureCode',
-              description: 'Código Falla',
-              validation: '',
-            },
-            {
-              name: 'problemCode',
-              description: 'Código Problema',
-              validation: '',
-            },
-            {
-              name: 'state',
-              description: 'Estado',
-              validation: 'active-desactive',
-            },
-          ];
-          this._newCauseSvc
-            .allNewCauses()
-            .subscribe((resp: NewCausesApiModel) => {
-              this.dataToTable = resp.NewCauses.NewCause;
-              this.dataCount_newCauses.map((data) => {
-                data.amountData = this.dataToTable.length;
-                data.percentage = this.formatDecimal(
-                  (data.amountData * 100) / data.amountData,
-                  3
-                );
+      this._newCauseSvc
+        .runNewCauses()
+        .subscribe((resp: modelsNewCauses.ResponseModel) => {
+          if (resp.GeneralResponse.code == '0') {
+            this.structure = [
+              {
+                name: 'causeCode',
+                description: 'Código Causa',
+                validation: '',
+              },
+              {
+                name: 'problemCode',
+                description: 'Código Problema',
+                validation: '',
+              },
+              {
+                name: 'failureCode',
+                description: 'Código Falla',
+                validation: '',
+              },
+              {
+                name: 'state',
+                description: 'Estado',
+                validation: 'active-desactive',
+              },
+            ];
+            this._newCauseSvc
+              .allNewCauses()
+              .subscribe((resp: modelsNewCauses.NewCausesApiModel) => {
+                this.dataToTable = resp.NewCauses.NewCause;
+                this.dataCount_newCauses.map((data) => {
+                  data.amountData = this.dataToTable.length;
+                  data.percentage = this.formatDecimal(
+                    (data.amountData * 100) / data.amountData,
+                    3
+                  );
+                });
+                this.dataCount = [...this.dataCount_newCauses];
               });
-              this.dataCount = [...this.dataCount_newCauses];
+            this.nameTableSelected_download = 'causas_nuevas_';
+            this.selectedRevisionButtons = [];
+            this.structure.forEach((data) => {
+              this.nameRowsExcelSpanish.push(
+                this.removeAccents(data.description.toLocaleUpperCase())
+              );
+              this.nameRowsExcelEnglish.push(data.name);
             });
-          this.nameTableSelected_download = 'causas_nuevas_';
-          this.selectedRevisionButtons = [];
-          this.structure.forEach((data) => {
-            this.nameRowsExcelSpanish.push(data.description);
-            this.nameRowsExcelEnglish.push(data.name);
-          });
-        } else {
-          this._toastScv.showError(
-            resp.GeneralResponse.messageCode,
-            resp.GeneralResponse.descriptionCode
-          );
-        }
-      });
+            this.nameRowsExcelSpanish.push('Tipo Origen'.toLocaleUpperCase());
+            this.nameRowsExcelEnglish.push(''.toLocaleUpperCase());
+            this.nameRowsExcelSpanish = [
+              this.nameRowsExcelSpanish[0],
+              this.nameRowsExcelSpanish[1],
+              this.nameRowsExcelSpanish[2],
+              this.nameRowsExcelSpanish[4],
+              this.nameRowsExcelSpanish[3],
+            ];
+            this.nameRowsExcelEnglish = [
+              this.nameRowsExcelEnglish[0],
+              this.nameRowsExcelEnglish[1],
+              this.nameRowsExcelEnglish[2],
+              this.nameRowsExcelEnglish[4],
+              this.nameRowsExcelEnglish[3],
+            ];
+          } else {
+            this._toastScv.showError(
+              resp.GeneralResponse.messageCode,
+              resp.GeneralResponse.descriptionCode
+            );
+          }
+        });
+    }
+
+    if (this.nodeForm.get('listNodes_Revision').value.key === 'newSymptom') {
+      this._newSymptomSvc
+        .runNewSymptoms()
+        .subscribe((resp: modelsNewSymtoms.ResponseModel) => {
+          if (resp.GeneralResponse.code == '0') {
+            this.structure = [
+              {
+                name: 'code',
+                description: 'Código',
+                validation: '',
+              },
+              {
+                name: 'description',
+                description: 'Descripción',
+                validation: '',
+              },
+              {
+                name: 'state',
+                description: 'Estado',
+                validation: 'active-desactive',
+              },
+            ];
+            this._newSymptomSvc
+              .allNewSymptoms()
+              .subscribe((resp: modelsNewSymtoms.NewSymptomsApiModel) => {
+                this.dataToTable = resp.NewSymptoms.NewSymptom;
+                this.dataCount_newSymptoms.map((data) => {
+                  data.amountData = this.dataToTable.length;
+                  data.percentage = this.formatDecimal(
+                    (data.amountData * 100) / data.amountData,
+                    3
+                  );
+                });
+                this.dataCount = [...this.dataCount_newSymptoms];
+              });
+            this.nameTableSelected_download = 'sintomas_nuevos_';
+            this.selectedRevisionButtons = [];
+            this.structure.forEach((data) => {
+              this.nameRowsExcelSpanish.push(
+                data.description.toLocaleUpperCase()
+              );
+              this.nameRowsExcelEnglish.push(data.name);
+            });
+          } else {
+            this._toastScv.showError(
+              resp.GeneralResponse.messageCode,
+              resp.GeneralResponse.descriptionCode
+            );
+          }
+        });
     }
 
     this.structure.forEach((data) => {
-      this.nameRowsExcelSpanish.push(data.description);
+      this.nameRowsExcelSpanish.push(data.description.toLocaleUpperCase());
       this.nameRowsExcelEnglish.push(data.name);
     });
   }
+
+  removeAccents = (str) => {
+    return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  };
 
   formatDecimal(x, posiciones = 0) {
     var isNeg = x < 0;
@@ -548,9 +634,6 @@ export class NodesComponent implements OnInit {
   }
 
   exportAsExcelFile(json: object[]): void {
-    console.log('exportando data en excel');
-
-    console.log(json);
     console.log(this.nameRowsExcelEnglish);
     const csvContent = json.map((row) => {
       return this.nameRowsExcelEnglish.map((k) => {

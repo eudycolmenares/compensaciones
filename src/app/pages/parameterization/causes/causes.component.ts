@@ -64,10 +64,9 @@ export class CausesComponent implements OnInit {
       validation: '',
     },
     {
-      name: 'OriginType',
-      subname: 'name',
+      name: 'CloneOriginType',
       description: 'Tipo Origen',
-      validation: 'object',
+      validation: '',
     },
     {
       name: 'state',
@@ -129,6 +128,9 @@ export class CausesComponent implements OnInit {
     this._causeSvc.allCauses().subscribe((resp: CausesApiModel) => {
       if (resp.GeneralResponse.code == '0') {
         this.dataToTable = resp.Causes.Cause;
+        this.dataToTable.map( (add) => {
+          return add.CloneOriginType = add.OriginType.name;
+        } );
       } else { this._toastScv.showError(resp.GeneralResponse.messageCode); }
     });
   }
