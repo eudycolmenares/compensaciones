@@ -143,7 +143,10 @@
             <div class="row text-light text-center mt-4">
               <div class="col-sm container-buttons">
                 <button type="button" (click)="openModal()"
-                  [disabled]="stages[stageSelected -2].status == 0 || stages[stageSelected -1].status == 1"
+                  [disabled]="
+                    (stages[stageSelected -2].status == 0 || stages[stageSelected -1].status == 1) ||
+                    (stages[stageSelected -1].stateProcess == 'INICIADO' || stages[stageSelected -1].stateProcess == 'EN PROGRESO')
+                  "
                   class="btn btn-primary btn-sm">
                   Ejecutar Reglas Negocio RR
                 </button>
