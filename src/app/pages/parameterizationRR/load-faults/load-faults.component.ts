@@ -154,7 +154,7 @@ export class LoadFaultsComponent implements OnInit {
     let reader = new FileReader();
     reader.onload = () => {
       const data = reader.result;
-      const workBook = XLSX.read(data, { type: 'binary' });
+      const workBook = XLSX.read(data, { type: 'binary', cellDates: true });
       const jsonData = workBook.SheetNames.reduce((initial, name) => {
         const sheet = workBook.Sheets[name];
         initial[name] = XLSX.utils.sheet_to_json(sheet);
@@ -176,7 +176,15 @@ export class LoadFaultsComponent implements OnInit {
     const data: object[] = this.dataPreview[option];
     if (data.length > 0) {
       const items = Object.keys(data[0]);
-      this.structure = items.map(item => ({ name: item, description: item, validation: '' }));
+      this.structure = items.map(item => {
+        if (item.toLowerCase().includes('fecha')) {
+          return { name: item, description: item, validation: 'date' }
+        } else if (item.toLowerCase().includes('hora')) {
+          return { name: item, description: item, validation: 'hour' }
+        } else {
+          return { name: item, description: item, validation: '' }
+        }
+      });
       this.dataToTable = data;
     }
   }

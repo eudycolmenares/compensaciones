@@ -27,15 +27,9 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     // check server services
-    if (!this.paramsSvc.processedParams) {
-      this.paramsSvc.allParameters().subscribe(resp => {
-        if (resp.GeneralResponse.code == '0') {
-          this.paramsSvc.updateDataServers(resp.WebServiceParameters.WebServiceParameter).then(() => {
-            this.currentPeriod();
-          }).catch(() => this.currentPeriod());
-        }
-      }, () => this.currentPeriod());
-    } else { this.currentPeriod() }
+    this.paramsSvc.consumeInitialServices().then(resp => {
+      this.currentPeriod();
+    }).catch(err => this.currentPeriod() );
     this.initializeVariables();
   }
 

@@ -32,15 +32,9 @@ export class LoginComponent implements OnInit {
   ) {
     this.createForm();
     // check server services
-    if (!this.paramsSvc.processedParams) {
-      this.paramsSvc.allParameters().subscribe(resp => {
-        if (resp.GeneralResponse.code == '0') {
-          this.paramsSvc.updateDataServers(resp.WebServiceParameters.WebServiceParameter).then(() => {
-            this.disabledBtn = false;
-          }).catch(() => this.disabledBtn = false );
-        }
-      }, () => this.disabledBtn = false );
-    } else { this.disabledBtn = false }
+    this.paramsSvc.consumeInitialServices().then(resp => {
+      this.disabledBtn = false;
+    }).catch(err => this.disabledBtn = false );
   }
 
   ngOnInit(): void {
