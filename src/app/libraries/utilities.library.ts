@@ -328,32 +328,32 @@ export const bulkLoadParams = {
 export const loadFaultsParams = {
   optionsList: [
     {
-      valueOption: 'RESIDENTIAL_BASE',
+      valueOption: 'Base_Residencial',
       nameOption: 'Residencial',
       path: 'assets/documents/Template-BaseResidencial-FallasRR.xlsx'
     },
     {
-      valueOption: 'BUILDINGS_BASE',
+      valueOption: 'Base_Edificios',
       nameOption: 'Edificios',
-      path: 'assets/documents/Template-Edificios-FallasRR.xlsx'
+      path: 'assets/documents/Template-BaseEdificios-FallasRR.xlsx'
     },
     {
-      valueOption: 'SME_BASE',
+      valueOption: 'Base_Pymes',
       nameOption: 'Pymes',
       path: 'assets/documents/Template-BasePymes-FallasRR.xlsx'
     },
     {
-      valueOption: 'RESIDENTIAL_SETTING',
+      valueOption: 'Ajuste_Residencial',
       nameOption: 'Ajuste Residencial',
       path: 'assets/documents/Template-AjusteResidencial-FallasRR.xlsx'
     },
     {
-      valueOption: 'SME_SETTING',
+      valueOption: 'Ajuste_Pymes',
       nameOption: 'Ajuste Pymes',
       path: 'assets/documents/Template-AjustesPymes-FallasRR.xlsx'
     },
     {
-      valueOption: 'MAINTENANCE_ORDER',
+      valueOption: 'Ordenes_Mantenimiento',
       nameOption: 'Órdenes Mantenimiento',
       path: 'assets/documents/Template-OrdenesMantenimiento-FallasRR.xlsx'
     },

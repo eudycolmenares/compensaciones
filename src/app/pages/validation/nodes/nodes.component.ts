@@ -489,7 +489,7 @@ export class NodesComponent implements OnInit {
     }
 
     this.structure.forEach((data) => {
-      this.nameRowsExcelSpanish.push(data.description.toLocaleUpperCase());
+      this.nameRowsExcelSpanish.push(this.removeAccents(data.description.toLocaleUpperCase()));
       this.nameRowsExcelEnglish.push(data.name);
     });
   }
