@@ -335,7 +335,7 @@ export const loadFaultsParams = {
     {
       valueOption: 'BUILDINGS_BASE',
       nameOption: 'Edificios',
-      path: 'assets/documents/Template-Edificios-FallasRR.xlsx'
+      path: 'assets/documents/Template-BaseEdificios-FallasRR.xlsx'
     },
     {
       valueOption: 'SME_BASE',

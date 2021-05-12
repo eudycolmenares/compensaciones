@@ -108,21 +108,24 @@
       </button>
       <p-menu #menu id="config_menu" [model]="items" [popup]="true"></p-menu>
     </ng-template>
-    <p-table [value]="uploadedFiles" styleClass="p-datatable-sm">
+    <p-table [value]="uploadedFiles" styleClass="p-datatable-sm"
+    [autoLayout]="true">
       <ng-template pTemplate="colgroup">
         <colgroup>
             <col style="width: 11rem">
             <col>
             <col style="width: 8rem">
             <col style="width: 11rem">
+            <col style="width: 3rem">
         </colgroup>
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
           <th>Tipo carga</th>
           <th>Nombre archivo</th>
-          <th>Fecha creación</th>
+          <th class="text-center">Fecha creación</th>
           <th class="text-center">Estado</th>
+          <th class="text-center">Descargar errores</th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-file>
@@ -130,12 +133,14 @@
           <td>{{ gnrSvc.returnTypeFaultsReadable(file.loadType) }}</td>
           <td>{{ file.fileName }}</td>
           <td>{{ file.createDate | date }}</td>
-          <td class="text-center">
-            <span *ngIf="file.state == 'FINALIZADO'" class="badge badge-success w-100">{{ file.state }}</span>
-            <span *ngIf="file.state == 'FINALIZADO_CON_ERRORES'" class="badge badge-danger w-100">{{ file.state }}</span>
-            <span *ngIf="file.state == 'PROCESO'" class="badge badge-warning w-100">{{ file.state }}</span>
-            <span *ngIf="file.state == 'INICIADO'" class="badge badge-info w-100">{{ file.state }}</span>
+          <td>
+            <span *ngIf="file.state == 'FINALIZADO'" class="badge badge-success w-100 px-2">{{ file.state }}</span>
+            <span *ngIf="file.state == 'FINALIZADO_CON_ERRORES'" class="badge badge-danger w-100 px-2">{{ file.state }}</span>
+            <span *ngIf="file.state == 'PROCESO'" class="badge badge-warning w-100 px-2">{{ file.state }}</span>
+            <span *ngIf="file.state == 'INICIADO'" class="badge badge-info w-100 px-2">{{ file.state }}</span>
           </td>
+          <td class="text-center">
+            <button type="button" *ngIf="file.state == 'FINALIZADO_CON_ERRORES'" (click)="fileSent_Errors(file.idLoad)" class="btn btn-outline-primary btn-sm"><i class="bi bi-file-earmark-font"></i></button></td>
         </tr>
       </ng-template>
     </p-table>

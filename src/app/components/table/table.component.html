@@ -1,5 +1,4 @@
 <div class="container-table px-sm-0 px-md-3">
-
   <p-table #dt1 styleClass="p-datatable-sm" selectionMode="single"
     [value]="dataBase" [columns]="selectedColumns"
     [paginator]="true" [rows]="5" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,20]"
@@ -8,7 +7,6 @@
     dataKey="incidence"
     editMode="row"
   >
-
     <ng-template pTemplate="caption">
       <div class="d-flex justify-content-between">
         <p-multiSelect [options]="cols" [(ngModel)]="selectedColumns" optionLabel="header" selectedItemsLabel="{0} columns selected" [style]="{minWidth: '200px'}" placeholder="Elija Columnas">
@@ -20,7 +18,6 @@
         </span>
       </div>
     </ng-template>
-
     <ng-template pTemplate="colgroup" let-columns>
       <colgroup>
           <col style="width: 3rem">
@@ -30,7 +27,6 @@
           </ng-container>
       </colgroup>
     </ng-template>
-
     <ng-template pTemplate="header" let-columns>
       <tr>
         <th scope="col">#</th>
@@ -56,7 +52,6 @@
         </ng-container>
       </tr>
     </ng-template>
-
     <ng-template pTemplate="body" let-item let-editing="editing" let-i="rowIndex" let-columns="columns">
       <tr [pEditableRow]="item">
         <td style="width: 1rem">{{ i + 1}}</td>
@@ -74,7 +69,6 @@
                   <select
                   class="form-control form-control-sm"
                   [(ngModel)]="item[opt.name]"
-
                 >
                   <option [value]=" '' || undefined">- Seleccione -</option>
                   <option
@@ -154,6 +148,5 @@
     </ng-template>
   </p-table>
 </div>
-
 <p-confirmDialog [key]="randomKey" rejectLabel="Cancelar" acceptLabel="Aceptar">
 </p-confirmDialog>
