@@ -6,6 +6,7 @@ export interface loadModel {
   loadType: string;
   state: string;
   user: string;
+  loadError?: string;
 }
 
 interface generalResponse {

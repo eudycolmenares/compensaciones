@@ -35,4 +35,10 @@ export class FaultsService {
       headers: this.headers,
     });
   }
+
+  readFileSent_Errors(id: number): Observable<faultsApiModel> {
+    return this.http.get<faultsApiModel>(env.endpoints.Faults.url + env.endpoints.Faults.endpoints.readid + `${id}`, {
+      headers: this.headers,
+    });
+  }
 }

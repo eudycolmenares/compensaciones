@@ -4,7 +4,6 @@ import { MenuItem } from 'primeng/api';
 import { ConfirmationService } from 'primeng/api';
 // xlsx
 import * as XLSX from 'xlsx';
-
 import { GeneralFunctionsService } from '../../../services/general-functions.service';
 import { ToastService } from '../../../shared/services/toast.service';
 import { FaultsService } from '../../../services/faults/faults.service';
@@ -19,13 +18,11 @@ import {
   timeRefreshMinutes as timeExp,
   statusInProgress
 } from '../../../libraries/utilities.library';
-
 @Component({
   selector: 'app-load-faults',
   templateUrl: './load-faults.component.html',
   styleUrls: ['./load-faults.component.scss']
 })
-
 export class LoadFaultsComponent implements OnInit {
   form: FormGroup;
   fileBaseData: string;
@@ -53,6 +50,7 @@ export class LoadFaultsComponent implements OnInit {
   dataToTable: object[];
   structure: object[] = [];
   sheetOptionsList: object[] = [];
+  dataErrors: loadModel;
 
   constructor(
     private fb: FormBuilder,
@@ -64,15 +62,12 @@ export class LoadFaultsComponent implements OnInit {
   ) {
     this.initialSetup();
   }
-
   ngOnInit(): void {
   }
-
   initialSetup() {
     this.createForm();
     this.updateData();
   }
-
   updateData() {
     const arrayTypesFaults = loadFaultsParams.optionsList.reduce((pre, current) => [...pre, current.valueOption], []);
     this.loaderCustom = true;
@@ -93,7 +88,6 @@ export class LoadFaultsComponent implements OnInit {
       file: ['', [Validators.required, CustomValidation.fileIsAllowed(['xlsx'])],],
     })
   }
-
   get invalidType() {
     return this.form.get('type').touched && this.form.get('type').invalid;
   }
@@ -103,7 +97,6 @@ export class LoadFaultsComponent implements OnInit {
   textsFormInvalid(field: string) {
     return this.gnrSvc.validationFormTextRequired(this.form, field);
   }
-
   onSubmit() {
     if (this.form.invalid) {
       return Object.values(this.form.controls).forEach(control => {
@@ -119,7 +112,6 @@ export class LoadFaultsComponent implements OnInit {
       });
     }
   }
-
   sendFileToService() {
     const dataRequest = {
       'file': this.fileBaseData,
@@ -137,7 +129,6 @@ export class LoadFaultsComponent implements OnInit {
       this.updateData();
     })
   }
-
   handleFileInput(e: Event) {
     this.fileBaseName = e.target['files'][0]['name'];
     let reader = new FileReader();
@@ -148,13 +139,12 @@ export class LoadFaultsComponent implements OnInit {
       this.fileBaseData = fileString[fileString.length - 1];
     };
   }
-
   handlePreviewFileInput(e: Event) {
     const file = e.target['files'][0];
     let reader = new FileReader();
     reader.onload = () => {
       const data = reader.result;
-      const workBook = XLSX.read(data, { type: 'binary' });
+      const workBook = XLSX.read(data, { type: 'binary', cellDates: true });
       const jsonData = workBook.SheetNames.reduce((initial, name) => {
         const sheet = workBook.Sheets[name];
         initial[name] = XLSX.utils.sheet_to_json(sheet);
@@ -165,22 +155,27 @@ export class LoadFaultsComponent implements OnInit {
     reader.readAsBinaryString(file); // binary read for table
     this.handleFileInput(e); // read as url for base 64
   }
-
   prepareDataToPreview(data: Object) {
     const sheets = Object.keys(data);
     this.dataPreview = (sheets.length > 0) ? data : null;
     this.sheetOptionsList = sheets.map(sheet => ({ valueOption: sheet, nameOption: sheet }))
   }
-
   informationToTable(option) {
     const data: object[] = this.dataPreview[option];
     if (data.length > 0) {
       const items = Object.keys(data[0]);
-      this.structure = items.map(item => ({ name: item, description: item, validation: '' }));
+      this.structure = items.map(item => {
+        if (item.toLowerCase().includes('fecha')) {
+          return { name: item, description: item, validation: 'date' }
+        } else if (item.toLowerCase().includes('hora')) {
+          return { name: item, description: item, validation: 'hour' }
+        } else {
+          return { name: item, description: item, validation: '' }
+        }
+      });
       this.dataToTable = data;
     }
   }
-
   downloadTemplate(option) {
     const { path } = this.optListFaults.find(item => item.valueOption == option)
     const link = document.createElement('a');
@@ -193,7 +188,6 @@ export class LoadFaultsComponent implements OnInit {
       document.body.removeChild(link);
     }
   }
-
   cleanForm() {
     this.form.reset({
       type: ''
@@ -215,5 +209,40 @@ export class LoadFaultsComponent implements OnInit {
     this.timeOutSesion = setTimeout(() => {
       this.updateData();
     }, (timeExp * 60000))
+  }
+
+  fileSent_Errors(id: number){
+    this.faultsScv.readFileSent_Errors(id).subscribe((resp: faultsApiModel) => {
+      this.dataErrors = resp.Loads.Load[0];
+      console.log(atob(this.dataErrors.loadError));
+      this.exportToCsv(this.decode());
+    });
+  }
+
+  decode( ) {
+    return decodeURIComponent(escape(window.atob( this.dataErrors.loadError )));
+  }
+
+  exportToCsv(data) {
+
+
+    const blob = new Blob([data], { type: 'text/csv;charset=utf-8;' });
+    if (navigator.msSaveBlob) {
+      // IE 10+
+      navigator.msSaveBlob(blob, `errores_${this.dataErrors.fileName}.csv`);
+    } else {
+      const link = document.createElement('a');
+      if (link.download !== undefined) {
+        // Browsers that support HTML5 download attribute
+        const url = URL.createObjectURL(blob);
+        link.setAttribute('href', url);
+        link.setAttribute('download', `errores_${this.dataErrors.fileName}.csv`);
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        this.toastScv.showSuccess('Archivo de erorres descargado correctamente');
+      }
+    }
   }
 }
