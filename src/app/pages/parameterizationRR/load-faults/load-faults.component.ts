@@ -177,11 +177,11 @@ export class LoadFaultsComponent implements OnInit {
     }
   }
   downloadTemplate(option) {
-    const { path } = this.optListFaults.find(item => item.valueOption == option)
+    const path = this.optListFaults.filter(item => item.valueOption == option)
     const link = document.createElement('a');
     if (link.download !== undefined) {
-      link.setAttribute('href', path);
-      link.setAttribute('download', `${option}.xlsx`);
+      link.setAttribute('href', path[0]['path']);
+      link.setAttribute('download', `${path[0]['nameFile']}.xlsx`);
       link.style.visibility = 'hidden';
       document.body.appendChild(link);
       link.click();

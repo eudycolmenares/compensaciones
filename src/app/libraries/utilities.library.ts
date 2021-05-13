@@ -329,31 +329,37 @@ export const loadFaultsParams = {
   optionsList: [
     {
       valueOption: 'RESIDENTIAL_BASE',
+      nameFile: 'Base_Residencial',
       nameOption: 'Residencial',
       path: 'assets/documents/Template-BaseResidencial-FallasRR.xlsx'
     },
     {
       valueOption: 'BUILDINGS_BASE',
+      nameFile: 'Base_Edificios',
       nameOption: 'Edificios',
       path: 'assets/documents/Template-BaseEdificios-FallasRR.xlsx'
     },
     {
       valueOption: 'SME_BASE',
+      nameFile: 'Base_Pymes',
       nameOption: 'Pymes',
       path: 'assets/documents/Template-BasePymes-FallasRR.xlsx'
     },
     {
       valueOption: 'RESIDENTIAL_SETTING',
+      nameFile: 'Ajuste_Residencial',
       nameOption: 'Ajuste Residencial',
       path: 'assets/documents/Template-AjusteResidencial-FallasRR.xlsx'
     },
     {
       valueOption: 'SME_SETTING',
+      nameFile: 'Ajuste_Pymes',
       nameOption: 'Ajuste Pymes',
       path: 'assets/documents/Template-AjustesPymes-FallasRR.xlsx'
     },
     {
       valueOption: 'MAINTENANCE_ORDER',
+      nameFile: 'Ordenes_Mantenimiento',
       nameOption: 'Órdenes Mantenimiento',
       path: 'assets/documents/Template-OrdenesMantenimiento-FallasRR.xlsx'
     },
