@@ -31,6 +31,12 @@ export class ParametersService {
     );
   }
 
+  allParametersGeneral(): Observable<any> {
+    return this.http.get<any>(env.endpoints.ParametersGenerals.url + env.endpoints.ParametersGenerals.endpoints.readall,
+      { headers: this.headers }
+    );
+  }
+
   createParameter(body: any): Observable<any> {
     return this.http.post<any>(env.endpoints.Parameters.url + env.endpoints.Parameters.endpoints.create,
       body,
@@ -424,6 +430,10 @@ export class ParametersService {
             case 'CP010':
               env.endpoints.Observation.endpoints.delete = item.endpoint;
               break;
+            // Parametros generales
+            case 'CP062':
+              env.endpoints.ParametersGenerals.endpoints.readall = item.endpoint;
+              break;
             // Parametros Servicios
             // only service set
             default:
@@ -434,8 +444,46 @@ export class ParametersService {
         this.processedParams = true;
         resolve(true);
       } catch (error) {
-        reject(true);
+        resolve(true);
       }
+    });
+    return promise;
+  }
+
+  consumeInitialServices(): Promise<boolean> {
+    var promise: Promise<boolean> = new Promise((resolve, reject) => {
+      try {
+        if (!this.processedParams) {
+          this.allParameters().subscribe(resp => {
+            if (resp.GeneralResponse.code == '0') {
+              this.updateDataServers(resp.WebServiceParameters.WebServiceParameter).then(() => {
+                this.consumeParamsGenerals().then( resp => resolve(true) );
+              });
+            } else {
+              this.consumeParamsGenerals().then( resp => resolve(true) );
+            }
+          }, () => {
+            this.consumeParamsGenerals().then( resp => resolve(true) );
+          });
+        } else {
+          resolve(true);
+        }
+      } catch (err) {
+        reject(true)
+      }
+    });
+    return promise;
+  }
+
+
+  consumeParamsGenerals(): Promise<boolean> {
+    var promise: Promise<boolean> = new Promise((resolve, reject) => {
+      this.allParametersGeneral().subscribe(resp => {
+
+        // aqui deberia actualizar items parametros generales
+
+        resolve(true);
+      }, () => resolve(true) )
     });
     return promise;
   }

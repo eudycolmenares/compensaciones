@@ -42,6 +42,7 @@ export class ProcessRRComponent implements OnInit {
   itemsSteps: MenuItem[];
   activeStep: number = null;
   timeOutSesion = null;
+  stageSelected = 1;
 
   constructor(
     private processesSvc: ProcessesService,
@@ -54,17 +55,10 @@ export class ProcessRRComponent implements OnInit {
   ) {
     this.randomKey = Math.ceil(Math.random() * 10000).toString();
     // check server services
-    if (!this.paramsSvc.processedParams) {
-      this.paramsSvc.allParameters().subscribe(resp => {
-        if (resp.GeneralResponse.code == '0') {
-          this.paramsSvc.updateDataServers(resp.WebServiceParameters.WebServiceParameter).then(() => {
-            this.getProcesses();
-          }).catch(() => this.getProcesses() );
-        }
-      }, () => this.getProcesses() );
-    } else { this.getProcesses() }
+    this.paramsSvc.consumeInitialServices().then(resp => {
+      this.getProcesses();
+    }).catch(err => this.getProcesses() );
   }
-  stageSelected = 1;
 
   ngOnInit(): void { }
 
