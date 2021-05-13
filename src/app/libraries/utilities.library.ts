@@ -176,6 +176,8 @@ export const languagePrimeNG = {
 
 export const timeExpirationMinutes = 15;
 
+export const maxTimeExpectRequestSeconds = 300000;
+
 export const timeRefreshMinutes = 0.16;
 
 export const statusInProgress = ['INICIADO', 'PROCESO'];
@@ -304,7 +306,8 @@ export const messagesToast = {
   error_red: 'Se ha presentado un problema red de código: ',
   time_default: 5000,
   close_sesion: 'La sesión ha sido cerrada.',
-  timeout_sesion: 'Sesión cerrada por inactividad.'
+  timeout_sesion: 'Sesión cerrada por inactividad.',
+  timeout_request: '¡Se agotó el tiempo de espera para la petición!'
 };
 
 export const arrayTypesRents = ['ACCOUNT_RENT', 'NODES_RENT'];
