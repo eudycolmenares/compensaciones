@@ -94,7 +94,14 @@
             </ng-template>
           </td>
           <td *ngSwitchCase="''">{{ item[opt.name] }}</td>
-          <td *ngSwitchCase="'date'">{{ item[opt.name] | date }}</td>
+          <td *ngSwitchCase="'date'">
+            <ng-container *ngIf="typeOfObject(item[opt.name]) == 'object'">
+              {{ item[opt.name] | date }}
+            </ng-container>
+            <ng-container *ngIf="typeOfObject(item[opt.name]) != 'object'">
+              {{ item[opt.name] }}
+            </ng-container>
+          </td>
           <td *ngSwitchCase="'hour'">{{ item[opt.name] | date: 'h:mm:ss a' }}</td>
           <td *ngSwitchCase="'revision-approved'">
             <div *ngIf="item[opt.name] === 'APROBADO'" class="badge badge-success px-2"> {{ item[opt.name] }} </div>

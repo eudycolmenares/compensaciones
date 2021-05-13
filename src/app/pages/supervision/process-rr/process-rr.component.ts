@@ -197,7 +197,7 @@ export class ProcessRRComponent implements OnInit {
       this.compareToSort(this.stages);
       let incomplete = false;
       this.stages.map(item => {
-        item.stateProcess === 'NO COMPLETADO' || item.stateProcess === 'ERROR' ? item.status = 0 : item.status = 1;
+        (item.stateProcess === 'NO COMPLETADO' || item.stateProcess === 'ERROR') ? item.status = 0 : item.status = 1;
         item.stage = parseInt(item.processCode);
         ['INICIADO', 'EN PROGRESO'].includes(item.stateProcess) && (incomplete = true);
       });

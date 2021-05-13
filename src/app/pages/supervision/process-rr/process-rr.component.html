@@ -15,7 +15,8 @@
               <div>
                 <label class="title">{{ stage.processName }}
                   <div class="spinner-border spinner-border-sm ml-1" role="status"
-                    *ngIf="['INICIADO', 'EN PROGRESO'].includes(stage.stateProcess)"></div>
+                    *ngIf="['INICIADO', 'EN PROGRESO'].includes(stage.stateProcess)">
+                  </div>
                   <div class="d-flex flex-column">
                     <i class="bi bi-check2" *ngIf="stage.stateProcess == 'COMPLETADO'"></i>
                     <i class="bi bi-x text-danger" *ngIf="stage.stateProcess == 'ERROR'"></i>
@@ -25,10 +26,6 @@
               </div>
               <ng-container ng-switch="myVar">
                 <label class="subtitle">{{ stage.stateProcess }}</label>
-                <!-- <ng-container [ngSwitch]="stage.status">
-                  <label class="subtitle" *ngSwitchCase="1">Completado</label>
-                  <label class="subtitle" *ngSwitchCase="0">No completado</label>
-                </ng-container> -->
               </ng-container>
             </div>
             <ng-container *ngIf="i+1 !== stages.length">

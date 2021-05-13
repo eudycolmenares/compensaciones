@@ -111,4 +111,8 @@ export class TableComponent implements OnInit {
       this.dataBase[index][field] = this.cloneItem[index][field];
     }
   }
+
+  typeOfObject(item: any): string {
+    return typeof(item);
+  }
 }
