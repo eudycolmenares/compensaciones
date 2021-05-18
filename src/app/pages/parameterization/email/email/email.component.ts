@@ -37,6 +37,7 @@ export class EmailComponent implements OnInit {
 
   updateProcess(item: processModel) {
     if (this.validateEmail(item.email)) {
+      item.email = item.email.toLocaleLowerCase();
       const body: reqUpdateModel = {
         'TblSupervisionProcess': { ...item }
       }
