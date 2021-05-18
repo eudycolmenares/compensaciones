@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { StepsModule } from 'primeng/steps';
+import { SkeletonModule } from 'primeng/skeleton';
 
 import { ProcessRRRoutingModule } from './process-rr-routing.module';
 import { ProcessRRComponent } from "./process-rr.component";
@@ -14,7 +15,8 @@ import { ComponentsModule } from '../../../components/components.module';
     ProcessRRRoutingModule,
     ComponentsModule,
     ConfirmDialogModule,
-    StepsModule
+    StepsModule,
+    SkeletonModule
   ],
   exports: [ProcessRRComponent],
   bootstrap: [ProcessRRComponent],

@@ -35,7 +35,7 @@ import {
 })
 
 export class ProcessRRComponent implements OnInit {
-  stages: processModel[]
+  stages: processModel[] = null;
   randomKey: string;
   processParams = superProcessParams;
   uploadedFaults: loadModel[] = null;
@@ -203,7 +203,7 @@ export class ProcessRRComponent implements OnInit {
       });
       (incomplete) && this.startMyTimeOut(); // refresh consult
       this.setItemsSteps(true); // inicializo steps
-    });
+    }, () => this.stages = undefined );
   }
 
   // modal - confirmation
