@@ -5,7 +5,7 @@
   </ng-sidebar>
 
   <!-- Page content -->
-  <div class="my-sidebar-content" ng-sidebar-content>
+  <div class="my-sidebar-content" ng-sidebar-content (mouseover)="refreshAuthSesion()">
     <app-header [opened]="opened" (swToggle)="swToggle($event)"></app-header>
     <section class="section-maincontent">
       <div class="container-main">

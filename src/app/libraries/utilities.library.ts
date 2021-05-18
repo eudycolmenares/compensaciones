@@ -176,6 +176,8 @@ export const languagePrimeNG = {
 
 export const timeExpirationMinutes = 15;
 
+export const useAppTimeExpirationMinutes = 5;
+
 export const maxTimeExpectRequestSeconds = 300000;
 
 export const timeRefreshMinutes = 0.16;
