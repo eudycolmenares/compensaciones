@@ -13,7 +13,9 @@ import {
 import { ToastService } from '../../../shared/services/toast.service';
 import { ResponseLoginModel as UserModel } from '@models/users';
 import { AuthService } from '../../../shared/services/auth.service';
-import { arrayTypesRents } from '../../../libraries/utilities.library';
+import {
+  loadRentsParams as loadParams
+} from '../../../libraries/utilities.library';
 
 @Component({
   selector: 'app-load',
@@ -68,6 +70,7 @@ export class LoadComponent implements OnInit {
     }
   ];
   uploadedFiles: loadModel[] = null;
+  templateOptionsList = loadParams.optionList;
 
   constructor(
     private fb: FormBuilder,
@@ -92,7 +95,7 @@ export class LoadComponent implements OnInit {
   }
   updateData() {
     this.faultsScv.readAllFaults().subscribe((resp: faultsApiModel) => {
-      this.uploadedFiles = resp.Loads.Load.filter(item => arrayTypesRents.includes(item.loadType));
+      this.uploadedFiles = resp.Loads.Load.filter(item => loadParams.arrayTypes.includes(item.loadType));
       this.compareToSort(this.uploadedFiles);
     });
   }
@@ -201,6 +204,25 @@ export class LoadComponent implements OnInit {
       this.cleanForm();
       this.updateData();
     });
+  }
+
+  downloadTemplate(option) {
+    console.log('downloadTemplate: ', option);
+
+    const { path } = this.templateOptionsList.find(
+      (item) => item.valueOption == option
+    );
+    console.log('path: ', path);
+
+    const link = document.createElement('a');
+    if (link.download !== undefined) {
+      link.setAttribute('href', path);
+      link.setAttribute('download', `${option}${loadParams.extFile}`);
+      link.style.visibility = 'hidden';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
   }
 
   compareToSort(items: loadModel[]) {

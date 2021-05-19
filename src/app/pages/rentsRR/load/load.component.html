@@ -54,6 +54,22 @@
         </div>
       </div>
     </form>
+
+    <div class="row text-light text-center justify-content-center mt-3">
+      <p-dropdown
+        [options]="templateOptionsList"
+        optionLabel="nameOption"
+        [showClear]="true"
+        class="p-inputtext-sm"
+        placeholder="Descargar Plantilla"
+      >
+        <ng-template let-option pTemplate="item">
+          <div (click)="downloadTemplate(option.valueOption)">
+            {{ option.nameOption }}
+          </div>
+        </ng-template>
+      </p-dropdown>
+    </div>
   </div>
 
   <hr class="mt-5 mb-5" />

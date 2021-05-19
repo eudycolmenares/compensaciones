@@ -300,7 +300,7 @@ export const superProcessParams = {
   },
   empty: '¡No hay  procesos disponibles, intente más tarde!',
   emptyEmail: '¡No hay correo almacenado para este proceso, no se enviara notificación!',
-  errorLoadedProcesses: 'No se encontraron archivos cargadas ó no se encuentra finalizada(s).',
+  errorLoadedProcesses: 'No se encontraron archivos cargados ó no se encuentra finalizado(s).',
 };
 
 export const messagesToast = {
@@ -313,6 +313,15 @@ export const messagesToast = {
 };
 
 export const arrayTypesRents = ['ACCOUNT_RENT', 'NODES_RENT'];
+
+export const loadRentsParams = {
+  arrayTypes: ['ACCOUNT_RENT', 'NODES_RENT'],
+  extFile: '.txt',
+  optionList: [
+    { valueOption: 'NODOS_PLANTILLA', nameOption: 'Nodos', path: 'assets/documents/RENTAS_NODOS_PLANTILLA.txt'},
+    { valueOption: 'CUENTAS_PLANTILLA', nameOption: 'Cuentas', path: 'assets/documents/RENTAS_CUENTAS_PLANTILLA.txt'},
+  ],
+}
 
 export const bulkLoadParams = {
   filesAllowed: ['xlsx'],
