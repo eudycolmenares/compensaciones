@@ -46,7 +46,7 @@ export const environment = {
       url: '',
       endpoints: {
         readall: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/CausesService/readAll',
-        readid: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/CausesService/read/id/',
+        readid: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/CausesService/readId/',
         create: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/CausesService/create',
         update: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/CausesService/update',
         delete: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/CausesService/delete/',
@@ -57,7 +57,7 @@ export const environment = {
       url: '',
       endpoints: {
         readall: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/SystemStatusService/readAll',
-        readid: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/SystemStatusService/read/id/',
+        readid: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/SystemStatusService/readId/',
         create: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/SystemStatusService/create',
         update: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/SystemStatusService/update',
         delete: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/SystemStatusService/delete/',
@@ -68,7 +68,7 @@ export const environment = {
       url: '',
       endpoints: {
         readall: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/PriorityService/readAll',
-        readid: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/PriorityService/read/id/',
+        readid: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/PriorityService/readId/',
         create: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/PriorityService/create',
         update: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/PriorityService/update',
         delete: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/PriorityService/delete/',
@@ -85,7 +85,7 @@ export const environment = {
     Faults: {
       url: '',
       endpoints: {
-        readall: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSCompensacionesBatchRR/LoadService/readAll',
+        readall: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSCompensacionesBatchRR/LoadService/read/all',
         readid: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSCompensacionesBatchRR/LoadService/read/id/',
         load: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSCompensacionesBatchRR/LoadService/load',
       },
@@ -132,7 +132,7 @@ export const environment = {
     ValidationIntTelNode48H: {
       url: '',
       endpoints: {
-        readall: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSValidacionFallasRR/IntTelNode48HService/readAll',
+        readall: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSValidacionFallasRR/IntTelNode48HService/read/all',
         create: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSValidacionFallasRR/IntTelNode48HService/create',
         update: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSValidacionFallasRR/IntTelNode48HService/update',
         delete: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSValidacionFallasRR/IntTelNode48HService/delete/',
@@ -142,7 +142,7 @@ export const environment = {
     ValidationTvNode16H: {
       url: '',
       endpoints: {
-        readall: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSValidacionFallasRR/TvNode16HService/readAll',
+        readall: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSValidacionFallasRR/TvNode16HService/read/all',
         create: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSValidacionFallasRR/TvNode16HService/create',
         update: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSValidacionFallasRR/TvNode16HService/update',
         delete: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSValidacionFallasRR/TvNode16HService/delete/',
@@ -152,7 +152,7 @@ export const environment = {
     ValidationTvSetting16H: {
       url: '',
       endpoints: {
-        readall: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSValidacionFallasRR/TvSetting16HService/readAll',
+        readall: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSValidacionFallasRR/TvSetting16HService/read/all',
         create: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSValidacionFallasRR/TvSetting16HService/create',
         update: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSValidacionFallasRR/TvSetting16HService/update',
         delete: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSValidacionFallasRR/TvSetting16HService/delete/',
@@ -228,7 +228,7 @@ export const environment = {
     CompensationDetail: {
       url: '',
       endpoints: {
-        readall: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSFacturacionRR/CompensationDetailService/readAll',
+        readall: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSFacturacionRR/CompensationDetailService/read/all',
         create: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSFacturacionRR/CompensationDetailService/create',
         update: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSFacturacionRR/CompensationDetailService/update',
         delete: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSFacturacionRR/CompensationDetailService/delete/',
@@ -258,14 +258,14 @@ export const environment = {
     NodeRent: {
       url: '',
       endpoints: {
-        readall: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSRentasRR/NodeRentService/readAll',
+        readall: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSRentasRR/NodeRentService/read/all',
       },
     },
     // Accounts Rents RR
     AccountRent: {
       url: '',
       endpoints: {
-        readall: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSRentasRR/AccountRentService/readAll',
+        readall: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSRentasRR/AccountRentService/read/all',
       },
     },
     // Users
