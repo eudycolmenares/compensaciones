@@ -121,13 +121,15 @@ export class DownloadComponent implements OnInit {
         for (const item of this.dataToTableNodes) {
           (content === '') ? content = item['node'] : content = `${content}\n${item['node']}`;
         }
-        namefile = 'nodes-rent-rr.txt'
+        content = `NODOS\n${content}`;
+        namefile = 'nodes-rent-rr.txt';
         break;
       case 'accounts':
         for (const item of this.dataToTableAccounts) {
           (content === '') ? content = item['account'] : content = `${content}\n${item['account']}`;
         }
-        namefile = 'accounts-rent-rr.txt'
+        content = `CUENTAS\n${content}`;
+        namefile = 'accounts-rent-rr.txt';
         break;
     }
     this.exportToFile(content , namefile)
