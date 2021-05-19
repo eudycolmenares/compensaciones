@@ -64,9 +64,7 @@
         placeholder="Descargar Plantilla"
       >
         <ng-template let-option pTemplate="item">
-          <div (click)="downloadTemplate(option.valueOption)">
-            {{ option.nameOption }}
-          </div>
+          <div (click)="downloadTemplate(option.valueOption)">{{ option.nameOption }}</div>
         </ng-template>
       </p-dropdown>
     </div>

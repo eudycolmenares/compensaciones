@@ -207,13 +207,9 @@ export class LoadComponent implements OnInit {
   }
 
   downloadTemplate(option) {
-    console.log('downloadTemplate: ', option);
-
     const { path } = this.templateOptionsList.find(
       (item) => item.valueOption == option
     );
-    console.log('path: ', path);
-
     const link = document.createElement('a');
     if (link.download !== undefined) {
       link.setAttribute('href', path);
