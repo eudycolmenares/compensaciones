@@ -53,7 +53,7 @@ export class RrCompensatedAccountsComponent implements OnInit {
   createForm() {
     this.rrCompensatedAccountsForm = this._fb.group({
       tableOptions: [
-        { key: 'DetalleCompensacion', value: 'DetalleCompensacion' },
+        { key: 'DetalleCompensacion', value: 'Detalle Compensación' },
         [Validators.required],
       ],
     });
@@ -148,53 +148,61 @@ export class RrCompensatedAccountsComponent implements OnInit {
   }
 
   initializeVariables() {
-    this.selectTableList = [ // acomodar
-      { key: 'DetalleCompensacion', value: 'DetalleCompensacion' },
+    this.selectTableList = [
+      // acomodar
+      { key: 'DetalleCompensacion', value: 'Detalle Compensación' },
       { key: 'TCAAUF00', value: 'TCAAUF00' },
-      { key: 'NotasCompensacion', value: 'Notas_Compensacion' },
+      { key: 'NotasCompensacion', value: 'Notas Compensación' },
     ];
 
     this._RrCompensatedAccountsScv
       .allCompensationValue()
       .subscribe((resp: any) => {
-        this.totalCompensationValue = resp.CompensationValues.CompensationValue[0];
+        this.totalCompensationValue =
+          resp.CompensationValues.CompensationValue[0];
       });
   }
 
   selectedTable(selectedTable: string) {
     switch (selectedTable) {
       case 'DetalleCompensacion':
-        this.structure = this._RrCompensatedAccountsScv.structureCompensationDetails().structure;
+        this.structure =
+          this._RrCompensatedAccountsScv.structureCompensationDetails().structure;
         this._RrCompensatedAccountsScv
           .allCompensationDetails()
           .subscribe((resp: models.CompensationDetailsApiModel) => {
             this.dataToTable = resp.CompensationsDetails.CompensationDetail;
           });
-        this.columNames = this._RrCompensatedAccountsScv.structureCompensationDetails().columNames;
+        this.columNames =
+          this._RrCompensatedAccountsScv.structureCompensationDetails().columNames;
         this.name_selectedTable = this.selectTableList[0];
         this.selectedForm = 1;
         break;
 
       case 'TCAAUF00':
-        this.structure = this._RrCompensatedAccountsScv.structureTotalCompensation().structure;
+        this.structure =
+          this._RrCompensatedAccountsScv.structureTotalCompensation().structure;
         this._RrCompensatedAccountsScv
           .allTotalCompensation()
           .subscribe((resp: models.TotalCompensationApiModel) => {
             this.dataToTable = resp.TblTotalCompensation.TblTotalCompensation;
           });
-        this.columNames = this._RrCompensatedAccountsScv.structureTotalCompensation().columNames;
+        this.columNames =
+          this._RrCompensatedAccountsScv.structureTotalCompensation().columNames;
         this.name_selectedTable = this.selectTableList[1];
         this.selectedForm = 2;
         break;
 
       case 'NotasCompensacion':
-        this.structure = this._RrCompensatedAccountsScv.structureCompensationNotes().structure;
+        this.structure =
+          this._RrCompensatedAccountsScv.structureCompensationNotes().structure;
         this._RrCompensatedAccountsScv
           .allCompensationNotes()
           .subscribe((resp: models.CompensationNotesApiModel) => {
             this.dataToTable = resp.TblCompensationNote.TblCompensationNote;
           });
-        this.columNames = this._RrCompensatedAccountsScv.structureCompensationNotes().columNames;
+        this.columNames =
+          this._RrCompensatedAccountsScv.structureCompensationNotes().columNames;
         this.name_selectedTable = this.selectTableList[2];
         this.selectedForm = 3;
         break;
@@ -239,10 +247,7 @@ export class RrCompensatedAccountsComponent implements OnInit {
           account: data.account,
           compensationValue: data.compensationValue,
           compensationcode: data.compensationcode,
-          date: new Date(
-            data.date +
-              ' 00:00:00'
-          ),
+          date: new Date(data.date + ' 00:00:00'),
         });
         break;
 
@@ -281,7 +286,8 @@ export class RrCompensatedAccountsComponent implements OnInit {
   }
 
   onSubmit_TCAAUF00Form() {
-    console.log(this.TCAAUF00Form.value);debugger
+    console.log(this.TCAAUF00Form.value);
+    debugger;
     if (this.TCAAUF00Form.invalid) {
       return Object.values(this.TCAAUF00Form.controls).forEach((control) => {
         control.markAsTouched();
@@ -351,9 +357,10 @@ export class RrCompensatedAccountsComponent implements OnInit {
     switch (this.name_selectedTable.value) {
       case this.selectTableList[0].value: // DetalleCompensacion_YYYYMMDDhhmmss
         if (actionApi === 'structureData') {
-          this.dataRequest = this._RrCompensatedAccountsScv.structureRequest_CompensationDetail(
-            this.compensationDetailForm.value
-          );
+          this.dataRequest =
+            this._RrCompensatedAccountsScv.structureRequest_CompensationDetail(
+              this.compensationDetailForm.value
+            );
         } else if (actionApi === 'createData') {
           this._RrCompensatedAccountsScv
             .createRequest_CompensationDetail(this.dataRequest)
@@ -379,9 +386,10 @@ export class RrCompensatedAccountsComponent implements OnInit {
         if (actionApi === 'structureData') {
           console.log('entra a estructurar la data');
 
-          this.dataRequest = this._RrCompensatedAccountsScv.structureRequest_TotalCompensation(
-            this.TCAAUF00Form.value
-          );
+          this.dataRequest =
+            this._RrCompensatedAccountsScv.structureRequest_TotalCompensation(
+              this.TCAAUF00Form.value
+            );
           console.log('data estructurada', this.dataRequest);
         } else if (actionApi === 'createData') {
           this._RrCompensatedAccountsScv
@@ -408,9 +416,10 @@ export class RrCompensatedAccountsComponent implements OnInit {
 
       case this.selectTableList[2].value: // Notas_Compensacion_YYYMMDDhhmmss
         if (actionApi === 'structureData') {
-          this.dataRequest = this._RrCompensatedAccountsScv.structureRequest_CompensationNote(
-            this.compensationNoteForm.value
-          );
+          this.dataRequest =
+            this._RrCompensatedAccountsScv.structureRequest_CompensationNote(
+              this.compensationNoteForm.value
+            );
         } else if (actionApi === 'createData') {
           this._RrCompensatedAccountsScv
             .createRequest_CompensationNote(this.dataRequest)
@@ -442,8 +451,9 @@ export class RrCompensatedAccountsComponent implements OnInit {
   nameSelectedTable_Download() {
     this.nameTableSelected_download =
       this.rrCompensatedAccountsForm.get('tableOptions').value.key +
-      ' ' +
-      this._gnrScv.toISOLocal(this.currentDate);
+      '_' +
+      this._gnrScv.toISOLocal(this.currentDate).replace(' ', '') +
+      5111;
   }
 
   downloadDataTable() {
