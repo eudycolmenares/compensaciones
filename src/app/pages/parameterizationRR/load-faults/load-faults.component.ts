@@ -72,14 +72,17 @@ export class LoadFaultsComponent implements OnInit {
     const arrayTypesFaults = loadFaultsParams.optionsList.reduce((pre, current) => [...pre, current.valueOption], []);
     this.loaderCustom = true;
     this.faultsScv.readAllFaults().subscribe((resp: faultsApiModel) => {
-      this.loaderCustom = false;
+
       if (resp.GeneralResponse.code == '0') {
         this.uploadedFiles = resp.Loads.Load.filter(item => arrayTypesFaults.includes(item.loadType));
         this.compareToSort(this.uploadedFiles);
         if (!!this.uploadedFiles.find(item => statusInProgress.includes(item.state))) {
           this.startMyTimeOut();
-        }
-      } else { this.toastScv.showError(resp.GeneralResponse.descriptionCode, resp.GeneralResponse.messageCode); }
+        } else { this.loaderCustom = false; }
+      } else {
+        this.loaderCustom = false;
+        this.toastScv.showError(resp.GeneralResponse.descriptionCode, resp.GeneralResponse.messageCode);
+      }
     }, () => this.loaderCustom = false);
   }
   createForm() {
