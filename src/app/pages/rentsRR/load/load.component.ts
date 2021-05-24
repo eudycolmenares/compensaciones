@@ -14,7 +14,9 @@ import { ToastService } from '../../../shared/services/toast.service';
 import { ResponseLoginModel as UserModel } from '@models/users';
 import { AuthService } from '../../../shared/services/auth.service';
 import {
-  loadRentsParams as loadParams
+  loadRentsParams as loadParams,
+  statusInProgress,
+  timeRefreshMinutes as timeExp,
 } from '../../../libraries/utilities.library';
 
 @Component({
@@ -71,6 +73,8 @@ export class LoadComponent implements OnInit {
   ];
   uploadedFiles: loadModel[] = null;
   templateOptionsList = loadParams.optionList;
+  loaderCustom = false;
+  timeOutSesion = null;
 
   constructor(
     private fb: FormBuilder,
@@ -94,10 +98,19 @@ export class LoadComponent implements OnInit {
     });
   }
   updateData() {
+    this.loaderCustom = true;
     this.faultsScv.readAllFaults().subscribe((resp: faultsApiModel) => {
-      this.uploadedFiles = resp.Loads.Load.filter(item => loadParams.arrayTypes.includes(item.loadType));
-      this.compareToSort(this.uploadedFiles);
-    });
+      if (resp.GeneralResponse.code == '0') {
+        this.uploadedFiles = resp.Loads.Load.filter(item => loadParams.arrayTypes.includes(item.loadType));
+        this.compareToSort(this.uploadedFiles);
+        if (!!this.uploadedFiles.find(item => statusInProgress.includes(item.state))) {
+          this.startMyTimeOut();
+        } else { this.loaderCustom = false; }
+      } else {
+        this.loaderCustom = false;
+        this.toastScv.showError(resp.GeneralResponse.descriptionCode, resp.GeneralResponse.messageCode);
+      }
+    }, () => this.loaderCustom = false);
   }
 
   get invalidType() {
@@ -223,6 +236,11 @@ export class LoadComponent implements OnInit {
 
   compareToSort(items: loadModel[]) {
     return items.sort((a, b) => new Date(b.createDate).getTime() - new Date(a.createDate).getTime());
+  }
+  startMyTimeOut() {
+    this.timeOutSesion = setTimeout(() => {
+      this.updateData();
+    }, (timeExp * 60000))
   }
 
   cleanForm() {
