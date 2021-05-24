@@ -24,3 +24,11 @@ export interface WSparameter {
   port: string;
   protocol: string;
 }
+
+export interface ParamsGeneralModel {
+  code: string;
+  description: string;
+  name: string;
+  parameterId: number;
+  value: string;
+}

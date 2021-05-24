@@ -174,6 +174,14 @@ export const languagePrimeNG = {
   "weekHeader": "Wk"
 }
 
+export const paramsLogin = {
+  idApp: 'AT',
+}
+
+export const compensateAccounts = {
+  totalMaxValue : 1000000,
+}
+
 export const timeExpirationMinutes = 15;
 
 export const useAppTimeExpirationMinutes = 5;

@@ -5,9 +5,14 @@ import { Observable } from 'rxjs';
 import { environment as env } from 'src/environments/environment';
 import {
   responseSettingsModel as respondeModel,
-  WSparameter as paramModel
+  WSparameter as paramModel,
+  ParamsGeneralModel as paraGeneModel,
 } from '../../shared/models/parameters';
-import { wsWithOutLoader } from '../../libraries/utilities.library';
+import {
+  wsWithOutLoader,
+  paramsLogin,
+  compensateAccounts
+} from '../../libraries/utilities.library';
 
 @Injectable({
   providedIn: 'root'
@@ -440,7 +445,6 @@ export class ParametersService {
               break;
           }
         });
-        // Se debe setear una variable en servicio // ACOMODAR
         this.processedParams = true;
         resolve(true);
       } catch (error) {
@@ -479,12 +483,28 @@ export class ParametersService {
   consumeParamsGenerals(): Promise<boolean> {
     var promise: Promise<boolean> = new Promise((resolve, reject) => {
       this.allParametersGeneral().subscribe(resp => {
-
-        // aqui deberia actualizar items parametros generales
-
+        if (resp.GeneralResponse.code == '0') {
+          this.updateParamsGeneral(resp.parameter);
+        }
         resolve(true);
       }, () => resolve(true) )
     });
     return promise;
+  }
+  updateParamsGeneral(list: paraGeneModel[]) {
+    list.map(item => {
+      switch (item.code) {
+        // ID App
+        case 'idApp':
+          paramsLogin.idApp = item.value;
+          break;
+        // Max Cuentas Compensadas
+        case 'maxCompensateAccounts':
+          compensateAccounts.totalMaxValue = parseInt(item.value);
+          break;
+        default:
+          break;
+      }
+    });
   }
 }

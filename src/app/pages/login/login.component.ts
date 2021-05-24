@@ -8,7 +8,10 @@ import { UsersService } from '../../services/users/users.service';
 import { AuthService } from '../../shared/services/auth.service';
 import { ParametersService } from '../../shared/services/parameters.service';
 import { RequestLoginModel as loginModel } from '../../models/users';
-import { itemsStorage } from '../../libraries/utilities.library';
+import {
+  itemsStorage,
+  paramsLogin
+} from '../../libraries/utilities.library';
 
 @Component({
   selector: 'app-login',
@@ -68,7 +71,7 @@ export class LoginComponent implements OnInit {
       const dataRequest: loginModel  = {
         usuario: this.form.get('usuario').value,
         password: this.form.get('password').value,
-        idApp : "AT" // SETEADO ACOMODAR
+        idApp : paramsLogin.idApp
       }
       this.usersSvc.login(dataRequest).subscribe(resp => {
         if(resp.token_session !== '') {
