@@ -68,7 +68,7 @@ export class MaintenanceOrdersCausesComponent implements OnInit {
     },
     {
       name: 'television',
-      description: 'Telvisión',
+      description: 'Televisión',
       validation: 'service',
     },
     {
