@@ -71,7 +71,7 @@ export class SettingsComponent implements OnInit {
     },
     {
       name: 'compensate',
-      description: 'Compensa',
+      description: 'CRC',
       validation: 'yes-no',
     },
   ];
