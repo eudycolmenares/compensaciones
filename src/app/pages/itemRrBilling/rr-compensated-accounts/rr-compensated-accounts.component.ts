@@ -88,7 +88,6 @@ export class RrCompensatedAccountsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.nameSelectedTable_Download();
     this.selectedTable(
       this.rrCompensatedAccountsForm.get('tableOptions').value.key
     );
@@ -210,6 +209,7 @@ export class RrCompensatedAccountsComponent implements OnInit {
       default:
         break;
     }
+    this.nameSelectedTable_Download();
   }
 
   updateData(dataSelected: any) {
@@ -449,11 +449,12 @@ export class RrCompensatedAccountsComponent implements OnInit {
   }
 
   nameSelectedTable_Download() {
-    this.nameTableSelected_download =
-      this.rrCompensatedAccountsForm.get('tableOptions').value.key +
+    this.nameTableSelected_download = (
+      this.name_selectedTable.value +
       '_' +
-      this._gnrScv.toISOLocal(this.currentDate).replace(' ', '') +
-      5111;
+      this._gnrScv.toISOLocal(this.currentDate) +
+      5111
+    ).replace(' ', '');
   }
 
   downloadDataTable() {
