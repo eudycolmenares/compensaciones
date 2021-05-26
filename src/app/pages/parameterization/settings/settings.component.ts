@@ -1,14 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { SelectStatus, ServicesSettings as Services } from '../../../libraries/utilities.library';
+import {
+  SelectStatus,
+  ServicesSettings as Services,
+  SelectCompensateText
+} from '../../../libraries/utilities.library';
 import { DataList } from '../../../models/general';
 import { GeneralFunctionsService } from '../../../services/general-functions.service';
 import { SettingsService } from '../../../services/settings/settings.service';
 import { StratumService } from '../../../services/stratum/stratum.service';
 import { ToastService } from '../../../shared/services/toast.service';
 import { AuthService } from '../../../shared/services/auth.service';
-import { requestSettingsModel as requestModel, settingModel, settingsApiModel } from '../../../models/settings';
+import {
+  requestSettingsModel as requestModel,
+  settingModel, settingsApiModel
+} from '../../../models/settings';
 import { strataApiModel, stratumModel } from "../../../models/stratum";
 
 @Component({
@@ -23,6 +30,7 @@ export class SettingsComponent implements OnInit {
   servicesBase: DataList[] = [];
   formStgs: FormGroup;
   actionForm = 'create'; // create, update
+  selectCompensate: object[] = [];
   // table
   dataToTable: settingModel[];
   structure: object[] = [
@@ -61,6 +69,11 @@ export class SettingsComponent implements OnInit {
       description: 'Estado',
       validation: 'active-desactive'
     },
+    {
+      name: 'compensate',
+      description: 'Compensa',
+      validation: 'yes-no',
+    },
   ];
 
   constructor(
@@ -85,6 +98,9 @@ export class SettingsComponent implements OnInit {
     }
     for (const i of Object.entries(Services)) {
       this.servicesBase.push({key: i[0], value: i[1]})
+    }
+    for (const i of Object.entries(SelectCompensateText)) {
+      this.selectCompensate.push({key: i[1], value: i[0]})
     }
     this.stratumSvc.allStrata().subscribe((resp: strataApiModel) => {
       if (resp.generalResponse.code == '0') {
@@ -114,6 +130,7 @@ export class SettingsComponent implements OnInit {
       state: ['', Validators.required],
       strata: ['', Validators.required],
       services: ['', Validators.required],
+      compensate: ['', Validators.required],
     })
   }
 
@@ -131,6 +148,9 @@ export class SettingsComponent implements OnInit {
   }
   get invalidServices() {
     return this.formStgs.get('services').touched && this.formStgs.get('services').invalid;
+  }
+  get invalidCompensate() {
+    return this.formStgs.get('compensate').touched && this.formStgs.get('compensate').invalid;
   }
   textsFormInvalid(field: string) {
     return this.gnrScv.validationFormTextRequired(this.formStgs, field);
@@ -155,7 +175,8 @@ export class SettingsComponent implements OnInit {
           },
           'television': (servicesSelected.find((svc: DataList) => svc.key === 'television') ? '1' : '0'),
           'internet': (servicesSelected.find((svc: DataList) => svc.key === 'internet') ? '1' : '0'),
-          'telephone': (servicesSelected.find((svc: DataList) => svc.key === 'telephone') ? '1' : '0')
+          'telephone': (servicesSelected.find((svc: DataList) => svc.key === 'telephone') ? '1' : '0'),
+          'compensate': this.formStgs.get('compensate').value,
         }
       }
       if(this.actionForm === 'create') {
@@ -194,7 +215,8 @@ export class SettingsComponent implements OnInit {
       description: data.description,
       state: data.state,
       strata: data.socialStratums.socialStratum,
-      services: this.servicesBase.filter((item: DataList) => data[item.key] === '1')
+      services: this.servicesBase.filter((item: DataList) => data[item.key] === '1'),
+      compensate: data.compensate,
     });
   }
 
@@ -222,7 +244,7 @@ export class SettingsComponent implements OnInit {
     return items.sort((a, b) => parseInt(a.statusSocial) - parseInt(b.statusSocial));;
   }
   cleanForm() {
-    this.formStgs.reset({'state': ''});
+    this.formStgs.reset({'state': '', 'compensate': ''});
     this.actionForm = 'create';
   }
 }

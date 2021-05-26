@@ -4,7 +4,7 @@
   <div class="container-add px-sm-2 px-md-5">
     <form autocomplete="off" [formGroup]="formStgs" (ngSubmit)="onSubmit()">
       <div class="row text-light text-center">
-        <div class="col-sm bg-primary py-1 mx-1">Código(*)</div>
+        <div class="col-sm bg-primary py-1 mx-1">Código(***)</div>
         <div class="col-sm bg-primary py-1 mx-1">Descripción(*)</div>
         <div class="col-sm bg-primary py-1 mx-1">Estado(*)</div>
       </div>
@@ -27,6 +27,7 @@
       <div class="row text-light text-center mt-4">
         <div class="col-sm bg-primary py-1 mx-1">Estrato(*)</div>
         <div class="col-sm bg-primary py-1 mx-1">Servicios(*)</div>
+        <div class="col-sm bg-primary py-1 mx-1">Compensa(*)</div>
       </div>
       <div class="row text-light text-left mt-1">
         <div class="col-sm mx-1 mt-1 p-0">
@@ -48,6 +49,12 @@
             optionLabel="value"
           ></p-multiSelect>
           <small class="text-danger" *ngIf="invalidServices">{{ textsFormInvalid("services") }}</small>
+        </div>
+        <div class="col-sm mx-1 mt-1 p-0">
+          <select class="form-control form-control-sm" formControlName="compensate" [class.is-invalid]="invalidCompensate">
+            <option *ngFor="let opt of selectCompensate" [value]="opt.key">{{ opt.value }}</option>
+          </select>
+          <small class="text-danger" *ngIf="invalidCompensate">{{ textsFormInvalid("compensate") }}</small>
         </div>
       </div>
       <div class="row text-light text-center mt-4">

@@ -107,6 +107,12 @@ export enum SelectCompensate {
   'No' = '0'
 }
 
+export enum SelectCompensateText {
+  '- Seleccione -' = '',
+  'Aplica' = '1',
+  'No Aplica' = '0'
+}
+
 export enum ButtonsTable {
   edit = 'edit',
   disable = 'disable',

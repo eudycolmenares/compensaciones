@@ -24,6 +24,7 @@ export interface settingModel {
   internet?: string;
   telephone?: string;
   createDate?: string;
+  compensate: string;
 }
 
 export interface settingsApiModel {
