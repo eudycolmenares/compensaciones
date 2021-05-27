@@ -36,8 +36,8 @@ export class DashboardComponent implements OnInit {
   refreshAuthSesion() {
     if (this.timeoutStatus_refresh) {
       this.timeoutStatus_refresh = false;
+      this.authSvc.isAuthenticated() && this.authSvc.resetMyTimeOut();
       setTimeout(() =>{
-        this.authSvc.isAuthenticated() && this.authSvc.resetMyTimeOut();
         this.timeoutStatus_refresh = true;
       }, (timeExp * 60000));
     }

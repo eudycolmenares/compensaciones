@@ -454,7 +454,7 @@ export class RrCompensatedAccountsComponent implements OnInit {
       '_' +
       this._gnrScv.toISOLocal(this.currentDate) +
       5111
-    ).replace(' ', '');
+    ).replace(/\s+/g, '');
   }
 
   downloadDataTable() {
