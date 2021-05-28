@@ -42,11 +42,7 @@ export class TableComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log( this.structure );
-    console.log('000');
     if (this.structure != undefined) {
-      console.log('111');
-
       this.cols = this.structure.map(item => ({...item, field: item['name'], header: item['description']}) );
       this._selectedColumns = this.cols;
     }
