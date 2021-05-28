@@ -146,8 +146,6 @@ export class BulkLoadComponent implements OnInit {
         initial[name] = XLSX.utils.sheet_to_json(sheet);
         return initial;
       }, {});
-      console.log('jsonData', jsonData);
-
       this.prepareDataToPreview(jsonData);
     };
     reader.readAsBinaryString(file); // binary read for table
@@ -161,12 +159,9 @@ export class BulkLoadComponent implements OnInit {
       valueOption: sheet,
       nameOption: sheet,
     }));
-    console.log('sheetOptionsList: ', this.sheetOptionsList);
   }
 
   informationToTable(option) {
-    console.log('option: ', option);
-
     const data: object[] = this.dataPreview[option];
     if (data.length > 0) {
       const items = Object.keys(data[0]);
@@ -200,7 +195,6 @@ export class BulkLoadComponent implements OnInit {
         control.markAsTouched();
       });
     } else {
-      console.log(this.bulkLoadForm.value);
       this._confirmationScv.confirm({
         message: bulkLoadParams.confirmLoad.msg,
         accept: () => {
@@ -235,7 +229,6 @@ export class BulkLoadComponent implements OnInit {
           this._toastScv.showSuccess(resp.messageCode);
           // this.fileSent();
         } else {
-          console.log('Respuesta: ', resp);
           this.fileSent(resp.Errors.Error);
           this._toastScv.showError(resp.descriptionCode);
         }

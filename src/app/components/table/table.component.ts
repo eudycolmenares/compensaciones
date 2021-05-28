@@ -42,8 +42,14 @@ export class TableComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.cols = this.structure.map(item => ({...item, field: item['name'], header: item['description']}) );
-    this._selectedColumns = this.cols;
+    console.log( this.structure );
+    console.log('000');
+    if (this.structure != undefined) {
+      console.log('111');
+
+      this.cols = this.structure.map(item => ({...item, field: item['name'], header: item['description']}) );
+      this._selectedColumns = this.cols;
+    }
   }
 
   ngOnChanges() {
@@ -51,7 +57,6 @@ export class TableComponent implements OnInit {
   }
 
   editObservation(item) {
-    console.log(item);
     this.statusObservationItem = true;
 
   }
@@ -102,7 +107,6 @@ export class TableComponent implements OnInit {
   }
 
   onRowEditInit(item, index, field){
-    console.log('data received: ',item[field]);
     this.cloneItem[index] = {...item};
   }
 
