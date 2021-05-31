@@ -257,7 +257,7 @@ export class RrCompensatedAccountsService {
   ): models.CompensationNoteRequestModel {
     let dataRequest: models.CompensationNoteRequestModel = {
       TblCompensationNote: {
-        idNotaCompensacion: dataForm.id,
+        compensationNoteId: dataForm.id,
         account: dataForm.account,
         note: dataForm.note,
       },
@@ -294,7 +294,7 @@ export class RrCompensatedAccountsService {
     );
   }
 
-  deleteRequest_CompensationNote(id: string): Observable<models.ResponseModel> {
+  deleteRequest_CompensationNote(id: number): Observable<models.ResponseModel> {
     return this._http.delete<models.ResponseModel>(
       env.endpoints.CompensationNote.url + env.endpoints.CompensationNote.endpoints.delete + `${id}`,
       { headers: this.headers }

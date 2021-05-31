@@ -61,7 +61,7 @@ export interface TotalCompensationRequestModel {
 /////////////////////////////////////////////////
 
 export interface CompensationNoteModel {
-  idNotaCompensacion?: string;
+  compensationNoteId?: string;
   account: string;
   note: string;
 }

@@ -253,7 +253,7 @@ export class RrCompensatedAccountsComponent implements OnInit {
 
       case 3:
         this.compensationNoteForm.reset({
-          id: data.idNotaCompensacion,
+          id: data.compensationNoteId,
           account: data.account,
           note: data.note,
         });
@@ -435,7 +435,7 @@ export class RrCompensatedAccountsComponent implements OnInit {
         } else if (actionApi === 'deleteData') {
           this._RrCompensatedAccountsScv
             .deleteRequest_CompensationNote(
-              dataAditionals['idNotaCompensacion']
+              dataAditionals['compensationNoteId']
             )
             .subscribe((resp: models.ResponseModel) => {
               this.messageToCustomer(resp);
