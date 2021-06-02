@@ -115,7 +115,7 @@
             </ng-template>
           </td>
           <td *ngSwitchCase="'amount'">{{ item[opt.name] | currency }}</td>
-          <td *ngSwitchCase="'time-min'">{{item[opt.name]}} min.</td>
+          <td *ngSwitchCase="'time-min'">{{item[opt.name] | hourMinute}}</td>
           <td *ngSwitchCase="'period'">
             <div *ngIf="item[opt.name] === CurrentPeriodSent else notIsActual" class="d-flex flex-row">Periodo {{item[opt.name]}} <span class="badge-success px-2 mx-2">Actual</span></div>
             <ng-template #notIsActual >
