@@ -23,6 +23,12 @@ import {
 import { ResponseLoginModel as UserModel } from '@models/users';
 import { AuthService } from '@shared_services/auth.service';
 
+
+import * as XLSX from 'xlsx';
+const EXCEL_TYPE =
+  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+const EXCEL_EXTENSION = '.xlsx';
+
 interface originModel {
   id: number;
   name: string;
@@ -74,6 +80,9 @@ export class CausesComponent implements OnInit {
       validation: 'active-desactive',
     },
   ];
+  //download file
+  nameRowsExcelEnglish: string[] = [];
+  nameRowsExcelSpanish: string[] = [];
   constructor(
     private _fb: FormBuilder,
     private _causeSvc: CauseService,
@@ -131,6 +140,16 @@ export class CausesComponent implements OnInit {
         this.dataToTable.map( (add) => {
           return add.CloneOriginType = add.OriginType.name;
         } );
+        this.structure.forEach((data: {
+          name: string;
+          description: string;
+          validation: string;
+      }) => {
+          this.nameRowsExcelSpanish.push(
+            this.removeAccents(data.description.toLocaleUpperCase())
+          );
+          this.nameRowsExcelEnglish.push(data.name);
+        });
       } else { this._toastScv.showError(resp.GeneralResponse.messageCode); }
     });
   }
@@ -230,4 +249,73 @@ export class CausesComponent implements OnInit {
     this.causeForm.reset({ typeOrigin: '', status: '' });
     this.actionForm = 'create';
   }
+
+
+
+
+
+  downloadDataTable() {
+    if (this.dataToTable.length > 0) {
+      this.exportAsExcelFile(this.dataToTable);
+    }
+  }
+
+  exportAsExcelFile(json: object[]): void {
+    const csvContent = json.map((row) => {
+      return this.nameRowsExcelEnglish.map((k) => {
+        let cell = row[k] === null || row[k] === undefined ? '' : row[k];
+        return cell;
+      });
+    });
+
+    var worksheet = XLSX.utils.json_to_sheet([], {
+      header: this.nameRowsExcelSpanish,
+    });
+    worksheet = XLSX.utils.sheet_add_json(worksheet, csvContent, {
+      skipHeader: true,
+      origin: 'A2',
+    });
+    const workbook: XLSX.WorkBook = {
+      Sheets: { ['CAUSAS']: worksheet },
+      SheetNames: ['CAUSAS'],
+    };
+    const excelBuffer: any = XLSX.write(workbook, {
+      bookType: 'xlsx',
+      type: 'array',
+    });
+    this.saveAsExcelFile(excelBuffer);
+  }
+
+  saveAsExcelFile(buffer: any): void {
+    const blob: Blob = new Blob([buffer], { type: EXCEL_TYPE });
+    if (navigator.msSaveBlob) {
+      // IE 10+
+      navigator.msSaveBlob(
+        blob,
+        'causas_' + new Date().getTime() + EXCEL_EXTENSION
+      );
+    } else {
+      const link = document.createElement('a');
+      if (link.download !== undefined) {
+        // Browsers that support HTML5 download attribute
+        const url = URL.createObjectURL(blob);
+        link.setAttribute('href', url);
+        link.setAttribute(
+          'download',
+          'causas_' +
+            new Date().getTime() +
+            EXCEL_EXTENSION
+        );
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        this._toastScv.showSuccess('Archivo descargado correctamente');
+      }
+    }
+  }
+
+  removeAccents = (str) => {
+    return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  };
 }

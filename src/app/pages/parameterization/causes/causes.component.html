@@ -140,4 +140,14 @@
     (disableRecord)="disableCause($event)"
     (deleteRecord)="deleteCause($event)"
   ></app-table>
+
+  <div *ngIf="dataToTable" class="text-center justify-content-center">
+    <button
+      type="button"
+      class="btn btn-primary mr-3 btn-sm"
+      (click)="downloadDataTable()"
+    >
+      Descargar Excel
+    </button>
+  </div>
 </section>
