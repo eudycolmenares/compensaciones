@@ -8,7 +8,7 @@ import { AuthService } from '../../../shared/services/auth.service';
 import { SelectStatus, ServicesSettings as Services } from '../../../libraries/utilities.library';
 import { DataList } from '../../../models/general';
 import { requestModel, responseModel, symptomModel, symptomsApiModel } from '../../../models/symptom';
-import * as XLSX from 'xlsx';
+import { estructTableModel } from '../../../shared/models/parameters';
 
 @Component({
   selector: 'app-symptom',
@@ -23,7 +23,7 @@ export class SymptomComponent implements OnInit {
   services: DataList[] = [];
   // table
   dataToTable: symptomModel[];
-  structure: object[] = [
+  structure: estructTableModel[] = [
     {
       name: 'symptomCode',
       description: 'Código',
@@ -40,11 +40,6 @@ export class SymptomComponent implements OnInit {
       validation: 'active-desactive'
     }
   ];
-  //download file
-  nameRowsExcelEnglish: string[] = [];
-  nameRowsExcelSpanish: string[] = [];
-  EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
-  EXCEL_EXTENSION = '.xlsx';
 
   constructor(
     private fb: FormBuilder,
@@ -182,88 +177,10 @@ export class SymptomComponent implements OnInit {
 
   downloadDataTable() {
     if (this.dataToTable.length > 0) {
-
-      //
-
-      this.structure.forEach((data: {
-        name: string;
-        description: string;
-        validation: string;
-      }) => {
-        this.nameRowsExcelSpanish.push(
-          this.removeAccents(data.description.toLocaleUpperCase())
-        );
-        this.nameRowsExcelEnglish.push(data.name);
-      });
-
-
-      //
-
-
-      this.exportAsExcelFile(this.dataToTable);
-    }
-  }
-  exportAsExcelFile(json: object[]): void {
-    const csvContent = json.map((row) => {
-      return this.nameRowsExcelEnglish.map((k) => {
-        let cell = row[k] === null || row[k] === undefined ? '' : row[k];
-        return cell;
-      });
-    });
-
-
-
-
-
-    var worksheet = XLSX.utils.json_to_sheet([], {
-      header: this.nameRowsExcelSpanish,
-    });
-    worksheet = XLSX.utils.sheet_add_json(worksheet, csvContent, {
-      skipHeader: true,
-      origin: 'A2',
-    });
-    const workbook: XLSX.WorkBook = {
-      Sheets: { ['SINTOMAS']: worksheet },
-      SheetNames: ['SINTOMAS'],
-    };
-    const excelBuffer: any = XLSX.write(workbook, {
-      bookType: 'xlsx',
-      type: 'array',
-    });
-    this.saveAsExcelFile(excelBuffer);
-  }
-  saveAsExcelFile(buffer: any): void {
-    const blob: Blob = new Blob([buffer], { type: this.EXCEL_TYPE });
-    if (navigator.msSaveBlob) {
-      // IE 10+
-      navigator.msSaveBlob(
-        blob,
-        'sintomas_' + new Date().getTime() + this.EXCEL_EXTENSION
-      );
-    } else {
-      const link = document.createElement('a');
-      if (link.download !== undefined) {
-        // Browsers that support HTML5 download attribute
-        const url = URL.createObjectURL(blob);
-        link.setAttribute('href', url);
-        link.setAttribute(
-          'download',
-          'sintomas_' +
-          new Date().getTime() +
-          this.EXCEL_EXTENSION
-        );
-        link.style.visibility = 'hidden';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        this.toastScv.showSuccess('Archivo descargado correctamente');
-      }
+      this.gnrScv.exportDataToExcelFile(this.structure, this.dataToTable, 'SINTOMAS')
     }
   }
 
-  removeAccents = (str) => {
-    return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-  };
   cleanForm() {
     this.formSymptom.reset({
       state: '',

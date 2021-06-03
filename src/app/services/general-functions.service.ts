@@ -1,11 +1,20 @@
 import { Injectable, PipeTransform } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import * as XLSX from 'xlsx';
+
+import { ToastService } from '../shared/services/toast.service';
+import {
+  estructTableModel as tableModel
+} from '../shared/models/parameters';
+import {
+  exportExcelParams as excelParams
+} from '../libraries/utilities.library';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GeneralFunctionsService {
-  constructor() {}
+  constructor(private toastScv: ToastService,) {}
 
   compare(v1, v2) {
     return v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
@@ -94,6 +103,70 @@ export class GeneralFunctionsService {
         return 'Cuentas Rentas';
       case 'NODES_RENT':
         return 'Nodos Rentas';
+    }
+  }
+
+  removeAccents = (str) => {
+    return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  };
+
+  exportDataToExcelFile(estructure: tableModel[], data: object[], useCase: string) {
+    let rowsEng: string[] = [];
+    let rowsSpa: string[] = [];
+    estructure.forEach(data => {
+      rowsSpa.push(
+        this.removeAccents(data.description.toLocaleUpperCase())
+      );
+      rowsEng.push(data.name);
+    });
+    this.exportAsExcelFile(data, rowsEng, rowsSpa, useCase);
+  }
+  private exportAsExcelFile(json: object[], rowsEng, rowsSpa, useCase): void {
+    const csvContent = json.map((row) => {
+      return rowsEng.map((k) => {
+        let cell = row[k] === null || row[k] === undefined ? '' : row[k];
+        return cell;
+      });
+    });
+    var worksheet = XLSX.utils.json_to_sheet([], { header: rowsSpa });
+    worksheet = XLSX.utils.sheet_add_json(worksheet, csvContent, {
+      skipHeader: true,
+      origin: 'A2',
+    });
+    const workbook: XLSX.WorkBook = {
+      Sheets: { [useCase]: worksheet },
+      SheetNames: [useCase],
+    };
+    const excelBuffer: any = XLSX.write(workbook, {
+      bookType: 'xlsx',
+      type: 'array',
+    });
+    this.saveAsExcelFile(excelBuffer, useCase);
+  }
+  private saveAsExcelFile(buffer: any, useCase: string): void {
+    const blob: Blob = new Blob([buffer], { type: excelParams.excelType });
+    if (navigator.msSaveBlob) {
+      // IE 10+
+      navigator.msSaveBlob(
+        blob,
+        excelParams.case[useCase] + new Date().getTime() + excelParams.excelExt
+      );
+    } else {
+      const link = document.createElement('a');
+      if (link.download !== undefined) {
+        // Browsers that support HTML5 download attribute
+        const url = URL.createObjectURL(blob);
+        link.setAttribute('href', url);
+        link.setAttribute(
+          'download',
+          excelParams.case[useCase] + new Date().getTime() + excelParams.excelExt
+        );
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        this.toastScv.showSuccess(excelParams.msgSuccess);
+      }
     }
   }
 }

@@ -32,3 +32,9 @@ export interface ParamsGeneralModel {
   parameterId: number;
   value: string;
 }
+
+export interface estructTableModel {
+  name: string;
+  description: string;
+  validation: string;
+}

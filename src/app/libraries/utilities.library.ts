@@ -403,3 +403,13 @@ export let wsWithOutLoader = [
   'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSCompensacionesBatchRR/LoadService/read/all',
   'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSBilling/SupervisionProcessService/read/all'
 ];
+
+export  const exportExcelParams = {
+  excelType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8',
+  excelExt: '.xlsx',
+  case: {
+    'SINTOMAS': 'sintomas_',
+    'CAUSAS': 'causas_',
+  },
+  msgSuccess: 'Archivo descargado correctamente'
+}
