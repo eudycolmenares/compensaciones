@@ -52,8 +52,8 @@ export class NavbarComponent implements OnInit {
                 routerLink: ['/dashboard/system-status']
               },
               {
-                label: 'Síntoma',
-                title: 'Síntoma',
+                label: 'Síntomas',
+                title: 'Síntomas',
                 icon:'pi pi-fw pi-search',
                 routerLink: ['/dashboard/symptom']
               },

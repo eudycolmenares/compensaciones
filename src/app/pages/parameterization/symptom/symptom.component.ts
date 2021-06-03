@@ -8,6 +8,7 @@ import { AuthService } from '../../../shared/services/auth.service';
 import { SelectStatus, ServicesSettings as Services } from '../../../libraries/utilities.library';
 import { DataList } from '../../../models/general';
 import { requestModel, responseModel, symptomModel, symptomsApiModel } from '../../../models/symptom';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-symptom',
@@ -39,6 +40,11 @@ export class SymptomComponent implements OnInit {
       validation: 'active-desactive'
     }
   ];
+  //download file
+  nameRowsExcelEnglish: string[] = [];
+  nameRowsExcelSpanish: string[] = [];
+  EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+  EXCEL_EXTENSION = '.xlsx';
 
   constructor(
     private fb: FormBuilder,
@@ -81,10 +87,10 @@ export class SymptomComponent implements OnInit {
 
   initializeVariables() {
     for (const i of Object.entries(SelectStatus)) {
-      this.selectStatus.push({key: i[1], value: i[0]})
+      this.selectStatus.push({ key: i[1], value: i[0] })
     }
     for (const i of Object.entries(Services)) {
-      this.services.push({key: i[0], value: i[1]})
+      this.services.push({ key: i[0], value: i[1] })
     }
     this.initialCharge(); // table
   }
@@ -98,11 +104,11 @@ export class SymptomComponent implements OnInit {
   }
 
   onSubmit() {
-    if(this.formSymptom.invalid) {
+    if (this.formSymptom.invalid) {
       return Object.values(this.formSymptom.controls).forEach(control => {
         control.markAsTouched();
       })
-    }else {
+    } else {
       const dataRequest: requestModel = {
         'symptom': {
           'symptomCode': this.formSymptom.get('code').value,
@@ -111,9 +117,9 @@ export class SymptomComponent implements OnInit {
           'user': this.authSvc.userData.usuario.usuario,
         }
       }
-      if(this.actionForm === 'create') {
+      if (this.actionForm === 'create') {
         this.createSymptomApi(dataRequest);
-      }else {
+      } else {
         dataRequest.symptom.symptomId = this.formSymptom.get('id').value;
         this.updateSymptomApi(dataRequest);
       }
@@ -121,20 +127,20 @@ export class SymptomComponent implements OnInit {
   }
   createSymptomApi(dataRequest: requestModel) {
     this.symptomSvc.createSymptom(dataRequest).subscribe((resp: responseModel) => {
-      if(resp.generalResponse.code === '0') {
+      if (resp.generalResponse.code === '0') {
         this.toastScv.showSuccess(resp.generalResponse.messageCode);
         this.initialCharge();
-      }else{
+      } else {
         this.toastScv.showError(resp.generalResponse.messageCode);
       }
     })
   }
   updateSymptomApi(dataRequest: requestModel) {
     this.symptomSvc.updateSymptom(dataRequest).subscribe(resp => {
-      if(resp.generalResponse.code === '0') {
+      if (resp.generalResponse.code === '0') {
         this.toastScv.showSuccess(resp.generalResponse.messageCode);
         this.initialCharge();
-      }else{
+      } else {
         this.toastScv.showError(resp.generalResponse.messageCode);
       }
     })
@@ -165,15 +171,99 @@ export class SymptomComponent implements OnInit {
 
   deleteSymptom(symptom: symptomModel) {
     this.symptomSvc.deleteSymptom(symptom.symptomId).subscribe(resp => {
-      if(resp.generalResponse.code === '0') {
+      if (resp.generalResponse.code === '0') {
         this.toastScv.showSuccess(resp.generalResponse.messageCode);
         this.initialCharge();
-      }else{
+      } else {
         this.toastScv.showError(resp.generalResponse.messageCode);
       }
     })
   }
 
+  downloadDataTable() {
+    if (this.dataToTable.length > 0) {
+
+      //
+
+      this.structure.forEach((data: {
+        name: string;
+        description: string;
+        validation: string;
+      }) => {
+        this.nameRowsExcelSpanish.push(
+          this.removeAccents(data.description.toLocaleUpperCase())
+        );
+        this.nameRowsExcelEnglish.push(data.name);
+      });
+
+
+      //
+
+
+      this.exportAsExcelFile(this.dataToTable);
+    }
+  }
+  exportAsExcelFile(json: object[]): void {
+    const csvContent = json.map((row) => {
+      return this.nameRowsExcelEnglish.map((k) => {
+        let cell = row[k] === null || row[k] === undefined ? '' : row[k];
+        return cell;
+      });
+    });
+
+
+
+
+
+    var worksheet = XLSX.utils.json_to_sheet([], {
+      header: this.nameRowsExcelSpanish,
+    });
+    worksheet = XLSX.utils.sheet_add_json(worksheet, csvContent, {
+      skipHeader: true,
+      origin: 'A2',
+    });
+    const workbook: XLSX.WorkBook = {
+      Sheets: { ['SINTOMAS']: worksheet },
+      SheetNames: ['SINTOMAS'],
+    };
+    const excelBuffer: any = XLSX.write(workbook, {
+      bookType: 'xlsx',
+      type: 'array',
+    });
+    this.saveAsExcelFile(excelBuffer);
+  }
+  saveAsExcelFile(buffer: any): void {
+    const blob: Blob = new Blob([buffer], { type: this.EXCEL_TYPE });
+    if (navigator.msSaveBlob) {
+      // IE 10+
+      navigator.msSaveBlob(
+        blob,
+        'sintomas_' + new Date().getTime() + this.EXCEL_EXTENSION
+      );
+    } else {
+      const link = document.createElement('a');
+      if (link.download !== undefined) {
+        // Browsers that support HTML5 download attribute
+        const url = URL.createObjectURL(blob);
+        link.setAttribute('href', url);
+        link.setAttribute(
+          'download',
+          'sintomas_' +
+          new Date().getTime() +
+          this.EXCEL_EXTENSION
+        );
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        this.toastScv.showSuccess('Archivo descargado correctamente');
+      }
+    }
+  }
+
+  removeAccents = (str) => {
+    return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  };
   cleanForm() {
     this.formSymptom.reset({
       state: '',

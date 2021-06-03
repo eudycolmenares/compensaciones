@@ -44,4 +44,10 @@
   <hr class="mt-5 mb-5" />
 
   <app-table [dataBase]="dataToTable" [structure]="structure" (editRecord)="updateSymptom($event)" (disableRecord)="disableSymptom($event)" (deleteRecord)="deleteSymptom($event)"></app-table>
+
+  <div *ngIf="dataToTable" class="text-center justify-content-center">
+    <button type="button" (click)="downloadDataTable()" class="btn btn-primary mr-3 btn-sm">
+      Descargar Excel
+    </button>
+  </div>
 </section>
