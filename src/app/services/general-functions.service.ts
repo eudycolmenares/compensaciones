@@ -3,18 +3,14 @@ import { FormGroup } from '@angular/forms';
 import * as XLSX from 'xlsx';
 
 import { ToastService } from '../shared/services/toast.service';
-import {
-  estructTableModel as tableModel
-} from '../shared/models/parameters';
-import {
-  exportExcelParams as excelParams
-} from '../libraries/utilities.library';
+import { estructTableModel as tableModel } from '../shared/models/parameters';
+import { exportExcelParams as excelParams } from '../libraries/utilities.library';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GeneralFunctionsService {
-  constructor(private toastScv: ToastService,) {}
+  constructor(private toastScv: ToastService) {}
 
   compare(v1, v2) {
     return v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
@@ -72,7 +68,6 @@ export class GeneralFunctionsService {
       d.getFullYear() +
       z(d.getMonth() + 1) +
       z(d.getDate()) +
-      ' ' +
       z(d.getHours()) +
       z(d.getMinutes()) +
       z(d.getSeconds())
@@ -110,15 +105,25 @@ export class GeneralFunctionsService {
     return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
   };
 
-  exportDataToExcelFile(estructure: tableModel[], data: object[], useCase: string) {
+  exportDataToExcelFile(
+    estructure: tableModel[],
+    data: object[],
+    useCase: string
+  ) {
     let rowsEng: string[] = [];
     let rowsSpa: string[] = [];
-    estructure.forEach(data => {
-      rowsSpa.push(
-        this.removeAccents(data.description.toLocaleUpperCase())
-      );
+    estructure.forEach((data) => {
+      rowsSpa.push(this.removeAccents(data.description.toLocaleUpperCase()));
       rowsEng.push(data.name);
     });
+    if (useCase === 'CAUSAS NUEVAS') {
+      rowsSpa.splice(
+        3,
+        0,
+        this.removeAccents('Tipo Origen').toLocaleUpperCase()
+      );
+      rowsEng.splice(3, 0, '');
+    }
     this.exportAsExcelFile(data, rowsEng, rowsSpa, useCase);
   }
   private exportAsExcelFile(json: object[], rowsEng, rowsSpa, useCase): void {
@@ -149,7 +154,7 @@ export class GeneralFunctionsService {
       // IE 10+
       navigator.msSaveBlob(
         blob,
-        excelParams.case[useCase] + new Date().getTime() + excelParams.excelExt
+        excelParams.case[useCase] + this.toISOLocal(new Date()) + excelParams.excelExt
       );
     } else {
       const link = document.createElement('a');
@@ -159,7 +164,9 @@ export class GeneralFunctionsService {
         link.setAttribute('href', url);
         link.setAttribute(
           'download',
-          excelParams.case[useCase] + new Date().getTime() + excelParams.excelExt
+          excelParams.case[useCase] +
+            this.toISOLocal(new Date()) +
+            excelParams.excelExt
         );
         link.style.visibility = 'hidden';
         document.body.appendChild(link);

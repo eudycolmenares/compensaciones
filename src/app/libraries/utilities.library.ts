@@ -410,6 +410,11 @@ export  const exportExcelParams = {
   case: {
     'SINTOMAS': 'sintomas_',
     'CAUSAS': 'causas_',
+    //nodes
+    'NODOS CANDIDATOS': 'nodos_candidatos_',
+    'DATA INVALIDA': 'nodos_data_invalida_',
+    'CAUSAS NUEVAS': 'causas_nuevas_',
+    'SINTOMAS NUEVOS': 'sintomas_nuevos_',
   },
   msgSuccess: 'Archivo descargado correctamente'
 }

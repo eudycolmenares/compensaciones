@@ -2,10 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { GeneralFunctionsService } from '@services/general-functions.service';
-import {
-  ServicesSettings,
-  SelectStatus,
-} from '@libraries/utilities.library';
+import { ServicesSettings, SelectStatus } from '@libraries/utilities.library';
 import {
   CauseModel,
   CausesApiModel,
@@ -22,12 +19,7 @@ import {
 } from '@models/origin-type';
 import { ResponseLoginModel as UserModel } from '@models/users';
 import { AuthService } from '@shared_services/auth.service';
-
-
-import * as XLSX from 'xlsx';
-const EXCEL_TYPE =
-  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
-const EXCEL_EXTENSION = '.xlsx';
+import { estructTableModel } from 'src/app/shared/models/parameters';
 
 interface originModel {
   id: number;
@@ -42,7 +34,6 @@ interface originModel {
   styleUrls: ['./causes.component.scss'],
 })
 export class CausesComponent implements OnInit {
-
   causeForm: FormGroup;
   selectState: DataList[] = [];
   selectService: DataList[] = [];
@@ -53,7 +44,7 @@ export class CausesComponent implements OnInit {
   originTypeList: originTypeModel[];
   // table
   dataToTable: CauseModel[];
-  structure: object[] = [
+  structure: estructTableModel[] = [
     {
       name: 'code',
       description: 'Código Causa',
@@ -80,16 +71,13 @@ export class CausesComponent implements OnInit {
       validation: 'active-desactive',
     },
   ];
-  //download file
-  nameRowsExcelEnglish: string[] = [];
-  nameRowsExcelSpanish: string[] = [];
   constructor(
     private _fb: FormBuilder,
     private _causeSvc: CauseService,
     public _originTypeSvc: OriginTypeService,
     private _gnrScv: GeneralFunctionsService,
     private _toastScv: ToastService,
-    private _authSvc: AuthService,
+    private _authSvc: AuthService
   ) {
     this.userData = this._authSvc.userData;
     this.createForm();
@@ -128,7 +116,9 @@ export class CausesComponent implements OnInit {
     this._originTypeSvc.allOrigins().subscribe((resp: originsApiModel) => {
       if (resp.GeneralResponse.code == '0') {
         this.originTypeList = resp.OriginTypes.OriginType;
-      } else { this._toastScv.showError(resp.GeneralResponse.messageCode); }
+      } else {
+        this._toastScv.showError(resp.GeneralResponse.messageCode);
+      }
     });
     this.initialCharge(); // table
   }
@@ -137,20 +127,12 @@ export class CausesComponent implements OnInit {
     this._causeSvc.allCauses().subscribe((resp: CausesApiModel) => {
       if (resp.GeneralResponse.code == '0') {
         this.dataToTable = resp.Causes.Cause;
-        this.dataToTable.map( (add) => {
-          return add.CloneOriginType = add.OriginType.name;
-        } );
-        this.structure.forEach((data: {
-          name: string;
-          description: string;
-          validation: string;
-      }) => {
-          this.nameRowsExcelSpanish.push(
-            this.removeAccents(data.description.toLocaleUpperCase())
-          );
-          this.nameRowsExcelEnglish.push(data.name);
+        this.dataToTable.map((add) => {
+          return (add.CloneOriginType = add.OriginType.name);
         });
-      } else { this._toastScv.showError(resp.GeneralResponse.messageCode); }
+      } else {
+        this._toastScv.showError(resp.GeneralResponse.messageCode);
+      }
     });
   }
 
@@ -226,9 +208,10 @@ export class CausesComponent implements OnInit {
 
   disableCause(cause: CauseModel) {
     const dataRequest: RequestModel = {
-      Cause: { ...cause,
-        state: (cause.state.toString() === '0') ? '1' : '0',
-        user: this.userData.usuario.usuario
+      Cause: {
+        ...cause,
+        state: cause.state.toString() === '0' ? '1' : '0',
+        user: this.userData.usuario.usuario,
       },
     };
     this.updateCauseApi(dataRequest);
@@ -250,72 +233,13 @@ export class CausesComponent implements OnInit {
     this.actionForm = 'create';
   }
 
-
-
-
-
   downloadDataTable() {
     if (this.dataToTable.length > 0) {
-      this.exportAsExcelFile(this.dataToTable);
-    }
-  }
-
-  exportAsExcelFile(json: object[]): void {
-    const csvContent = json.map((row) => {
-      return this.nameRowsExcelEnglish.map((k) => {
-        let cell = row[k] === null || row[k] === undefined ? '' : row[k];
-        return cell;
-      });
-    });
-
-    var worksheet = XLSX.utils.json_to_sheet([], {
-      header: this.nameRowsExcelSpanish,
-    });
-    worksheet = XLSX.utils.sheet_add_json(worksheet, csvContent, {
-      skipHeader: true,
-      origin: 'A2',
-    });
-    const workbook: XLSX.WorkBook = {
-      Sheets: { ['CAUSAS']: worksheet },
-      SheetNames: ['CAUSAS'],
-    };
-    const excelBuffer: any = XLSX.write(workbook, {
-      bookType: 'xlsx',
-      type: 'array',
-    });
-    this.saveAsExcelFile(excelBuffer);
-  }
-
-  saveAsExcelFile(buffer: any): void {
-    const blob: Blob = new Blob([buffer], { type: EXCEL_TYPE });
-    if (navigator.msSaveBlob) {
-      // IE 10+
-      navigator.msSaveBlob(
-        blob,
-        'causas_' + new Date().getTime() + EXCEL_EXTENSION
+      this._gnrScv.exportDataToExcelFile(
+        this.structure,
+        this.dataToTable,
+        'CAUSAS'
       );
-    } else {
-      const link = document.createElement('a');
-      if (link.download !== undefined) {
-        // Browsers that support HTML5 download attribute
-        const url = URL.createObjectURL(blob);
-        link.setAttribute('href', url);
-        link.setAttribute(
-          'download',
-          'causas_' +
-            new Date().getTime() +
-            EXCEL_EXTENSION
-        );
-        link.style.visibility = 'hidden';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        this._toastScv.showSuccess('Archivo descargado correctamente');
-      }
     }
   }
-
-  removeAccents = (str) => {
-    return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-  };
 }

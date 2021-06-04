@@ -28,7 +28,6 @@ export class NodesComponent implements OnInit {
   nodeRevisionForm: FormGroup;
   selectService_Node: DataList[];
   selectRevision_Node: DataList[];
-  nameTableSelected_download: string = '';
   selectedRevisionButtons: string[] = [];
 
   // table
@@ -41,8 +40,6 @@ export class NodesComponent implements OnInit {
   }[] = [];
   changeIconValidation = true;
   listObservation: ObservationModel[];
-  nameRowsExcelEnglish: string[] = [];
-  nameRowsExcelSpanish: string[] = [];
   SheetNameInExcel: string = '';
   dataCount_aprroved: {
     nameTable: string;
@@ -190,8 +187,6 @@ export class NodesComponent implements OnInit {
   initialCharge() {
     this.dataCount = [...this.dataCount_aprroved];
     this.structure = [];
-    this.nameRowsExcelSpanish = [];
-    this.nameRowsExcelEnglish = [];
 
     if (this.nodeForm.get('listNodes_Revision').value.key === 'approved') {
       this.structure = [
@@ -291,7 +286,6 @@ export class NodesComponent implements OnInit {
           this.dataCount = [...this.dataCount_aprroved];
         });
       this.SheetNameInExcel = 'NODOS CANDIDATOS';
-      this.nameTableSelected_download = 'nodos_candidatos_';
       this.selectedRevisionButtons = ['edit', '', 'delete'];
     }
 
@@ -357,7 +351,6 @@ export class NodesComponent implements OnInit {
           this.dataCount = [...this.dataCount_invalidData];
         });
         this.SheetNameInExcel = 'DATA INVALIDA';
-      this.nameTableSelected_download = 'nodos_data_invalida_';
       this.selectedRevisionButtons = [];
     }
 
@@ -401,31 +394,8 @@ export class NodesComponent implements OnInit {
                 });
                 this.dataCount = [...this.dataCount_newCauses];
               });
-            this.SheetNameInExcel = 'CAUSAS';
-            this.nameTableSelected_download = 'causas_nuevas_';
+            this.SheetNameInExcel = 'CAUSAS NUEVAS';
             this.selectedRevisionButtons = [];
-            this.structure.forEach((data) => {
-              this.nameRowsExcelSpanish.push(
-                this.removeAccents(data.description.toLocaleUpperCase())
-              );
-              this.nameRowsExcelEnglish.push(data.name);
-            });
-            this.nameRowsExcelSpanish.push('Tipo Origen'.toLocaleUpperCase());
-            this.nameRowsExcelEnglish.push(''.toLocaleUpperCase());
-            this.nameRowsExcelSpanish = [
-              this.nameRowsExcelSpanish[0],
-              this.nameRowsExcelSpanish[1],
-              this.nameRowsExcelSpanish[2],
-              this.nameRowsExcelSpanish[4],
-              this.nameRowsExcelSpanish[3],
-            ];
-            this.nameRowsExcelEnglish = [
-              this.nameRowsExcelEnglish[0],
-              this.nameRowsExcelEnglish[1],
-              this.nameRowsExcelEnglish[2],
-              this.nameRowsExcelEnglish[4],
-              this.nameRowsExcelEnglish[3],
-            ];
           } else {
             this._toastScv.showError(
               resp.GeneralResponse.messageCode,
@@ -470,15 +440,8 @@ export class NodesComponent implements OnInit {
                 });
                 this.dataCount = [...this.dataCount_newSymptoms];
               });
-              this.SheetNameInExcel = 'SINTOMAS';
-            this.nameTableSelected_download = 'sintomas_nuevos_';
+              this.SheetNameInExcel = 'SINTOMAS NUEVOS';
             this.selectedRevisionButtons = [];
-            this.structure.forEach((data) => {
-              this.nameRowsExcelSpanish.push(
-                this.removeAccents(data.description.toLocaleUpperCase())
-              );
-              this.nameRowsExcelEnglish.push(data.name);
-            });
           } else {
             this._toastScv.showError(
               resp.GeneralResponse.messageCode,
@@ -487,16 +450,7 @@ export class NodesComponent implements OnInit {
           }
         });
     }
-
-    this.structure.forEach((data) => {
-      this.nameRowsExcelSpanish.push(this.removeAccents(data.description.toLocaleUpperCase()));
-      this.nameRowsExcelEnglish.push(data.name);
-    });
   }
-
-  removeAccents = (str) => {
-    return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-  };
 
   formatDecimal(x, posiciones = 0) {
     var isNeg = x < 0;
@@ -634,63 +588,11 @@ export class NodesComponent implements OnInit {
 
   downloadDataTable() {
     if (this.dataToTable.length > 0) {
-      this.exportAsExcelFile(this.dataToTable);
-    }
-  }
-
-  exportAsExcelFile(json: object[]): void {
-    console.log(this.nameRowsExcelEnglish);
-    const csvContent = json.map((row) => {
-      return this.nameRowsExcelEnglish.map((k) => {
-        let cell = row[k] === null || row[k] === undefined ? '' : row[k];
-        return cell;
-      });
-    });
-
-    var worksheet = XLSX.utils.json_to_sheet([], {
-      header: this.nameRowsExcelSpanish,
-    });
-    worksheet = XLSX.utils.sheet_add_json(worksheet, csvContent, {
-      skipHeader: true,
-      origin: 'A2',
-    });
-    const workbook: XLSX.WorkBook = {
-      Sheets: { [this.SheetNameInExcel]: worksheet },
-      SheetNames: [this.SheetNameInExcel],
-    };
-    const excelBuffer: any = XLSX.write(workbook, {
-      bookType: 'xlsx',
-      type: 'array',
-    });
-    this.saveAsExcelFile(excelBuffer);
-  }
-
-  saveAsExcelFile(buffer: any): void {
-    const blob: Blob = new Blob([buffer], { type: EXCEL_TYPE });
-    if (navigator.msSaveBlob) {
-      // IE 10+
-      navigator.msSaveBlob(
-        blob,
-        this.nameTableSelected_download + new Date().getTime() + EXCEL_EXTENSION
+      this._gnrScv.exportDataToExcelFile(
+        this.structure,
+        this.dataToTable,
+        this.SheetNameInExcel
       );
-    } else {
-      const link = document.createElement('a');
-      if (link.download !== undefined) {
-        // Browsers that support HTML5 download attribute
-        const url = URL.createObjectURL(blob);
-        link.setAttribute('href', url);
-        link.setAttribute(
-          'download',
-          this.nameTableSelected_download +
-            new Date().getTime() +
-            EXCEL_EXTENSION
-        );
-        link.style.visibility = 'hidden';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        this._toastScv.showSuccess('Archivo descargado correctamente');
-      }
     }
   }
 }
