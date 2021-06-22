@@ -74,6 +74,29 @@ export class LoginComponent implements OnInit {
         idApp : paramsLogin.idApp
       }
       this.usersSvc.login(dataRequest).subscribe(resp => {
+        
+        console.log('11');
+        // SETEADO
+        resp = {
+          correoAliado: 'test@mail.com',
+          estado: 'activo',
+          fechaExpiracionToken: '22-026-2021',
+          nitAliado: 'test',
+          nombreAliado: 'test',
+          token_session: 'TOKENTEST',
+          usuario: {
+            codPerfil: 'CODTEST',
+            descripcion: 'DESCTEST',
+            entityClass: '',
+            estado: '',
+            idPerfil: 1,
+            idUsuario: 1,
+            listRoles: [],
+            nombre: '',
+            usuario: 'USERTEST'
+          }
+        }
+        
         if(resp.token_session !== '') {
           this.authSvc.login(resp);
           this.toastScv.showSuccess('Sesión iniciada corectamente.');
@@ -81,6 +104,9 @@ export class LoginComponent implements OnInit {
         }else{
           this.toastScv.showError(resp.estado);
         }
+      },() => {
+        console.log('22');
+        
       })
     }
   }
