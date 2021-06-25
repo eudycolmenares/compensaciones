@@ -105,6 +105,7 @@ export class GeneralFunctionsService {
     return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
   };
 
+  // Methods to export EXCEL
   exportDataToExcelFile(
     estructure: tableModel[],
     data: object[],
@@ -173,6 +174,55 @@ export class GeneralFunctionsService {
         link.click();
         document.body.removeChild(link);
         this.toastScv.showSuccess(excelParams.msgSuccess);
+      }
+    }
+  }
+
+  // Methods to export CSV
+  exportToCsv(
+    rows: object[],
+    columNames: { english: string[]; spanish: string[] },
+    nameFile
+  ) {
+    if (!rows || !rows.length) {
+      return;
+    }
+    const separator = ';';
+    const keys = columNames.english;
+    const keysSpanish = columNames.spanish;
+    const csvContent =
+      keysSpanish.join(separator) +
+      '\n' +
+      rows
+        .map((row) => {
+          return keys
+            .map((k) => {
+              let cell = row[k] === null || row[k] === undefined ? '' : row[k];
+              cell = cell.toLocaleString();
+              if (cell.search(/("|,|\n)/g) >= 0) {
+                cell = `"${cell}"`;
+              }
+              return cell;
+            })
+            .join(separator);
+        })
+        .join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    if (navigator.msSaveBlob) {
+      // IE 10+
+      navigator.msSaveBlob(blob, nameFile + '.csv');
+    } else {
+      const link = document.createElement('a');
+      if (link.download !== undefined) {
+        // Browsers that support HTML5 download attribute
+        const url = URL.createObjectURL(blob);
+        link.setAttribute('href', url);
+        link.setAttribute('download', nameFile + '.csv');
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        this.toastScv.showSuccess('Archivo descargado correctamente');
       }
     }
   }

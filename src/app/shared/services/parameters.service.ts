@@ -11,7 +11,8 @@ import {
 import {
   wsWithOutLoader,
   paramsLogin,
-  compensateAccounts
+  compensateAccounts,
+  inspiraValidationAccounts as validAccounts,
 } from '../../libraries/utilities.library';
 
 @Injectable({
@@ -224,6 +225,12 @@ export class ParametersService {
             // Validation Accounts
             case 'CP008':
               env.endpoints.ValidationAccounts.endpoints.readall = item.endpoint;
+            case 'CP007':
+              env.endpoints.ValidationAccounts.endpoints.create = item.endpoint;
+            case 'CP005':
+              env.endpoints.ValidationAccounts.endpoints.update = item.endpoint;
+            case 'CP006':
+              env.endpoints.ValidationAccounts.endpoints.delete = item.endpoint;
               break;
             // Validation Nodes: 'MaximoService/readAll'
             case 'RR033':
@@ -501,6 +508,10 @@ export class ParametersService {
         // Max Cuentas Compensadas
         case 'maxCompensateAccounts':
           compensateAccounts.totalMaxValue = parseInt(item.value);
+          break;
+        // Accounts High Amount
+        case 'highAmount':
+          validAccounts.highAmmount = parseInt(item.value);
           break;
         default:
           break;

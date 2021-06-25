@@ -188,6 +188,10 @@ export const compensateAccounts = {
   totalMaxValue : 1000000,
 }
 
+export let inspiraValidationAccounts = {
+  highAmmount: 100000,
+}
+
 export const timeExpirationMinutes = 15;
 
 export const useAppTimeExpirationMinutes = 5;
