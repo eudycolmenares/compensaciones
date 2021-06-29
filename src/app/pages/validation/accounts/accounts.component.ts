@@ -83,6 +83,7 @@ export class AccountsComponent implements OnInit {
   }
 
   initialCharge() {
+    this.cleanForm();
     this.accountsSvc.allValidationAccounts().subscribe((resp: responseAccountsModel) => {
       this.dataToTable = resp.list;
     });

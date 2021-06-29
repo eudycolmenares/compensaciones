@@ -75,7 +75,6 @@ export class LoginComponent implements OnInit {
       }
       this.usersSvc.login(dataRequest).subscribe(resp => {
         
-        console.log('11');
         // SETEADO
         resp = {
           correoAliado: 'test@mail.com',
@@ -104,10 +103,7 @@ export class LoginComponent implements OnInit {
         }else{
           this.toastScv.showError(resp.estado);
         }
-      },() => {
-        console.log('22');
-        
-      })
+      },() => { })
     }
   }
 

@@ -225,10 +225,13 @@ export class ParametersService {
             // Validation Accounts
             case 'CP008':
               env.endpoints.ValidationAccounts.endpoints.readall = item.endpoint;
-            case 'CP007':
+              break;
+            case 'CP007':              
               env.endpoints.ValidationAccounts.endpoints.create = item.endpoint;
+              break;
             case 'CP005':
               env.endpoints.ValidationAccounts.endpoints.update = item.endpoint;
+              break;
             case 'CP006':
               env.endpoints.ValidationAccounts.endpoints.delete = item.endpoint;
               break;
