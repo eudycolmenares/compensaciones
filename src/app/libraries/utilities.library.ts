@@ -87,6 +87,10 @@ export const RoutesData = {
     url: ['dashboard', 'observation'],
     breadcrumb: ['Validación', 'Observación']
   },
+  'fullstack-confirmation': {
+    url: ['dashboard', 'fullstack-confirmation'],
+    breadcrumb: ['Facturación', 'Confirmación Fullstack']
+  },
 }
 
 export enum ServicesSettings {

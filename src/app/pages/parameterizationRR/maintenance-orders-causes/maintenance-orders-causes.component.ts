@@ -95,7 +95,7 @@ export class MaintenanceOrdersCausesComponent implements OnInit {
       causeCode: ['', [Validators.required, Validators.maxLength(100)]],
       diagnosticDescription: ['', [Validators.required, Validators.maxLength(100)]],
       state: ['', [Validators.required]],
-      compensation: ['', [Validators.required]],
+      compensation: [''],
       maintenance: ['', [Validators.required]],
       affectedServices: ['', [Validators.required]],
       detailAffectation: ['', [Validators.required, Validators.maxLength(100)]],
@@ -167,7 +167,7 @@ export class MaintenanceOrdersCausesComponent implements OnInit {
           .value,
         maintenance: this.MOCauseForm.get('maintenance').value,
         affectedService: this.MOCauseForm.get('detailAffectation').value,
-        compensation: this.MOCauseForm.get('compensation').value,
+        compensation: (this.MOCauseForm.get('state').value === '1') ? 'Si': 'No',
         internet: servicesSelected.find((svc) => svc['key'] === 'internet')
           ? 1
           : 0,
@@ -232,7 +232,7 @@ export class MaintenanceOrdersCausesComponent implements OnInit {
       causeCode: data.cause,
       diagnosticDescription: data.diagnosticDescription,
       state: data.state,
-      compensation: data.compensation,
+      compensation: (data.state) ? 'Si': 'No',
       maintenance: data.maintenance,
       affectedServices: this.returnServiceName(data),
       detailAffectation: data.affectedService,

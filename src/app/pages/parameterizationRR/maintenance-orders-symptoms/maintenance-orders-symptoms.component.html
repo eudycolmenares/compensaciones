@@ -25,17 +25,10 @@
         </div>
       </div>
       <div class="row text-light text-center mt-4">
-        <div class="col-sm bg-primary py-1 mx-1">Compensa(*)</div>
         <div class="col-sm bg-primary py-1 mx-1">Mantenimiento(*)</div>
         <div class="col-sm bg-primary py-1 mx-1">Servicios(*)</div>
       </div>
       <div class="row">
-        <div class="col-sm mx-1 mt-1 p-0">
-          <select class="form-control form-control-sm" formControlName="compensate" [class.is-invalid]="invalidCompensate">
-            <option *ngFor="let opt of selectCompensate" [value]="opt.key">{{ opt.value }}</option>
-          </select>
-          <small class="text-danger" *ngIf="invalidCompensate">{{ textsFormInvalid("compensate") }}</small>
-        </div>
         <div class="col-sm mx-1 mt-1 p-0">
           <select class="form-control form-control-sm" formControlName="maintenance" [class.is-invalid]="invalidMaintenance">
             <option *ngFor="let opt of selectCompensate" [value]="opt.key">{{ opt.value }}</option>

@@ -8,7 +8,7 @@ import { AuthService } from '../../../shared/services/auth.service';
 import { SelectStatus, ServicesSettings as Services } from '../../../libraries/utilities.library';
 import { DataList } from '../../../models/general';
 import { requestModel, responseModel, symptomModel, symptomsApiModel } from '../../../models/symptom';
-import { estructTableModel } from '../../../shared/models/parameters';
+import { StructTableModel } from '../../../shared/models/parameters';
 
 @Component({
   selector: 'app-symptom',
@@ -23,7 +23,7 @@ export class SymptomComponent implements OnInit {
   services: DataList[] = [];
   // table
   dataToTable: symptomModel[];
-  structure: estructTableModel[] = [
+  structure: StructTableModel[] = [
     {
       name: 'symptomCode',
       description: 'Código',

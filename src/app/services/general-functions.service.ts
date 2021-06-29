@@ -3,7 +3,7 @@ import { FormGroup } from '@angular/forms';
 import * as XLSX from 'xlsx';
 
 import { ToastService } from '../shared/services/toast.service';
-import { estructTableModel as tableModel } from '../shared/models/parameters';
+import { StructTableModel as tableModel } from '../shared/models/parameters';
 import { exportExcelParams as excelParams } from '../libraries/utilities.library';
 
 @Injectable({

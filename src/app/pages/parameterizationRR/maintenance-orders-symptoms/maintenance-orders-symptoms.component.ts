@@ -88,7 +88,7 @@ export class MaintenanceOrdersSymptomsComponent implements OnInit {
       description: ['', [Validators.required, Validators.maxLength(100)]],
       maintenance: ['', Validators.required],
       state: ['', Validators.required],
-      compensate: ['', Validators.required],
+      compensate: [''],
       services: ['', Validators.required],
     })
   }
@@ -97,9 +97,6 @@ export class MaintenanceOrdersSymptomsComponent implements OnInit {
   }
   get invalidDescription() {
     return this.form.get('description').touched && this.form.get('description').invalid;
-  }
-  get invalidCompensate() {
-    return this.form.get('compensate').touched && this.form.get('compensate').invalid;
   }
   get invalidMaintenance() {
     return this.form.get('maintenance').touched && this.form.get('maintenance').invalid;
@@ -146,7 +143,7 @@ export class MaintenanceOrdersSymptomsComponent implements OnInit {
           'diagnosticDescription': this.form.get('description').value,
           'state': this.form.get('state').value,
           'maintenance': (this.form.get('maintenance').value === '1') ?  'Si' : 'No',
-          'compensation': (this.form.get('compensate').value === '1') ?  'Si' : 'No' ,
+          'compensation': (this.form.get('state').value === '1') ?  'Si' : 'No' ,
           'television': (servicesSelected.find((svc: DataList) => svc.key === 'television') ? 1 : 0),
           'internet': (servicesSelected.find((svc: DataList) => svc.key === 'internet') ? 1 : 0),
           'phone': (servicesSelected.find((svc: DataList) => svc.key === 'telephone') ? 1 : 0)
@@ -193,7 +190,7 @@ export class MaintenanceOrdersSymptomsComponent implements OnInit {
       description: data.diagnosticDescription,
       state: data.state,
       maintenance: (data.maintenance.toUpperCase() === 'SI') ? '1': '0',
-      compensate: (data.compensation.toUpperCase() === 'SI') ? '1': '0',
+      compensate: (data.state) ? 'Si': 'No',
       services: this.services.filter((item: DataList) => data[item.key] === 1)
     });
   }

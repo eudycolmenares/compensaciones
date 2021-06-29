@@ -310,6 +310,16 @@ export const environment = {
         delete: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/ObservationToValidateService/delete/',
       },
     },
+    // Fullstack Confirmation
+    FullstackConfirmation: {
+      url: '',
+      endpoints: {
+        readall: '',
+        create: '',
+        update: '',
+        delete: '',
+      },
+    },
     // Parametros Generales
     ParametersGenerals: {
       url: '',

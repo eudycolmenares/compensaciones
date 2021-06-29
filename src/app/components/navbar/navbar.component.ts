@@ -252,6 +252,18 @@ export class NavbarComponent implements OnInit {
             ]
           },
           {
+            label: 'Facturación',
+            title: 'Facturación',
+            items: [
+              {
+                label: 'Confirmación FullStack',
+                title: 'Confirmación FullStack',
+                icon:'pi pi-fw pi-check-square',
+                routerLink: ['/dashboard/fullstack-confirmation']
+              }
+            ]
+          },
+          {
             label: 'Supervisión',
             title: 'Supervisión',
             items: [

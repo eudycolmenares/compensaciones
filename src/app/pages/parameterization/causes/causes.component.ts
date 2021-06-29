@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { GeneralFunctionsService } from '@services/general-functions.service';
-import { ServicesSettings, SelectStatus } from '@libraries/utilities.library';
+import { SelectStatus } from '@libraries/utilities.library';
 import {
   CauseModel,
   CausesApiModel,
@@ -19,7 +19,7 @@ import {
 } from '@models/origin-type';
 import { ResponseLoginModel as UserModel } from '@models/users';
 import { AuthService } from '@shared_services/auth.service';
-import { estructTableModel } from 'src/app/shared/models/parameters';
+import { StructTableModel } from 'src/app/shared/models/parameters';
 
 interface originModel {
   id: number;
@@ -44,7 +44,7 @@ export class CausesComponent implements OnInit {
   originTypeList: originTypeModel[];
   // table
   dataToTable: CauseModel[];
-  structure: estructTableModel[] = [
+  structure: StructTableModel[] = [
     {
       name: 'code',
       description: 'Código Causa',

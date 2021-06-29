@@ -1,0 +1,254 @@
+<section class="container py-3">
+  <app-breadcrumb></app-breadcrumb>
+
+  <div class="container-add px-sm-2 px-md-5">
+    <form
+      autocomplete="off"
+      [formGroup]="fullstackConfirmationForm"
+      (ngSubmit)="onSubmit()"
+    >
+      <div class="formLayout">
+        <div class="formSection">
+          <div class="formLabel">Código Identificador único (*)</div>
+          <div class="formField">
+            <input
+              type="text"
+              formControlName="charge_service"
+              class="form-control form-control-sm"
+              [ngClass]="{
+                'is-invalid': this.invalidFieldForm('charge_service')
+              }"
+              placeholder="Código Identificador único"
+            />
+            <small
+              class="text-danger"
+              *ngIf="this.invalidFieldForm('charge_service')"
+            >
+              {{ textFormInvalid("charge_service") }}
+            </small>
+          </div>
+        </div>
+        <div class="formSection">
+          <div class="formLabel">Código cliente externo</div>
+          <div class="formField">
+            <input
+              type="text"
+              formControlName="cust_num"
+              class="form-control form-control-sm"
+              [ngClass]="{
+                'is-invalid': this.invalidFieldForm('cust_num')
+              }"
+              placeholder="Código cliente externo"
+            />
+            <small
+              class="text-danger"
+              *ngIf="this.invalidFieldForm('cust_num')"
+            >
+              {{ textFormInvalid("cust_num") }}
+            </small>
+          </div>
+        </div>
+        <div class="formSection">
+          <div class="formLabel">Código cliente interno (*)</div>
+          <div class="formField">
+            <input
+              type="text"
+              formControlName="customer_id"
+              class="form-control form-control-sm"
+              [ngClass]="{
+                'is-invalid': this.invalidFieldForm('customer_id')
+              }"
+              placeholder="Código cliente interno"
+            />
+            <small
+              class="text-danger"
+              *ngIf="this.invalidFieldForm('customer_id')"
+            >
+              {{ textFormInvalid("customer_id") }}
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <div class="formLayout">
+        <div class="formSection">
+          <div class="formLabel">Código contrato externo</div>
+          <div class="formField">
+            <input
+              type="text"
+              formControlName="co_code"
+              class="form-control form-control-sm"
+              [ngClass]="{
+                'is-invalid': this.invalidFieldForm('co_code')
+              }"
+              placeholder="Código contrato externo"
+            />
+            <small class="text-danger" *ngIf="this.invalidFieldForm('co_code')">
+              {{ textFormInvalid("co_code") }}
+            </small>
+          </div>
+        </div>
+        <div class="formSection">
+          <div class="formLabel">Código contrato interno</div>
+          <div class="formField">
+            <input
+              type="text"
+              formControlName="co_id"
+              class="form-control form-control-sm"
+              [ngClass]="{
+                'is-invalid': this.invalidFieldForm('co_id')
+              }"
+              placeholder="Código contrato interno"
+            />
+            <small class="text-danger" *ngIf="this.invalidFieldForm('co_id')">
+              {{ textFormInvalid("co_id") }}
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <div class="formLayout">
+        <div class="formSection">
+          <div class="formLabel">Fecha de la OCC (*)</div>
+          <div class="formField">
+            <p-calendar
+              formControlName="valid_from"
+              placeholder="Fecha de la OCC"
+              dateFormat="dd/mm/yy"
+              [monthNavigator]="true"
+              [yearNavigator]="true"
+              yearRange="1980:2050"
+              selectionMode="single"
+              [readonlyInput]="true"
+              [ngClass]="{
+                'ng-invalid ng-dirty': this.invalidFieldForm('valid_from')
+              }"
+            ></p-calendar>
+            <small
+              class="text-danger"
+              *ngIf="this.invalidFieldForm('valid_from')"
+            >
+              {{ textFormInvalid("valid_from") }}
+            </small>
+          </div>
+        </div>
+        <div class="formSection">
+          <div class="formLabel">Monto de la OCC (*)</div>
+          <div class="formField">
+            <input
+              type="text"
+              formControlName="amount"
+              class="form-control form-control-sm"
+              [ngClass]="{
+                'is-invalid': this.invalidFieldForm('amount')
+              }"
+              placeholder="Monto de la OCC"
+            />
+            <small class="text-danger" *ngIf="this.invalidFieldForm('amount')">
+              {{ textFormInvalid("amount") }}
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <div class="formLayout">
+        <div class="formSection">
+          <div class="formLabel">Fecha de BSCS (*)</div>
+          <div class="formField">
+            <p-calendar
+              formControlName="execute_date"
+              placeholder="Fecha de BSCS"
+              dateFormat="dd/mm/yy"
+              [monthNavigator]="true"
+              [yearNavigator]="true"
+              yearRange="1980:2050"
+              selectionMode="single"
+              [readonlyInput]="true"
+              [ngClass]="{
+                'ng-invalid ng-dirty': this.invalidFieldForm('execute_date')
+              }"
+            ></p-calendar>
+            <small
+              class="text-danger"
+              *ngIf="this.invalidFieldForm('execute_date')"
+            >
+              {{ textFormInvalid("execute_date") }}
+            </small>
+          </div>
+        </div>
+        <div class="formSection">
+          <div class="formLabel">Estado (*)</div>
+          <div class="formField">
+            <input
+              type="text"
+              formControlName="state"
+              class="form-control form-control-sm"
+              [ngClass]="{
+                'is-invalid': this.invalidFieldForm('state')
+              }"
+              placeholder="Estado"
+            />
+            <small class="text-danger" *ngIf="this.invalidFieldForm('state')">
+              {{ textFormInvalid("state") }}
+            </small>
+          </div>
+        </div>
+        <div class="formSection">
+          <div class="formLabel">Observación (*)</div>
+          <div class="formField">
+            <input
+              type="text"
+              formControlName="observation"
+              class="form-control form-control-sm"
+              [ngClass]="{
+                'is-invalid': this.invalidFieldForm('observation')
+              }"
+              placeholder="Observación"
+            />
+            <small
+              class="text-danger"
+              *ngIf="this.invalidFieldForm('observation')"
+            >
+              {{ textFormInvalid("observation") }}
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <div class="formLayout">
+        <div class="actionsButtons">
+          <button type="submit" class="btn btn-primary mr-3 btn-sm">
+            {{ actionForm === "create" ? "Crear" : "Actualizar" }}
+          </button>
+          <button
+            type="button"
+            class="btn btn-secondary btn-sm"
+            (click)="cleanForm()"
+          >
+            Limpiar
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <hr />
+
+  <app-table
+    [dataBase]="dataToTable"
+    [structure]="structureTable"
+    (editRecord)="updateFullstackConfirmation($event)"
+    (disableRecord)="disableFullstackConfirmation($event)"
+    (deleteRecord)="deleteFullstackConfirmation($event)"
+  ></app-table>
+
+  <div *ngIf="dataToTable" class="text-center justify-content-center">
+    <button
+      type="button"
+      class="btn btn-primary mr-3 btn-sm"
+      (click)="downloadDataTable()"
+    >
+      Descargar CSV
+    </button>
+  </div>
+</section>

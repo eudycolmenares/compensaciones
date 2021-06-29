@@ -115,6 +115,11 @@ const ROUTES: Routes = [
         canActivate: [AuthenticatedGuard],
         loadChildren: () => import('../validation/observation/observation.module').then(m => m.ObservationModule),
       },
+      {
+        path: 'fullstack-confirmation',
+        canActivate: [AuthenticatedGuard],
+        loadChildren: () => import('../billing/fullstack-confirmation/fullstack-confirmation.module').then(m => m.FullstackConfirmationModule),
+      },
     ],
   }
 ];

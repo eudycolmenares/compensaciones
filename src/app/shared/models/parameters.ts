@@ -33,7 +33,7 @@ export interface ParamsGeneralModel {
   value: string;
 }
 
-export interface estructTableModel {
+export interface StructTableModel {
   name: string;
   description: string;
   validation: string;
