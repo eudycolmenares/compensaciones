@@ -226,11 +226,29 @@ export class NavbarComponent implements OnInit {
                 routerLink: ['/dashboard/origintype']
               },
               {
-                label: 'Cargue Masivo',
-                title: 'Cargue Masivo',
+                label: 'Cargue Masivo Causas y Síntomas',
+                title: 'Cargue Masivo Causas y Síntomas',
                 icon:'pi pi-fw pi-file-excel',
                 routerLink: ['/dashboard/bulk-load']
-              }
+              },
+              {
+                label: 'Causas Ordenes Mantenimiento',
+                title: 'Causas Ordenes Mantenimiento',
+                icon:'pi pi-fw pi-exclamation-circle',
+                routerLink: ['/dashboard/maintenance-orders-causes']
+              },
+              {
+                label: 'Síntomas Ordenes Mantenimiento',
+                title: 'Síntomas Ordenes Mantenimiento',
+                icon:'pi pi-fw pi-search',
+                routerLink: ['/dashboard/orders-symptoms']
+              },
+              {
+                label: 'Periodos de facturación',
+                title: 'Periodos de facturación',
+                icon:'bi bi-calendar2-week',
+                routerLink: ['/dashboard/billing-periods']
+              },
             ]
           },
           {
@@ -248,13 +266,25 @@ export class NavbarComponent implements OnInit {
                 title: 'Cuentas',
                 icon:'pi pi-fw pi-book',
                 routerLink: ['/dashboard/validation-accounts']
-              }
+              },
+              {
+                label: 'Observación',
+                title: 'Observación',
+                icon:'pi pi-fw pi-search',
+                routerLink: ['/dashboard/observation']
+              },
             ]
           },
           {
             label: 'Facturación',
             title: 'Facturación',
             items: [
+              {
+                label: 'Cuentas Inspira',
+                title: 'Cuentas Inspira',
+                icon:'pi pi-fw pi-dollar',
+                routerLink: ['/dashboard/item-rr-billing']
+              },
               {
                 label: 'Confirmación FullStack',
                 title: 'Confirmación FullStack',
@@ -272,7 +302,13 @@ export class NavbarComponent implements OnInit {
                 title: 'Procesos',
                 icon:'pi pi-fw pi-chart-line',
                 routerLink: ['/dashboard/process-rr']
-              }
+              },
+              {
+                label: 'Email de Supervisión',
+                title: 'Email de Supervisión',
+                icon:'pi pi-envelope',
+                routerLink: ['/dashboard/email']
+              },
             ]
           }
         ]
