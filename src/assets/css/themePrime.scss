@@ -123,6 +123,10 @@ p-calendar.ng-dirty.ng-invalid > .p-calendar > .p-inputtext {
   border-color: #dc3545;
 }
 
+p-calendar .p-calendar {
+  height: 2rem;
+}
+
 .p-datepicker {
   padding: 0;
   background: #ffffff;

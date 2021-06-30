@@ -29,29 +29,54 @@ export class FullstackConfirmationComponent implements OnInit {
   dataToTable: FullstackConfirmationModel[];
   structureTable: StructTableModel[] = [
     {
-      name: 'code',
-      description: 'Código Causa',
+      name: 'charge_service',
+      description: 'Código Identificador único',
       validation: '',
     },
     {
-      name: 'problemCode',
-      description: 'Código Problema',
+      name: 'cust_num',
+      description: 'Código cliente externo',
       validation: '',
     },
     {
-      name: 'failureCode',
-      description: 'Código Falla',
+      name: 'customer_id',
+      description: 'Código cliente interno',
       validation: '',
     },
     {
-      name: 'CloneOriginType',
-      description: 'Tipo Origen',
+      name: 'co_code',
+      description: 'Código contrato externo',
+      validation: '',
+    },
+    {
+      name: 'co_id',
+      description: 'Código contrato interno',
+      validation: '',
+    },
+    {
+      name: 'valid_from',
+      description: 'Fecha de la OCC',
+      validation: '',
+    },
+    {
+      name: 'amount',
+      description: 'Monto de la OCC',
+      validation: '',
+    },
+    {
+      name: 'execute_date',
+      description: 'Fecha de BSCS',
       validation: '',
     },
     {
       name: 'state',
       description: 'Estado',
       validation: 'active-desactive',
+    },
+    {
+      name: 'observation',
+      description: 'Observación',
+      validation: '',
     },
   ];
   constructor(
