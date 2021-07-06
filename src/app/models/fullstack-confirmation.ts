@@ -4,7 +4,7 @@ export interface FullstackConfirmationModel {
   cust_num: string;
   customer_id: string;
   co_code: string;
-  co_id: Date;
+  co_id: string;
   valid_from: string;
   amount: string;
   execute_date: string;

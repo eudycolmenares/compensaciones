@@ -129,15 +129,28 @@ export class FullstackConfirmationComponent implements OnInit {
   }
 
   initialCharge() {
-    this._fConfirmationSvc
-      .allFullstackConfirmations()
-      .subscribe((resp: FullstackConfirmationsApiModel) => {
-        if (resp.GeneralResponse.code == '0') {
-          this.dataToTable = resp.FullstackConfirmations.FullstackConfirmation;
-        } else {
-          this._toastScv.showError(resp.GeneralResponse.messageCode);
-        }
-      });
+    // this._fConfirmationSvc
+    //   .allFullstackConfirmations()
+    //   .subscribe((resp: FullstackConfirmationsApiModel) => {
+    //     if (resp.GeneralResponse.code == '0') {
+    //       this.dataToTable = resp.FullstackConfirmations.FullstackConfirmation;
+    //     } else {
+    //       this._toastScv.showError(resp.GeneralResponse.messageCode);
+    //     }
+    //   });
+
+      this.dataToTable = [
+        {charge_service: 'test1' ,
+        cust_num: 'test2' ,
+        customer_id: 'test3' ,
+        co_code: 'test4' ,
+        co_id: 'test5' ,
+        valid_from: '26/06/2021' ,
+        amount: '5000' ,
+        execute_date: '26/06/2021' ,
+        state: '1' ,
+        observation: 'test front' },
+      ]
   }
 
   onSubmit() {

@@ -423,6 +423,8 @@ export  const exportExcelParams = {
     'DATA INVALIDA': 'nodos_data_invalida_',
     'CAUSAS NUEVAS': 'causas_nuevas_',
     'SINTOMAS NUEVOS': 'sintomas_nuevos_',
+    //billing - Fullstack Confirmation
+    'CONFIRMACION FULLSTACK': 'confirmación_fullstack_',
   },
   msgSuccess: 'Archivo descargado correctamente'
 }
