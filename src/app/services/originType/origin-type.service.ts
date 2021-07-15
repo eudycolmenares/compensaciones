@@ -4,17 +4,14 @@ import { Observable } from 'rxjs';
 
 import { environment as env } from 'src/environments/environment';
 import { requestModel, responseModel, originsApiModel } from '../../models/origin-type';
+import { paramsHttp } from '../../libraries/utilities.library';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class OriginTypeService {
-  headers = new HttpHeaders({
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
-    'Content-Type': 'application/json; charset=utf-8',
-  });
+  headers = new HttpHeaders(paramsHttp.headerGeneral);
 
   constructor(
     private http: HttpClient

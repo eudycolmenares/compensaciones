@@ -4,16 +4,13 @@ import { Observable } from 'rxjs';
 
 import { environment as env } from 'src/environments/environment';
 import { NewCausesApiModel } from '../../models/new-cause';
+import { paramsHttp } from '../../libraries/utilities.library';
 
 @Injectable({
   providedIn: 'root',
 })
 export class NewCauseService {
-  headers = new HttpHeaders({
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
-    'Content-Type': 'application/json; charset=utf-8',
-  });
+  headers = new HttpHeaders(paramsHttp.headerGeneral);
 
   constructor(private _http: HttpClient) {}
 

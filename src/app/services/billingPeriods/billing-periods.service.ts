@@ -10,16 +10,13 @@ import {
   BillingPeriodModel,
 } from '../../models/billing-periods';
 import { GeneralFunctionsService } from '../../services/general-functions.service';
+import { paramsHttp } from '../../libraries/utilities.library';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BillingPeriodsService {
-  headers = new HttpHeaders({
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
-    'Content-Type': 'application/json; charset=utf-8',
-  });
+  headers = new HttpHeaders(paramsHttp.headerGeneral);
 
   listPeriod: BillingPeriodModel[] = [];
   currentPeriod: BillingPeriodModel[] = [];

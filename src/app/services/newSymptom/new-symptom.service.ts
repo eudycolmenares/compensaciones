@@ -4,16 +4,13 @@ import { Observable } from 'rxjs';
 
 import { environment as env } from 'src/environments/environment';
 import { NewSymptomsApiModel } from '../../models/new-symptom';
+import { paramsHttp } from '../../libraries/utilities.library';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NewSymptomService {
-  headers = new HttpHeaders({
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
-    'Content-Type': 'application/json; charset=utf-8',
-  });
+  headers = new HttpHeaders(paramsHttp.headerGeneral);
 
   constructor(private _http: HttpClient) {}
 

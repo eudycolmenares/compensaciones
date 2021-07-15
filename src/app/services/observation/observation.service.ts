@@ -7,17 +7,14 @@ import {
   responseObservationModel as responseModel,
   requestObservationModel as requestModel
 } from '../../models/observation';
+import { paramsHttp } from '../../libraries/utilities.library';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class ObservationService {
-  headers = new HttpHeaders({
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
-    'Content-Type': 'application/json; charset=utf-8',
-  });
+  headers = new HttpHeaders(paramsHttp.headerGeneral);
 
   constructor(private http: HttpClient) { }
 

@@ -9,16 +9,13 @@ import {
   RequestModel,
   ResponseModel,
 } from '../../models/maintenance-orders-causes';
+import { paramsHttp } from '../../libraries/utilities.library';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MaintenanceOrdersCausesService {
-  headers = new HttpHeaders({
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
-    'Content-Type': 'application/json; charset=utf-8',
-  });
+  headers = new HttpHeaders(paramsHttp.headerGeneral);
 
   constructor(private _http: HttpClient) {}
 

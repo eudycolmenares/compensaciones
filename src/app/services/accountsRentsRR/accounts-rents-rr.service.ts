@@ -7,16 +7,13 @@ import {
   responseAccountsModel as responseModel,
   requestAccountRentModel as requestModel
 } from '../../models/accounts-rents-rr';
+import { paramsHttp } from '../../libraries/utilities.library';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountsRentsRRService {
-  headers = new HttpHeaders({
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
-    'Content-Type': 'application/json; charset=utf-8',
-  });
+  headers = new HttpHeaders(paramsHttp.headerGeneral);
 
   constructor(private http: HttpClient) { }
 

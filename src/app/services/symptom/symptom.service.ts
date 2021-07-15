@@ -4,17 +4,14 @@ import { Observable } from 'rxjs';
 
 import { environment as env } from 'src/environments/environment';
 import { requestModel, symptomsApiModel, responseModel } from '../../models/symptom';
+import { paramsHttp } from '../../libraries/utilities.library';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class SymptomService {
-  headers = new HttpHeaders({
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
-    'Content-Type': 'application/json; charset=utf-8',
-  });
+  headers = new HttpHeaders(paramsHttp.headerGeneral);
 
   constructor(private http: HttpClient) { }
 

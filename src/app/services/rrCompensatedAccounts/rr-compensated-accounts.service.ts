@@ -4,16 +4,13 @@ import { Observable } from 'rxjs';
 
 import { environment as env } from 'src/environments/environment';
 import * as models from '../../models/rr-compensated-accounts';
+import { paramsHttp } from '../../libraries/utilities.library';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RrCompensatedAccountsService {
-  headers = new HttpHeaders({
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
-    'Content-Type': 'application/json; charset=utf-8',
-  });
+  headers = new HttpHeaders(paramsHttp.headerGeneral);
 
   constructor(private _http: HttpClient) {}
 

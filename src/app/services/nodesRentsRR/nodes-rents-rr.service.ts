@@ -8,17 +8,14 @@ import {
   requestNodeRentModel as requestModel,
   responseNodeModel as responseNode
 } from '../../models/nodes-rents-rr';
+import { paramsHttp } from '../../libraries/utilities.library';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class NodesRentsRRService {
-  headers = new HttpHeaders({
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
-    'Content-Type': 'application/json; charset=utf-8',
-  });
+  headers = new HttpHeaders(paramsHttp.headerGeneral);
 
   constructor(private http: HttpClient) { }
 

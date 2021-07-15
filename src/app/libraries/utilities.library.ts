@@ -428,3 +428,11 @@ export  const exportExcelParams = {
   },
   msgSuccess: 'Archivo descargado correctamente'
 }
+
+export const paramsHttp = {
+  headerGeneral: {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
+    'Content-Type': 'application/json; charset=utf-8',
+  }
+}
