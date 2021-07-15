@@ -1,22 +1,26 @@
 <section class="container py-3" id="editScrollTop">
   <app-breadcrumb></app-breadcrumb>
-  <div class="container-add">
+
+  <div class="container-add px-sm-2 px-md-5">
     <form
       autocomplete="off"
       [formGroup]="billingPeriodForm"
       (ngSubmit)="onSubmit()"
     >
-      <div class="formLayout justify-content-md-center">
-        <div class="formSection2">
-          <div class="formLabel">Fechas de facturación (*)</div>
-          <div class="formField">
+      <div class="row text-light justify-content-center px-sm-0 px-md-5">
+        <div class="col-sm-6 px-sm-1 mb-4">
+          <div class="bg-primary py-1 mb-1 text-center">
+            Fechas de facturación (*)
+          </div>
+          <div class="text-left">
             <p-calendar
               formControlName="billingDate"
               placeholder=" -- Seleccione la fecha de inicio y la fecha final --"
               dateFormat="dd/mm/yy"
               [monthNavigator]="true"
-              [yearNavigator]="true" yearRange="1980:2050"
-              selectionMode="range" 
+              [yearNavigator]="true"
+              yearRange="1980:2050"
+              selectionMode="range"
               [readonlyInput]="true"
             ></p-calendar>
             <small *ngIf="this.invalidFieldForm('billingDate')">
@@ -26,8 +30,8 @@
         </div>
       </div>
 
-      <div class="formLayout">
-        <div class="actionsButtons">
+      <div class="row text-light text-center">
+        <div class="col-sm container-buttons">
           <button type="submit" class="btn btn-primary mr-3 btn-sm">
             {{ actionForm === "create" ? "Crear" : "Actualizar" }}
           </button>
@@ -53,6 +57,5 @@
     [buttons]="['edit', 'delete']"
     [CurrentPeriodSent]="currentPeriod"
   >
-    ></app-table
-  >
+  </app-table>
 </section>

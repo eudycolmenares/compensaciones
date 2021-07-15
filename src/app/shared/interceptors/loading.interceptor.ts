@@ -46,6 +46,8 @@ export class LoadingInterceptor implements HttpInterceptor {
           {
             this.toastScv.showError(msgsToast.timeout_request, msgsToast.error_title);
             this.loadingSvc.setLoading(false, request.url);
+
+            return null;
           }
         ))
       )

@@ -7,10 +7,10 @@
       [formGroup]="fullstackConfirmationForm"
       (ngSubmit)="onSubmit()"
     >
-      <div class="formLayout">
-        <div class="formSection">
-          <div class="formLabel">Código Identificador único (*)</div>
-          <div class="formField">
+      <div class="row">
+        <div class="col-sm text-light text-center px-sm-1 mb-4">
+          <div class="bg-primary py-1 mb-1">Código Identificador único (*)</div>
+          <div class="text-left">
             <input
               type="text"
               formControlName="charge_service"
@@ -28,9 +28,9 @@
             </small>
           </div>
         </div>
-        <div class="formSection">
-          <div class="formLabel">Código cliente externo</div>
-          <div class="formField">
+        <div class="col-sm text-light text-center px-sm-1 mb-4">
+          <div class="bg-primary py-1 mb-1">Código cliente externo</div>
+          <div class="text-left">
             <input
               type="text"
               formControlName="cust_num"
@@ -48,9 +48,9 @@
             </small>
           </div>
         </div>
-        <div class="formSection">
-          <div class="formLabel">Código cliente interno (*)</div>
-          <div class="formField">
+        <div class="col-sm text-light text-center px-sm-1 mb-4">
+          <div class="bg-primary py-1 mb-1">Código cliente interno (*)</div>
+          <div class="text-left">
             <input
               type="text"
               formControlName="customer_id"
@@ -70,10 +70,10 @@
         </div>
       </div>
 
-      <div class="formLayout">
-        <div class="formSection">
-          <div class="formLabel">Código contrato externo</div>
-          <div class="formField">
+      <div class="row">
+        <div class="col-sm text-light text-center px-sm-1 mb-4">
+          <div class="bg-primary py-1 mb-1">Código contrato externo</div>
+          <div class="text-left">
             <input
               type="text"
               formControlName="co_code"
@@ -88,9 +88,9 @@
             </small>
           </div>
         </div>
-        <div class="formSection">
-          <div class="formLabel">Código contrato interno</div>
-          <div class="formField">
+        <div class="col-sm text-light text-center px-sm-1 mb-4">
+          <div class="bg-primary py-1 mb-1">Código contrato interno</div>
+          <div class="text-left">
             <input
               type="text"
               formControlName="co_id"
@@ -107,10 +107,10 @@
         </div>
       </div>
 
-      <div class="formLayout">
-        <div class="formSection">
-          <div class="formLabel">Fecha de la OCC (*)</div>
-          <div class="formField">
+      <div class="row">
+        <div class="col-sm text-light text-center px-sm-1 mb-4">
+          <div class="bg-primary py-1 mb-1">Fecha de la OCC (*)</div>
+          <div class="text-left">
             <p-calendar
               formControlName="valid_from"
               placeholder="Fecha de la OCC"
@@ -133,9 +133,9 @@
             </small>
           </div>
         </div>
-        <div class="formSection">
-          <div class="formLabel">Monto de la OCC (*)</div>
-          <div class="formField">
+        <div class="col-sm text-light text-center px-sm-1 mb-4">
+          <div class="bg-primary py-1 mb-1">Monto de la OCC (*)</div>
+          <div class="text-left">
             <input
               type="text"
               formControlName="amount"
@@ -152,10 +152,10 @@
         </div>
       </div>
 
-      <div class="formLayout">
-        <div class="formSection">
-          <div class="formLabel">Fecha de BSCS (*)</div>
-          <div class="formField">
+      <div class="row">
+        <div class="col-sm text-light text-center px-sm-1 mb-4">
+          <div class="bg-primary py-1 mb-1">Fecha de BSCS (*)</div>
+          <div class="text-left">
             <p-calendar
               formControlName="execute_date"
               placeholder="Fecha de BSCS"
@@ -178,9 +178,9 @@
             </small>
           </div>
         </div>
-        <div class="formSection">
-          <div class="formLabel">Estado (*)</div>
-          <div class="formField">
+        <div class="col-sm text-light text-center px-sm-1 mb-4">
+          <div class="bg-primary py-1 mb-1">Estado (*)</div>
+          <div class="text-left">
             <input
               type="text"
               formControlName="state"
@@ -195,9 +195,9 @@
             </small>
           </div>
         </div>
-        <div class="formSection">
-          <div class="formLabel">Observación (*)</div>
-          <div class="formField">
+        <div class="col-sm text-light text-center px-sm-1 mb-4">
+          <div class="bg-primary py-1 mb-1">Observación (*)</div>
+          <div class="text-left">
             <input
               type="text"
               formControlName="observation"
@@ -217,8 +217,8 @@
         </div>
       </div>
 
-      <div class="formLayout">
-        <div class="actionsButtons">
+      <div class="row text-light text-center">
+        <div class="col-sm container-buttons">
           <button type="submit" class="btn btn-primary mr-3 btn-sm">
             {{ actionForm === "create" ? "Crear" : "Actualizar" }}
           </button>

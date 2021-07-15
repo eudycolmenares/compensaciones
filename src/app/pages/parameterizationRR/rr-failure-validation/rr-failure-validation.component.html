@@ -46,10 +46,10 @@
         (ngSubmit)="onSubmit_formOption1()"
         *ngIf="selectedForm === 1"
       >
-        <div class="formLayout">
-          <div class="formSection">
-            <div class="formLabel">Incidente (*)</div>
-            <div class="formField">
+        <div class="row">
+          <div class="col-sm text-light text-center px-sm-1 mb-4">
+            <div class="bg-primary py-1 mb-1">Incidente (*)</div>
+            <div class="text-left">
               <input
                 type="text"
                 formControlName="issue"
@@ -64,9 +64,9 @@
               </small>
             </div>
           </div>
-          <div class="formSection">
-            <div class="formLabel">Nodo (*)</div>
-            <div class="formField">
+          <div class="col-sm text-light text-center px-sm-1 mb-4">
+            <div class="bg-primary py-1 mb-1">Nodo (*)</div>
+            <div class="text-left">
               <input
                 type="text"
                 formControlName="node"
@@ -81,9 +81,9 @@
               </small>
             </div>
           </div>
-          <div class="formSection">
-            <div class="formLabel">Causa (*)</div>
-            <div class="formField">
+          <div class="col-sm text-light text-center px-sm-1 mb-4">
+            <div class="bg-primary py-1 mb-1">Causa (*)</div>
+            <div class="text-left">
               <input
                 type="text"
                 formControlName="cause"
@@ -98,9 +98,9 @@
               </small>
             </div>
           </div>
-          <div class="formSection">
-            <div class="formLabel">Tiempo (*)</div>
-            <div class="formField">
+          <div class="col-sm text-light text-center px-sm-1 mb-4">
+            <div class="bg-primary py-1 mb-1">Tiempo (*)</div>
+            <div class="text-left">
               <input
                 type="text"
                 formControlName="time"
@@ -115,9 +115,9 @@
               </small>
             </div>
           </div>
-          <div class="formSection">
-            <div class="formLabel">Servicio (*)</div>
-            <div class="formField">
+          <div class="col-sm text-light text-center px-sm-1 mb-4">
+            <div class="bg-primary py-1 mb-1">Servicio (*)</div>
+            <div class="text-left">
               <p-multiSelect
                 formControlName="service"
                 [options]="selectService"
@@ -135,8 +135,8 @@
           </div>
         </div>
 
-        <div class="formLayout">
-          <div class="actionsButtons">
+        <div class="row text-light text-center">
+          <div class="col-sm container-buttons">
             <button type="submit" class="btn btn-primary mr-3 btn-sm">
               {{ actionForm === "create" ? "Crear" : "Actualizar" }}
             </button>
@@ -158,10 +158,10 @@
         (ngSubmit)="onSubmit_formOption2()"
         *ngIf="selectedForm === 2"
       >
-        <div class="formLayout">
-          <div class="formSection">
-            <div class="formLabel">Cuenta (*)</div>
-            <div class="formField">
+        <div class="row">
+          <div class="col-sm text-light text-center px-sm-1 mb-4">
+            <div class="bg-primary py-1 mb-1">Cuenta (*)</div>
+            <div class="text-left">
               <input
                 type="text"
                 formControlName="account"
@@ -176,9 +176,9 @@
               </small>
             </div>
           </div>
-          <div class="formSection">
-            <div class="formLabel">Llamada (*)</div>
-            <div class="formField">
+          <div class="col-sm text-light text-center px-sm-1 mb-4">
+            <div class="bg-primary py-1 mb-1">Llamada (*)</div>
+            <div class="text-left">
               <input
                 type="text"
                 formControlName="call"
@@ -193,9 +193,9 @@
               </small>
             </div>
           </div>
-          <div class="formSection">
-            <div class="formLabel">Tiempo (*)</div>
-            <div class="formField">
+          <div class="col-sm text-light text-center px-sm-1 mb-4">
+            <div class="bg-primary py-1 mb-1">Tiempo (*)</div>
+            <div class="text-left">
               <input
                 type="text"
                 formControlName="time"
@@ -210,9 +210,9 @@
               </small>
             </div>
           </div>
-          <div class="formSection">
-            <div class="formLabel">Servicio (*)</div>
-            <div class="formField">
+          <div class="col-sm text-light text-center px-sm-1 mb-4">
+            <div class="bg-primary py-1 mb-1">Servicio (*)</div>
+            <div class="text-left">
               <p-multiSelect
                 formControlName="service"
                 [options]="selectService"
@@ -230,8 +230,8 @@
           </div>
         </div>
 
-        <div class="formLayout">
-          <div class="actionsButtons">
+        <div class="row text-light text-center">
+          <div class="col-sm container-buttons">
             <button type="submit" class="btn btn-primary mr-3 btn-sm">
               {{ actionForm === "create" ? "Crear" : "Actualizar" }}
             </button>
@@ -253,10 +253,10 @@
         (ngSubmit)="onSubmit_formOption3()"
         *ngIf="selectedForm === 3"
       >
-        <div class="formLayout">
-          <div class="formSection">
-            <div class="formLabel">Cuenta (*)</div>
-            <div class="formField">
+        <div class="row">
+          <div class="col-sm text-light text-center px-sm-1 mb-4">
+            <div class="bg-primary py-1 mb-1">Cuenta (*)</div>
+            <div class="text-left">
               <input
                 type="text"
                 formControlName="account"
@@ -271,9 +271,9 @@
               </small>
             </div>
           </div>
-          <div class="formSection">
-            <div class="formLabel">Incidente (*)</div>
-            <div class="formField">
+          <div class="col-sm text-light text-center px-sm-1 mb-4">
+            <div class="bg-primary py-1 mb-1">Incidente (*)</div>
+            <div class="text-left">
               <input
                 type="text"
                 formControlName="incident"
@@ -288,9 +288,9 @@
               </small>
             </div>
           </div>
-          <div class="formSection">
-            <div class="formLabel">Tiempo (*)</div>
-            <div class="formField">
+          <div class="col-sm text-light text-center px-sm-1 mb-4">
+            <div class="bg-primary py-1 mb-1">Tiempo (*)</div>
+            <div class="text-left">
               <input
                 type="text"
                 formControlName="time"
@@ -305,9 +305,9 @@
               </small>
             </div>
           </div>
-          <div class="formSection">
-            <div class="formLabel">Servicio (*)</div>
-            <div class="formField">
+          <div class="col-sm text-light text-center px-sm-1 mb-4">
+            <div class="bg-primary py-1 mb-1">Servicio (*)</div>
+            <div class="text-left">
               <p-multiSelect
                 formControlName="service"
                 [options]="selectService"
@@ -325,8 +325,8 @@
           </div>
         </div>
 
-        <div class="formLayout">
-          <div class="actionsButtons">
+        <div class="row text-light text-center">
+          <div class="col-sm container-buttons">
             <button type="submit" class="btn btn-primary mr-3 btn-sm">
               {{ actionForm === "create" ? "Crear" : "Actualizar" }}
             </button>

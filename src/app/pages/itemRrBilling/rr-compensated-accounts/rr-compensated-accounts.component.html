@@ -1,7 +1,7 @@
 <section class="container py-3">
   <app-breadcrumb></app-breadcrumb>
-  <div class="container-add">
-    <div class="formLayout">
+  <div class="px-sm-2 px-md-5">
+    <div class="row">
       <div class="col-sm-4">
         <form autocomplete="off" [formGroup]="rrCompensatedAccountsForm">
           <p-dropdown
@@ -21,7 +21,7 @@
         </form>
       </div>
 
-      <div class="formSection bg-primary p-3 container-statistic">
+      <div class="col-sm text-light text-center px-sm-1 mb-4 bg-primary p-3 container-statistic">
         <p class="font-weight-bold mb-0">Valor Total Compensación</p>
         <h4 class="mt-3">{{ totalCompensationValue['compensationTotal'] }}</h4>
         <div class="progress">
@@ -52,10 +52,10 @@
         (ngSubmit)="onSubmit_compensationDetailForm()"
         *ngIf="selectedForm === 1"
       >
-        <div class="formLayout">
-          <div class="formSection">
-            <div class="formLabel">Cuenta (*)</div>
-            <div class="formField">
+        <div class="row">
+          <div class="col-sm text-light text-center px-sm-1 mb-4">
+            <div class="bg-primary py-1 mb-1">Cuenta (*)</div>
+            <div class="text-left">
               <input
                 type="text"
                 formControlName="account"
@@ -74,9 +74,9 @@
               </small>
             </div>
           </div>
-          <div class="formSection">
-            <div class="formLabel">Des. Categoría (*)</div>
-            <div class="formField">
+          <div class="col-sm text-light text-center px-sm-1 mb-4">
+            <div class="bg-primary py-1 mb-1">Des. Categoría (*)</div>
+            <div class="text-left">
               <input
                 type="text"
                 formControlName="categoryDescription"
@@ -101,9 +101,9 @@
               </small>
             </div>
           </div>
-          <div class="formSection">
-            <div class="formLabel">Nombre Servicio (*)</div>
-            <div class="formField">
+          <div class="col-sm text-light text-center px-sm-1 mb-4">
+            <div class="bg-primary py-1 mb-1">Nombre Servicio (*)</div>
+            <div class="text-left">
               <input
                 type="text"
                 formControlName="serviceName"
@@ -122,9 +122,9 @@
               </small>
             </div>
           </div>
-          <div class="formSection">
-            <div class="formLabel">Desc. Servicio (*)</div>
-            <div class="formField">
+          <div class="col-sm text-light text-center px-sm-1 mb-4">
+            <div class="bg-primary py-1 mb-1">Desc. Servicio (*)</div>
+            <div class="text-left">
               <input
                 type="text"
                 formControlName="serviceDescription"
@@ -148,10 +148,10 @@
             </div>
           </div>
         </div>
-        <div class="formLayout">
-          <div class="formSection">
-            <div class="formLabel">Nombre Producto (*)</div>
-            <div class="formField">
+        <div class="row">
+          <div class="col-sm text-light text-center px-sm-1 mb-4">
+            <div class="bg-primary py-1 mb-1">Nombre Producto (*)</div>
+            <div class="text-left">
               <input
                 type="text"
                 formControlName="productName"
@@ -170,9 +170,9 @@
               </small>
             </div>
           </div>
-          <div class="formSection">
-            <div class="formLabel">Trf Pqr Aviso (*)</div>
-            <div class="formField">
+          <div class="col-sm text-light text-center px-sm-1 mb-4">
+            <div class="bg-primary py-1 mb-1">Trf Pqr Aviso (*)</div>
+            <div class="text-left">
               <input
                 type="text"
                 formControlName="trfPqrWarning"
@@ -193,9 +193,9 @@
               </small>
             </div>
           </div>
-          <div class="formSection">
-            <div class="formLabel">Número Ticket (*)</div>
-            <div class="formField">
+          <div class="col-sm text-light text-center px-sm-1 mb-4">
+            <div class="bg-primary py-1 mb-1">Número Ticket (*)</div>
+            <div class="text-left">
               <input
                 type="text"
                 formControlName="ticketNumber"
@@ -214,9 +214,9 @@
               </small>
             </div>
           </div>
-          <div class="formSection">
-            <div class="formLabel">Fecha (*)</div>
-            <div class="formField">
+          <div class="col-sm text-light text-center px-sm-1 mb-4">
+            <div class="bg-primary py-1 mb-1">Fecha (*)</div>
+            <div class="text-left">
               <p-calendar
                 [showIcon]="true"
                 formControlName="date"
@@ -229,10 +229,10 @@
             </div>
           </div>
         </div>
-        <div class="formLayout">
-          <div class="formSection">
-            <div class="formLabel">Fecha Últ. renta (*)</div>
-            <div class="formField">
+        <div class="row">
+          <div class="col-sm text-light text-center px-sm-1 mb-4">
+            <div class="bg-primary py-1 mb-1">Fecha Últ. renta (*)</div>
+            <div class="text-left">
               <p-calendar
                 [showIcon]="true"
                 formControlName="lastRentDate"
@@ -251,9 +251,9 @@
               </small>
             </div>
           </div>
-          <div class="formSection">
-            <div class="formLabel">Código Compensación (*)</div>
-            <div class="formField">
+          <div class="col-sm text-light text-center px-sm-1 mb-4">
+            <div class="bg-primary py-1 mb-1">Código Compensación (*)</div>
+            <div class="text-left">
               <input
                 type="text"
                 formControlName="compensationCode"
@@ -276,9 +276,9 @@
               </small>
             </div>
           </div>
-          <div class="formSection">
-            <div class="formLabel">Valor Def. Promedio (*)</div>
-            <div class="formField">
+          <div class="col-sm text-light text-center px-sm-1 mb-4">
+            <div class="bg-primary py-1 mb-1">Valor Def. Promedio (*)</div>
+            <div class="text-left">
               <input
                 type="text"
                 formControlName="averangeDefValue"
@@ -301,9 +301,9 @@
               </small>
             </div>
           </div>
-          <div class="formSection">
-            <div class="formLabel">Valor Compensación (*)</div>
-            <div class="formField">
+          <div class="col-sm text-light text-center px-sm-1 mb-4">
+            <div class="bg-primary py-1 mb-1">Valor Compensación (*)</div>
+            <div class="text-left">
               <input
                 type="text"
                 formControlName="compesationValue"
@@ -328,8 +328,8 @@
           </div>
         </div>
 
-        <div class="formLayout">
-          <div class="actionsButtons">
+        <div class="row text-light text-center mt-4">
+          <div class="col-sm container-buttons">
             <button type="submit" class="btn btn-primary mr-3 btn-sm">
               {{ actionForm === "create" ? "Crear" : "Actualizar" }}
             </button>
@@ -350,10 +350,10 @@
         (ngSubmit)="onSubmit_TCAAUF00Form()"
         *ngIf="selectedForm === 2"
       >
-        <div class="formLayout">
-          <div class="formSection">
-            <div class="formLabel">Cuenta (*)</div>
-            <div class="formField">
+        <div class="row">
+          <div class="col-sm text-light text-center px-sm-1 mb-4">
+            <div class="bg-primary py-1 mb-1">Cuenta (*)</div>
+            <div class="text-left">
               <input
                 type="text"
                 formControlName="account"
@@ -368,9 +368,9 @@
               </small>
             </div>
           </div>
-          <div class="formSection">
-            <div class="formLabel">Valor Compensación (*)</div>
-            <div class="formField">
+          <div class="col-sm text-light text-center px-sm-1 mb-4">
+            <div class="bg-primary py-1 mb-1">Valor Compensación (*)</div>
+            <div class="text-left">
               <input
                 type="text"
                 formControlName="compensationValue"
@@ -389,9 +389,9 @@
               </small>
             </div>
           </div>
-          <div class="formSection">
-            <div class="formLabel">Código Compensación (*)</div>
-            <div class="formField">
+          <div class="col-sm text-light text-center px-sm-1 mb-4">
+            <div class="bg-primary py-1 mb-1">Código Compensación (*)</div>
+            <div class="text-left">
               <input
                 type="text"
                 formControlName="compensationcode"
@@ -408,9 +408,9 @@
               </small>
             </div>
           </div>
-          <div class="formSection">
-            <div class="formLabel">Fecha (*)</div>
-            <div class="formField">
+          <div class="col-sm text-light text-center px-sm-1 mb-4">
+            <div class="bg-primary py-1 mb-1">Fecha (*)</div>
+            <div class="text-left">
               <p-calendar
                 [showIcon]="true"
                 formControlName="date"
@@ -424,8 +424,8 @@
           </div>
         </div>
 
-        <div class="formLayout">
-          <div class="actionsButtons">
+        <div class="row text-light text-center mt-4">
+          <div class="col-sm container-buttons">
             <button type="submit" class="btn btn-primary mr-3 btn-sm">
               {{ actionForm === "create" ? "Crear" : "Actualizar" }}
             </button>
@@ -446,10 +446,10 @@
         (ngSubmit)="onSubmit_compensationNoteForm()"
         *ngIf="selectedForm === 3"
       >
-        <div class="formLayout">
-          <div class="formSection">
-            <div class="formLabel">Cuenta (*)</div>
-            <div class="formField">
+        <div class="row">
+          <div class="col-sm text-light text-center px-sm-1 mb-4">
+            <div class="bg-primary py-1 mb-1">Cuenta (*)</div>
+            <div class="text-left">
               <input
                 type="text"
                 formControlName="account"
@@ -466,9 +466,9 @@
               </small>
             </div>
           </div>
-          <div class="formSection">
-            <div class="formLabel">Nota (*)</div>
-            <div class="formField">
+          <div class="col-sm text-light text-center px-sm-1 mb-4">
+            <div class="bg-primary py-1 mb-1">Nota (*)</div>
+            <div class="text-left">
               <input
                 type="text"
                 formControlName="note"
@@ -485,8 +485,8 @@
           </div>
         </div>
 
-        <div class="formLayout">
-          <div class="actionsButtons">
+        <div class="row text-light text-center mt-4">
+          <div class="col-sm container-buttons">
             <button type="submit" class="btn btn-primary mr-3 btn-sm">
               {{ actionForm === "create" ? "Crear" : "Actualizar" }}
             </button>
