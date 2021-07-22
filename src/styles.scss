@@ -148,6 +148,12 @@ input[type="number"] {
   }
 }
 
+.panel-with-table {
+  .p-dropdown-panel {
+    top: -129px !important;
+  }
+}
+
 //PRIMENG button dialog confirm
 .p-confirm-dialog-reject {
   color: var(--secondary);
