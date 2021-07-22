@@ -103,7 +103,7 @@
               {{ item[opt.name] }}
             </ng-container>
           </td>
-          <td *ngSwitchCase="'hour'">{{ item[opt.name] | date: 'h:mm:ss a' }}</td>
+          <td *ngSwitchCase="'hour'">{{ item[opt.name] | hourStringToDate | date: 'h:mm:ss a' }}</td>
           <td *ngSwitchCase="'revision-approved'">
             <div *ngIf="item[opt.name] === 'APROBADO'" class="badge badge-success px-2"> {{ item[opt.name] }} </div>
             <div *ngIf="item[opt.name] === '' || item[opt.name] === undefined " class="badge badge-warning px-2"> CANDIDATO </div>

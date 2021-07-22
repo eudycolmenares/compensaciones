@@ -14,13 +14,15 @@ import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
 import { TableComponent } from './table/table.component';
 import { SortableDirective } from '../directives/sortable.directive';
 import { HourMinutePipe } from '../shared/pipes/hour-minute.pipe';
+import { HourStringToDatePipe } from '../shared/pipes/hour-string-to-date.pipe';
 
 @NgModule({
   declarations: [
     BreadcrumbComponent,
     TableComponent,
     SortableDirective,
-    HourMinutePipe
+    HourMinutePipe,
+    HourStringToDatePipe
   ],
   imports: [
     CommonModule,
