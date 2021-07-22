@@ -1,5 +1,5 @@
 export const environment = {
-  production: true,
+  production: false,
   endpoints: {
     // Settings
     Settings: {
@@ -125,6 +125,9 @@ export const environment = {
       url: '',
       endpoints: {
         readall: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/CrcCompensationService/list',
+        create:  'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/CrcCompensationService/create',
+        update: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/CrcCompensationService/update',
+        delete: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/CrcCompensationService/delete',
       },
     },
     // Validation Nodes: 'MaximoService/readAll',
