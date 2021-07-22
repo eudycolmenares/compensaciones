@@ -16,7 +16,7 @@ export class RrCompensatedAccountsComponent implements OnInit {
   currentDate: Date = new Date();
   nameSelectedTable: string;
   selectTableList: DataList[];
-  totalCompensationValue: string = '';
+  totalCompensationValue: number = 0;
 
   // forms
   rrCompensatedAccountsForm: FormGroup;
@@ -154,12 +154,55 @@ export class RrCompensatedAccountsComponent implements OnInit {
       { key: 'NotasCompensacion', value: 'Notas Compensación' },
     ];
 
-    this._RrCompensatedAccountsScv
-      .allCompensationValue()
-      .subscribe((resp: any) => {
-        this.totalCompensationValue =
-          resp.CompensationValues.CompensationValue[0];
+    let dataresultvaliationperiod = this.validationBillingPeriods()
+    dataresultvaliationperiod.then((resp: any) => {
+      console.log("respuesta del filtro ",resp);
+      if (resp['exists']){
+        this.totalCompensationValue = resp['currentPeriod']['compensationTotal'];
+      } else {
+        this.totalCompensationValue = 0;
+      }
+    });;
+    
+    
+  }
+
+  validationBillingPeriods(): Promise<any> {
+    const promise = new Promise((resol, reject) => {
+      const dateNow = new Date().setHours(0, 0, 0, 0);
+      this._RrCompensatedAccountsScv.allCompensationValue().subscribe((resp: any) => {
+        let listPeriod = resp;
+        
+        let currentPeriod = resp['CompensationValues']['CompensationValue'].filter(
+          (data) =>
+            dateNow >=
+            new Date(data['startDate'])
+                .setHours(0, 0, 0, 0) &&
+            dateNow <=
+            new Date(data['endDate'])
+                .setHours(23, 59, 59, 999)
+        );
+        console.log(currentPeriod);
+        
+        let DataNumber = currentPeriod.length;
+        if (DataNumber > 0) {
+          resol({
+            exists: true,
+            message: 'Existe un periodo de facturación en curso',
+            currentPeriod: currentPeriod[DataNumber - 1],
+          });
+        } else {
+          resol({
+            exists: false,
+            message: 'No existe un periodo de facturación en curso',
+            currentPeriod: currentPeriod,
+          });
+        }
       });
+    });
+    console.log("resultado del filtro ", promise);
+    
+    return promise;
   }
 
   selectedTable(selectedTable: string) {

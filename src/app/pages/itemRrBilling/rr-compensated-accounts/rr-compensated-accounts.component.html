@@ -23,8 +23,8 @@
 
       <div class="col-sm text-light text-center px-sm-1 mb-4 bg-primary p-3 container-statistic">
         <p class="font-weight-bold mb-0">Valor Total Compensación</p>
-        <h4 class="mt-3">{{ totalCompensationValue['compensationTotal'] }}</h4>
-        <div class="progress">
+        <h4 class="mt-3">{{ totalCompensationValue | currency }}</h4>
+        <!-- <div class="progress">
           <div
             class="progress-bar bg-success"
             role="progressbar"
@@ -33,7 +33,7 @@
             aria-valuemin="0"
             aria-valuemax="100"
           ></div>
-        </div>
+        </div> -->
         <!-- <span class="mt-3">Lorem ipsum dolor sit amet</span> -->
       </div>
     </div>
