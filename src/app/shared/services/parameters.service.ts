@@ -78,30 +78,30 @@ export class ParametersService {
             case 'CP052':
               env.endpoints.Settings.endpoints.delete = item.endpoint;
               break;
-            // Symptom
-            case 'CP040':
+            // Symptom - Bus
+            case 'CP102':
               env.endpoints.Symptom.endpoints.readall = item.endpoint;
               break;
-            case 'CP039':
+            case 'CP099':
               env.endpoints.Symptom.endpoints.create = item.endpoint;
               break;
-            case 'CP036':
+            case 'CP100':
               env.endpoints.Symptom.endpoints.update = item.endpoint;
               break;
-            case 'CP037':
+            case 'CP101':
               env.endpoints.Symptom.endpoints.delete = item.endpoint;
               break;
-            // Origin
-            case 'CP073':
+            // Origin - Bus
+            case 'CP113':
               env.endpoints.Origin.endpoints.readall = item.endpoint;
               break;
-            case 'CP075':
+            case 'CP109':
               env.endpoints.Origin.endpoints.create = item.endpoint;
               break;
-            case 'CP071':
+            case 'CP110':
               env.endpoints.Origin.endpoints.update = item.endpoint;
               break;
-            case 'CP072':
+            case 'CP111':
               env.endpoints.Origin.endpoints.delete = item.endpoint;
               break;
             // Stratum
@@ -117,52 +117,52 @@ export class ParametersService {
             case 'CP027':
               env.endpoints.Stratum.endpoints.delete = item.endpoint;
               break;
-            // Cause
-            case 'CP034':
+            // Cause - Bus
+            case 'CP092':
               env.endpoints.Cause.endpoints.readall = item.endpoint;
               break;
-            case 'CP035':
+            case 'CP093':
               env.endpoints.Cause.endpoints.readid = item.endpoint;
               break;
-            case 'CP033':
+            case 'CP089':
               env.endpoints.Cause.endpoints.create = item.endpoint;
               break;
-            case 'CP031':
+            case 'CP090':
               env.endpoints.Cause.endpoints.update = item.endpoint;
               break;
-            case 'CP032':
+            case 'CP091':
               env.endpoints.Cause.endpoints.delete = item.endpoint;
               break;
-            // System status
-            case 'CP085':
+            // System status - Bus
+            case 'CP097':
               env.endpoints.SystemStatus.endpoints.readall = item.endpoint;
               break;
-            case 'CP086':
+            case 'CP098':
               env.endpoints.SystemStatus.endpoints.readid = item.endpoint;
               break;
-            case 'CP084':
+            case 'CP094':
               env.endpoints.SystemStatus.endpoints.create = item.endpoint;
               break;
-            case 'CP082':
+            case 'CP095':
               env.endpoints.SystemStatus.endpoints.update = item.endpoint;
               break;
-            case 'CP083':
+            case 'CP096':
               env.endpoints.SystemStatus.endpoints.delete = item.endpoint;
               break;
-            // Priorities
-            case 'CP025':
+            // Priorities - Bus
+            case 'CP108':
               env.endpoints.Priority.endpoints.readall = item.endpoint;
               break;
-            case 'CP023':
+            case 'CP107':
               env.endpoints.Priority.endpoints.readid = item.endpoint;
               break;
-            case 'CP024':
+            case 'CP104':
               env.endpoints.Priority.endpoints.create = item.endpoint;
               break;
-            case 'CP021':
+            case 'CP105':
               env.endpoints.Priority.endpoints.update = item.endpoint;
               break;
-            case 'CP022':
+            case 'CP106':
               env.endpoints.Priority.endpoints.delete = item.endpoint;
               break;
             // Bulk load
@@ -180,43 +180,43 @@ export class ParametersService {
             case 'RR001':
               env.endpoints.Faults.endpoints.load = item.endpoint;
               break;
-            // Maintenance Orders Causes
-            case 'CP004':
+            // Maintenance Orders Causes - Bus
+            case 'CP129':
               env.endpoints.OrderCause.endpoints.readall = item.endpoint;
               break;
-            case 'CP003':
+            case 'CP130':
               env.endpoints.OrderCause.endpoints.create = item.endpoint;
               break;
-            case 'CP001':
+            case 'CP128':
               env.endpoints.OrderCause.endpoints.update = item.endpoint;
               break;
-            case 'CP002':
+            case 'CP131':
               env.endpoints.OrderCause.endpoints.delete = item.endpoint;
               break;
-            // Maintenance Orders Symptoms
-            case 'CP050':
+            // Maintenance Orders Symptoms - Bus
+            case 'CP132':
               env.endpoints.OrderSymptoms.endpoints.readall = item.endpoint;
               break;
-            case 'CP049':
+            case 'CP134':
               env.endpoints.OrderSymptoms.endpoints.create = item.endpoint;
               break;
-            case 'CP047':
+            case 'CP133':
               env.endpoints.OrderSymptoms.endpoints.update = item.endpoint;
               break;
-            case 'CP048':
+            case 'CP135':
               env.endpoints.OrderSymptoms.endpoints.delete = item.endpoint;
               break;
-            // RR - parameterization - billing periods
-            case 'CP017':
+            // RR - parameterization - billing periods - Bus
+            case 'CP125':
               env.endpoints.BillingPeriods.endpoints.readAll = item.endpoint;
               break;
-            case 'CP016':
+            case 'CP122':
               env.endpoints.BillingPeriods.endpoints.create = item.endpoint;
               break;
-            case 'CP014':
+            case 'CP123':
               env.endpoints.BillingPeriods.endpoints.update = item.endpoint;
               break;
-            case 'CP015':
+            case 'CP124':
               env.endpoints.BillingPeriods.endpoints.delete = item.endpoint;
               break;
             // Validation Accounts
@@ -310,17 +310,17 @@ export class ParametersService {
             case 'RR042':
               env.endpoints.ValidationTelevCompensa.endpoints.delete = item.endpoint;
               break;
-            // RR - validation - node
-            case 'CP065':
+            // RR - validation - node - Bus
+            case 'CP117':
               env.endpoints.NodesValidation.endpoints.readAll = item.endpoint;
               break;
-            case 'CP068':
+            case 'CP119':
               env.endpoints.NodesValidation.endpoints.readAllApproved = item.endpoint;
               break;
-            case 'CP070':
+            case 'CP121':
               env.endpoints.NodesValidation.endpoints.readAllRejectedForQuality = item.endpoint;
               break;
-            case 'CP063':
+            case 'CP115':
               env.endpoints.NodesValidation.endpoints.update = item.endpoint;
               break;
             // RR - validation - node (new causes)
@@ -418,8 +418,8 @@ export class ParametersService {
             case 'EMAIL_REST':
               env.endpoints.NotificationsEmail.endpoints.sendMail = item.endpoint;
               break;
-            // Billing - Supervision Process
-            case 'CP019':
+            // Billing - Supervision Process - Bus
+            case 'CP127':
               env.endpoints.BillingSupervision.endpoints.compensationValue = item.endpoint;
               break;
             case 'CP044':

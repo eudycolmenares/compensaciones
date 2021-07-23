@@ -15,24 +15,24 @@ export const environment = {
         delete: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/SettingsService/delete/',
       },
     },
-    // Symptom
+    // Symptom - Bus
     Symptom: {
       url: '',
       endpoints: {
-        readall: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/SymptomService/readAll',
-        create: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/SymptomService/create',
-        update: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/SymptomService/update',
-        delete: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/SymptomService/delete/',
+        readall: 'HTTP://100.126.21.189:7777/SymptomService/V1.0/Rest/ReadAll',
+        create: 'HTTP://100.126.21.189:7777/SymptomService/V1.0/Rest/Create',
+        update: 'HTTP://100.126.21.189:7777/SymptomService/V1.0/Rest/Update',
+        delete: 'HTTP://100.126.21.189:7777/SymptomService/V1.0/Rest/Delete',
       },
     },
-    // Origin
+    // Origin - Bus
     Origin: {
       url: '',
       endpoints: {
-        readall: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/OriginTypeService/readAll',
-        create: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/OriginTypeService/create',
-        update: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/OriginTypeService/update',
-        delete: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/OriginTypeService/delete/',
+        readall: 'HTTP://100.126.21.189:7777/OriginTypeService/V1.0/Rest/ReadAll',
+        create: 'HTTP://100.126.21.189:7777/OriginTypeService/V1.0/Rest/Create',
+        update: 'HTTP://100.126.21.189:7777/OriginTypeService/V1.0/Rest/Update',
+        delete: 'HTTP://100.126.21.189:7777/OriginTypeService/V1.0/Rest/Delete',
       },
     },
     // Stratum
@@ -45,37 +45,37 @@ export const environment = {
         delete: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/SocialStratumService/delete/',
       },
     },
-    // Cause
+    // Cause - Bus
     Cause: {
       url: '',
       endpoints: {
-        readall: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/CausesService/readAll',
-        readid: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/CausesService/readId/',
-        create: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/CausesService/create',
-        update: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/CausesService/update',
-        delete: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/CausesService/delete/',
+        readall: 'HTTP://100.126.21.189:7777/CausesService/V1.0/Rest/ReadAll',
+        readid: 'HTTP://100.126.21.189:7777/CausesService/V1.0/Rest/ReadById',
+        create: 'HTTP://100.126.21.189:7777/CausesService/V1.0/Rest/Create',
+        update: 'HTTP://100.126.21.189:7777/CausesService/V1.0/Rest/Update',
+        delete: 'HTTP://100.126.21.189:7777/CausesService/V1.0/Rest/Delete',
       },
     },
-    // System status
+    // System status - Bus
     SystemStatus: {
       url: '',
       endpoints: {
-        readall: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/SystemStatusService/readAll',
-        readid: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/SystemStatusService/readId/',
-        create: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/SystemStatusService/create',
-        update: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/SystemStatusService/update',
-        delete: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/SystemStatusService/delete/',
+        readall: 'HTTP://100.126.21.189:7777/SystemStatusService/V1.0/Rest/ReadAll',
+        readid: 'HTTP://100.126.21.189:7777/SystemStatusService/V1.0/Rest/ReadById',
+        create: 'HTTP://100.126.21.189:7777/SystemStatusService/V1.0/Rest/Create',
+        update: 'HTTP://100.126.21.189:7777/SystemStatusService/V1.0/Rest/Update',
+        delete: 'HTTP://100.126.21.189:7777/SystemStatusService/V1.0/Rest/Delete',
       },
     },
-    // Priorities
+    // Priorities - Bus
     Priority: {
       url: '',
       endpoints: {
-        readall: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/PriorityService/readAll',
-        readid: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/PriorityService/readId/',
-        create: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/PriorityService/create',
-        update: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/PriorityService/update',
-        delete: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/PriorityService/delete/',
+        readall: 'HTTP://100.126.21.189:7777/PriorityService/V1.0/Rest/ReadAll',
+        readid: 'HTTP://100.126.21.189:7777/PriorityService/V1.0/Rest/ReadId',
+        create: 'HTTP://100.126.21.189:7777/PriorityService/V1.0/Rest/Create',
+        update: 'HTTP://100.126.21.189:7777/PriorityService/V1.0/Rest/Update',
+        delete: 'HTTP://100.126.21.189:7777/PriorityService/V1.0/Rest/Delete',
       },
     },
     // Bulk load
@@ -94,34 +94,34 @@ export const environment = {
         load: 'http://100.126.19.74:7669/WSCompensacionesBatchRR-web/webresources/WSCompensacionesBatchRR/LoadService/load',
       },
     },
-    // Maintenance Orders Causes
+    // Maintenance Orders Causes - Bus
     OrderCause: {
       url: '',
       endpoints: {
-        readall: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/MaintenanceOrderCauseService/list',
-        create: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/MaintenanceOrderCauseService/create',
-        update: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/MaintenanceOrderCauseService/update',
-        delete: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/MaintenanceOrderCauseService/delete/',
+        readall: 'HTTP://100.126.21.189:7777/MaintenanceOrderCauseService/V1.0/Rest/ReadAll',
+        create: 'HTTP://100.126.21.189:7777/MaintenanceOrderCauseService/V1.0/Rest/Create',
+        update: 'HTTP://100.126.21.189:7777/MaintenanceOrderCauseService/V1.0/Rest/Update',
+        delete: 'HTTP://100.126.21.189:7777/MaintenanceOrderCauseService/V1.0/Rest/Delete',
       },
     },
-    // Maintenance Orders Symptoms
+    // Maintenance Orders Symptoms - Bus
     OrderSymptoms: {
       url: '',
       endpoints: {
-        readall: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/MaintenanceOrderDiagnosticService/list',
-        create: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/MaintenanceOrderDiagnosticService/create',
-        update: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/MaintenanceOrderDiagnosticService/update',
-        delete: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/MaintenanceOrderDiagnosticService/delete/',
+        readall: 'HTTP://100.126.21.189:7777/MaintenanceOrderDiagnosticService/V1.0/Rest/ReadAll',
+        create: 'HTTP://100.126.21.189:7777/MaintenanceOrderDiagnosticService/V1.0/Rest/Create',
+        update: 'HTTP://100.126.21.189:7777/MaintenanceOrderDiagnosticService/V1.0/Rest/Update',
+        delete: 'HTTP://100.126.21.189:7777/MaintenanceOrderDiagnosticService/V1.0/Rest/Delete',
       },
     },
-    // RR - parameterization - billing periods
+    // RR - parameterization - billing periods - Bus
     BillingPeriods: {
       url: '',
       endpoints: {
-        readAll: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSBilling/BillingPeriodsService/readAll',
-        create: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSBilling/BillingPeriodsService/create',
-        update: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSBilling/BillingPeriodsService/update',
-        delete: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSBilling/BillingPeriodsService/delete/',
+        readAll: 'HTTP://100.126.21.189:7777/BillingPeriodsService/V1.0/Rest/ReadAll',
+        create: 'HTTP://100.126.21.189:7777/BillingPeriodsService/V1.0/Rest/Create',
+        update: 'HTTP://100.126.21.189:7777/BillingPeriodsService/V1.0/Rest/Update',
+        delete: 'HTTP://100.126.21.189:7777/BillingPeriodsService/V1.0/Rest/Delete',
       },
     },
     // Validation Accounts
@@ -199,10 +199,10 @@ export const environment = {
     NodesValidation: {
       url: '',
       endpoints: {
-        readAll: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/MaximoService/readAll',
-        readAllApproved: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/MaximoService/readAllApproved',
-        readAllRejectedForQuality: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/MaximoService/readAllQualityReject',
-        update: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSCompensaciones/MaximoService/update',
+        readAll: 'HTTP://100.126.21.189:7777/MaximoService/V1.0/Rest/ReadAll',
+        readAllApproved: 'HTTP://100.126.21.189:7777/MaximoService/V1.0/Rest/ReadAllApproved',
+        readAllRejectedForQuality: 'HTTP://100.126.21.189:7777/MaximoService/V1.0/Rest/ReadAllQualityReject',
+        update: 'HTTP://100.126.21.189:7777/MaximoService/V1.0/Rest/Update',
       },
     },
     // RR - validation - node (new causes)
@@ -302,7 +302,7 @@ export const environment = {
     BillingSupervision: {
       url: '',
       endpoints: {
-        compensationValue: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSBilling/CompensationValueService/readAll',
+        compensationValue: 'HTTP://100.126.21.189:7777/CompensationValueService/V1.0/Rest/ReadAll', // Bus
         readAll: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSBilling/SupervisionProcessService/readAll',
         update: 'http://100.126.19.74:7669/WSCompensaciones-web/webresources/WSBilling/SupervisionProcessService/update',
       },
