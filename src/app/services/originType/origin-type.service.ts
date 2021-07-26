@@ -4,7 +4,11 @@ import { Observable } from 'rxjs';
 
 import { environment as env } from 'src/environments/environment';
 import { requestModel, responseModel, originsApiModel } from '../../models/origin-type';
-import { paramsHttp } from '../../libraries/utilities.library';
+import {
+  paramsHttp,
+  paramsUrlBus
+} from '../../libraries/utilities.library';
+import { GeneralFunctionsService } from '../general-functions.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,12 +18,19 @@ export class OriginTypeService {
   headers = new HttpHeaders(paramsHttp.headerGeneral);
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private gnrSvc: GeneralFunctionsService,
   ) {
   }
 
   allOrigins() {
-    return this.http.get<originsApiModel>(env.endpoints.Origin.url + env.endpoints.Origin.endpoints.readall, { headers: this.headers });
+    console.log('allOrigins()', env.endpoints.Origin.endpoints.readall);
+    
+    return this.http.get<originsApiModel>(
+      env.endpoints.Origin.url + env.endpoints.Origin.endpoints.readall +
+      '?' + this.gnrSvc.convertObjectToStringParamsUrl(paramsUrlBus),
+      { headers: this.headers }
+    );
   }
 
   createOrigin(body: requestModel): Observable<responseModel> {
