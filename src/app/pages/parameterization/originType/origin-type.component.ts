@@ -101,9 +101,9 @@ export class OriginTypeComponent implements OnInit {
   initialCharge() {
     this.cleanForm();
     this.originSvc.allOrigins().subscribe((resp: originsApiModel) => {
-      if (resp.GeneralResponse.code == '0') {
-        this.dataToTable = resp.OriginTypes.OriginType;
-      } else { this.toastScv.showError(resp.GeneralResponse.messageCode); }
+      if (resp.generalResponse.code == '0') {
+        this.dataToTable = resp.originTypes.originType;
+      } else { this.toastScv.showError(resp.generalResponse.messageCode); }
     });
   }
 
@@ -132,21 +132,21 @@ export class OriginTypeComponent implements OnInit {
   }
   createOriginApi(dataRequest: requestModel) {
     this.originSvc.createOrigin(dataRequest).subscribe((resp: responseModel) => {
-      if(resp.GeneralResponse.code === '0') {
-        this.toastScv.showSuccess(resp.GeneralResponse.messageCode);
+      if(resp.generalResponse.code === '0') {
+        this.toastScv.showSuccess(resp.generalResponse.messageCode);
         this.initialCharge();
       }else{
-        this.toastScv.showError(resp.GeneralResponse.messageCode);
+        this.toastScv.showError(resp.generalResponse.messageCode);
       }
     })
   }
   updateOriginApi(dataRequest: requestModel) {
     this.originSvc.updateOrigin(dataRequest).subscribe(resp => {
-      if(resp.GeneralResponse.code === '0') {
-        this.toastScv.showSuccess(resp.GeneralResponse.messageCode);
+      if(resp.generalResponse.code === '0') {
+        this.toastScv.showSuccess(resp.generalResponse.messageCode);
         this.initialCharge();
       }else{
-        this.toastScv.showError(resp.GeneralResponse.messageCode);
+        this.toastScv.showError(resp.generalResponse.messageCode);
       }
     })
   }
@@ -179,11 +179,11 @@ export class OriginTypeComponent implements OnInit {
 
   deleteOrigin(origin: originModel) {
     this.originSvc.deleteOrigin(origin.id).subscribe(resp => {
-      if(resp.GeneralResponse.code === '0') {
-        this.toastScv.showSuccess(resp.GeneralResponse.messageCode);
+      if(resp.generalResponse.code === '0') {
+        this.toastScv.showSuccess(resp.generalResponse.messageCode);
         this.initialCharge();
       }else{
-        this.toastScv.showError(resp.GeneralResponse.messageCode);
+        this.toastScv.showError(resp.generalResponse.messageCode);
       }
     })
   }

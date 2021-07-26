@@ -19,12 +19,12 @@ export interface requestModel {
 }
 
 export interface responseModel {
-  GeneralResponse: generalResponse;
+  generalResponse: generalResponse;
 }
 
 export interface originsApiModel {
-  GeneralResponse: generalResponse;
-  OriginTypes: {
-    OriginType: originModel[];
+  generalResponse: generalResponse;
+  originTypes: {
+    originType: originModel[];
   }
 }
