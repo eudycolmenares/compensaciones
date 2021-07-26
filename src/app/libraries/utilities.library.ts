@@ -436,3 +436,14 @@ export const paramsHttp = {
     'Content-Type': 'application/json; charset=utf-8',
   }
 }
+
+export const paramsUrlBus = {
+  transactionId: 'string',
+  system: 'string',
+  target: 'string',
+  user: 'string',
+  password: 'string',
+  requestDate: '2021-01-22T19:57:26.072Z',
+  ipApplication: 'string',
+  traceabilityId: 'string'
+}

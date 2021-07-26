@@ -20,6 +20,7 @@ import {
 import { ResponseLoginModel as UserModel } from '@models/users';
 import { AuthService } from '@shared_services/auth.service';
 import { StructTableModel } from 'src/app/shared/models/parameters';
+import { paramsUrlBus } from '../../../libraries/utilities.library';
 
 interface originModel {
   id: number;
@@ -93,6 +94,7 @@ export class CausesComponent implements OnInit {
       typeOrigin: ['', [Validators.required]],
       status: ['', [Validators.required]],
       user: [this.userData.usuario.usuario],
+      createDate: [''],
     });
   }
 
@@ -114,10 +116,10 @@ export class CausesComponent implements OnInit {
       this.selectState.push({ key: i[1], value: i[0] });
     }
     this._originTypeSvc.allOrigins().subscribe((resp: originsApiModel) => {
-      if (resp.GeneralResponse.code == '0') {
-        this.originTypeList = resp.OriginTypes.OriginType;
+      if (resp.generalResponse.code == '0') {
+        this.originTypeList = resp.originTypes.originType;
       } else {
-        this._toastScv.showError(resp.GeneralResponse.messageCode);
+        this._toastScv.showError(resp.generalResponse.messageCode);
       }
     });
     this.initialCharge(); // table
@@ -125,41 +127,41 @@ export class CausesComponent implements OnInit {
 
   initialCharge() {
     this._causeSvc.allCauses().subscribe((resp: CausesApiModel) => {
-      if (resp.GeneralResponse.code == '0') {
-        this.dataToTable = resp.Causes.Cause;
+      if (resp.generalResponse.code == '0') {
+        this.dataToTable = resp.causes.cause;
         this.dataToTable.map((add) => {
-          return (add.CloneOriginType = add.OriginType.name);
+          return (add.CloneOriginType = add.originType.name);
         });
       } else {
-        this._toastScv.showError(resp.GeneralResponse.messageCode);
+        this._toastScv.showError(resp.generalResponse.messageCode);
       }
     });
   }
 
   onSubmit() {
-    console.log(this.causeForm.value);
-
     if (this.causeForm.invalid) {
       return Object.values(this.causeForm.controls).forEach((control) => {
         control.markAsTouched();
       });
     } else {
       const dataRequest: RequestModel = {
-        Cause: {
+        headerRequest: paramsUrlBus,
+        cause: {
           code: this.causeForm.get('causeCode').value,
-          failureCode: this.causeForm.get('failureCode').value,
-          problemCode: this.causeForm.get('problemCode').value,
-          OriginType: {
+          state: this.causeForm.get('status').value,
+          originType: {
             id: Number(this.causeForm.get('typeOrigin').value),
           },
-          state: this.causeForm.get('status').value,
           user: this.userData.usuario.usuario,
-        },
+          failureCode: this.causeForm.get('failureCode').value,
+          problemCode: this.causeForm.get('problemCode').value,
+        }
       };
       if (this.actionForm === 'create') {
         this.createCauseApi(dataRequest);
       } else {
-        dataRequest.Cause.id = this.causeForm.get('idCause').value;
+        dataRequest.cause.id = this.causeForm.get('idCause').value;
+        dataRequest.cause.createDate = this.causeForm.get('createDate').value;
         this.updateCauseApi(dataRequest);
       }
     }
@@ -167,24 +169,24 @@ export class CausesComponent implements OnInit {
 
   createCauseApi(dataRequest: RequestModel) {
     this._causeSvc.createCause(dataRequest).subscribe((resp: ResponseModel) => {
-      if (resp.GeneralResponse.code === '0') {
-        this._toastScv.showSuccess(resp.GeneralResponse.messageCode);
+      if (resp.generalResponse.code === '0') {
+        this._toastScv.showSuccess(resp.generalResponse.messageCode);
         this.cleanForm();
         this.initialCharge(); // table
       } else {
-        this._toastScv.showError(resp.GeneralResponse.messageCode);
+        this._toastScv.showError(resp.generalResponse.messageCode);
       }
     });
   }
 
   updateCauseApi(dataRequest: RequestModel) {
     this._causeSvc.updateCause(dataRequest).subscribe((resp) => {
-      if (resp.GeneralResponse.code === '0') {
-        this._toastScv.showSuccess(resp.GeneralResponse.messageCode);
+      if (resp.generalResponse.code === '0') {
+        this._toastScv.showSuccess(resp.generalResponse.messageCode);
         this.cleanForm();
         this.initialCharge(); // table
       } else {
-        this._toastScv.showError(resp.GeneralResponse.messageCode);
+        this._toastScv.showError(resp.generalResponse.messageCode);
       }
     });
   }
@@ -194,21 +196,22 @@ export class CausesComponent implements OnInit {
     this.actionForm = 'update';
   }
 
-  setForm(data: CauseModel) {
+  setForm(data: CauseModel) {    
     this.causeForm.reset({
       idCause: data.id,
       failureCode: data.failureCode,
       problemCode: data.problemCode,
       causeCode: data.code,
-      typeOrigin: data.OriginType.id,
+      typeOrigin: data.originType.id,
       status: data.state,
       user: data.user,
+      createDate: data.createDate
     });
   }
 
   disableCause(cause: CauseModel) {
     const dataRequest: RequestModel = {
-      Cause: {
+      cause: {
         ...cause,
         state: cause.state.toString() === '0' ? '1' : '0',
         user: this.userData.usuario.usuario,
@@ -219,11 +222,11 @@ export class CausesComponent implements OnInit {
 
   deleteCause(cause: CauseModel) {
     this._causeSvc.deleteCause(cause.id).subscribe((resp) => {
-      if (resp.GeneralResponse.code === '0') {
-        this._toastScv.showSuccess(resp.GeneralResponse.messageCode);
+      if (resp.generalResponse.code == '0') {
+        this._toastScv.showSuccess(resp.generalResponse.messageCode);
         this.initialCharge(); // table
       } else {
-        this._toastScv.showError(resp.GeneralResponse.messageCode);
+        this._toastScv.showError(resp.generalResponse.messageCode);
       }
     });
   }

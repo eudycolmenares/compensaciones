@@ -8,7 +8,11 @@ import {
   CausesApiModel,
   ResponseModel,
 } from '../../models/cause';
-import { paramsHttp } from '../../libraries/utilities.library';
+import {
+  paramsHttp,
+  paramsUrlBus
+} from '../../libraries/utilities.library';
+import { GeneralFunctionsService } from '../general-functions.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,11 +20,15 @@ import { paramsHttp } from '../../libraries/utilities.library';
 export class CauseService {
   headers = new HttpHeaders(paramsHttp.headerGeneral);
 
-  constructor(private _http: HttpClient) {}
+  constructor(
+    private _http: HttpClient,
+    private gnrSvc: GeneralFunctionsService,
+  ) {}
 
   allCauses() {
     return this._http.get<CausesApiModel>(
-      env.endpoints.Cause.url + env.endpoints.Cause.endpoints.readall,
+      env.endpoints.Cause.url + env.endpoints.Cause.endpoints.readall +
+      '?' + this.gnrSvc.convertObjectToStringParamsUrl(paramsUrlBus),
       {
         headers: this.headers,
       }
@@ -31,25 +39,24 @@ export class CauseService {
     return this._http.post<any>(
       env.endpoints.Cause.url + env.endpoints.Cause.endpoints.create,
       body,
-      {
-        headers: this.headers,
-      }
+      { headers: this.headers }
     );
   }
 
-  updateCause(body: RequestModel): Observable<CausesApiModel> {
+  updateCause(body: RequestModel): Observable<CausesApiModel> {    
     return this._http.put<CausesApiModel>(
       env.endpoints.Cause.url + env.endpoints.Cause.endpoints.update,
       body,
-      {
-        headers: this.headers,
-      }
+      { headers: this.headers }
     );
   }
 
   deleteCause(causeId: string): Observable<ResponseModel> {
+    const params = {...paramsUrlBus, 'causeId': causeId};
     return this._http.delete<ResponseModel>(
-      env.endpoints.Cause.url + env.endpoints.Cause.endpoints.delete + `${causeId}`
+      env.endpoints.Cause.url +
+      env.endpoints.Cause.endpoints.delete +
+      '?' + this.gnrSvc.convertObjectToStringParamsUrl(params)
     );
   }
 }

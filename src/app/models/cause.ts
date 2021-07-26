@@ -1,8 +1,10 @@
+import { headerRequestBus } from '../shared/models/parameters';
+
 export interface CauseModel {
   id?: string;
   code: string;
   state: string;
-  OriginType: {
+  originType: {
     id: number;
     name?: string;
     description?: string;
@@ -11,7 +13,7 @@ export interface CauseModel {
     user?: string;
   };
   user?: string;
-  createDate?: Date;
+  createDate?: string;
   failureCode: string;
   problemCode: string;
   CloneOriginType?: string;
@@ -24,16 +26,17 @@ interface GeneralResponse {
 }
 
 export interface RequestModel {
-  Cause: CauseModel;
+  cause: CauseModel;
+  headerRequest?: headerRequestBus;
 }
 
 export interface ResponseModel {
-  GeneralResponse: GeneralResponse;
+  generalResponse: GeneralResponse;
 }
 
 export interface CausesApiModel {
-  GeneralResponse: GeneralResponse;
-  Causes: {
-    Cause: CauseModel[];
+  generalResponse: GeneralResponse;
+  causes: {
+    cause: CauseModel[];
   };
 }

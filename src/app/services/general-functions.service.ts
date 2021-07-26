@@ -4,7 +4,9 @@ import * as XLSX from 'xlsx';
 
 import { ToastService } from '../shared/services/toast.service';
 import { StructTableModel as tableModel } from '../shared/models/parameters';
-import { exportExcelParams as excelParams } from '../libraries/utilities.library';
+import { 
+  exportExcelParams as excelParams
+} from '../libraries/utilities.library';
 
 @Injectable({
   providedIn: 'root',
@@ -225,5 +227,15 @@ export class GeneralFunctionsService {
         this.toastScv.showSuccess('Archivo descargado correctamente');
       }
     }
+  }
+
+  convertObjectToStringParamsUrl(params) {
+    let value = '';
+    for (const key in params) {
+      (value == '') 
+        ? value = `${key}=${params[key]}`
+        : value += `&${key}=${params[key]}`
+    }
+    return value;
   }
 }

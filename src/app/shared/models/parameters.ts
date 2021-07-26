@@ -38,3 +38,14 @@ export interface StructTableModel {
   description: string;
   validation: string;
 }
+
+export interface headerRequestBus {
+  transactionId: string,
+  system: string,
+  target: string,
+  user: string,
+  password: string,
+  requestDate: string,
+  ipApplication: string,
+  traceabilityId: string
+}
